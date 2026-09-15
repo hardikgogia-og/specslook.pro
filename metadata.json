@@ -1,0 +1,7 @@
+{
+  "name": "Specslook Eyewear",
+  "description": "Premium Ray-Ban-style luxury eyewear e-commerce store with comprehensive catalog, real-time cart, Cash on Delivery (COD) checkout, order tracking, and a secure admin panel.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

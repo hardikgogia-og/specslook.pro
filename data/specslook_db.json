@@ -1,0 +1,2121 @@
+{
+  "products": [
+    {
+      "id": "prod-eye-men-01",
+      "slug": "specslook-executive-titanium-browline",
+      "name": "Specslook Executive Titanium Browline Eyeglasses",
+      "sku": "SL-EG-BRW-MEN01",
+      "brand": "SPECSLOOK",
+      "price": 6990,
+      "salePrice": 4490,
+      "description": "Masterfully crafted from aerospace-grade Japanese titanium and hand-beveled Italian acetate. The Executive Titanium Browline delivers refined authority and featherlight comfort for long workdays in front of spreadsheets and boardroom presentations.",
+      "shortDescription": "Aerospace-grade titanium browline with hand-beveled acetate and ergonomic nose-pads.",
+      "category": "Eyeglasses",
+      "subcategory": "Men",
+      "featured": true,
+      "bestSeller": true,
+      "newArrival": true,
+      "stock": 28,
+      "images": [
+        "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "specifications": {
+        "frameMaterial": "Aerospace Titanium & Italian Mazzucchelli Acetate",
+        "lensMaterial": "Optical CR-39 Demo Lenses (Upgradable)",
+        "lensWidthMm": 52,
+        "bridgeMm": 18,
+        "templeLengthMm": 145,
+        "uvProtection": "100% UV400 Optical Filter",
+        "isPolarized": false,
+        "frameShape": "Clubmaster",
+        "gender": "Men",
+        "weightGrams": 19
+      },
+      "variants": [
+        {
+          "id": "var-egm1-1",
+          "colorName": "Polished Black & Gunmetal",
+          "colorHex": "#1C1C1C",
+          "frameColor": "Gloss Black / Gunmetal",
+          "lensColor": "Clear Optical Demo",
+          "sku": "SL-EG-BRW-MEN01-BLK",
+          "stock": 16,
+          "size": "Standard (50mm)",
+          "images": [
+            "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80"
+          ]
+        },
+        {
+          "id": "var-egm1-2",
+          "colorName": "Vintage Tortoise & Gold",
+          "colorHex": "#6D4C41",
+          "frameColor": "Havana Tortoise / 18K Gold",
+          "lensColor": "Clear Optical Demo",
+          "sku": "SL-EG-BRW-MEN01-TRT",
+          "stock": 12,
+          "size": "Standard (50mm)",
+          "images": [
+            "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80"
+          ]
+        }
+      ],
+      "rating": 4.9,
+      "reviewsCount": 84,
+      "createdAt": "2026-09-13T15:32:17.489Z"
+    },
+    {
+      "id": "prod-eye-men-02",
+      "slug": "specslook-matte-black-wayfarer-optical",
+      "name": "Specslook Matte Black Square Optical Eyeglasses",
+      "sku": "SL-EG-SQR-MEN02",
+      "brand": "SPECSLOOK",
+      "price": 5490,
+      "salePrice": 3290,
+      "description": "An understated modern square silhouette engineered in ultra-flexible Swiss TR90 memory polymer with velvet touch matte finish. Perfectly balances comfort, durability, and bold facial framing.",
+      "shortDescription": "Velvet-touch matte black square frames with German 5-barrel spring hinges.",
+      "category": "Eyeglasses",
+      "subcategory": "Men",
+      "featured": true,
+      "bestSeller": false,
+      "newArrival": true,
+      "stock": 35,
+      "images": [
+        "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "specifications": {
+        "frameMaterial": "Swiss EMS TR90 Polymer",
+        "lensMaterial": "Anti-Scratch Demo Optic",
+        "lensWidthMm": 54,
+        "bridgeMm": 17,
+        "templeLengthMm": 142,
+        "uvProtection": "100% UV400",
+        "isPolarized": false,
+        "frameShape": "Square",
+        "gender": "Men",
+        "weightGrams": 16
+      },
+      "variants": [
+        {
+          "id": "var-egm2-1",
+          "colorName": "Velvet Matte Black",
+          "colorHex": "#121212",
+          "frameColor": "Matte Black",
+          "lensColor": "Clear Optical Demo",
+          "sku": "SL-EG-SQR-MEN02-VBLK",
+          "stock": 20,
+          "images": [
+            "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80"
+          ]
+        },
+        {
+          "id": "var-egm2-2",
+          "colorName": "Slate Charcoal Grey",
+          "colorHex": "#374151",
+          "frameColor": "Charcoal Grey",
+          "lensColor": "Clear Optical Demo",
+          "sku": "SL-EG-SQR-MEN02-GRY",
+          "stock": 15,
+          "images": [
+            "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80"
+          ]
+        }
+      ],
+      "rating": 4.8,
+      "reviewsCount": 62,
+      "createdAt": "2026-09-13T15:32:17.489Z"
+    },
+    {
+      "id": "prod-eye-men-03",
+      "slug": "specslook-gunmetal-titanium-rectangular",
+      "name": "Specslook Gunmetal Titanium Rectangular Eyeglasses",
+      "sku": "SL-EG-REC-MEN03",
+      "brand": "SPECSLOOK",
+      "price": 7490,
+      "salePrice": 4890,
+      "description": "Sleek, low-profile semi-rimless rectangular frame sculpted from ultra-thin pure titanium wire. Engineered for businessmen, coders, and scholars looking for zero-pressure nose bridges and clean minimalist aesthetics.",
+      "shortDescription": "Featherlight pure titanium wire frame with silicone air-cushion nose pads.",
+      "category": "Eyeglasses",
+      "subcategory": "Men",
+      "featured": false,
+      "bestSeller": true,
+      "newArrival": false,
+      "stock": 22,
+      "images": [
+        "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "specifications": {
+        "frameMaterial": "Pure Beta Titanium",
+        "lensMaterial": "Clear Optical Demo",
+        "lensWidthMm": 53,
+        "bridgeMm": 18,
+        "templeLengthMm": 140,
+        "uvProtection": "100% UV400",
+        "isPolarized": false,
+        "frameShape": "Rectangular",
+        "gender": "Men",
+        "weightGrams": 14
+      },
+      "variants": [
+        {
+          "id": "var-egm3-1",
+          "colorName": "Brushed Gunmetal",
+          "colorHex": "#4B5563",
+          "frameColor": "Gunmetal",
+          "lensColor": "Clear Optical Demo",
+          "sku": "SL-EG-REC-MEN03-GNM",
+          "stock": 22,
+          "images": [
+            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
+          ]
+        }
+      ],
+      "rating": 4.9,
+      "reviewsCount": 47,
+      "createdAt": "2026-09-13T15:32:17.489Z"
+    },
+    {
+      "id": "prod-eye-wom-01",
+      "slug": "specslook-rose-gold-cat-eye-optical",
+      "name": "Specslook Rose Gold Cat-Eye Optical Eyeglasses",
+      "sku": "SL-EG-CAT-WOM01",
+      "brand": "SPECSLOOK",
+      "price": 6490,
+      "salePrice": 3990,
+      "description": "An alluring feminine cat-eye frame featuring subtle geometric wing tips in 18K rose gold ion plating. Delivers an immediate face-lifting visual lift and effortless everyday glamour.",
+      "shortDescription": "18K rose-gold plated cat-eye silhouette with subtle geometric temple tips.",
+      "category": "Eyeglasses",
+      "subcategory": "Women",
+      "featured": true,
+      "bestSeller": true,
+      "newArrival": true,
+      "stock": 32,
+      "images": [
+        "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "specifications": {
+        "frameMaterial": "Monel Metal & 18K Rose Gold Plating",
+        "lensMaterial": "Clear Optical Filter",
+        "lensWidthMm": 51,
+        "bridgeMm": 17,
+        "templeLengthMm": 140,
+        "uvProtection": "100% UV400",
+        "isPolarized": false,
+        "frameShape": "Cat-Eye",
+        "gender": "Women",
+        "weightGrams": 18
+      },
+      "variants": [
+        {
+          "id": "var-egw1-1",
+          "colorName": "18K Rose Gold",
+          "colorHex": "#B76E79",
+          "frameColor": "Polished Rose Gold",
+          "lensColor": "Clear Optical Demo",
+          "sku": "SL-EG-CAT-WOM01-RGD",
+          "stock": 18,
+          "images": [
+            "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80"
+          ]
+        },
+        {
+          "id": "var-egw1-2",
+          "colorName": "Rose Gold with Gloss Black Rim",
+          "colorHex": "#262626",
+          "frameColor": "Rose Gold / Black Rim",
+          "lensColor": "Clear Optical Demo",
+          "sku": "SL-EG-CAT-WOM01-RGB",
+          "stock": 14,
+          "images": [
+            "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80"
+          ]
+        }
+      ],
+      "rating": 4.9,
+      "reviewsCount": 96,
+      "createdAt": "2026-09-13T15:32:17.489Z"
+    },
+    {
+      "id": "prod-eye-wom-02",
+      "slug": "specslook-champagne-crystal-round-optical",
+      "name": "Specslook Champagne Crystal Petite Round Eyeglasses",
+      "sku": "SL-EG-RND-WOM02",
+      "brand": "SPECSLOOK",
+      "price": 5990,
+      "salePrice": 3690,
+      "description": "Translucent champagne crystal bio-acetate sculpted into a gentle rounded wire shape. Softens sharp facial lines while offering a luminous, youthful glow under daylight.",
+      "shortDescription": "Luminous crystal champagne bio-acetate with custom metal temple filigree.",
+      "category": "Eyeglasses",
+      "subcategory": "Women",
+      "featured": true,
+      "bestSeller": false,
+      "newArrival": true,
+      "stock": 25,
+      "images": [
+        "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "specifications": {
+        "frameMaterial": "Crystal Bio-Acetate",
+        "lensMaterial": "Clear Optical Filter",
+        "lensWidthMm": 49,
+        "bridgeMm": 19,
+        "templeLengthMm": 138,
+        "uvProtection": "100% UV400",
+        "isPolarized": false,
+        "frameShape": "Round",
+        "gender": "Women",
+        "weightGrams": 17
+      },
+      "variants": [
+        {
+          "id": "var-egw2-1",
+          "colorName": "Champagne Crystal",
+          "colorHex": "#F7E7CE",
+          "frameColor": "Transparent Champagne",
+          "lensColor": "Clear Optical Demo",
+          "sku": "SL-EG-RND-WOM02-CHM",
+          "stock": 15,
+          "images": [
+            "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80"
+          ]
+        },
+        {
+          "id": "var-egw2-2",
+          "colorName": "Smoky Lavender Crystal",
+          "colorHex": "#E6E6FA",
+          "frameColor": "Lavender Crystal",
+          "lensColor": "Clear Optical Demo",
+          "sku": "SL-EG-RND-WOM02-LAV",
+          "stock": 10,
+          "images": [
+            "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80"
+          ]
+        }
+      ],
+      "rating": 4.8,
+      "reviewsCount": 51,
+      "createdAt": "2026-09-13T15:32:17.489Z"
+    },
+    {
+      "id": "prod-eye-wom-03",
+      "slug": "specslook-havana-geometric-optical",
+      "name": "Specslook Havana Tortoise Geometric Eyeglasses",
+      "sku": "SL-EG-GEO-WOM03",
+      "brand": "SPECSLOOK",
+      "price": 6290,
+      "salePrice": 3890,
+      "description": "Italian Mazzucchelli tortoise acetate with architectural octagonal beveling. A distinctive statement silhouette loved by stylists, writers, and designers.",
+      "shortDescription": "Octagonal beveled Italian tortoise acetate with comfortable keyhole bridge.",
+      "category": "Eyeglasses",
+      "subcategory": "Women",
+      "featured": false,
+      "bestSeller": true,
+      "newArrival": false,
+      "stock": 20,
+      "images": [
+        "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "specifications": {
+        "frameMaterial": "Italian Mazzucchelli Acetate",
+        "lensMaterial": "Clear Optical Demo",
+        "lensWidthMm": 50,
+        "bridgeMm": 18,
+        "templeLengthMm": 140,
+        "uvProtection": "100% UV400",
+        "isPolarized": false,
+        "frameShape": "Hexagonal",
+        "gender": "Women",
+        "weightGrams": 21
+      },
+      "variants": [
+        {
+          "id": "var-egw3-1",
+          "colorName": "Rich Amber Havana Tortoise",
+          "colorHex": "#8B4513",
+          "frameColor": "Amber Tortoise",
+          "lensColor": "Clear Optical Demo",
+          "sku": "SL-EG-GEO-WOM03-AMB",
+          "stock": 20,
+          "images": [
+            "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80"
+          ]
+        }
+      ],
+      "rating": 4.9,
+      "reviewsCount": 39,
+      "createdAt": "2026-09-13T15:32:17.489Z"
+    },
+    {
+      "id": "prod-eye-kid-01",
+      "slug": "specslook-junior-flex-tr90-kids-glasses",
+      "name": "Specslook Junior Flex-TR90 Unbreakable Kids Eyeglasses",
+      "sku": "SL-EG-KID-FLX01",
+      "brand": "SPECSLOOK JUNIOR",
+      "price": 3990,
+      "salePrice": 2490,
+      "description": "Specially engineered for kids aged 5 to 14. Molded from 180-degree flexible Swiss TR90 medical-grade polymer with zero metal screws to eliminate injury risk during sports or playground activity.",
+      "shortDescription": "180-degree bendable medical polymer with drop-safe magnetic hinge protection.",
+      "category": "Eyeglasses",
+      "subcategory": "Kids",
+      "featured": true,
+      "bestSeller": true,
+      "newArrival": true,
+      "stock": 40,
+      "images": [
+        "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "specifications": {
+        "frameMaterial": "Medical Swiss TR90 (Hypoallergenic & BPA Free)",
+        "lensMaterial": "Polycarbonate Shatterproof Demo",
+        "lensWidthMm": 45,
+        "bridgeMm": 15,
+        "templeLengthMm": 128,
+        "uvProtection": "100% UV400 Child Protection",
+        "isPolarized": false,
+        "frameShape": "Round",
+        "gender": "Kids",
+        "weightGrams": 12
+      },
+      "variants": [
+        {
+          "id": "var-egk1-1",
+          "colorName": "Royal Navy & Cyan Blue",
+          "colorHex": "#0077B6",
+          "frameColor": "Navy Blue / Cyan",
+          "lensColor": "Clear Optical Demo",
+          "sku": "SL-EG-KID-FLX01-BLU",
+          "stock": 22,
+          "images": [
+            "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1000&q=80"
+          ]
+        },
+        {
+          "id": "var-egk1-2",
+          "colorName": "Candy Pink & Purple",
+          "colorHex": "#E056FD",
+          "frameColor": "Pink / Violet",
+          "lensColor": "Clear Optical Demo",
+          "sku": "SL-EG-KID-FLX01-PNK",
+          "stock": 18,
+          "images": [
+            "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1000&q=80"
+          ]
+        }
+      ],
+      "rating": 4.9,
+      "reviewsCount": 78,
+      "createdAt": "2026-09-13T15:32:17.489Z"
+    },
+    {
+      "id": "prod-eye-kid-02",
+      "slug": "specslook-junior-study-blue-block-kids",
+      "name": "Specslook Junior Active Study Eyeglasses",
+      "sku": "SL-EG-KID-STD02",
+      "brand": "SPECSLOOK JUNIOR",
+      "price": 3490,
+      "salePrice": 1990,
+      "description": "Lightweight ergonomic study eyeglasses fitted with anti-slip silicone ear-grips to prevent slipping while writing or reading. Pair with SL BluPro or SL Anti Glare for optimum digital screen learning comfort.",
+      "shortDescription": "Anti-slip ear hooks with featherlight build designed for classroom concentration.",
+      "category": "Eyeglasses",
+      "subcategory": "Kids",
+      "featured": false,
+      "bestSeller": true,
+      "newArrival": false,
+      "stock": 35,
+      "images": [
+        "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "specifications": {
+        "frameMaterial": "Eco-Flex TR90",
+        "lensMaterial": "Optical Clear Demo",
+        "lensWidthMm": 46,
+        "bridgeMm": 16,
+        "templeLengthMm": 130,
+        "uvProtection": "100% UV400",
+        "isPolarized": false,
+        "frameShape": "Square",
+        "gender": "Kids",
+        "weightGrams": 11
+      },
+      "variants": [
+        {
+          "id": "var-egk2-1",
+          "colorName": "Jet Black & Lime Green Grips",
+          "colorHex": "#32CD32",
+          "frameColor": "Black / Lime",
+          "lensColor": "Clear Optical Demo",
+          "sku": "SL-EG-KID-STD02-LME",
+          "stock": 20,
+          "images": [
+            "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1000&q=80"
+          ]
+        },
+        {
+          "id": "var-egk2-2",
+          "colorName": "Crystal Aqua Clear",
+          "colorHex": "#48CAE4",
+          "frameColor": "Transparent Aqua",
+          "lensColor": "Clear Optical Demo",
+          "sku": "SL-EG-KID-STD02-AQA",
+          "stock": 15,
+          "images": [
+            "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1000&q=80"
+          ]
+        }
+      ],
+      "rating": 4.8,
+      "reviewsCount": 42,
+      "createdAt": "2026-09-13T15:32:17.489Z"
+    },
+    {
+      "id": "prod-sun-men-01",
+      "slug": "specslook-aviator-pilot-polar-gold",
+      "name": "Specslook Aviator Pilot Polarized Gold Sunglasses",
+      "sku": "SL-SG-AV-MEN01",
+      "brand": "SPECSLOOK",
+      "price": 9990,
+      "salePrice": 6990,
+      "description": "The pinnacle of masculine aviator design. Features 18K gold-electroplated double bridge metal with authentic emerald green polarized crystal lenses for razor-sharp visual fidelity on road drives and bright sunny days.",
+      "shortDescription": "18K gold plated pilot frame with emerald green crystal polarized glass.",
+      "category": "Sunglasses",
+      "subcategory": "Men",
+      "featured": true,
+      "bestSeller": true,
+      "newArrival": false,
+      "stock": 45,
+      "images": [
+        "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "specifications": {
+        "frameMaterial": "Monel Metal with 18K Gold Finish",
+        "lensMaterial": "Mineral Crystal Glass G-15",
+        "lensWidthMm": 58,
+        "bridgeMm": 14,
+        "templeLengthMm": 135,
+        "uvProtection": "100% UV400 Polarization",
+        "isPolarized": true,
+        "frameShape": "Aviator",
+        "gender": "Men",
+        "weightGrams": 31
+      },
+      "variants": [
+        {
+          "id": "var-sgm1-1",
+          "colorName": "Gold / Emerald Green Polarized",
+          "colorHex": "#D4AF37",
+          "frameColor": "18K Gold",
+          "lensColor": "Crystal Green G-15",
+          "sku": "SL-SG-AV-MEN01-GLD",
+          "stock": 25,
+          "images": [
+            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
+          ]
+        },
+        {
+          "id": "var-sgm1-2",
+          "colorName": "Gunmetal / Polarized Grey Mirror",
+          "colorHex": "#4A4A4A",
+          "frameColor": "Gunmetal",
+          "lensColor": "Silver Flash Polarized",
+          "sku": "SL-SG-AV-MEN01-GNM",
+          "stock": 20,
+          "images": [
+            "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80"
+          ]
+        }
+      ],
+      "rating": 4.9,
+      "reviewsCount": 165,
+      "createdAt": "2026-09-13T15:32:17.489Z"
+    },
+    {
+      "id": "prod-sun-men-02",
+      "slug": "specslook-justin-matte-black-wrap",
+      "name": "Specslook Justin Matte Black Wrap Sunglasses",
+      "sku": "SL-SG-JUS-MEN02",
+      "brand": "SPECSLOOK",
+      "price": 8490,
+      "salePrice": 5490,
+      "description": "Inspired by iconic street culture, the Justin delivers a slightly larger rectangular frame with a luxurious rubberized matte black touch and dark grey gradient UV400 lenses.",
+      "shortDescription": "Rubberized matte black rectangular frame with dark gradient UV400 lenses.",
+      "category": "Sunglasses",
+      "subcategory": "Men",
+      "featured": true,
+      "bestSeller": false,
+      "newArrival": true,
+      "stock": 30,
+      "images": [
+        "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "specifications": {
+        "frameMaterial": "Rubberized Soft-Touch Nylon",
+        "lensMaterial": "Polycarbonate UV400",
+        "lensWidthMm": 55,
+        "bridgeMm": 16,
+        "templeLengthMm": 145,
+        "uvProtection": "100% UV400",
+        "isPolarized": true,
+        "frameShape": "Square",
+        "gender": "Men",
+        "weightGrams": 28
+      },
+      "variants": [
+        {
+          "id": "var-sgm2-1",
+          "colorName": "Rubberized Matte Black",
+          "colorHex": "#141414",
+          "frameColor": "Matte Black",
+          "lensColor": "Grey Gradient Polarized",
+          "sku": "SL-SG-JUS-MEN02-RBLK",
+          "stock": 30,
+          "images": [
+            "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80"
+          ]
+        }
+      ],
+      "rating": 4.8,
+      "reviewsCount": 73,
+      "createdAt": "2026-09-13T15:32:17.489Z"
+    },
+    {
+      "id": "prod-sun-wom-01",
+      "slug": "specslook-glam-oversized-butterfly-sunglasses",
+      "name": "Specslook Oversized Glam Butterfly Sunglasses",
+      "sku": "SL-SG-BTF-WOM01",
+      "brand": "SPECSLOOK",
+      "price": 8990,
+      "salePrice": 5990,
+      "description": "Statement oversized silhouette with butterfly contours hand-polished in rich black and honey tortoiseshell. Designed to frame high cheekbones and provide complete wrap-around sun shielding.",
+      "shortDescription": "Dramatically sculpted oversized butterfly frame with gradient bronze lenses.",
+      "category": "Sunglasses",
+      "subcategory": "Women",
+      "featured": true,
+      "bestSeller": true,
+      "newArrival": true,
+      "stock": 25,
+      "images": [
+        "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "specifications": {
+        "frameMaterial": "High-Density Italian Acetate",
+        "lensMaterial": "Nylon Gradient UV400",
+        "lensWidthMm": 56,
+        "bridgeMm": 17,
+        "templeLengthMm": 140,
+        "uvProtection": "100% UV400 Absorption",
+        "isPolarized": true,
+        "frameShape": "Cat-Eye",
+        "gender": "Women",
+        "weightGrams": 32
+      },
+      "variants": [
+        {
+          "id": "var-sgw1-1",
+          "colorName": "Gloss Black / Smoked Gradient",
+          "colorHex": "#0A0A0A",
+          "frameColor": "Gloss Black",
+          "lensColor": "Smoked Gradient",
+          "sku": "SL-SG-BTF-WOM01-BLK",
+          "stock": 15,
+          "images": [
+            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
+          ]
+        },
+        {
+          "id": "var-sgw1-2",
+          "colorName": "Honey Tortoise / Warm Bronze",
+          "colorHex": "#A0522D",
+          "frameColor": "Honey Tortoise",
+          "lensColor": "Warm Bronze Gradient",
+          "sku": "SL-SG-BTF-WOM01-HNY",
+          "stock": 10,
+          "images": [
+            "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80"
+          ]
+        }
+      ],
+      "rating": 4.9,
+      "reviewsCount": 112,
+      "createdAt": "2026-09-13T15:32:17.489Z"
+    },
+    {
+      "id": "prod-sun-wom-02",
+      "slug": "specslook-rose-gold-hexagonal-sunglasses",
+      "name": "Specslook Hexagonal Rose Gold Sunglasses",
+      "sku": "SL-SG-HEX-WOM02",
+      "brand": "SPECSLOOK",
+      "price": 9490,
+      "salePrice": 6290,
+      "description": "Slender hexagonal metal geometry in radiant 18K rose gold. Fitted with flat crystal pink-champagne flash mirror lenses that offer stunning reflective warmth and full UV400 defense.",
+      "shortDescription": "Slim hexagonal wireframe with pink-champagne flash crystal lenses.",
+      "category": "Sunglasses",
+      "subcategory": "Women",
+      "featured": false,
+      "bestSeller": true,
+      "newArrival": false,
+      "stock": 22,
+      "images": [
+        "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "specifications": {
+        "frameMaterial": "18K Rose Gold Ion-Plated Metal",
+        "lensMaterial": "Flat Crystal Glass",
+        "lensWidthMm": 51,
+        "bridgeMm": 21,
+        "templeLengthMm": 145,
+        "uvProtection": "100% UV400",
+        "isPolarized": false,
+        "frameShape": "Hexagonal",
+        "gender": "Women",
+        "weightGrams": 27
+      },
+      "variants": [
+        {
+          "id": "var-sgw2-1",
+          "colorName": "Rose Gold & Pink Mirror",
+          "colorHex": "#E0A96D",
+          "frameColor": "Rose Gold",
+          "lensColor": "Champagne Pink Mirror",
+          "sku": "SL-SG-HEX-WOM02-PNK",
+          "stock": 22,
+          "images": [
+            "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80"
+          ]
+        }
+      ],
+      "rating": 4.8,
+      "reviewsCount": 68,
+      "createdAt": "2026-09-13T15:32:17.489Z"
+    },
+    {
+      "id": "prod-sun-kid-01",
+      "slug": "specslook-junior-pilot-uv400-kids-aviator",
+      "name": "Specslook Junior Pilot 100% UV400 Kids Aviator",
+      "sku": "SL-SG-KID-AV01",
+      "brand": "SPECSLOOK JUNIOR",
+      "price": 3490,
+      "salePrice": 1990,
+      "description": "Iconic aviator silhouette scaled down specifically for growing children aged 4 to 12. Equipped with drop-safe impact-resistant TAC polarized lenses and flexible temple tips.",
+      "shortDescription": "Child-safe mini aviator with 100% UV400 polarized glare control.",
+      "category": "Sunglasses",
+      "subcategory": "Kids",
+      "featured": true,
+      "bestSeller": true,
+      "newArrival": true,
+      "stock": 30,
+      "images": [
+        "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "specifications": {
+        "frameMaterial": "Flex-Alloy & Rubber Temple Tips",
+        "lensMaterial": "Impact-Safe TAC Polarized",
+        "lensWidthMm": 48,
+        "bridgeMm": 13,
+        "templeLengthMm": 125,
+        "uvProtection": "100% UV400 Child Eye Protection",
+        "isPolarized": true,
+        "frameShape": "Aviator",
+        "gender": "Kids",
+        "weightGrams": 16
+      },
+      "variants": [
+        {
+          "id": "var-sgk1-1",
+          "colorName": "Silver Frame / Sky Blue Mirror",
+          "colorHex": "#00B4D8",
+          "frameColor": "Silver / Cyan",
+          "lensColor": "Sky Blue Flash",
+          "sku": "SL-SG-KID-AV01-BLU",
+          "stock": 18,
+          "images": [
+            "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1000&q=80"
+          ]
+        },
+        {
+          "id": "var-sgk1-2",
+          "colorName": "Gold Frame / Green Polarized",
+          "colorHex": "#D4AF37",
+          "frameColor": "Gold",
+          "lensColor": "G-15 Green Polarized",
+          "sku": "SL-SG-KID-AV01-GLD",
+          "stock": 12,
+          "images": [
+            "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1000&q=80"
+          ]
+        }
+      ],
+      "rating": 4.9,
+      "reviewsCount": 54,
+      "createdAt": "2026-09-13T15:32:17.489Z"
+    },
+    {
+      "id": "prod-sun-kid-02",
+      "slug": "specslook-junior-shatterproof-beach-wayfarer",
+      "name": "Specslook Junior Shatterproof Polarized Wayfarer",
+      "sku": "SL-SG-KID-WF02",
+      "brand": "SPECSLOOK JUNIOR",
+      "price": 3290,
+      "salePrice": 1890,
+      "description": "Vibrant, indestructible rubberized sunglasses made for beach vacations, family road trips, and sunny school sports days. Can bend, twist, and drop without shattering.",
+      "shortDescription": "Flexible rubberized frames with anti-reflective polarized UV400 shield.",
+      "category": "Sunglasses",
+      "subcategory": "Kids",
+      "featured": false,
+      "bestSeller": false,
+      "newArrival": true,
+      "stock": 25,
+      "images": [
+        "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "specifications": {
+        "frameMaterial": "Rubberized Food-Grade TPEE",
+        "lensMaterial": "Shatterproof TAC Polarized",
+        "lensWidthMm": 47,
+        "bridgeMm": 15,
+        "templeLengthMm": 124,
+        "uvProtection": "100% UV400 Polarized",
+        "isPolarized": true,
+        "frameShape": "Wayfarer",
+        "gender": "Kids",
+        "weightGrams": 14
+      },
+      "variants": [
+        {
+          "id": "var-sgk2-1",
+          "colorName": "Neon Orange & Ocean Blue",
+          "colorHex": "#FF7B00",
+          "frameColor": "Orange / Blue",
+          "lensColor": "Dark Smoke Polarized",
+          "sku": "SL-SG-KID-WF02-ORG",
+          "stock": 25,
+          "images": [
+            "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1000&q=80"
+          ]
+        }
+      ],
+      "rating": 4.8,
+      "reviewsCount": 38,
+      "createdAt": "2026-09-13T15:32:17.489Z"
+    },
+    {
+      "id": "prod-001",
+      "slug": "aviator-classic-gold-g15",
+      "name": "Specslook Aviator Classic Gold",
+      "sku": "SL-AV-3025-GLD",
+      "brand": "SPECSLOOK",
+      "price": 11990,
+      "salePrice": 8990,
+      "description": "Currently one of the most iconic sunglass models in the world, the Specslook Aviator Classic was originally designed for aviators in 1937. Aviator Classic sunglasses are a timeless model that combines great aviator styling with exceptional quality, performance and comfort. With a classic gold frame, you can see the world through the legendary crystal green G-15 lens that offers optimal visual clarity and 100% UV protection.",
+      "shortDescription": "Legendary teardrop frame with polished 18K gold finish and crystal green G-15 lenses.",
+      "category": "Sunglasses",
+      "subcategory": "Aviator",
+      "featured": true,
+      "bestSeller": true,
+      "newArrival": false,
+      "stock": 43,
+      "images": [
+        "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "specifications": {
+        "frameMaterial": "Monel Metal with 18K Gold Ion Plating",
+        "lensMaterial": "Mineral Crystal Glass G-15",
+        "lensWidthMm": 58,
+        "bridgeMm": 14,
+        "templeLengthMm": 135,
+        "uvProtection": "100% UV400 Absorption",
+        "isPolarized": true,
+        "frameShape": "Aviator",
+        "gender": "Unisex",
+        "weightGrams": 31
+      },
+      "variants": [
+        {
+          "id": "var-001-1",
+          "colorName": "Gold / Crystal Green G-15",
+          "colorHex": "#D4AF37",
+          "frameColor": "Polished Gold",
+          "lensColor": "Crystal Green G-15",
+          "sku": "SL-AV-3025-GLD-58",
+          "stock": 24,
+          "size": "Standard (50mm)",
+          "images": [
+            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
+          ]
+        },
+        {
+          "id": "var-001-2",
+          "colorName": "Matte Black / Polarized Grey",
+          "colorHex": "#111111",
+          "frameColor": "Matte Black",
+          "lensColor": "Polarized Dark Grey",
+          "sku": "SL-AV-3025-BLK-58",
+          "stock": 20,
+          "size": "Standard (50mm)",
+          "images": [
+            "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80"
+          ]
+        }
+      ],
+      "rating": 4.9,
+      "reviewsCount": 142,
+      "createdAt": "2026-08-13T07:27:29.981Z"
+    },
+    {
+      "id": "prod-002",
+      "slug": "original-wayfarer-classic-black",
+      "name": "Specslook Original Wayfarer Classic",
+      "sku": "SL-WF-2140-BLK",
+      "brand": "SPECSLOOK",
+      "price": 12990,
+      "salePrice": 9490,
+      "description": "The Specslook Original Wayfarer Classic is the most recognizable style in the history of sunglasses. Since its initial design in 1952, Wayfarer has gained popularity among celebrities, musicians, artists and those with an impeccable fashion sense. As an iconic style of sunglasses, Original Wayfarer Classic always makes a statement. Choose classic black acetate with green G-15 lenses.",
+      "shortDescription": "The defining silhouette of modern counterculture in hand-polished glossy black Italian acetate.",
+      "category": "Sunglasses",
+      "subcategory": "Wayfarer",
+      "featured": true,
+      "bestSeller": true,
+      "newArrival": false,
+      "stock": 38,
+      "images": [
+        "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "specifications": {
+        "frameMaterial": "Hand-Polished Mazzucchelli Italian Acetate",
+        "lensMaterial": "Mineral Crystal Glass B-15",
+        "lensWidthMm": 50,
+        "bridgeMm": 22,
+        "templeLengthMm": 150,
+        "uvProtection": "100% UV400 Filtering",
+        "isPolarized": true,
+        "frameShape": "Wayfarer",
+        "gender": "Unisex",
+        "weightGrams": 42
+      },
+      "variants": [
+        {
+          "id": "var-002-1",
+          "colorName": "Polished Black / G-15 Green",
+          "colorHex": "#000000",
+          "frameColor": "Gloss Black",
+          "lensColor": "Classic Green G-15",
+          "sku": "SL-WF-2140-901",
+          "stock": 22,
+          "size": "Standard (50mm)",
+          "images": [
+            "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80"
+          ]
+        },
+        {
+          "id": "var-002-2",
+          "colorName": "Tortoise Havana / Brown Gradient",
+          "colorHex": "#5C381E",
+          "frameColor": "Havana Tortoise",
+          "lensColor": "Brown Gradient B-15",
+          "sku": "SL-WF-2140-902",
+          "stock": 16,
+          "size": "Standard (50mm)",
+          "images": [
+            "https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1000&q=80"
+          ]
+        }
+      ],
+      "rating": 4.8,
+      "reviewsCount": 118,
+      "createdAt": "2026-08-18T07:27:29.981Z"
+    },
+    {
+      "id": "prod-003",
+      "slug": "clubmaster-classic-browline",
+      "name": "Specslook Clubmaster Classic Browline",
+      "sku": "SL-CM-3016-EBN",
+      "brand": "SPECSLOOK",
+      "price": 13490,
+      "salePrice": 9990,
+      "description": "Specslook Clubmaster Classic sunglasses are retro and timeless. Inspired by the 50s, the unmistakable design of the Clubmaster has been repeatedly selected by historical intellectuals and cultural leaders. While wearing the Specslook Clubmaster Classic design, you will always make a statement. Combining refined ebony acetate browline with polished gold accents.",
+      "shortDescription": "Retro mid-century browline design combining ebony acetate and gold metal rims.",
+      "category": "Sunglasses",
+      "subcategory": "Clubmaster",
+      "featured": true,
+      "bestSeller": false,
+      "newArrival": false,
+      "stock": 28,
+      "images": [
+        "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "specifications": {
+        "frameMaterial": "Dual Acetate & Monel Metal Browline",
+        "lensMaterial": "Anti-Reflective Mineral Crystal",
+        "lensWidthMm": 51,
+        "bridgeMm": 21,
+        "templeLengthMm": 145,
+        "uvProtection": "100% UV400 Block",
+        "isPolarized": false,
+        "frameShape": "Clubmaster",
+        "gender": "Unisex",
+        "weightGrams": 37
+      },
+      "variants": [
+        {
+          "id": "var-003-1",
+          "colorName": "Ebony Gold / Crystal Green",
+          "colorHex": "#1E1E1E",
+          "frameColor": "Black & Gold",
+          "lensColor": "Green Solid",
+          "sku": "SL-CM-3016-W0365",
+          "stock": 18,
+          "size": "Standard (50mm)",
+          "images": [
+            "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80"
+          ]
+        },
+        {
+          "id": "var-003-2",
+          "colorName": "Spotted Havana / Gold",
+          "colorHex": "#704214",
+          "frameColor": "Mock Tortoise",
+          "lensColor": "Brown Classic",
+          "sku": "SL-CM-3016-W0366",
+          "stock": 10,
+          "size": "Standard (50mm)",
+          "images": [
+            "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80"
+          ]
+        }
+      ],
+      "rating": 4.7,
+      "reviewsCount": 89,
+      "createdAt": "2026-08-23T07:27:29.981Z"
+    },
+    {
+      "id": "prod-004",
+      "slug": "round-metal-legend-gold",
+      "name": "Specslook Round Metal Legend",
+      "sku": "SL-RM-3447-GLD",
+      "brand": "SPECSLOOK",
+      "price": 11490,
+      "salePrice": 8490,
+      "description": "The Specslook Round Metal sunglasses are totally retro. This look has been worn by legendary musicians and inspired by the 1960s counter-culture when this style first originated. The unisex metal, iconic sunglasses are known for their defined round crystal lenses and distinct curved brow bar, adjustable nose pads, and thin metal temples with plastic end tips.",
+      "shortDescription": "1960s counter-culture icon with circular wire frame and curved brow bar.",
+      "category": "Sunglasses",
+      "subcategory": "Round",
+      "featured": true,
+      "bestSeller": true,
+      "newArrival": false,
+      "stock": 32,
+      "images": [
+        "https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "specifications": {
+        "frameMaterial": "Fine Gauge Stainless Steel & Monel",
+        "lensMaterial": "Precision Ground Optical Glass",
+        "lensWidthMm": 50,
+        "bridgeMm": 21,
+        "templeLengthMm": 145,
+        "uvProtection": "100% UV400 Protection",
+        "isPolarized": true,
+        "frameShape": "Round",
+        "gender": "Unisex",
+        "weightGrams": 28
+      },
+      "variants": [
+        {
+          "id": "var-004-1",
+          "colorName": "Polished Gold / G-15 Green",
+          "colorHex": "#E5C158",
+          "frameColor": "Gold Wire",
+          "lensColor": "Crystal Green",
+          "sku": "SL-RM-3447-001",
+          "stock": 20,
+          "size": "Standard (50mm)",
+          "images": [
+            "https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1000&q=80"
+          ]
+        },
+        {
+          "id": "var-004-2",
+          "colorName": "Silver / Flash Blue Mirrored",
+          "colorHex": "#C0C0C0",
+          "frameColor": "Polished Silver",
+          "lensColor": "Mirrored Blue Flash",
+          "sku": "SL-RM-3447-112",
+          "stock": 12,
+          "size": "Standard (50mm)",
+          "images": [
+            "https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1000&q=80"
+          ]
+        }
+      ],
+      "rating": 4.9,
+      "reviewsCount": 97,
+      "createdAt": "2026-08-28T07:27:29.981Z"
+    },
+    {
+      "id": "prod-005",
+      "slug": "hexagonal-flat-lenses-copper",
+      "name": "Specslook Hexagonal Flat Lenses",
+      "sku": "SL-HX-3548-COP",
+      "brand": "SPECSLOOK",
+      "price": 12490,
+      "salePrice": 8990,
+      "description": "What do you get when you cross a circle with a square? You get the hexagonal Specslook Flat Lenses. An evolution of round sunglasses with flat crystal lenses. Hexagonal shape provides an ultra-contemporary edge to timeless metallic elegance.",
+      "shortDescription": "Contemporary geometric geometric sunglasses with ultra-flat crystal lenses and coin-edge profile.",
+      "category": "Sunglasses",
+      "subcategory": "Hexagonal",
+      "featured": false,
+      "bestSeller": false,
+      "newArrival": true,
+      "stock": 24,
+      "images": [
+        "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "specifications": {
+        "frameMaterial": "Ultra-thin Metallic Alloy",
+        "lensMaterial": "Flat Crystal Mineral Glass",
+        "lensWidthMm": 51,
+        "bridgeMm": 21,
+        "templeLengthMm": 145,
+        "uvProtection": "100% UV400",
+        "isPolarized": false,
+        "frameShape": "Hexagonal",
+        "gender": "Unisex",
+        "weightGrams": 27
+      },
+      "variants": [
+        {
+          "id": "var-005-1",
+          "colorName": "Copper Gold / Classic Green",
+          "colorHex": "#B87333",
+          "frameColor": "Copper Gold",
+          "lensColor": "Green",
+          "sku": "SL-HX-3548-001",
+          "stock": 14,
+          "size": "Standard (50mm)",
+          "images": [
+            "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80"
+          ]
+        },
+        {
+          "id": "var-005-2",
+          "colorName": "Matte Gunmetal / Grey Gradient",
+          "colorHex": "#43464B",
+          "frameColor": "Gunmetal",
+          "lensColor": "Grey Gradient",
+          "sku": "SL-HX-3548-002",
+          "stock": 10,
+          "size": "Standard (50mm)",
+          "images": [
+            "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80"
+          ]
+        }
+      ],
+      "rating": 4.6,
+      "reviewsCount": 42,
+      "createdAt": "2026-09-02T07:27:29.981Z"
+    },
+    {
+      "id": "prod-006",
+      "slug": "blue-light-blocker-pro-acetate",
+      "name": "Specslook Blue-Cut Optics Elite",
+      "sku": "SL-EG-7040-BLU",
+      "brand": "SPECSLOOK",
+      "price": 8990,
+      "salePrice": 5990,
+      "description": "Engineered for digital nomads, professionals and gamers. Specslook Blue-Cut lenses filter out harmful high-energy blue-violet light (HEV) emitted by digital screens, smartphones, and LEDs. Reduces digital eye strain, glare, headaches and improves sleep quality. Handcrafted lightweight acetate frame for all-day ergonomic comfort.",
+      "shortDescription": "Ergonomic Japanese acetate eyeglasses with zero-glare blue-light filtering lenses.",
+      "category": "Blue Light Blockers",
+      "subcategory": "Eyeglasses",
+      "featured": true,
+      "bestSeller": true,
+      "newArrival": false,
+      "stock": 50,
+      "images": [
+        "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "specifications": {
+        "frameMaterial": "Ultra-light Italian Acetate & Beta Titanium",
+        "lensMaterial": "Polycarbonate with Blue-Block AR Coating",
+        "lensWidthMm": 52,
+        "bridgeMm": 18,
+        "templeLengthMm": 142,
+        "uvProtection": "100% UV400 + 40% HEV Blue Light",
+        "isPolarized": false,
+        "frameShape": "Square",
+        "gender": "Unisex",
+        "weightGrams": 22
+      },
+      "variants": [
+        {
+          "id": "var-006-1",
+          "colorName": "Crystal Clear / Anti-Blue",
+          "colorHex": "#F0F4F8",
+          "frameColor": "Transparent Crystal",
+          "lensColor": "Clear with Subtle Blue Reflex",
+          "sku": "SL-EG-7040-CLR",
+          "stock": 30,
+          "size": "Standard (50mm)",
+          "images": [
+            "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80"
+          ]
+        },
+        {
+          "id": "var-006-2",
+          "colorName": "Midnight Black / Anti-Blue",
+          "colorHex": "#0A0A0A",
+          "frameColor": "Midnight Black",
+          "lensColor": "Clear with Subtle Blue Reflex",
+          "sku": "SL-EG-7040-BLK",
+          "stock": 20,
+          "size": "Standard (50mm)",
+          "images": [
+            "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80"
+          ]
+        }
+      ],
+      "rating": 4.9,
+      "reviewsCount": 164,
+      "createdAt": "2026-08-31T07:27:29.981Z"
+    },
+    {
+      "id": "prod-007",
+      "slug": "titanium-aviator-polarized-chromance",
+      "name": "Specslook Titanium Chromance Polarized",
+      "sku": "SL-TI-8090-CHR",
+      "brand": "SPECSLOOK",
+      "price": 18990,
+      "salePrice": 14990,
+      "description": "The pinnacle of luxury eyewear engineering. Crafted from aerospace-grade solid Japanese Beta-Titanium, weighing merely 18 grams while offering unbeatable tensile strength and zero corrosion. Equipped with patented Chromance polarized lenses that calibrate light spectrum for intensified color vibrancy, hyper-defined contrasts and eliminated reflection glare.",
+      "shortDescription": "Aerospace-grade Japanese Titanium with Chromance color-enhancing polarized optics.",
+      "category": "Polarized",
+      "subcategory": "Aviator",
+      "featured": true,
+      "bestSeller": false,
+      "newArrival": true,
+      "stock": 15,
+      "images": [
+        "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "specifications": {
+        "frameMaterial": "100% Pure Japanese Beta-Titanium",
+        "lensMaterial": "High-Definition Chromance Polarized Glass",
+        "lensWidthMm": 59,
+        "bridgeMm": 15,
+        "templeLengthMm": 140,
+        "uvProtection": "100% UV400 + Polarized Cat 3",
+        "isPolarized": true,
+        "frameShape": "Aviator",
+        "gender": "Unisex",
+        "weightGrams": 18
+      },
+      "variants": [
+        {
+          "id": "var-007-1",
+          "colorName": "Titanium Pewter / Silver Chromance",
+          "colorHex": "#8A8D8F",
+          "frameColor": "Brushed Titanium",
+          "lensColor": "Silver Flash Polarized",
+          "sku": "SL-TI-8090-PWT",
+          "stock": 8,
+          "size": "Large (54mm)",
+          "images": [
+            "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80"
+          ]
+        },
+        {
+          "id": "var-007-2",
+          "colorName": "Rose Gold / Bronze Polarized",
+          "colorHex": "#B76E79",
+          "frameColor": "Rose Gold Titanium",
+          "lensColor": "Bronze Gradient Polarized",
+          "sku": "SL-TI-8090-RSG",
+          "stock": 7,
+          "size": "Standard (50mm)",
+          "images": [
+            "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80"
+          ]
+        }
+      ],
+      "rating": 5,
+      "reviewsCount": 56,
+      "createdAt": "2026-09-07T07:27:29.981Z"
+    },
+    {
+      "id": "prod-008",
+      "slug": "justin-matte-rubber-black",
+      "name": "Specslook Justin Matte Rubberized",
+      "sku": "SL-JU-4165-MAT",
+      "brand": "SPECSLOOK",
+      "price": 10490,
+      "salePrice": 7990,
+      "description": "Specslook Justin may just be one of the coolest looks in the Specslook collection. Inspired by the iconic Wayfarer sunglasses, this style has been redesigned with slightly larger rectangle lenses, fresh new frame colors, stunning colored lenses and a rubberized frame finish to really give it that extra edge.",
+      "shortDescription": "Contemporary oversized Wayfarer silhouette with tactile rubberized soft-touch matte finish.",
+      "category": "Sunglasses",
+      "subcategory": "Wayfarer",
+      "featured": false,
+      "bestSeller": true,
+      "newArrival": false,
+      "stock": 40,
+      "images": [
+        "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "specifications": {
+        "frameMaterial": "Rubberized Injection Molded Nylon",
+        "lensMaterial": "Polycarbonate Polarized Grey Gradient",
+        "lensWidthMm": 54,
+        "bridgeMm": 16,
+        "templeLengthMm": 145,
+        "uvProtection": "100% UV400",
+        "isPolarized": true,
+        "frameShape": "Square",
+        "gender": "Men",
+        "weightGrams": 30
+      },
+      "variants": [
+        {
+          "id": "var-008-1",
+          "colorName": "Matte Black / Gradient Grey",
+          "colorHex": "#1B1B1B",
+          "frameColor": "Matte Rubber Black",
+          "lensColor": "Grey Gradient",
+          "sku": "SL-JU-4165-622",
+          "stock": 25,
+          "size": "Large (54mm)",
+          "images": [
+            "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80"
+          ]
+        },
+        {
+          "id": "var-008-2",
+          "colorName": "Matte Havana / Brown Gradient",
+          "colorHex": "#4A2F1B",
+          "frameColor": "Rubberized Havana",
+          "lensColor": "Brown Gradient",
+          "sku": "SL-JU-4165-865",
+          "stock": 15,
+          "size": "Large (54mm)",
+          "images": [
+            "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80"
+          ]
+        }
+      ],
+      "rating": 4.8,
+      "reviewsCount": 77,
+      "createdAt": "2026-08-25T07:27:29.981Z"
+    }
+  ],
+  "categories": [
+    {
+      "id": "cat-eyeglasses",
+      "slug": "eyeglasses",
+      "name": "Eyeglasses",
+      "description": "Precision optical frames tailored for prescription clarity, digital screen comfort, and bespoke styling.",
+      "image": "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=800&q=80",
+      "itemCount": 12,
+      "featured": true
+    },
+    {
+      "id": "cat-sunglasses",
+      "slug": "sunglasses",
+      "name": "Sunglasses",
+      "description": "Iconic silhouettes, legendary crystal lenses, 100% UV400 shield and high-contrast polarization.",
+      "image": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80",
+      "itemCount": 12,
+      "featured": true
+    },
+    {
+      "id": "cat-eye-men",
+      "slug": "eyeglasses-men",
+      "name": "Eyeglasses for Men",
+      "description": "Executive titanium, matte black rectangulars, and bold acetate browlines built for professional sharpness.",
+      "image": "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=800&q=80",
+      "itemCount": 4,
+      "featured": true
+    },
+    {
+      "id": "cat-eye-women",
+      "slug": "eyeglasses-women",
+      "name": "Eyeglasses for Women",
+      "description": "Sculpted cat-eyes, elegant champagne crystal rounds, and featherlight rose-gold geometric frames.",
+      "image": "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=800&q=80",
+      "itemCount": 4,
+      "featured": true
+    },
+    {
+      "id": "cat-eye-kids",
+      "slug": "eyeglasses-kids",
+      "name": "Eyeglasses for Kids",
+      "description": "Shatterproof flex TR90, drop-safe memory hinges, and blue-light screen defense for active youngsters.",
+      "image": "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=800&q=80",
+      "itemCount": 4,
+      "featured": true
+    },
+    {
+      "id": "cat-sun-men",
+      "slug": "sunglasses-men",
+      "name": "Sunglasses for Men",
+      "description": "Commanding Aviators, high-definition Polarized Wayfarers, and sports wraparounds with glare cancellation.",
+      "image": "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=800&q=80",
+      "itemCount": 4,
+      "featured": true
+    },
+    {
+      "id": "cat-sun-women",
+      "slug": "sunglasses-women",
+      "name": "Sunglasses for Women",
+      "description": "High-fashion oversized butterflies, gradient cat-eyes, and metallic accents with 100% UV400 defense.",
+      "image": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80",
+      "itemCount": 4,
+      "featured": true
+    },
+    {
+      "id": "cat-sun-kids",
+      "slug": "sunglasses-kids",
+      "name": "Sunglasses for Kids",
+      "description": "Safe rubberized frames, polarized shatter-resistant optics, and vibrant UV400 shades for outdoor play.",
+      "image": "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=800&q=80",
+      "itemCount": 4,
+      "featured": true
+    }
+  ],
+  "orders": [
+    {
+      "id": "ord-mtzzf07z",
+      "orderNumber": "SL-166703",
+      "createdAt": "2026-09-13T15:41:40.703Z",
+      "customer": {
+        "fullName": "Honey Gogia",
+        "phone": "+918368853448",
+        "email": "info@specslook.com",
+        "addressLine1": "Specslook , Shop No. 1 , Dreamz Mall UG Floor",
+        "addressLine2": "Sector 4-7 Circle",
+        "city": "Gurugram",
+        "state": "Haryana",
+        "pinCode": "122001",
+        "country": "India"
+      },
+      "items": [
+        {
+          "productId": "prod-001",
+          "productName": "Specslook Aviator Classic Gold",
+          "sku": "SL-AV-3025-GLD-58",
+          "variantName": "Gold / Crystal Green G-15",
+          "selectedLensType": "Classic Mineral Crystal",
+          "image": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80",
+          "price": 899,
+          "quantity": 1,
+          "total": 899
+        },
+        {
+          "productId": "prod-eye-wom-02",
+          "productName": "Specslook Champagne Crystal Petite Round Eyeglasses",
+          "sku": "SL-EG-RND-WOM02-CHM",
+          "variantName": "Champagne Crystal",
+          "lensAddon": {
+            "id": "none",
+            "name": "Standard Frame / Demo Lenses",
+            "price": 0,
+            "description": "Complimentary high-clarity optical demo lenses pre-fitted into your frame.",
+            "features": [
+              "Zero power demo lenses"
+            ]
+          },
+          "selectedLensType": "Standard Frame / Demo Lenses",
+          "image": "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80",
+          "price": 3690,
+          "quantity": 1,
+          "total": 3690
+        }
+      ],
+      "subtotal": 4589,
+      "discount": 500,
+      "couponCode": "WELCOME500",
+      "shippingFee": 0,
+      "total": 4089,
+      "paymentMethod": "cod",
+      "paymentStatus": "Pending",
+      "paymentTransactionId": "COD-MTZZEZX7",
+      "orderStatus": "Pending",
+      "estimatedDeliveryDate": "2026-09-17",
+      "timeline": [
+        {
+          "status": "Pending",
+          "timestamp": "2026-09-13T15:41:40.703Z",
+          "note": "Order placed via Cash on Delivery"
+        }
+      ],
+      "prescription": {
+        "mode": "optometrist_exam",
+        "submittedAt": "2026-09-13T15:45:00.000Z",
+        "optometristAppointment": {
+          "patientName": "Honey Gogia",
+          "patientAge": 28,
+          "storeId": "store-sl1",
+          "storeName": "SPECSLOOK SL1 - DREAMZ MALL, GURUGRAM",
+          "storeAddress": "Shop No. 1, Dreamz Mall UG Floor, Sector 4-7 Circle, Gurugram, Haryana 122001",
+          "appointmentDate": "2026-09-15",
+          "timeSlot": "04:30 PM - 05:30 PM",
+          "contactNumber": "8368853448",
+          "status": "Pending Confirmation",
+          "specialInstructions": "Wants computerized eye test and high-index blue filter lens consultation."
+        }
+      }
+    },
+    {
+      "id": "ord-mty2cim5",
+      "orderNumber": "SL-780207",
+      "createdAt": "2026-09-12T07:28:11.069Z",
+      "customer": {
+        "fullName": "Aryan Sharma",
+        "phone": "9811223344",
+        "email": "aryan@example.com",
+        "addressLine1": "Tower 4, DLF Phase 5",
+        "city": "Gurugram",
+        "state": "Haryana",
+        "pinCode": "122002",
+        "country": "India"
+      },
+      "items": [
+        {
+          "productId": "prod-001",
+          "productName": "Specslook Aviator Classic Gold",
+          "sku": "SL-AV-3025-GLD",
+          "price": 8990,
+          "quantity": 1,
+          "total": 8990
+        }
+      ],
+      "subtotal": 8990,
+      "discount": 0,
+      "shippingFee": 0,
+      "total": 8990,
+      "paymentMethod": "cashfree",
+      "paymentStatus": "Paid",
+      "paymentTransactionId": "CF_TEST_99182",
+      "orderStatus": "Confirmed",
+      "estimatedDeliveryDate": "2026-09-16",
+      "timeline": [
+        {
+          "status": "Pending",
+          "timestamp": "2026-09-12T07:28:11.069Z",
+          "note": "Order placed via Cashfree Gateway"
+        },
+        {
+          "status": "Confirmed",
+          "timestamp": "2026-09-12T07:28:11.069Z",
+          "note": "Payment captured successfully and order verified."
+        }
+      ],
+      "prescription": {
+        "mode": "manual",
+        "submittedAt": "2026-09-12T07:35:00.000Z",
+        "manualPower": {
+          "odSph": "-1.50",
+          "odCyl": "-0.50",
+          "odAxis": "90°",
+          "odAdd": "None",
+          "osSph": "-1.75",
+          "osCyl": "-0.25",
+          "osAxis": "85°",
+          "osAdd": "None",
+          "pd": "64 mm",
+          "notes": "Anti-glare single vision for laptop usage"
+        }
+      }
+    },
+    {
+      "id": "ord-892104",
+      "orderNumber": "SL-892104",
+      "createdAt": "2026-09-08T07:27:29.981Z",
+      "customer": {
+        "fullName": "Rohan Malhotra",
+        "phone": "+91 98112 34567",
+        "email": "rohan.malhotra@gmail.com",
+        "addressLine1": "Villa 14, Golf Links Enclave",
+        "addressLine2": "Near Lodhi Road",
+        "city": "New Delhi",
+        "state": "Delhi",
+        "pinCode": "110003",
+        "country": "India"
+      },
+      "items": [
+        {
+          "productId": "prod-001",
+          "productName": "Specslook Aviator Classic Gold",
+          "sku": "SL-AV-3025-GLD-58",
+          "variantName": "Gold / Crystal Green G-15",
+          "image": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=400&q=80",
+          "price": 8990,
+          "quantity": 1,
+          "total": 8990
+        },
+        {
+          "productId": "prod-006",
+          "productName": "Specslook Blue-Cut Optics Elite",
+          "sku": "SL-EG-7040-CLR",
+          "variantName": "Crystal Clear / Anti-Blue",
+          "image": "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=400&q=80",
+          "price": 5990,
+          "quantity": 1,
+          "total": 5990
+        }
+      ],
+      "subtotal": 14980,
+      "discount": 1498,
+      "couponCode": "SPECS10",
+      "shippingFee": 0,
+      "total": 13482,
+      "paymentMethod": "cashfree",
+      "paymentStatus": "Paid",
+      "paymentTransactionId": "cf_tx_9948210375",
+      "orderStatus": "Delivered",
+      "courierName": "BlueDart Express",
+      "trackingNumber": "BD74829103IN",
+      "trackingUrl": "https://www.bluedart.com",
+      "estimatedDeliveryDate": "2026-09-10",
+      "timeline": [
+        {
+          "status": "Pending",
+          "timestamp": "2026-09-08T07:27:29.981Z",
+          "note": "Order created via Cashfree Payment Gateway"
+        },
+        {
+          "status": "Confirmed",
+          "timestamp": "2026-09-08T08:27:29.981Z",
+          "note": "Payment verified and inventory allocated"
+        },
+        {
+          "status": "Processing",
+          "timestamp": "2026-09-09T07:27:29.981Z",
+          "note": "Lens calibrated and packed in signature velvet hard case"
+        },
+        {
+          "status": "Shipped",
+          "timestamp": "2026-09-10T07:27:29.981Z",
+          "note": "Dispatched via BlueDart Express (Air Courier)"
+        },
+        {
+          "status": "Delivered",
+          "timestamp": "2026-09-11T07:27:29.981Z",
+          "note": "Handed over to customer with signature confirmation"
+        }
+      ],
+      "prescription": {
+        "mode": "optometrist_exam",
+        "submittedAt": "2026-09-08T07:35:00.000Z",
+        "optometristAppointment": {
+          "patientName": "Rohan Malhotra",
+          "patientAge": 31,
+          "storeId": "store-sl3",
+          "storeName": "SPECSLOOK SL3 - SECTOR 85, GURUGRAM",
+          "storeAddress": "Boulevard Galleria, New Gurugram, Sector 85, Gurugram, Haryana 122004",
+          "appointmentDate": "2026-09-09",
+          "timeSlot": "02:00 PM - 03:00 PM",
+          "contactNumber": "9811234567",
+          "status": "Completed - Exam Done in Store",
+          "callNotes": "Called client at 11:00 AM. Exam completed at Sector 85 by Dr. Verma. Lens power OD: -2.00, OS: -1.75 configured.",
+          "specialInstructions": "Requires progressive lens fitting and frame sizing check."
+        }
+      }
+    },
+    {
+      "id": "ord-892305",
+      "orderNumber": "SL-892305",
+      "createdAt": "2026-09-10T07:27:29.981Z",
+      "customer": {
+        "fullName": "Pooja Singhania",
+        "phone": "+91 99201 88344",
+        "email": "pooja.s@outlook.com",
+        "addressLine1": "B-702, Sea Green Towers, Carter Road",
+        "addressLine2": "Bandra West",
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "pinCode": "400050",
+        "country": "India"
+      },
+      "items": [
+        {
+          "productId": "prod-002",
+          "productName": "Specslook Original Wayfarer Classic",
+          "sku": "SL-WF-2140-901",
+          "variantName": "Polished Black / G-15 Green",
+          "image": "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=400&q=80",
+          "price": 9490,
+          "quantity": 1,
+          "total": 9490
+        }
+      ],
+      "subtotal": 9490,
+      "discount": 500,
+      "couponCode": "WELCOME500",
+      "shippingFee": 0,
+      "total": 8990,
+      "paymentMethod": "cashfree",
+      "paymentStatus": "Paid",
+      "paymentTransactionId": "cf_tx_8830192384",
+      "orderStatus": "Shipped",
+      "courierName": "Delhivery Surface",
+      "trackingNumber": "DEL773829104",
+      "trackingUrl": "https://www.delhivery.com",
+      "estimatedDeliveryDate": "2026-09-13",
+      "timeline": [
+        {
+          "status": "Pending",
+          "timestamp": "2026-09-10T07:27:29.981Z",
+          "note": "Order placed by customer"
+        },
+        {
+          "status": "Confirmed",
+          "timestamp": "2026-09-10T07:57:29.981Z",
+          "note": "Payment verified via Cashfree"
+        },
+        {
+          "status": "Processing",
+          "timestamp": "2026-09-11T07:27:29.981Z",
+          "note": "Quality check passed and dispatched to hub"
+        },
+        {
+          "status": "Shipped",
+          "timestamp": "2026-09-11T19:27:29.981Z",
+          "note": "In transit to Mumbai Distribution Hub"
+        }
+      ]
+    },
+    {
+      "id": "ord-892711",
+      "orderNumber": "SL-892711",
+      "createdAt": "2026-09-11T13:27:29.981Z",
+      "customer": {
+        "fullName": "Vikramaditya Rao",
+        "phone": "+91 97405 66789",
+        "email": "vikram.rao@techcorp.in",
+        "addressLine1": "Penthouse 4B, Palm Meadows",
+        "addressLine2": "Airport Whitefield Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pinCode": "560066",
+        "country": "India"
+      },
+      "items": [
+        {
+          "productId": "prod-007",
+          "productName": "Specslook Titanium Chromance Polarized",
+          "sku": "SL-TI-8090-PWT",
+          "variantName": "Titanium Pewter / Silver Chromance",
+          "image": "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=400&q=80",
+          "price": 14990,
+          "quantity": 1,
+          "total": 14990
+        }
+      ],
+      "subtotal": 14990,
+      "discount": 2500,
+      "couponCode": "LOOK20",
+      "shippingFee": 0,
+      "total": 12490,
+      "paymentMethod": "cashfree",
+      "paymentStatus": "Paid",
+      "paymentTransactionId": "cf_tx_7720918342",
+      "orderStatus": "Processing",
+      "courierName": "BlueDart Air",
+      "trackingNumber": "BD99281033",
+      "estimatedDeliveryDate": "2026-09-14",
+      "timeline": [
+        {
+          "status": "Pending",
+          "timestamp": "2026-09-11T13:27:29.981Z",
+          "note": "Order created"
+        },
+        {
+          "status": "Confirmed",
+          "timestamp": "2026-09-11T14:27:29.981Z",
+          "note": "Payment verified"
+        },
+        {
+          "status": "Processing",
+          "timestamp": "2026-09-12T01:27:29.981Z",
+          "note": "Under precision optical calibration in lab"
+        }
+      ]
+    },
+    {
+      "id": "ord-893012",
+      "orderNumber": "SL-893012",
+      "createdAt": "2026-09-12T03:27:29.981Z",
+      "customer": {
+        "fullName": "Amitabh Sen",
+        "phone": "+91 98300 12345",
+        "email": "amitabh.sen@kolkata.org",
+        "addressLine1": "Flat 3A, Alipore Park Road",
+        "city": "Kolkata",
+        "state": "West Bengal",
+        "pinCode": "700027",
+        "country": "India"
+      },
+      "items": [
+        {
+          "productId": "prod-003",
+          "productName": "Specslook Clubmaster Classic Browline",
+          "sku": "SL-CM-3016-W0365",
+          "variantName": "Ebony Gold / Crystal Green",
+          "image": "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=400&q=80",
+          "price": 9990,
+          "quantity": 1,
+          "total": 9990
+        }
+      ],
+      "subtotal": 9990,
+      "discount": 999,
+      "couponCode": "SPECS10",
+      "shippingFee": 0,
+      "total": 8991,
+      "paymentMethod": "cod",
+      "paymentStatus": "Pending",
+      "orderStatus": "Confirmed",
+      "estimatedDeliveryDate": "2026-09-16",
+      "timeline": [
+        {
+          "status": "Pending",
+          "timestamp": "2026-09-12T03:27:29.981Z",
+          "note": "Order placed with Cash on Delivery"
+        },
+        {
+          "status": "Confirmed",
+          "timestamp": "2026-09-12T04:27:29.981Z",
+          "note": "Customer contact verified via SMS"
+        }
+      ]
+    }
+  ],
+  "coupons": [
+    {
+      "id": "coup-01",
+      "code": "SPECS10",
+      "discountType": "percentage",
+      "discountValue": 10,
+      "minOrderValue": 1999,
+      "maxDiscount": 1500,
+      "isActive": true,
+      "expiryDate": "2026-12-31",
+      "usageCount": 84
+    },
+    {
+      "id": "coup-02",
+      "code": "LOOK20",
+      "discountType": "percentage",
+      "discountValue": 20,
+      "minOrderValue": 4999,
+      "maxDiscount": 2500,
+      "isActive": true,
+      "expiryDate": "2026-12-31",
+      "usageCount": 41
+    },
+    {
+      "id": "coup-03",
+      "code": "WELCOME500",
+      "discountType": "flat",
+      "discountValue": 500,
+      "minOrderValue": 2499,
+      "isActive": true,
+      "expiryDate": "2026-12-31",
+      "usageCount": 113
+    }
+  ],
+  "stores": [
+    {
+      "id": "store-sl1",
+      "name": "SPECSLOOK SL1",
+      "city": "Gurugram",
+      "address": "Dreamz Mall, Sector 4 / 7, Gurugram, Haryana - 122001",
+      "phone": "+91 98110 54101",
+      "email": "sl1.dreamz@specslook.com",
+      "timings": "Mon - Sun: 10:30 AM - 9:30 PM",
+      "features": [
+        "Flagship Optical Lounge",
+        "Comprehensive Zeiss Eye Exam",
+        "Custom Prescription Lens Lab",
+        "Complimentary Ultrasonic Cleaning"
+      ],
+      "image": "https://images.unsplash.com/photo-1555529771-835f59fc5efe?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "store-sl2",
+      "name": "SPECSLOOK SL2",
+      "city": "Gurugram",
+      "address": "Sec 5 Circle, Railway Road, Gurugram, Haryana - 122006",
+      "phone": "+91 98110 54102",
+      "email": "sl2.sec5@specslook.com",
+      "timings": "Mon - Sun: 10:30 AM - 9:30 PM",
+      "features": [
+        "Iconic Aviator & Wayfarer Vault",
+        "3D Facial Scanning & Fitting",
+        "Zero-Power Blue Cut Testing Bar",
+        "Same-Day Lens Dispensing"
+      ],
+      "image": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "store-sl3",
+      "name": "SPECSLOOK SL3",
+      "city": "Gurugram",
+      "address": "Sector 85, Multi-Brand Eyewear Boulevard, Gurugram, Haryana - 122004",
+      "phone": "+91 98110 54103",
+      "email": "sl3.sec85@specslook.com",
+      "timings": "Mon - Sun: 10:30 AM - 9:30 PM",
+      "features": [
+        "Handcrafted Titanium & Acetate Gallery",
+        "Certified Senior Optometrists",
+        "Polarized Glare Simulator",
+        "VIP Doorstep Trial Service"
+      ],
+      "image": "https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "store-sl4",
+      "name": "SPECSLOOK SL4",
+      "city": "Gurugram",
+      "address": "Sector 103, Dwarka Expressway Corridor, Gurugram, Haryana - 122006",
+      "phone": "+91 98110 54104",
+      "email": "sl4.sec103@specslook.com",
+      "timings": "Mon - Sun: 10:30 AM - 9:30 PM",
+      "features": [
+        "Express Precision Optical Lab",
+        "Junior Eyewear & Flexible Frames",
+        "High-Index Ultra-Thin Lenses",
+        "Contact Lens Solutions Bar"
+      ],
+      "image": "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "store-sl5",
+      "name": "SPECSLOOK SL5",
+      "city": "Gurugram",
+      "address": "Sector 89, New Gurugram Commercial Hub, Gurugram, Haryana - 122505",
+      "phone": "+91 98110 54105",
+      "email": "sl5.sec89@specslook.com",
+      "timings": "Mon - Sun: 10:30 AM - 9:30 PM",
+      "features": [
+        "Haute Eyewear & Solar Atelier",
+        "Computer Vision Eye Strain Clinic",
+        "Bespoke Laser Monogramming",
+        "Valet Parking Available"
+      ],
+      "image": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80"
+    }
+  ],
+  "blogs": [
+    {
+      "id": "blog-01",
+      "slug": "the-legendary-aviator-style-history",
+      "title": "The Legendary Aviator: From 1937 Cockpits to Modern Haute Couture",
+      "excerpt": "How military pilot requirements birthed the world’s most iconic eyewear silhouette that has transcended generations.",
+      "content": "The story of the Aviator began above the clouds. In the 1930s, as military aviation reached higher altitudes, pilots reported debilitating headaches and optical blindness caused by intense sunlight glare above cloud decks.\n\nIn response, optical engineers developed a revolutionary tear-drop shape designed to mimic the human eye socket's natural field of vision, preventing harsh rays from leaking past the perimeter. Coupled with emerald-green anti-glare crystal glass, the Aviator was officially born.\n\nDecades later, from General MacArthur to Hollywood cinematic royalty, the Aviator remains the quintessential symbol of courage, precision, and effortless elegance. At Specslook, we preserve this authentic legacy with hand-plated Monel frames and precision-calibrated mineral glass.",
+      "author": "Aarav Mehta",
+      "authorRole": "Head of Optical Heritage",
+      "publishedAt": "2026-08-28",
+      "readTime": "4 min read",
+      "image": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80",
+      "category": "Heritage & Design",
+      "tags": [
+        "Aviator",
+        "History",
+        "Style Guide",
+        "Ray-Ban Legacy"
+      ]
+    },
+    {
+      "id": "blog-02",
+      "slug": "polarized-vs-non-polarized-eyewear-guide",
+      "title": "Polarized vs. Standard Lenses: The Optical Science You Need to Know",
+      "excerpt": "Discover why standard dark tints only reduce brightness while polarized lenses eliminate blinding horizontal glare completely.",
+      "content": "Many assume that a darker sunglass lens automatically offers superior protection. In reality, standard dark lenses merely dim all incoming light uniformly—including the reflective glare bouncing off roads, water, snow, and windshields.\n\nPolarized lenses incorporate a microscopic chemical filter arranged vertically. Because glare is polarized horizontally when bouncing off flat surfaces, the vertical filter acts like a Venetian blind, blocking 99.9% of blinding reflections without diminishing sharpness or natural color tones.\n\nWhether you're navigating highway asphalt on bright afternoons or relaxing near coastal waters, polarized lenses reduce squinting, eradicate optical fatigue, and heighten contrast clarity.",
+      "author": "Dr. Neha Sharma",
+      "authorRole": "Lead Optometrist",
+      "publishedAt": "2026-09-02",
+      "readTime": "5 min read",
+      "image": "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=800&q=80",
+      "category": "Eye Health",
+      "tags": [
+        "Polarized",
+        "UV Protection",
+        "Driving Optics"
+      ]
+    },
+    {
+      "id": "blog-03",
+      "slug": "how-to-choose-frames-for-your-face-shape",
+      "title": "How to Choose the Perfect Eyewear Frame for Your Face Shape",
+      "excerpt": "A comprehensive rulebook for pairing Aviators, Wayfarers, Clubmasters and Round frames to flatter your facial contours.",
+      "content": "The golden rule of eyewear styling is contrast and proportion. The silhouette of your frames should counterbalance the natural contours of your face:\n\n1. Round Faces: Opt for angular frames with sharp geometry—such as Wayfarers, Square silhouettes, or Browline Clubmasters—which add definition and lengthen facial proportions.\n\n2. Square Jawlines: Soften strong angles with curved, circular, or teardrop Aviator profiles. Round Metal frames balance high cheekbones effortlessly.\n\n3. Oval Faces: Blessed with natural symmetry, oval faces look stunning in virtually any classic shape, especially Hexagonal flat lenses and classic Aviators.\n\n4. Heart Shapes: Frames that are slightly wider than your forehead, such as subtle Cat-Eye or light wire Aviators, draw harmonious balance downward.",
+      "author": "Kavita Roy",
+      "authorRole": "Fashion Director",
+      "publishedAt": "2026-09-08",
+      "readTime": "6 min read",
+      "image": "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=800&q=80",
+      "category": "Style & Trends",
+      "tags": [
+        "Face Shape",
+        "Wayfarer",
+        "Clubmaster",
+        "Fitting"
+      ]
+    }
+  ],
+  "banners": [
+    {
+      "id": "banner-01",
+      "title": "THE ICONIC COLLECTION",
+      "subtitle": "Legendary teardrop Aviators & handcrafted Wayfarers. Timeless Italian elegance reborn for the modern connoisseur.",
+      "badge": "SPECSLOOK HERITAGE",
+      "ctaText": "EXPLORE THE ICONS",
+      "ctaLink": "/shop?category=Sunglasses",
+      "image": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1600&q=85",
+      "alignment": "left",
+      "isActive": true,
+      "priority": 1
+    },
+    {
+      "id": "banner-02",
+      "title": "CHROMANCE POLARIZED",
+      "subtitle": "Eliminate glare. Elevate contrast. Experience hyper-vibrant color calibration engineered with aerospace Japanese Titanium.",
+      "badge": "ADVANCED OPTICS",
+      "ctaText": "DISCOVER POLARIZED",
+      "ctaLink": "/shop?category=Polarized",
+      "image": "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1600&q=85",
+      "alignment": "center",
+      "isActive": true,
+      "priority": 2
+    },
+    {
+      "id": "banner-03",
+      "title": "BLUE-CUT SCREEN SHIELD",
+      "subtitle": "Featherlight Japanese acetate frames with 40% HEV blue light filtration for modern coders, creators and leaders.",
+      "badge": "ALL-DAY COMFORT",
+      "ctaText": "SHOP EYEGLASSES",
+      "ctaLink": "/shop?category=Blue%20Light%20Blockers",
+      "image": "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1600&q=85",
+      "alignment": "left",
+      "isActive": true,
+      "priority": 3
+    }
+  ],
+  "customers": [
+    {
+      "id": "cust-01",
+      "name": "Rohan Malhotra",
+      "email": "rohan.malhotra@gmail.com",
+      "phone": "+91 98112 34567",
+      "city": "New Delhi",
+      "ordersCount": 2,
+      "totalSpent": 20980,
+      "lastOrderDate": "2026-09-08",
+      "createdAt": "2026-07-15"
+    },
+    {
+      "id": "cust-02",
+      "name": "Pooja Singhania",
+      "email": "pooja.s@outlook.com",
+      "phone": "+91 99201 88344",
+      "city": "Mumbai",
+      "ordersCount": 1,
+      "totalSpent": 9490,
+      "lastOrderDate": "2026-09-10",
+      "createdAt": "2026-08-01"
+    },
+    {
+      "id": "cust-03",
+      "name": "Vikramaditya Rao",
+      "email": "vikram.rao@techcorp.in",
+      "phone": "+91 97405 66789",
+      "city": "Bengaluru",
+      "ordersCount": 1,
+      "totalSpent": 14990,
+      "lastOrderDate": "2026-09-11",
+      "createdAt": "2026-08-20"
+    },
+    {
+      "id": "cust-mty2cim5",
+      "name": "Aryan Sharma",
+      "email": "aryan@example.com",
+      "phone": "9811223344",
+      "city": "Gurugram",
+      "ordersCount": 1,
+      "totalSpent": 8990,
+      "lastOrderDate": "2026-09-12",
+      "createdAt": "2026-09-12"
+    },
+    {
+      "id": "cust-mtzzf07z",
+      "name": "Honey Gogia",
+      "email": "info@specslook.com",
+      "phone": "+918368853448",
+      "city": "Gurugram",
+      "ordersCount": 1,
+      "totalSpent": 4089,
+      "lastOrderDate": "2026-09-13",
+      "createdAt": "2026-09-13"
+    }
+  ],
+  "reviews": [
+    {
+      "id": "rev-01",
+      "productId": "prod-001",
+      "customerName": "Siddharth Rao",
+      "rating": 5,
+      "title": "Unbelievable Ray-Ban feel and optical clarity",
+      "comment": "The gold plating is flawless and the G-15 crystal lenses make the harsh sun soothing while maintaining razor-sharp contrast. Feels identical to my heirloom pair from Milan.",
+      "verifiedPurchase": true,
+      "createdAt": "2026-08-20"
+    },
+    {
+      "id": "rev-02",
+      "productId": "prod-001",
+      "customerName": "Ananya Deshmukh",
+      "rating": 5,
+      "title": "Packaging is pure luxury",
+      "comment": "Arrived within 48 hours via BlueDart in a heavy magnetic gift box, velvet case, and microfiber cloth. Fits perfectly without sliding.",
+      "verifiedPurchase": true,
+      "createdAt": "2026-08-25"
+    },
+    {
+      "id": "rev-03",
+      "productId": "prod-002",
+      "customerName": "Kabir Varma",
+      "rating": 5,
+      "title": "The Italian acetate has serious heft",
+      "comment": "You can immediately tell this is real Mazzucchelli acetate, not cheap injection plastic. The hinges are 7-barrel solid metal. 10/10.",
+      "verifiedPurchase": true,
+      "createdAt": "2026-09-01"
+    }
+  ],
+  "admin": {
+    "id": "admin-01",
+    "username": "honeygogia",
+    "passwordSalt": "f3045f34c7f0e8cc4c63818378ea0109",
+    "passwordHash": "ec79771d29e00844ee8a048856b94f605e30e6410b892c8eec137a72af54719214cddaa08aec3d0addb9c77281323401c0ee4cbcb3d5addfd0ad91fa5333819a",
+    "role": "superadmin",
+    "name": "Honey Gogia",
+    "email": "honeygogia@specslook.com"
+  }
+}
