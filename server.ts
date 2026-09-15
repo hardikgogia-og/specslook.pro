@@ -840,18 +840,35 @@ app.get('/api/admin/stats', requireAdminAuth, (req: Request, res: Response) => {
   return res.json(dbService.getAdminStats());
 });
 
+// Root health check for Cloud Run health probes
+app.get('/health', (req: Request, res: Response) => {
+  return res.json({ status: 'ok', service: 'Specslook Eyewear API', timestamp: new Date().toISOString() });
+});
+
 // -------------------------------------------------------------
 // VITE MIDDLEWARE / PRODUCTION STATIC SERVING
 // -------------------------------------------------------------
 
 async function startServer() {
-  if (process.env.NODE_ENV !== 'production') {
-    const { createServer: createViteServer } = await import('vite');
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: 'spa'
-    });
-    app.use(vite.middlewares);
+  const isDistBundle = typeof __filename !== 'undefined' && __filename.includes('dist');
+  const isProduction = process.env.NODE_ENV === 'production' || isDistBundle;
+
+  if (!isProduction) {
+    try {
+      const { createServer: createViteServer } = await import('vite');
+      const vite = await createViteServer({
+        server: { middlewareMode: true },
+        appType: 'spa'
+      });
+      app.use(vite.middlewares);
+    } catch (err) {
+      console.warn('Vite dev middleware failed to load, falling back to static files:', err);
+      const distPath = path.join(process.cwd(), 'dist');
+      app.use(express.static(distPath));
+      app.get('*', (req: Request, res: Response) => {
+        res.sendFile(path.join(distPath, 'index.html'));
+      });
+    }
   } else {
     const distPath = path.join(process.cwd(), 'dist');
     app.use(express.static(distPath));
@@ -860,9 +877,28 @@ async function startServer() {
     });
   }
 
-  app.listen(PORT, '0.0.0.0', () => {
+  // Primary port 3000 required for AI Studio local reverse proxy
+  const primaryServer = app.listen(PORT, '0.0.0.0', () => {
     console.log(`Specslook Luxury Eyewear Server active on port ${PORT}`);
   });
+  primaryServer.on('error', (err: any) => {
+    if (err.code !== 'EADDRINUSE') {
+      console.error(`Server port ${PORT} error:`, err);
+    }
+  });
+
+  // Cloud Run / container environment port support (e.g. PORT=8080)
+  const envPort = process.env.PORT ? parseInt(process.env.PORT, 10) : null;
+  if (envPort && envPort !== PORT && !isNaN(envPort)) {
+    const cloudRunServer = app.listen(envPort, '0.0.0.0', () => {
+      console.log(`Specslook Luxury Eyewear Server also listening on Cloud Run port ${envPort}`);
+    });
+    cloudRunServer.on('error', (err: any) => {
+      if (err.code !== 'EADDRINUSE') {
+        console.error(`Cloud Run port ${envPort} error:`, err);
+      }
+    });
+  }
 }
 
 // In standalone/container environments, start the server.
