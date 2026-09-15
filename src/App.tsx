@@ -17,6 +17,7 @@ import { AboutView } from './views/AboutView.tsx';
 import { ContactView } from './views/ContactView.tsx';
 import { BlogView } from './views/BlogView.tsx';
 import { AdminView } from './views/AdminView.tsx';
+import { WhatsAppWidget } from './components/WhatsAppWidget.tsx';
 
 const AppContent: React.FC = () => {
   const { currentView, toastMessage } = useStore();
@@ -85,6 +86,9 @@ const AppContent: React.FC = () => {
 
       {/* Customer Footer (Hidden in Admin) */}
       {!isAdmin && <Footer />}
+
+      {/* Floating WhatsApp Orders Widget (+91 83688 53448) */}
+      {!isAdmin && <WhatsAppWidget phoneNumber="918368853448" />}
     </div>
   );
 };

@@ -2,7 +2,6 @@ import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import fs from 'fs';
 import cors from 'cors';
-import { createServer as createViteServer } from 'vite';
 import { dbService } from './src/server/db.ts';
 
 const app = express();
@@ -804,6 +803,7 @@ app.get('/api/admin/stats', requireAdminAuth, (req: Request, res: Response) => {
 
 async function startServer() {
   if (process.env.NODE_ENV !== 'production') {
+    const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa'

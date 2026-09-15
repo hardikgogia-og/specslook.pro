@@ -177,11 +177,13 @@ export interface OrderItem {
   productName: string;
   sku: string;
   variantName?: string;
-  image: string;
+  image?: string;
   price: number; // Unit price including lens add-on
   basePrice?: number; // Base frame price
   lensAddonName?: string;
   lensAddonPrice?: number;
+  selectedLensType?: string;
+  lensAddon?: LensAddon;
   quantity: number;
   total: number;
 }
@@ -219,7 +221,7 @@ export interface OptometristAppointment {
   appointmentDate: string; // YYYY-MM-DD
   timeSlot: string; // e.g. "11:00 AM - 12:00 PM"
   contactNumber: string;
-  status: 'Pending Confirmation' | 'Confirmed - Client Called' | 'Completed' | 'Cancelled';
+  status: 'Pending Confirmation' | 'Confirmed - Client Called' | 'Completed' | 'Cancelled' | 'Completed - Exam Done in Store' | string;
   calledAt?: string;
   callNotes?: string;
   specialInstructions?: string;

@@ -1,5 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Product, Category, CartItem, Order, Coupon, StoreLocation, BlogPost, Banner, ProductVariant, LensAddon } from '../types.ts';
+import {
+  initialProducts,
+  initialCategories,
+  initialStores,
+  initialBlogs,
+  initialBanners
+} from '../data/seedData.ts';
 
 export type AppView =
   | 'home'
@@ -37,6 +44,17 @@ interface StoreContextType {
   banners: Banner[];
   loadingData: boolean;
   refreshProducts: () => Promise<void>;
+
+  // Data Mutations (Admin & Store Sync)
+  addCategory: (category: Omit<Category, 'id'>) => Promise<Category>;
+  updateCategory: (id: string, updates: Partial<Category>) => Promise<Category | null>;
+  deleteCategory: (id: string) => Promise<boolean>;
+  addStore: (store: Omit<StoreLocation, 'id'>) => Promise<StoreLocation>;
+  updateStore: (id: string, updates: Partial<StoreLocation>) => Promise<StoreLocation | null>;
+  deleteStore: (id: string) => Promise<boolean>;
+  addProduct: (product: Omit<Product, 'id'>) => Promise<Product>;
+  updateProduct: (id: string, updates: Partial<Product>) => Promise<Product | null>;
+  deleteProduct: (id: string) => Promise<boolean>;
 
   // Cart
   cart: CartItem[];
@@ -87,13 +105,63 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [currentView, setCurrentView] = useState<AppView>('home');
   const [viewParams, setViewParams] = useState<Record<string, any>>({});
 
-  // Data
-  const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [stores, setStores] = useState<StoreLocation[]>([]);
-  const [blogs, setBlogs] = useState<BlogPost[]>([]);
-  const [banners, setBanners] = useState<Banner[]>([]);
-  const [loadingData, setLoadingData] = useState<boolean>(true);
+  // Data initialized with fallback seed data for instant Vercel/offline reliability
+  const [products, setProducts] = useState<Product[]>(() => {
+    try {
+      const saved = localStorage.getItem('specslook_products');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch {}
+    return initialProducts;
+  });
+
+  const [categories, setCategories] = useState<Category[]>(() => {
+    try {
+      const saved = localStorage.getItem('specslook_categories');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch {}
+    return initialCategories;
+  });
+
+  const [stores, setStores] = useState<StoreLocation[]>(() => {
+    try {
+      const saved = localStorage.getItem('specslook_stores');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch {}
+    return initialStores;
+  });
+
+  const [blogs, setBlogs] = useState<BlogPost[]>(() => {
+    try {
+      const saved = localStorage.getItem('specslook_blogs');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch {}
+    return initialBlogs;
+  });
+
+  const [banners, setBanners] = useState<Banner[]>(() => {
+    try {
+      const saved = localStorage.getItem('specslook_banners');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch {}
+    return initialBanners;
+  });
+
+  const [loadingData, setLoadingData] = useState<boolean>(false);
 
   // Cart & Wishlist from localStorage
   const [cart, setCart] = useState<CartItem[]>(() => {
@@ -167,25 +235,60 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   }, [wishlist]);
 
-  // Fetch initial data
+  // Fetch initial data with resilient fallback
   const fetchData = async () => {
     setLoadingData(true);
     try {
-      const [pRes, cRes, sRes, bRes, bnRes] = await Promise.all([
-        fetch('/api/products'),
-        fetch('/api/categories'),
-        fetch('/api/stores'),
-        fetch('/api/blogs'),
-        fetch('/api/banners')
+      const [pRes, cRes, sRes, bRes, bnRes] = await Promise.allSettled([
+        fetch('/api/products').then(async r => {
+          if (!r.ok) return null;
+          const data = await r.json();
+          return Array.isArray(data) ? data : null;
+        }),
+        fetch('/api/categories').then(async r => {
+          if (!r.ok) return null;
+          const data = await r.json();
+          return Array.isArray(data) ? data : null;
+        }),
+        fetch('/api/stores').then(async r => {
+          if (!r.ok) return null;
+          const data = await r.json();
+          return Array.isArray(data) ? data : null;
+        }),
+        fetch('/api/blogs').then(async r => {
+          if (!r.ok) return null;
+          const data = await r.json();
+          return Array.isArray(data) ? data : null;
+        }),
+        fetch('/api/banners').then(async r => {
+          if (!r.ok) return null;
+          const data = await r.json();
+          return Array.isArray(data) ? data : null;
+        })
       ]);
 
-      if (pRes.ok) setProducts(await pRes.json());
-      if (cRes.ok) setCategories(await cRes.json());
-      if (sRes.ok) setStores(await sRes.json());
-      if (bRes.ok) setBlogs(await bRes.json());
-      if (bnRes.ok) setBanners(await bnRes.json());
+      if (pRes.status === 'fulfilled' && pRes.value && pRes.value.length > 0) {
+        setProducts(pRes.value);
+        try { localStorage.setItem('specslook_products', JSON.stringify(pRes.value)); } catch {}
+      }
+      if (cRes.status === 'fulfilled' && cRes.value && cRes.value.length > 0) {
+        setCategories(cRes.value);
+        try { localStorage.setItem('specslook_categories', JSON.stringify(cRes.value)); } catch {}
+      }
+      if (sRes.status === 'fulfilled' && sRes.value && sRes.value.length > 0) {
+        setStores(sRes.value);
+        try { localStorage.setItem('specslook_stores', JSON.stringify(sRes.value)); } catch {}
+      }
+      if (bRes.status === 'fulfilled' && bRes.value && bRes.value.length > 0) {
+        setBlogs(bRes.value);
+        try { localStorage.setItem('specslook_blogs', JSON.stringify(bRes.value)); } catch {}
+      }
+      if (bnRes.status === 'fulfilled' && bnRes.value && bnRes.value.length > 0) {
+        setBanners(bnRes.value);
+        try { localStorage.setItem('specslook_banners', JSON.stringify(bnRes.value)); } catch {}
+      }
     } catch (err) {
-      console.error('Error fetching store data:', err);
+      console.warn('StoreContext: network fetch failed, continuing with cached/seed data:', err);
     } finally {
       setLoadingData(false);
     }
@@ -411,6 +514,264 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     showToast('Logged out of Admin Portal', 'info');
   };
 
+  // Category Mutations (Syncs with server when online, persists locally)
+  const addCategory = async (catData: Omit<Category, 'id'>): Promise<Category> => {
+    const newCat: Category = {
+      ...catData,
+      id: `cat-${Date.now().toString(36)}`
+    };
+    try {
+      if (adminToken) {
+        const res = await fetch('/api/categories', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${adminToken}`
+          },
+          body: JSON.stringify(catData)
+        });
+        if (res.ok) {
+          const created = await res.json();
+          setCategories(prev => {
+            const next = [...prev, created];
+            try { localStorage.setItem('specslook_categories', JSON.stringify(next)); } catch {}
+            return next;
+          });
+          return created;
+        }
+      }
+    } catch {
+      console.warn('Category saved locally (offline sync)');
+    }
+    setCategories(prev => {
+      const next = [...prev, newCat];
+      try { localStorage.setItem('specslook_categories', JSON.stringify(next)); } catch {}
+      return next;
+    });
+    return newCat;
+  };
+
+  const updateCategory = async (id: string, updates: Partial<Category>): Promise<Category | null> => {
+    try {
+      if (adminToken) {
+        await fetch(`/api/categories/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${adminToken}`
+          },
+          body: JSON.stringify(updates)
+        });
+      }
+    } catch {
+      console.warn('Category updated locally (offline sync)');
+    }
+    let updated: Category | null = null;
+    setCategories(prev => {
+      const next = prev.map(c => {
+        if (c.id === id) {
+          updated = { ...c, ...updates };
+          return updated;
+        }
+        return c;
+      });
+      try { localStorage.setItem('specslook_categories', JSON.stringify(next)); } catch {}
+      return next;
+    });
+    return updated;
+  };
+
+  const deleteCategory = async (id: string): Promise<boolean> => {
+    try {
+      if (adminToken) {
+        await fetch(`/api/categories/${id}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': `Bearer ${adminToken}` }
+        });
+      }
+    } catch {
+      console.warn('Category deleted locally (offline sync)');
+    }
+    setCategories(prev => {
+      const next = prev.filter(c => c.id !== id);
+      try { localStorage.setItem('specslook_categories', JSON.stringify(next)); } catch {}
+      return next;
+    });
+    return true;
+  };
+
+  // Store Mutations (Syncs with server when online, persists locally)
+  const addStore = async (storeData: Omit<StoreLocation, 'id'>): Promise<StoreLocation> => {
+    const newStore: StoreLocation = {
+      ...storeData,
+      id: `store-${Date.now().toString(36)}`
+    };
+    try {
+      if (adminToken) {
+        const res = await fetch('/api/stores', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${adminToken}`
+          },
+          body: JSON.stringify(storeData)
+        });
+        if (res.ok) {
+          const created = await res.json();
+          setStores(prev => {
+            const next = [...prev, created];
+            try { localStorage.setItem('specslook_stores', JSON.stringify(next)); } catch {}
+            return next;
+          });
+          return created;
+        }
+      }
+    } catch {
+      console.warn('Store saved locally (offline sync)');
+    }
+    setStores(prev => {
+      const next = [...prev, newStore];
+      try { localStorage.setItem('specslook_stores', JSON.stringify(next)); } catch {}
+      return next;
+    });
+    return newStore;
+  };
+
+  const updateStore = async (id: string, updates: Partial<StoreLocation>): Promise<StoreLocation | null> => {
+    try {
+      if (adminToken) {
+        await fetch(`/api/stores/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${adminToken}`
+          },
+          body: JSON.stringify(updates)
+        });
+      }
+    } catch {
+      console.warn('Store updated locally (offline sync)');
+    }
+    let updated: StoreLocation | null = null;
+    setStores(prev => {
+      const next = prev.map(s => {
+        if (s.id === id) {
+          updated = { ...s, ...updates };
+          return updated;
+        }
+        return s;
+      });
+      try { localStorage.setItem('specslook_stores', JSON.stringify(next)); } catch {}
+      return next;
+    });
+    return updated;
+  };
+
+  const deleteStore = async (id: string): Promise<boolean> => {
+    try {
+      if (adminToken) {
+        await fetch(`/api/stores/${id}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': `Bearer ${adminToken}` }
+        });
+      }
+    } catch {
+      console.warn('Store deleted locally (offline sync)');
+    }
+    setStores(prev => {
+      const next = prev.filter(s => s.id !== id);
+      try { localStorage.setItem('specslook_stores', JSON.stringify(next)); } catch {}
+      return next;
+    });
+    return true;
+  };
+
+  // Product Mutations (Syncs with server when online, persists locally)
+  const addProduct = async (prodData: Omit<Product, 'id'>): Promise<Product> => {
+    const newProd: Product = {
+      ...prodData,
+      id: `prod-${Date.now().toString(36)}`
+    };
+    try {
+      if (adminToken) {
+        const res = await fetch('/api/products', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${adminToken}`
+          },
+          body: JSON.stringify(prodData)
+        });
+        if (res.ok) {
+          const created = await res.json();
+          setProducts(prev => {
+            const next = [created, ...prev];
+            try { localStorage.setItem('specslook_products', JSON.stringify(next)); } catch {}
+            return next;
+          });
+          return created;
+        }
+      }
+    } catch {
+      console.warn('Product saved locally (offline sync)');
+    }
+    setProducts(prev => {
+      const next = [newProd, ...prev];
+      try { localStorage.setItem('specslook_products', JSON.stringify(next)); } catch {}
+      return next;
+    });
+    return newProd;
+  };
+
+  const updateProduct = async (id: string, updates: Partial<Product>): Promise<Product | null> => {
+    try {
+      if (adminToken) {
+        await fetch(`/api/products/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${adminToken}`
+          },
+          body: JSON.stringify(updates)
+        });
+      }
+    } catch {
+      console.warn('Product updated locally (offline sync)');
+    }
+    let updated: Product | null = null;
+    setProducts(prev => {
+      const next = prev.map(p => {
+        if (p.id === id) {
+          updated = { ...p, ...updates };
+          return updated;
+        }
+        return p;
+      });
+      try { localStorage.setItem('specslook_products', JSON.stringify(next)); } catch {}
+      return next;
+    });
+    return updated;
+  };
+
+  const deleteProduct = async (id: string): Promise<boolean> => {
+    try {
+      if (adminToken) {
+        await fetch(`/api/products/${id}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': `Bearer ${adminToken}` }
+        });
+      }
+    } catch {
+      console.warn('Product deleted locally (offline sync)');
+    }
+    setProducts(prev => {
+      const next = prev.filter(p => p.id !== id);
+      try { localStorage.setItem('specslook_products', JSON.stringify(next)); } catch {}
+      return next;
+    });
+    return true;
+  };
+
   return (
     <StoreContext.Provider
       value={{
@@ -424,6 +785,15 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         banners,
         loadingData,
         refreshProducts: fetchData,
+        addCategory,
+        updateCategory,
+        deleteCategory,
+        addStore,
+        updateStore,
+        deleteStore,
+        addProduct,
+        updateProduct,
+        deleteProduct,
         cart,
         isCartOpen,
         setIsCartOpen,
