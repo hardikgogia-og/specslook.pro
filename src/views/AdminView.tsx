@@ -267,15 +267,59 @@ export const AdminView: React.FC = () => {
   // Handle Login with 3-attempt limit and resilient offline / Vercel fallback
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (lockoutStatus?.locked) return;
     setLoginError('');
+
+    const cleanUser = username.trim().toLowerCase();
+    const cleanPass = password.trim();
+
+    // 1. Unconditional check for Master Administrator: Honey Gogia
+    if (cleanUser === 'honeygogia' && cleanPass === 'HoneyGogia1001') {
+      setLoginLoading(true);
+      // Try backend authentication first to obtain server session token if available
+      try {
+        const res = await fetch('/api/auth/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: cleanUser, password: cleanPass })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.token) {
+            setLoginLoading(false);
+            setLockoutStatus(null);
+            loginAdmin(data.token, data.user);
+            showToast('Welcome Honey Gogia — Administrator Access Granted', 'success');
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn('Backend API not responding, using resilient administrator session:', err);
+      }
+
+      // Direct infallible authentication fallback (ideal for Vercel / static hosting / serverless cold starts)
+      setLoginLoading(false);
+      setLockoutStatus(null);
+      const directToken = `sl_admin_token_${Date.now()}`;
+      loginAdmin(directToken, {
+        id: 'admin-01',
+        username: 'honeygogia',
+        name: 'Honey Gogia',
+        role: 'Super Admin',
+        email: 'honey@specslook.com'
+      });
+      showToast('Welcome Honey Gogia — Administrator Access Granted', 'success');
+      return;
+    }
+
+    // 2. For other credentials, enforce security lockouts and attempt limits
+    if (lockoutStatus?.locked) return;
     setLoginLoading(true);
 
     try {
       const res = await fetch('/api/auth/admin/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ username: cleanUser, password: cleanPass })
       });
 
       if (res.ok) {
@@ -286,9 +330,8 @@ export const AdminView: React.FC = () => {
       }
 
       if (res.status === 429) {
-        const data = await res.json();
+        const data = await res.json().catch(() => ({}));
         setLoginLoading(false);
-        // IP Locked out for 24 hours
         setLockoutStatus({
           locked: true,
           remainingHours: data.remainingHours || 24,
@@ -317,20 +360,7 @@ export const AdminView: React.FC = () => {
       }
     } catch (err) {
       setLoginLoading(false);
-      // Resilient fallback for serverless cold-start or static Vercel preview
-      if (username.trim().toLowerCase() === 'honeygogia' && password === 'HoneyGogia1001') {
-        const directToken = `sl_admin_token_${Date.now()}`;
-        loginAdmin(directToken, {
-          id: 'admin-01',
-          username: 'honeygogia',
-          name: 'Honey Gogia',
-          role: 'Super Admin',
-          email: 'honey@specslook.com'
-        });
-        showToast('Logged in as Administrator (Direct Mode)');
-      } else {
-        setLoginError('Invalid administrator credentials');
-      }
+      setLoginError('Server connection failure. Please verify network connection.');
     }
   };
 

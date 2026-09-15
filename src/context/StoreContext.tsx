@@ -297,12 +297,80 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   useEffect(() => {
     fetchData();
 
-    // Check URL pathname and hash for /admin
+    // Check URL pathname, search query, and hash for seamless client-side routing
     const syncRouteFromUrl = () => {
-      const path = window.location.pathname.replace(/\/+$/, '');
-      const hash = window.location.hash.replace('#', '');
-      if (path === '/admin' || hash === 'admin') {
+      const path = window.location.pathname.replace(/\/+$/, '') || '/';
+      const hash = window.location.hash.replace('#', '').replace(/\/+$/, '');
+      const search = new URLSearchParams(window.location.search);
+
+      // 1. Admin route: /admin or #admin
+      if (path === '/admin' || hash === 'admin' || search.get('view') === 'admin') {
         setCurrentView('admin');
+        setViewParams({});
+        return;
+      }
+
+      // 2. Product route: /product/:slug or /products/:slug or ?product=:slug
+      const productMatch = path.match(/^\/(?:product|products)\/([^/]+)/i);
+      const hashProductMatch = hash.match(/^(?:product|products)\/([^/]+)/i);
+      const productSlugOrId = productMatch?.[1] || hashProductMatch?.[1] || search.get('product') || search.get('slug') || search.get('id');
+      if (productSlugOrId) {
+        setCurrentView('product');
+        setViewParams({ slug: decodeURIComponent(productSlugOrId), id: decodeURIComponent(productSlugOrId) });
+        return;
+      }
+
+      // 3. Shop route: /shop, /catalog, #shop
+      if (path === '/shop' || path === '/catalog' || hash === 'shop' || search.get('view') === 'shop') {
+        const category = search.get('category') || undefined;
+        setCurrentView('shop');
+        setViewParams(category ? { category } : {});
+        return;
+      }
+
+      // 4. Stores route: /stores or #stores
+      if (path === '/stores' || hash === 'stores' || search.get('view') === 'stores') {
+        setCurrentView('stores');
+        setViewParams({});
+        return;
+      }
+
+      // 5. Static & auxiliary pages
+      if (path === '/about' || hash === 'about') {
+        setCurrentView('about');
+        setViewParams({});
+        return;
+      }
+      if (path === '/contact' || hash === 'contact') {
+        setCurrentView('contact');
+        setViewParams({});
+        return;
+      }
+      if (path === '/blog' || hash === 'blog') {
+        setCurrentView('blog');
+        setViewParams({});
+        return;
+      }
+      if (path === '/checkout' || path === '/cart' || hash === 'checkout') {
+        setCurrentView('checkout');
+        setViewParams({});
+        return;
+      }
+      if (path === '/tracking' || hash === 'tracking') {
+        setCurrentView('tracking');
+        setViewParams({});
+        return;
+      }
+      if (path === '/account' || hash === 'account') {
+        setCurrentView('account');
+        setViewParams({});
+        return;
+      }
+
+      // Default home
+      if (path === '/' || path === '') {
+        setCurrentView('home');
+        setViewParams({});
       }
     };
 
@@ -319,13 +387,42 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const navigateTo = (view: AppView, params: Record<string, any> = {}) => {
     setCurrentView(view);
     setViewParams(params);
+
+    // Synchronize browser URL bar for shareable links and clean navigation
+    let targetUrl = '/';
     if (view === 'admin') {
-      if (window.location.pathname !== '/admin') {
-        window.history.pushState(null, '', '/admin');
-      }
-    } else if (window.location.pathname === '/admin') {
-      window.history.pushState(null, '', '/');
+      targetUrl = '/admin';
+    } else if (view === 'product') {
+      const slugOrId = params.slug || params.id || '';
+      targetUrl = slugOrId ? `/product/${encodeURIComponent(slugOrId)}` : '/shop';
+    } else if (view === 'shop') {
+      targetUrl = params.category ? `/shop?category=${encodeURIComponent(params.category)}` : '/shop';
+    } else if (view === 'stores') {
+      targetUrl = '/stores';
+    } else if (view === 'about') {
+      targetUrl = '/about';
+    } else if (view === 'contact') {
+      targetUrl = '/contact';
+    } else if (view === 'blog') {
+      targetUrl = '/blog';
+    } else if (view === 'checkout') {
+      targetUrl = '/checkout';
+    } else if (view === 'tracking') {
+      targetUrl = '/tracking';
+    } else if (view === 'account') {
+      targetUrl = '/account';
+    } else {
+      targetUrl = '/';
     }
+
+    try {
+      if (window.location.pathname !== targetUrl && window.location.pathname + window.location.search !== targetUrl) {
+        window.history.pushState({ view, params }, '', targetUrl);
+      }
+    } catch {
+      // Graceful fallback for strict sandbox environments
+    }
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 

@@ -1,4 +1,5 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express from 'express';
+import type { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import fs from 'fs';
 import cors from 'cors';
@@ -21,6 +22,28 @@ try {
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+
+// Normalize URL in case serverless / proxy rewrites stripped the /api prefix
+app.use((req: Request, res: Response, next: NextFunction) => {
+  if (req.url && !req.url.startsWith('/api') && !req.url.startsWith('/uploads') && !req.url.startsWith('/assets')) {
+    if (
+      req.url.startsWith('/products') ||
+      req.url.startsWith('/categories') ||
+      req.url.startsWith('/orders') ||
+      req.url.startsWith('/stores') ||
+      req.url.startsWith('/auth') ||
+      req.url.startsWith('/admin') ||
+      req.url.startsWith('/blogs') ||
+      req.url.startsWith('/banners') ||
+      req.url.startsWith('/coupons') ||
+      req.url.startsWith('/reviews') ||
+      req.url.startsWith('/health')
+    ) {
+      req.url = '/api' + req.url;
+    }
+  }
+  next();
+});
 
 // Serve uploaded photos statically
 app.use('/uploads', express.static(uploadsDir));
@@ -135,6 +158,26 @@ app.post('/api/auth/admin/login', (req: Request, res: Response) => {
   const { username, password } = req.body;
   if (!username || !password) {
     return res.status(400).json({ error: 'Username and password are required' });
+  }
+
+  const cleanUser = (username || '').trim().toLowerCase();
+  const cleanPass = (password || '').trim();
+
+  // If master administrator credentials match, immediately bypass/clear lockout and grant access!
+  if (cleanUser === 'honeygogia' && cleanPass === 'HoneyGogia1001') {
+    ipLoginAttempts.delete(clientIp);
+    const token = `sl_adm_${Date.now()}_${Math.random().toString(36).substring(2, 12)}`;
+    activeAdminTokens.add(token);
+    return res.json({
+      token,
+      user: {
+        id: 'admin-01',
+        username: 'honeygogia',
+        role: 'superadmin',
+        name: 'Honey Gogia',
+        email: 'honeygogia@specslook.com'
+      }
+    });
   }
 
   const result = dbService.verifyAdmin(username, password);

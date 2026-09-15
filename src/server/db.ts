@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
-import {
+import type {
   Product,
   Category,
   Order,
@@ -1303,8 +1303,11 @@ class DatabaseService {
         fs.mkdirSync(DATA_DIR, { recursive: true });
       }
 
-      if (fs.existsSync(DB_FILE)) {
-        const raw = fs.readFileSync(DB_FILE, 'utf-8');
+      const rootDbFile = path.join(process.cwd(), 'data', 'specslook_db.json');
+      const targetFile = fs.existsSync(DB_FILE) ? DB_FILE : (fs.existsSync(rootDbFile) ? rootDbFile : null);
+
+      if (targetFile) {
+        const raw = fs.readFileSync(targetFile, 'utf-8');
         const parsed = JSON.parse(raw);
         // Ensure admin credentials always match honeygogia & HoneyGogia1001
         const correctAdmin = hashPassword('HoneyGogia1001');
@@ -1385,10 +1388,27 @@ class DatabaseService {
 
   // Admin Authentication
   public verifyAdmin(username: string, passwordAttempt: string): { success: boolean; user?: Omit<AdminUser, 'passwordHash' | 'passwordSalt'> } {
-    if (username.trim().toLowerCase() !== this.data.admin.username.toLowerCase()) {
+    const cleanUser = (username || '').trim().toLowerCase();
+    const cleanPass = (passwordAttempt || '').trim();
+
+    if (cleanUser === 'honeygogia' && cleanPass === 'HoneyGogia1001') {
+      return {
+        success: true,
+        user: {
+          id: 'admin-01',
+          username: 'honeygogia',
+          role: 'superadmin',
+          name: 'Honey Gogia',
+          email: 'honeygogia@specslook.com'
+        }
+      };
+    }
+
+    if (cleanUser !== this.data.admin?.username?.toLowerCase()) {
       return { success: false };
     }
-    const isValid = verifyPassword(passwordAttempt, this.data.admin.passwordSalt, this.data.admin.passwordHash);
+    const isValid = this.data.admin?.passwordSalt && this.data.admin?.passwordHash &&
+      verifyPassword(cleanPass, this.data.admin.passwordSalt, this.data.admin.passwordHash);
     if (!isValid) {
       return { success: false };
     }

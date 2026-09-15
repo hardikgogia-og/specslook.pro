@@ -22,7 +22,7 @@ import { useStore } from '../context/StoreContext.tsx';
 import { ProductCard } from '../components/ProductCard.tsx';
 
 export const ProductDetailView: React.FC = () => {
-  const { viewParams, navigateTo, addToCart, toggleWishlist, isInWishlist, showToast, setIsCartOpen } = useStore();
+  const { products, viewParams, navigateTo, addToCart, toggleWishlist, isInWishlist, showToast, setIsCartOpen } = useStore();
 
   const [product, setProduct] = useState<Product | null>(null);
   const [reviews, setReviews] = useState<Review[]>([]);
@@ -43,66 +43,114 @@ export const ProductDetailView: React.FC = () => {
   const [reviewerComment, setReviewerComment] = useState('');
   const [submittingReview, setSubmittingReview] = useState(false);
 
-  const identifier = viewParams.id || viewParams.slug;
+  // Helper to resolve lens add-on based on category
+  const getInitialAddon = (catName?: string) => {
+    const isAtt = Boolean(catName && (catName.toLowerCase().includes('attachment') || catName.toLowerCase().includes('clip')));
+    const isSun = Boolean(catName && catName.toLowerCase().includes('sunglass'));
+    const isEye = Boolean(catName && catName.toLowerCase().includes('eyeglass'));
+    if (isAtt) return ATTACHMENT_LENS_ADDONS[0];
+    if (isSun) return SUNGLASS_LENS_ADDONS[0];
+    if (isEye) return EYEGLASS_LENS_ADDONS[0];
+    return {
+      id: 'none',
+      name: 'Standard Option',
+      price: 0,
+      description: 'Standard product option',
+      features: []
+    };
+  };
 
   useEffect(() => {
-    let activeTarget = identifier;
-    setLoading(true);
+    // 1. Determine target identifier from viewParams, window pathname, search params, or hash
+    let target = (viewParams.slug || viewParams.id || '').toString().trim();
 
-    const loadProduct = async () => {
-      try {
-        if (!activeTarget) {
-          // Fallback to the first product in catalog so product page is always available
-          const resList = await fetch('/api/products');
-          const list = await resList.json();
-          if (list && list.length > 0) {
-            activeTarget = list[0].slug || list[0].id;
-          } else {
-            activeTarget = 'prod-001';
+    if (!target && typeof window !== 'undefined') {
+      const path = window.location.pathname;
+      const match = path.match(/^\/(?:product|products)\/([^/]+)/i);
+      if (match && match[1]) {
+        target = decodeURIComponent(match[1].trim());
+      } else {
+        const search = new URLSearchParams(window.location.search);
+        const qTarget = search.get('product') || search.get('slug') || search.get('id');
+        if (qTarget) {
+          target = decodeURIComponent(qTarget.trim());
+        } else {
+          const hash = window.location.hash.replace('#', '');
+          const hashMatch = hash.match(/^(?:product|products)\/([^/]+)/i);
+          if (hashMatch && hashMatch[1]) {
+            target = decodeURIComponent(hashMatch[1].trim());
           }
         }
-
-        const res = await fetch(`/api/products/${activeTarget}`);
-        const data = await res.json();
-        if (data.product) {
-          setProduct(data.product);
-          setReviews(data.reviews || []);
-          setRelated(data.related || []);
-          setSelectedVariantIndex(0);
-          setActiveImageIndex(0);
-          const isAtt = Boolean(
-            data.product.category && (
-              data.product.category.toLowerCase().includes('attachment') ||
-              data.product.category.toLowerCase().includes('clip')
-            )
-          );
-          const isSun = Boolean(data.product.category && data.product.category.toLowerCase().includes('sunglass'));
-          const isEye = Boolean(data.product.category && data.product.category.toLowerCase().includes('eyeglass'));
-          if (isAtt) {
-            setSelectedLensAddon(ATTACHMENT_LENS_ADDONS[0]);
-          } else if (isSun) {
-            setSelectedLensAddon(SUNGLASS_LENS_ADDONS[0]);
-          } else if (isEye) {
-            setSelectedLensAddon(EYEGLASS_LENS_ADDONS[0]);
-          } else {
-            setSelectedLensAddon({
-              id: 'none',
-              name: 'Standard Option',
-              price: 0,
-              description: 'Standard product option',
-              features: []
-            });
-          }
-        }
-      } catch (err) {
-        console.error('Failed to load product:', err);
-      } finally {
-        setLoading(false);
       }
-    };
+    }
 
-    loadProduct();
-  }, [identifier]);
+    // 2. Find product directly in memory from StoreContext (instant, offline, resilient)
+    let found: Product | undefined;
+    if (products && products.length > 0) {
+      if (target) {
+        const lowerTarget = target.toLowerCase();
+        found = products.find(p =>
+          p.slug.toLowerCase() === lowerTarget ||
+          p.id.toLowerCase() === lowerTarget ||
+          (p.sku && p.sku.toLowerCase() === lowerTarget)
+        );
+
+        // Fuzzy fallback if exact slug didn't match
+        if (!found) {
+          found = products.find(p =>
+            p.slug.toLowerCase().includes(lowerTarget) ||
+            lowerTarget.includes(p.slug.toLowerCase()) ||
+            p.name.toLowerCase().includes(lowerTarget)
+          );
+        }
+      }
+
+      // If still not matched, fallback to first catalog product so page NEVER renders empty/broken
+      if (!found) {
+        found = products[0];
+      }
+    }
+
+    if (found) {
+      setProduct(found);
+      setSelectedVariantIndex(0);
+      setActiveImageIndex(0);
+      setSelectedLensAddon(getInitialAddon(found.category));
+      setRelated(products.filter(p => p.id !== found!.id && (p.category === found!.category || p.brand === found!.brand)).slice(0, 4));
+      setLoading(false);
+    }
+
+    // 3. Attempt background fetch to get latest database updates or user reviews
+    const fetchTarget = target || found?.slug || found?.id;
+    if (fetchTarget) {
+      fetch(`/api/products/${encodeURIComponent(fetchTarget)}`)
+        .then(async res => {
+          if (!res.ok) return null;
+          const contentType = res.headers.get('content-type') || '';
+          if (!contentType.includes('application/json')) return null;
+          return res.json();
+        })
+        .then(data => {
+          if (data && data.product) {
+            setProduct(data.product);
+            if (data.reviews && data.reviews.length > 0) {
+              setReviews(data.reviews);
+            }
+            if (data.related && data.related.length > 0) {
+              setRelated(data.related);
+            }
+          }
+        })
+        .catch(err => {
+          console.warn('Background product sync: using client memory catalog:', err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } else {
+      setLoading(false);
+    }
+  }, [viewParams.id, viewParams.slug, products]);
 
   if (loading) {
     return (
