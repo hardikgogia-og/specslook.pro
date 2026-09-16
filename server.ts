@@ -23,23 +23,46 @@ app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
-// Normalize URL in case serverless / proxy rewrites stripped the /api prefix
+// Security and encryption headers
 app.use((req: Request, res: Response, next: NextFunction) => {
-  if (req.url && !req.url.startsWith('/api') && !req.url.startsWith('/uploads') && !req.url.startsWith('/assets')) {
-    if (
-      req.url.startsWith('/products') ||
-      req.url.startsWith('/categories') ||
-      req.url.startsWith('/orders') ||
-      req.url.startsWith('/stores') ||
-      req.url.startsWith('/auth') ||
-      req.url.startsWith('/admin') ||
-      req.url.startsWith('/blogs') ||
-      req.url.startsWith('/banners') ||
-      req.url.startsWith('/coupons') ||
-      req.url.startsWith('/reviews') ||
-      req.url.startsWith('/health')
-    ) {
-      req.url = '/api' + req.url;
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  if (req.secure || req.headers['x-forwarded-proto'] === 'https') {
+    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+  }
+  next();
+});
+
+// Normalize URL in case serverless / proxy rewrites stripped the /api prefix or redirected through /api/index
+app.use((req: Request, res: Response, next: NextFunction) => {
+  const matchedPath = (req.headers['x-matched-path'] || req.headers['x-vercel-matched-path']) as string | undefined;
+  if (matchedPath && matchedPath.startsWith('/api')) {
+    req.url = matchedPath;
+  } else if (req.url) {
+    if (req.url.startsWith('/api/index/')) {
+      req.url = req.url.replace(/^\/api\/index/, '/api');
+    } else if (req.url === '/api/index' && req.query && typeof req.query.path === 'string') {
+      req.url = '/api/' + req.query.path;
+    }
+
+    if (!req.url.startsWith('/api') && !req.url.startsWith('/uploads') && !req.url.startsWith('/assets')) {
+      if (
+        req.url.startsWith('/products') ||
+        req.url.startsWith('/categories') ||
+        req.url.startsWith('/orders') ||
+        req.url.startsWith('/stores') ||
+        req.url.startsWith('/auth') ||
+        req.url.startsWith('/admin') ||
+        req.url.startsWith('/blogs') ||
+        req.url.startsWith('/banners') ||
+        req.url.startsWith('/coupons') ||
+        req.url.startsWith('/reviews') ||
+        req.url.startsWith('/health')
+      ) {
+        req.url = '/api' + req.url;
+      }
     }
   }
   next();
@@ -843,6 +866,22 @@ app.get('/api/admin/stats', requireAdminAuth, (req: Request, res: Response) => {
 // Root health check for Cloud Run health probes
 app.get('/health', (req: Request, res: Response) => {
   return res.json({ status: 'ok', service: 'Specslook Eyewear API', timestamp: new Date().toISOString() });
+});
+
+// Custom 404 handler for API routes to ALWAYS return JSON instead of HTML
+app.all('/api/*', (req: Request, res: Response) => {
+  return res.status(404).json({ error: `API endpoint ${req.method} ${req.originalUrl || req.url} not found` });
+});
+
+// Global error handler to ALWAYS return JSON instead of HTML on unhandled exceptions
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  console.error('Unhandled server error on request:', req.method, req.url, err);
+  if (!res.headersSent) {
+    return res.status(500).json({
+      error: err?.message || 'An internal server error occurred while processing your request'
+    });
+  }
+  next(err);
 });
 
 // -------------------------------------------------------------

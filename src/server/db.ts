@@ -1054,15 +1054,23 @@ class DatabaseService {
     const shippingFee = subtotal >= 999 ? 0 : 199;
     const total = Math.max(0, subtotal - discount + shippingFee);
 
-    // Decrement stock
+    if (!orderInput.customer) {
+      throw new Error('Customer information is required');
+    }
+
+    if (!Array.isArray(orderInput.items) || orderInput.items.length === 0) {
+      throw new Error('Order items are required');
+    }
+
+    // Decrement stock safely
     orderInput.items.forEach(item => {
       const product = this.getProductByIdOrSlug(item.productId);
       if (product) {
-        product.stock = Math.max(0, product.stock - item.quantity);
-        if (item.sku) {
-          const variant = product.variants.find(v => v.sku === item.sku);
+        product.stock = Math.max(0, (product.stock || 0) - (item.quantity || 1));
+        if (item.sku && Array.isArray(product.variants)) {
+          const variant = product.variants.find(v => v && v.sku === item.sku);
           if (variant) {
-            variant.stock = Math.max(0, variant.stock - item.quantity);
+            variant.stock = Math.max(0, (variant.stock || 0) - (item.quantity || 1));
           }
         }
       }
@@ -1103,21 +1111,31 @@ class DatabaseService {
       });
     }
 
+    if (!Array.isArray(this.data.orders)) {
+      this.data.orders = [];
+    }
     this.data.orders.unshift(order);
 
-    // Update customer registry
-    const existingCust = this.data.customers.find(c => c.email.toLowerCase() === order.customer.email.toLowerCase());
+    // Update customer registry safely
+    if (!Array.isArray(this.data.customers)) {
+      this.data.customers = [];
+    }
+    const customerEmail = (order.customer.email || '').trim();
+    const existingCust = customerEmail
+      ? this.data.customers.find(c => c && c.email && c.email.toLowerCase() === customerEmail.toLowerCase())
+      : undefined;
+
     if (existingCust) {
-      existingCust.ordersCount += 1;
-      existingCust.totalSpent += total;
+      existingCust.ordersCount = (existingCust.ordersCount || 0) + 1;
+      existingCust.totalSpent = (existingCust.totalSpent || 0) + total;
       existingCust.lastOrderDate = new Date().toISOString().split('T')[0];
     } else {
       this.data.customers.push({
         id: `cust-${Date.now().toString(36)}`,
-        name: order.customer.fullName,
-        email: order.customer.email,
-        phone: order.customer.phone,
-        city: order.customer.city,
+        name: order.customer.fullName || 'Customer',
+        email: order.customer.email || '',
+        phone: order.customer.phone || '',
+        city: order.customer.city || '',
         ordersCount: 1,
         totalSpent: total,
         lastOrderDate: new Date().toISOString().split('T')[0],
@@ -1125,7 +1143,11 @@ class DatabaseService {
       });
     }
 
-    this.saveData();
+    try {
+      this.saveData();
+    } catch (saveErr) {
+      console.warn('Non-fatal error persisting order to disk:', saveErr);
+    }
     return order;
   }
 
@@ -1206,7 +1228,12 @@ class DatabaseService {
   }
 
   public getCouponByCode(code: string): Coupon | undefined {
-    return this.data.coupons.find(c => c.code.toUpperCase() === code.trim().toUpperCase());
+    if (!code || typeof code !== 'string') return undefined;
+    const clean = code.trim().toUpperCase();
+    if (!Array.isArray(this.data.coupons)) {
+      this.data.coupons = [];
+    }
+    return this.data.coupons.find(c => c && c.code && c.code.toUpperCase() === clean);
   }
 
   public createCoupon(coupon: Omit<Coupon, 'id' | 'usageCount'>): Coupon {

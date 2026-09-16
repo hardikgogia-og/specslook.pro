@@ -15,7 +15,7 @@
       "featured": true,
       "bestSeller": true,
       "newArrival": true,
-      "stock": 28,
+      "stock": 27,
       "images": [
         "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80",
         "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80"
@@ -1584,6 +1584,44 @@
   ],
   "orders": [
     {
+      "id": "ord-mu473b22",
+      "orderNumber": "SL-469282",
+      "createdAt": "2026-09-16T14:27:36.506Z",
+      "customer": {
+        "fullName": "Rahul Sharma",
+        "email": "rahul.sharma@example.com",
+        "phone": "9876543210",
+        "addressLine1": "Plot 42, Sector 14",
+        "city": "Gurugram",
+        "state": "Haryana",
+        "pinCode": "122001"
+      },
+      "items": [
+        {
+          "productId": "prod-eye-men-01",
+          "productName": "Specslook Executive Titanium Browline Eyeglasses",
+          "price": 6990,
+          "quantity": 1
+        }
+      ],
+      "subtotal": 6990,
+      "discount": 699,
+      "couponCode": "SPECS10",
+      "shippingFee": 0,
+      "total": 6291,
+      "paymentMethod": "cod",
+      "paymentStatus": "Pending",
+      "orderStatus": "Pending",
+      "estimatedDeliveryDate": "2026-09-20",
+      "timeline": [
+        {
+          "status": "Pending",
+          "timestamp": "2026-09-16T14:27:36.506Z",
+          "note": "Order placed via Cash on Delivery"
+        }
+      ]
+    },
+    {
       "id": "ord-mtzzf07z",
       "orderNumber": "SL-166703",
       "createdAt": "2026-09-13T15:41:40.703Z",
@@ -2042,7 +2080,7 @@
       "maxDiscount": 1500,
       "isActive": true,
       "expiryDate": "2026-12-31",
-      "usageCount": 84
+      "usageCount": 85
     },
     {
       "id": "coup-02",
@@ -2299,6 +2337,17 @@
       "totalSpent": 4089,
       "lastOrderDate": "2026-09-13",
       "createdAt": "2026-09-13"
+    },
+    {
+      "id": "cust-mu473b22",
+      "name": "Rahul Sharma",
+      "email": "rahul.sharma@example.com",
+      "phone": "9876543210",
+      "city": "Gurugram",
+      "ordersCount": 1,
+      "totalSpent": 6291,
+      "lastOrderDate": "2026-09-16",
+      "createdAt": "2026-09-16"
     }
   ],
   "reviews": [
@@ -2336,8 +2385,8 @@
   "admin": {
     "id": "admin-01",
     "username": "honeygogia",
-    "passwordSalt": "126859fd82f6c56ce940df849c706073",
-    "passwordHash": "0a33192eaa356857eaa775d24ea80df540f7b0f1eccc9ff61ad7edd85e69c91f1c5bc394511bf124da50f8206b49bf23568464001f097d27e17da1235c103453",
+    "passwordSalt": "f9a581a153cc94ec25f6830350405505",
+    "passwordHash": "b05bd378bba23da4be31b3566346233f83a6429c7bee7f464aecc539b3aacd06e7c4194dc781d287be456518ad8b8fda0a5534f983daabe309dddb39688dc92a",
     "role": "superadmin",
     "name": "Honey Gogia",
     "email": "honeygogia@specslook.com"

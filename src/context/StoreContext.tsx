@@ -5,7 +5,8 @@ import {
   initialCategories,
   initialStores,
   initialBlogs,
-  initialBanners
+  initialBanners,
+  initialCoupons
 } from '../data/seedData.ts';
 
 export type AppView =
@@ -583,28 +584,81 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   // Coupon operations
   const applyCouponCode = async (code: string): Promise<{ success: boolean; message: string }> => {
+    if (!code || !code.trim()) {
+      return { success: false, message: 'Please enter a coupon code' };
+    }
+
+    const cleanCode = code.trim().toUpperCase();
+
     try {
       const res = await fetch('/api/coupons/apply', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code, cartSubtotal })
+        body: JSON.stringify({ code: cleanCode, cartSubtotal })
       });
 
-      const data = await res.json();
-      if (!res.ok) {
-        return { success: false, message: data.error || 'Failed to apply coupon' };
+      let data: any = null;
+      try {
+        const text = await res.text();
+        data = text ? JSON.parse(text) : null;
+      } catch (parseErr) {
+        data = null;
       }
 
-      setAppliedCoupon({
-        code: data.code,
-        discount: data.discount,
-        message: data.message
-      });
-      showToast(data.message);
-      return { success: true, message: data.message };
+      if (res.ok && data && data.code) {
+        setAppliedCoupon({
+          code: data.code,
+          discount: data.discount,
+          message: data.message
+        });
+        showToast(data.message);
+        return { success: true, message: data.message };
+      }
+
+      if (data && data.error) {
+        return { success: false, message: data.error };
+      }
     } catch (err: any) {
-      return { success: false, message: 'Network error verifying coupon' };
+      console.warn('Network request to /api/coupons/apply failed, checking local coupon fallback:', err);
     }
+
+    // Client-side fallback if server is cold starting, offline, or experiencing network timeout
+    const localCoupon = initialCoupons.find(c => c && c.code && c.code.toUpperCase() === cleanCode);
+    if (localCoupon) {
+      if (!localCoupon.isActive) {
+        return { success: false, message: 'This coupon is currently inactive' };
+      }
+      if (new Date(localCoupon.expiryDate) < new Date()) {
+        return { success: false, message: 'This coupon has expired' };
+      }
+      if (cartSubtotal < localCoupon.minOrderValue) {
+        return {
+          success: false,
+          message: `Coupon applies on minimum order value of ₹${localCoupon.minOrderValue.toLocaleString('en-IN')}`
+        };
+      }
+
+      let discount = 0;
+      if (localCoupon.discountType === 'percentage') {
+        discount = Math.round((cartSubtotal * localCoupon.discountValue) / 100);
+        if (localCoupon.maxDiscount && discount > localCoupon.maxDiscount) {
+          discount = localCoupon.maxDiscount;
+        }
+      } else {
+        discount = localCoupon.discountValue;
+      }
+
+      const msg = `Coupon ${localCoupon.code} applied! You saved ₹${discount.toLocaleString('en-IN')}`;
+      setAppliedCoupon({
+        code: localCoupon.code,
+        discount,
+        message: msg
+      });
+      showToast(msg);
+      return { success: true, message: msg };
+    }
+
+    return { success: false, message: 'Invalid coupon code. Try SPECS10 or WELCOME500' };
   };
 
   const removeCoupon = () => {
