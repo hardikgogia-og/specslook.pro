@@ -663,6 +663,18 @@ class DatabaseService {
           parsed.products = [...seedData.products];
         }
 
+        // Ensure all seed coupons exist in loaded DB
+        if (Array.isArray(parsed.coupons)) {
+          seedData.coupons.forEach(sc => {
+            const exists = parsed.coupons.some((c: Coupon) => c && c.code && c.code.toUpperCase() === sc.code.toUpperCase());
+            if (!exists) {
+              parsed.coupons.push(sc);
+            }
+          });
+        } else {
+          parsed.coupons = [...seedData.coupons];
+        }
+
         // Ensure orders have prescription details populated for testing & visibility
         if (Array.isArray(parsed.orders)) {
           const seedOrders = getInitialSeedData().orders;

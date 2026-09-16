@@ -37,30 +37,31 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 // Normalize URL in case serverless / proxy rewrites stripped the /api prefix or redirected through /api/index
 app.use((req: Request, res: Response, next: NextFunction) => {
+  // If Vercel catch-all route passed path param (string or array)
+  if (req.query && req.query.path) {
+    const rawPath = req.query.path;
+    const subpath = Array.isArray(rawPath) ? rawPath.join('/') : String(rawPath);
+    if (subpath && !req.url.includes(subpath)) {
+      req.url = '/api/' + subpath.replace(/^\//, '');
+    }
+  }
+
   const matchedPath = (req.headers['x-matched-path'] || req.headers['x-vercel-matched-path']) as string | undefined;
-  if (matchedPath && matchedPath.startsWith('/api')) {
+  if (matchedPath && matchedPath.startsWith('/api') && !matchedPath.includes('index') && !matchedPath.includes('[...path]')) {
     req.url = matchedPath;
   } else if (req.url) {
     if (req.url.startsWith('/api/index/')) {
-      req.url = req.url.replace(/^\/api\/index/, '/api');
-    } else if (req.url === '/api/index' && req.query && typeof req.query.path === 'string') {
-      req.url = '/api/' + req.query.path;
+      req.url = req.url.replace(/^\/api\/index\//, '/api/');
+    } else if (req.url === '/api/index') {
+      req.url = '/api';
     }
 
     if (!req.url.startsWith('/api') && !req.url.startsWith('/uploads') && !req.url.startsWith('/assets')) {
-      if (
-        req.url.startsWith('/products') ||
-        req.url.startsWith('/categories') ||
-        req.url.startsWith('/orders') ||
-        req.url.startsWith('/stores') ||
-        req.url.startsWith('/auth') ||
-        req.url.startsWith('/admin') ||
-        req.url.startsWith('/blogs') ||
-        req.url.startsWith('/banners') ||
-        req.url.startsWith('/coupons') ||
-        req.url.startsWith('/reviews') ||
-        req.url.startsWith('/health')
-      ) {
+      const prefixes = [
+        '/products', '/categories', '/orders', '/stores', '/auth',
+        '/admin', '/blogs', '/banners', '/coupons', '/reviews', '/health', '/upload'
+      ];
+      if (prefixes.some(p => req.url.startsWith(p))) {
         req.url = '/api' + req.url;
       }
     }
@@ -70,6 +71,23 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 // Serve uploaded photos statically
 app.use('/uploads', express.static(uploadsDir));
+
+// Fallback dynamic photo server for serverless or multi-folder deployments
+app.get(['/uploads/:filename', '/api/uploads/:filename'], (req: Request, res: Response) => {
+  const filename = path.basename(req.params.filename);
+  const possiblePaths = [
+    path.join(uploadsDir, filename),
+    path.join('/tmp', 'uploads', filename),
+    path.join(process.cwd(), 'dist', 'uploads', filename),
+    path.join(process.cwd(), 'public', 'uploads', filename)
+  ];
+  for (const p of possiblePaths) {
+    if (fs.existsSync(p)) {
+      return res.sendFile(p);
+    }
+  }
+  return res.status(404).json({ error: 'Image not found' });
+});
 
 // Active admin session tokens (In-memory verification)
 const activeAdminTokens = new Set<string>();
@@ -94,7 +112,7 @@ function requireAdminAuth(req: Request, res: Response, next: NextFunction) {
 }
 
 // Health Check
-app.get('/api/health', (req: Request, res: Response) => {
+app.get(['/api/health', '/health'], (req: Request, res: Response) => {
   res.json({ status: 'ok', service: 'Specslook Eyewear API', timestamp: new Date().toISOString() });
 });
 

@@ -2385,8 +2385,8 @@
   "admin": {
     "id": "admin-01",
     "username": "honeygogia",
-    "passwordSalt": "f9a581a153cc94ec25f6830350405505",
-    "passwordHash": "b05bd378bba23da4be31b3566346233f83a6429c7bee7f464aecc539b3aacd06e7c4194dc781d287be456518ad8b8fda0a5534f983daabe309dddb39688dc92a",
+    "passwordSalt": "96b872ac10d37f098382f9b104400af5",
+    "passwordHash": "4dbc363c9e47249969b95d18571e25f75843cf6042436acbb8806f2d18e47bb2157c33c7d53bacc567e2280923d9d1bcb79439ea0861a0501196f100868a7805",
     "role": "superadmin",
     "name": "Honey Gogia",
     "email": "honeygogia@specslook.com"
