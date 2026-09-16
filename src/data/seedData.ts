@@ -1346,6 +1346,136 @@ export const initialProducts: Product[] = [
     "rating": 4.8,
     "reviewsCount": 77,
     "createdAt": "2026-08-25T07:27:29.981Z"
+  },
+  {
+    "id": "prod-009",
+    "slug": "specslook-6in1-magnetic-clip-on-eyeglasses",
+    "name": "Specslook 6-in-1 Magnetic Clip-On Eyeglasses",
+    "sku": "SL-MAG-6IN1-BLK",
+    "brand": "SPECSLOOK",
+    "price": 4999,
+    "salePrice": 2499,
+    "description": "The ultimate all-in-one convertible eyewear system. Crafted around an ultra-lightweight Swiss TR90 optical base frame engineered for clear everyday prescription or computer lenses, this system includes 5 magnetic snap-on front clips: Polarized Dark Grey Sunglasses, Amber Night Driving (anti-glare & blue-blocking), Ice Blue Mirrored, Golden Yellow High-Contrast & Warm Havana Brown. Neodymium magnetic locks snap securely into place with zero wobble.",
+    "shortDescription": "Optical base frame + 5 magnetic snap-on sunglasses & night driving clip lenses with premium carry pouch.",
+    "category": "Attachments",
+    "subcategory": "Clip-On Eyeglasses",
+    "featured": true,
+    "bestSeller": true,
+    "newArrival": true,
+    "stock": 50,
+    "images": [
+      "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "specifications": {
+      "frameMaterial": "TR90 Swiss Memory Polymer",
+      "lensMaterial": "TAC Polarized + Optical Demo Base",
+      "lensWidthMm": 53,
+      "bridgeMm": 18,
+      "templeLengthMm": 142,
+      "uvProtection": "100% UV400 on all clip-ons",
+      "isPolarized": true,
+      "frameShape": "Rectangular",
+      "gender": "Unisex",
+      "weightGrams": 21
+    },
+    "variants": [
+      {
+        "id": "var-009-1",
+        "colorName": "Matte Black (with 5 Clips)",
+        "colorHex": "#1B1B1B",
+        "frameColor": "Matte Black",
+        "lensColor": "Clear Base + 5 Sun/Driving Clips",
+        "sku": "SL-MAG-6IN1-BLK",
+        "stock": 30,
+        "size": "Medium (53mm)",
+        "images": [
+          "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80",
+          "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
+        ]
+      },
+      {
+        "id": "var-009-2",
+        "colorName": "Gloss Tortoise (with 5 Clips)",
+        "colorHex": "#5C381E",
+        "frameColor": "Dark Tortoise Shell",
+        "lensColor": "Clear Base + 5 Sun/Driving Clips",
+        "sku": "SL-MAG-6IN1-TOR",
+        "stock": 20,
+        "size": "Medium (53mm)",
+        "images": [
+          "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80"
+        ]
+      }
+    ],
+    "rating": 4.9,
+    "reviewsCount": 84,
+    "createdAt": "2026-09-01T08:00:00.000Z"
+  },
+  {
+    "id": "prod-010",
+    "slug": "specslook-2in1-magnetic-polarized-clip-on-eyeglasses",
+    "name": "Specslook 2-in-1 Magnetic Polarized Clip-On Eyeglasses",
+    "sku": "SL-MAG-2IN1-BLK",
+    "brand": "SPECSLOOK",
+    "price": 3499,
+    "salePrice": 1799,
+    "description": "Featherweight, minimalist optical eyeglasses with an integrated magnetic polarized sunglasses clip. Built with aerospace-grade Ultem polymer for incredible flexibility, extreme lightness, and seamless magnetic latching. Instant conversion from crisp optical eyeglasses to dark polarized sunglasses.",
+    "shortDescription": "Ultra-flexible optical eyeglasses with seamless magnetic polarized sunglass clip-on.",
+    "category": "Attachments",
+    "subcategory": "Clip-On Eyeglasses",
+    "featured": true,
+    "bestSeller": true,
+    "newArrival": true,
+    "stock": 40,
+    "images": [
+      "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "specifications": {
+      "frameMaterial": "Aerospace Ultem Resin",
+      "lensMaterial": "Polarized TAC Film UV400",
+      "lensWidthMm": 51,
+      "bridgeMm": 19,
+      "templeLengthMm": 140,
+      "uvProtection": "100% UV400",
+      "isPolarized": true,
+      "frameShape": "Round",
+      "gender": "Unisex",
+      "weightGrams": 18
+    },
+    "variants": [
+      {
+        "id": "var-010-1",
+        "colorName": "Midnight Black & Gunmetal",
+        "colorHex": "#18181B",
+        "frameColor": "Midnight Black",
+        "lensColor": "Clear Base + Dark Grey Polarized Clip",
+        "sku": "SL-MAG-2IN1-BLK",
+        "stock": 25,
+        "size": "Medium (51mm)",
+        "images": [
+          "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80"
+        ]
+      },
+      {
+        "id": "var-010-2",
+        "colorName": "Transparent Grey / Blue Polarized Clip",
+        "colorHex": "#64748B",
+        "frameColor": "Translucent Grey",
+        "lensColor": "Clear Base + Deep Ocean Blue Polarized Clip",
+        "sku": "SL-MAG-2IN1-GRY",
+        "stock": 15,
+        "size": "Medium (51mm)",
+        "images": [
+          "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80"
+        ]
+      }
+    ],
+    "rating": 4.8,
+    "reviewsCount": 42,
+    "createdAt": "2026-09-02T08:00:00.000Z"
   }
 ];
 
@@ -1356,7 +1486,7 @@ export const initialCategories: Category[] = [
     "name": "Eyeglasses",
     "description": "Precision optical frames tailored for prescription clarity, digital screen comfort, and bespoke styling.",
     "image": "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=800&q=80",
-    "itemCount": 12,
+    "itemCount": 9,
     "featured": true
   },
   {
@@ -1365,7 +1495,34 @@ export const initialCategories: Category[] = [
     "name": "Sunglasses",
     "description": "Iconic silhouettes, legendary crystal lenses, 100% UV400 shield and high-contrast polarization.",
     "image": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80",
-    "itemCount": 12,
+    "itemCount": 13,
+    "featured": true
+  },
+  {
+    "id": "cat-attachments",
+    "slug": "attachments",
+    "name": "Attachments",
+    "description": "Convertible 6-in-1 and 2-in-1 magnetic clip-on frames that switch seamlessly from optical eyeglasses to sunglasses in 1 second.",
+    "image": "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=800&q=80",
+    "itemCount": 2,
+    "featured": true
+  },
+  {
+    "id": "cat-polarized",
+    "slug": "polarized",
+    "name": "Polarized",
+    "description": "High-definition polarized optics that eliminate 99.9% of blinding road, water, and outdoor glare.",
+    "image": "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=800&q=80",
+    "itemCount": 8,
+    "featured": true
+  },
+  {
+    "id": "cat-blue-light-blockers",
+    "slug": "blue-light-blockers",
+    "name": "Blue Light Blockers",
+    "description": "Zero eye strain anti-fatigue lenses engineered for computer screens, gaming, and digital devices.",
+    "image": "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=800&q=80",
+    "itemCount": 5,
     "featured": true
   },
   {

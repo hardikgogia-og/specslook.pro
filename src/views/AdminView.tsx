@@ -991,7 +991,8 @@ export const AdminView: React.FC = () => {
   }
 
   // Filtered lists
-  const filteredAdminProducts = adminProducts.filter(p =>
+  const activeAdminProducts = (adminProducts && adminProducts.length > 0) ? adminProducts : (products || []);
+  const filteredAdminProducts = activeAdminProducts.filter(p =>
     p.name.toLowerCase().includes(productSearch.toLowerCase()) ||
     p.sku.toLowerCase().includes(productSearch.toLowerCase()) ||
     p.category.toLowerCase().includes(productSearch.toLowerCase())
@@ -1237,7 +1238,7 @@ export const AdminView: React.FC = () => {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-neutral-200">
               <div className="flex items-center gap-3">
                 <h3 className="font-extrabold text-sm uppercase tracking-wider text-neutral-900">
-                  Eyewear Product Catalog ({adminProducts.length})
+                  Eyewear Product Catalog ({activeAdminProducts.length})
                 </h3>
               </div>
 
@@ -1255,8 +1256,8 @@ export const AdminView: React.FC = () => {
 
                 <button
                   onClick={() => {
-                    if (adminProducts.length > 0) {
-                      setPhotoUploadTargetProd(adminProducts[0]);
+                    if (activeAdminProducts.length > 0) {
+                      setPhotoUploadTargetProd(activeAdminProducts[0]);
                       setIsQuickPhotoModalOpen(true);
                     } else {
                       showToast('Please add a product first before uploading photos', 'error');

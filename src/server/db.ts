@@ -16,8 +16,9 @@ import type {
   PrescriptionSubmission,
   OptometristAppointment
 } from '../types.ts';
+import { initialProducts, initialCategories } from '../data/seedData.ts';
 
-const IS_VERCEL = Boolean(process.env.VERCEL);
+const IS_VERCEL = Boolean(process.env.VERCEL || process.env.VERCEL_ENV || process.env.NOW_REGION);
 const DATA_DIR = IS_VERCEL ? path.join('/tmp', 'data') : path.join(process.cwd(), 'data');
 const DB_FILE = IS_VERCEL ? path.join('/tmp', 'data', 'specslook_db.json') : path.join(DATA_DIR, 'specslook_db.json');
 
@@ -59,700 +60,8 @@ export function verifyPassword(password: string, salt: string, expectedHash: str
 function getInitialSeedData(): DatabaseSchema {
   const adminCredentials = hashPassword('HoneyGogia1001');
 
-  const products: Product[] = [
-    {
-      id: 'prod-001',
-      slug: 'aviator-classic-gold-g15',
-      name: 'Specslook Aviator Classic Gold',
-      sku: 'SL-AV-3025-GLD',
-      brand: 'SPECSLOOK',
-      price: 11990,
-      salePrice: 8990,
-      description: 'Currently one of the most iconic sunglass models in the world, the Specslook Aviator Classic was originally designed for aviators in 1937. Aviator Classic sunglasses are a timeless model that combines great aviator styling with exceptional quality, performance and comfort. With a classic gold frame, you can see the world through the legendary crystal green G-15 lens that offers optimal visual clarity and 100% UV protection.',
-      shortDescription: 'Legendary teardrop frame with polished 18K gold finish and crystal green G-15 lenses.',
-      category: 'Sunglasses',
-      subcategory: 'Aviator',
-      featured: true,
-      bestSeller: true,
-      newArrival: false,
-      stock: 45,
-      images: [
-        'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80'
-      ],
-      specifications: {
-        frameMaterial: 'Monel Metal with 18K Gold Ion Plating',
-        lensMaterial: 'Mineral Crystal Glass G-15',
-        lensWidthMm: 58,
-        bridgeMm: 14,
-        templeLengthMm: 135,
-        uvProtection: '100% UV400 Absorption',
-        isPolarized: true,
-        frameShape: 'Aviator',
-        gender: 'Unisex',
-        weightGrams: 31
-      },
-      variants: [
-        {
-          id: 'var-001-1',
-          colorName: 'Gold / Crystal Green G-15',
-          colorHex: '#D4AF37',
-          frameColor: 'Polished Gold',
-          lensColor: 'Crystal Green G-15',
-          sku: 'SL-AV-3025-GLD-58',
-          stock: 25,
-          size: 'Standard (50mm)',
-          images: [
-            'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80'
-          ]
-        },
-        {
-          id: 'var-001-2',
-          colorName: 'Matte Black / Polarized Grey',
-          colorHex: '#111111',
-          frameColor: 'Matte Black',
-          lensColor: 'Polarized Dark Grey',
-          sku: 'SL-AV-3025-BLK-58',
-          stock: 20,
-          size: 'Standard (50mm)',
-          images: [
-            'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80'
-          ]
-        }
-      ],
-      rating: 4.9,
-      reviewsCount: 142,
-      createdAt: new Date(Date.now() - 30 * 86400000).toISOString()
-    },
-    {
-      id: 'prod-002',
-      slug: 'original-wayfarer-classic-black',
-      name: 'Specslook Original Wayfarer Classic',
-      sku: 'SL-WF-2140-BLK',
-      brand: 'SPECSLOOK',
-      price: 12990,
-      salePrice: 9490,
-      description: 'The Specslook Original Wayfarer Classic is the most recognizable style in the history of sunglasses. Since its initial design in 1952, Wayfarer has gained popularity among celebrities, musicians, artists and those with an impeccable fashion sense. As an iconic style of sunglasses, Original Wayfarer Classic always makes a statement. Choose classic black acetate with green G-15 lenses.',
-      shortDescription: 'The defining silhouette of modern counterculture in hand-polished glossy black Italian acetate.',
-      category: 'Sunglasses',
-      subcategory: 'Wayfarer',
-      featured: true,
-      bestSeller: true,
-      newArrival: false,
-      stock: 38,
-      images: [
-        'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1000&q=80'
-      ],
-      specifications: {
-        frameMaterial: 'Hand-Polished Mazzucchelli Italian Acetate',
-        lensMaterial: 'Mineral Crystal Glass B-15',
-        lensWidthMm: 50,
-        bridgeMm: 22,
-        templeLengthMm: 150,
-        uvProtection: '100% UV400 Filtering',
-        isPolarized: true,
-        frameShape: 'Wayfarer',
-        gender: 'Unisex',
-        weightGrams: 42
-      },
-      variants: [
-        {
-          id: 'var-002-1',
-          colorName: 'Polished Black / G-15 Green',
-          colorHex: '#000000',
-          frameColor: 'Gloss Black',
-          lensColor: 'Classic Green G-15',
-          sku: 'SL-WF-2140-901',
-          stock: 22,
-          size: 'Standard (50mm)',
-          images: [
-            'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80'
-          ]
-        },
-        {
-          id: 'var-002-2',
-          colorName: 'Tortoise Havana / Brown Gradient',
-          colorHex: '#5C381E',
-          frameColor: 'Havana Tortoise',
-          lensColor: 'Brown Gradient B-15',
-          sku: 'SL-WF-2140-902',
-          stock: 16,
-          size: 'Standard (50mm)',
-          images: [
-            'https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1000&q=80'
-          ]
-        }
-      ],
-      rating: 4.8,
-      reviewsCount: 118,
-      createdAt: new Date(Date.now() - 25 * 86400000).toISOString()
-    },
-    {
-      id: 'prod-003',
-      slug: 'clubmaster-classic-browline',
-      name: 'Specslook Clubmaster Classic Browline',
-      sku: 'SL-CM-3016-EBN',
-      brand: 'SPECSLOOK',
-      price: 13490,
-      salePrice: 9990,
-      description: 'Specslook Clubmaster Classic sunglasses are retro and timeless. Inspired by the 50s, the unmistakable design of the Clubmaster has been repeatedly selected by historical intellectuals and cultural leaders. While wearing the Specslook Clubmaster Classic design, you will always make a statement. Combining refined ebony acetate browline with polished gold accents.',
-      shortDescription: 'Retro mid-century browline design combining ebony acetate and gold metal rims.',
-      category: 'Sunglasses',
-      subcategory: 'Clubmaster',
-      featured: true,
-      bestSeller: false,
-      newArrival: false,
-      stock: 28,
-      images: [
-        'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80'
-      ],
-      specifications: {
-        frameMaterial: 'Dual Acetate & Monel Metal Browline',
-        lensMaterial: 'Anti-Reflective Mineral Crystal',
-        lensWidthMm: 51,
-        bridgeMm: 21,
-        templeLengthMm: 145,
-        uvProtection: '100% UV400 Block',
-        isPolarized: false,
-        frameShape: 'Clubmaster',
-        gender: 'Unisex',
-        weightGrams: 37
-      },
-      variants: [
-        {
-          id: 'var-003-1',
-          colorName: 'Ebony Gold / Crystal Green',
-          colorHex: '#1E1E1E',
-          frameColor: 'Black & Gold',
-          lensColor: 'Green Solid',
-          sku: 'SL-CM-3016-W0365',
-          stock: 18,
-          size: 'Standard (50mm)',
-          images: [
-            'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80'
-          ]
-        },
-        {
-          id: 'var-003-2',
-          colorName: 'Spotted Havana / Gold',
-          colorHex: '#704214',
-          frameColor: 'Mock Tortoise',
-          lensColor: 'Brown Classic',
-          sku: 'SL-CM-3016-W0366',
-          stock: 10,
-          size: 'Standard (50mm)',
-          images: [
-            'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80'
-          ]
-        }
-      ],
-      rating: 4.7,
-      reviewsCount: 89,
-      createdAt: new Date(Date.now() - 20 * 86400000).toISOString()
-    },
-    {
-      id: 'prod-004',
-      slug: 'round-metal-legend-gold',
-      name: 'Specslook Round Metal Legend',
-      sku: 'SL-RM-3447-GLD',
-      brand: 'SPECSLOOK',
-      price: 11490,
-      salePrice: 8490,
-      description: 'The Specslook Round Metal sunglasses are totally retro. This look has been worn by legendary musicians and inspired by the 1960s counter-culture when this style first originated. The unisex metal, iconic sunglasses are known for their defined round crystal lenses and distinct curved brow bar, adjustable nose pads, and thin metal temples with plastic end tips.',
-      shortDescription: '1960s counter-culture icon with circular wire frame and curved brow bar.',
-      category: 'Sunglasses',
-      subcategory: 'Round',
-      featured: true,
-      bestSeller: true,
-      newArrival: false,
-      stock: 32,
-      images: [
-        'https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80'
-      ],
-      specifications: {
-        frameMaterial: 'Fine Gauge Stainless Steel & Monel',
-        lensMaterial: 'Precision Ground Optical Glass',
-        lensWidthMm: 50,
-        bridgeMm: 21,
-        templeLengthMm: 145,
-        uvProtection: '100% UV400 Protection',
-        isPolarized: true,
-        frameShape: 'Round',
-        gender: 'Unisex',
-        weightGrams: 28
-      },
-      variants: [
-        {
-          id: 'var-004-1',
-          colorName: 'Polished Gold / G-15 Green',
-          colorHex: '#E5C158',
-          frameColor: 'Gold Wire',
-          lensColor: 'Crystal Green',
-          sku: 'SL-RM-3447-001',
-          stock: 20,
-          size: 'Standard (50mm)',
-          images: [
-            'https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1000&q=80'
-          ]
-        },
-        {
-          id: 'var-004-2',
-          colorName: 'Silver / Flash Blue Mirrored',
-          colorHex: '#C0C0C0',
-          frameColor: 'Polished Silver',
-          lensColor: 'Mirrored Blue Flash',
-          sku: 'SL-RM-3447-112',
-          stock: 12,
-          size: 'Standard (50mm)',
-          images: [
-            'https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1000&q=80'
-          ]
-        }
-      ],
-      rating: 4.9,
-      reviewsCount: 97,
-      createdAt: new Date(Date.now() - 15 * 86400000).toISOString()
-    },
-    {
-      id: 'prod-005',
-      slug: 'hexagonal-flat-lenses-copper',
-      name: 'Specslook Hexagonal Flat Lenses',
-      sku: 'SL-HX-3548-COP',
-      brand: 'SPECSLOOK',
-      price: 12490,
-      salePrice: 8990,
-      description: 'What do you get when you cross a circle with a square? You get the hexagonal Specslook Flat Lenses. An evolution of round sunglasses with flat crystal lenses. Hexagonal shape provides an ultra-contemporary edge to timeless metallic elegance.',
-      shortDescription: 'Contemporary geometric geometric sunglasses with ultra-flat crystal lenses and coin-edge profile.',
-      category: 'Sunglasses',
-      subcategory: 'Hexagonal',
-      featured: false,
-      bestSeller: false,
-      newArrival: true,
-      stock: 24,
-      images: [
-        'https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80'
-      ],
-      specifications: {
-        frameMaterial: 'Ultra-thin Metallic Alloy',
-        lensMaterial: 'Flat Crystal Mineral Glass',
-        lensWidthMm: 51,
-        bridgeMm: 21,
-        templeLengthMm: 145,
-        uvProtection: '100% UV400',
-        isPolarized: false,
-        frameShape: 'Hexagonal',
-        gender: 'Unisex',
-        weightGrams: 27
-      },
-      variants: [
-        {
-          id: 'var-005-1',
-          colorName: 'Copper Gold / Classic Green',
-          colorHex: '#B87333',
-          frameColor: 'Copper Gold',
-          lensColor: 'Green',
-          sku: 'SL-HX-3548-001',
-          stock: 14,
-          size: 'Standard (50mm)',
-          images: [
-            'https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80'
-          ]
-        },
-        {
-          id: 'var-005-2',
-          colorName: 'Matte Gunmetal / Grey Gradient',
-          colorHex: '#43464B',
-          frameColor: 'Gunmetal',
-          lensColor: 'Grey Gradient',
-          sku: 'SL-HX-3548-002',
-          stock: 10,
-          size: 'Standard (50mm)',
-          images: [
-            'https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80'
-          ]
-        }
-      ],
-      rating: 4.6,
-      reviewsCount: 42,
-      createdAt: new Date(Date.now() - 10 * 86400000).toISOString()
-    },
-    {
-      id: 'prod-006',
-      slug: 'blue-light-blocker-pro-acetate',
-      name: 'Specslook Blue-Cut Optics Elite',
-      sku: 'SL-EG-7040-BLU',
-      brand: 'SPECSLOOK',
-      price: 8990,
-      salePrice: 5990,
-      description: 'Engineered for digital nomads, professionals and gamers. Specslook Blue-Cut lenses filter out harmful high-energy blue-violet light (HEV) emitted by digital screens, smartphones, and LEDs. Reduces digital eye strain, glare, headaches and improves sleep quality. Handcrafted lightweight acetate frame for all-day ergonomic comfort.',
-      shortDescription: 'Ergonomic Japanese acetate eyeglasses with zero-glare blue-light filtering lenses.',
-      category: 'Blue Light Blockers',
-      subcategory: 'Eyeglasses',
-      featured: true,
-      bestSeller: true,
-      newArrival: false,
-      stock: 50,
-      images: [
-        'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80'
-      ],
-      specifications: {
-        frameMaterial: 'Ultra-light Italian Acetate & Beta Titanium',
-        lensMaterial: 'Polycarbonate with Blue-Block AR Coating',
-        lensWidthMm: 52,
-        bridgeMm: 18,
-        templeLengthMm: 142,
-        uvProtection: '100% UV400 + 40% HEV Blue Light',
-        isPolarized: false,
-        frameShape: 'Square',
-        gender: 'Unisex',
-        weightGrams: 22
-      },
-      variants: [
-        {
-          id: 'var-006-1',
-          colorName: 'Crystal Clear / Anti-Blue',
-          colorHex: '#F0F4F8',
-          frameColor: 'Transparent Crystal',
-          lensColor: 'Clear with Subtle Blue Reflex',
-          sku: 'SL-EG-7040-CLR',
-          stock: 30,
-          size: 'Standard (50mm)',
-          images: [
-            'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80'
-          ]
-        },
-        {
-          id: 'var-006-2',
-          colorName: 'Midnight Black / Anti-Blue',
-          colorHex: '#0A0A0A',
-          frameColor: 'Midnight Black',
-          lensColor: 'Clear with Subtle Blue Reflex',
-          sku: 'SL-EG-7040-BLK',
-          stock: 20,
-          size: 'Standard (50mm)',
-          images: [
-            'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80'
-          ]
-        }
-      ],
-      rating: 4.9,
-      reviewsCount: 164,
-      createdAt: new Date(Date.now() - 12 * 86400000).toISOString()
-    },
-    {
-      id: 'prod-007',
-      slug: 'titanium-aviator-polarized-chromance',
-      name: 'Specslook Titanium Chromance Polarized',
-      sku: 'SL-TI-8090-CHR',
-      brand: 'SPECSLOOK',
-      price: 18990,
-      salePrice: 14990,
-      description: 'The pinnacle of luxury eyewear engineering. Crafted from aerospace-grade solid Japanese Beta-Titanium, weighing merely 18 grams while offering unbeatable tensile strength and zero corrosion. Equipped with patented Chromance polarized lenses that calibrate light spectrum for intensified color vibrancy, hyper-defined contrasts and eliminated reflection glare.',
-      shortDescription: 'Aerospace-grade Japanese Titanium with Chromance color-enhancing polarized optics.',
-      category: 'Polarized',
-      subcategory: 'Aviator',
-      featured: true,
-      bestSeller: false,
-      newArrival: true,
-      stock: 15,
-      images: [
-        'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80'
-      ],
-      specifications: {
-        frameMaterial: '100% Pure Japanese Beta-Titanium',
-        lensMaterial: 'High-Definition Chromance Polarized Glass',
-        lensWidthMm: 59,
-        bridgeMm: 15,
-        templeLengthMm: 140,
-        uvProtection: '100% UV400 + Polarized Cat 3',
-        isPolarized: true,
-        frameShape: 'Aviator',
-        gender: 'Unisex',
-        weightGrams: 18
-      },
-      variants: [
-        {
-          id: 'var-007-1',
-          colorName: 'Titanium Pewter / Silver Chromance',
-          colorHex: '#8A8D8F',
-          frameColor: 'Brushed Titanium',
-          lensColor: 'Silver Flash Polarized',
-          sku: 'SL-TI-8090-PWT',
-          stock: 8,
-          size: 'Large (54mm)',
-          images: [
-            'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80'
-          ]
-        },
-        {
-          id: 'var-007-2',
-          colorName: 'Rose Gold / Bronze Polarized',
-          colorHex: '#B76E79',
-          frameColor: 'Rose Gold Titanium',
-          lensColor: 'Bronze Gradient Polarized',
-          sku: 'SL-TI-8090-RSG',
-          stock: 7,
-          size: 'Standard (50mm)',
-          images: [
-            'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80'
-          ]
-        }
-      ],
-      rating: 5.0,
-      reviewsCount: 56,
-      createdAt: new Date(Date.now() - 5 * 86400000).toISOString()
-    },
-    {
-      id: 'prod-008',
-      slug: 'justin-matte-rubber-black',
-      name: 'Specslook Justin Matte Rubberized',
-      sku: 'SL-JU-4165-MAT',
-      brand: 'SPECSLOOK',
-      price: 10490,
-      salePrice: 7990,
-      description: 'Specslook Justin may just be one of the coolest looks in the Specslook collection. Inspired by the iconic Wayfarer sunglasses, this style has been redesigned with slightly larger rectangle lenses, fresh new frame colors, stunning colored lenses and a rubberized frame finish to really give it that extra edge.',
-      shortDescription: 'Contemporary oversized Wayfarer silhouette with tactile rubberized soft-touch matte finish.',
-      category: 'Sunglasses',
-      subcategory: 'Wayfarer',
-      featured: false,
-      bestSeller: true,
-      newArrival: false,
-      stock: 40,
-      images: [
-        'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80'
-      ],
-      specifications: {
-        frameMaterial: 'Rubberized Injection Molded Nylon',
-        lensMaterial: 'Polycarbonate Polarized Grey Gradient',
-        lensWidthMm: 54,
-        bridgeMm: 16,
-        templeLengthMm: 145,
-        uvProtection: '100% UV400',
-        isPolarized: true,
-        frameShape: 'Square',
-        gender: 'Men',
-        weightGrams: 30
-      },
-      variants: [
-        {
-          id: 'var-008-1',
-          colorName: 'Matte Black / Gradient Grey',
-          colorHex: '#1B1B1B',
-          frameColor: 'Matte Rubber Black',
-          lensColor: 'Grey Gradient',
-          sku: 'SL-JU-4165-622',
-          stock: 25,
-          size: 'Large (54mm)',
-          images: [
-            'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80'
-          ]
-        },
-        {
-          id: 'var-008-2',
-          colorName: 'Matte Havana / Brown Gradient',
-          colorHex: '#4A2F1B',
-          frameColor: 'Rubberized Havana',
-          lensColor: 'Brown Gradient',
-          sku: 'SL-JU-4165-865',
-          stock: 15,
-          size: 'Large (54mm)',
-          images: [
-            'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80'
-          ]
-        }
-      ],
-      rating: 4.8,
-      reviewsCount: 77,
-      createdAt: new Date(Date.now() - 18 * 86400000).toISOString()
-    },
-    {
-      id: 'prod-009',
-      slug: 'specslook-6in1-magnetic-clip-on-eyeglasses',
-      name: 'Specslook 6-in-1 Magnetic Clip-On Eyeglasses',
-      sku: 'SL-MAG-6IN1-BLK',
-      brand: 'SPECSLOOK',
-      price: 4999,
-      salePrice: 2499,
-      description: 'The ultimate all-in-one convertible eyewear system. Crafted around an ultra-lightweight Swiss TR90 optical base frame engineered for clear everyday prescription or computer lenses, this system includes 5 magnetic snap-on front clips: Polarized Dark Grey Sunglasses, Amber Night Driving (anti-glare & blue-blocking), Ice Blue Mirrored, Golden Yellow High-Contrast & Warm Havana Brown. Neodymium magnetic locks snap securely into place with zero wobble.',
-      shortDescription: 'Optical base frame + 5 magnetic snap-on sunglasses & night driving clip lenses with premium carry pouch.',
-      category: 'Attachments',
-      subcategory: 'Clip-On Eyeglasses',
-      featured: true,
-      bestSeller: true,
-      newArrival: true,
-      stock: 50,
-      images: [
-        'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80'
-      ],
-      specifications: {
-        frameMaterial: 'TR90 Swiss Memory Polymer',
-        lensMaterial: 'TAC Polarized + Optical Demo Base',
-        lensWidthMm: 53,
-        bridgeMm: 18,
-        templeLengthMm: 142,
-        uvProtection: '100% UV400 on all clip-ons',
-        isPolarized: true,
-        frameShape: 'Rectangular',
-        gender: 'Unisex',
-        weightGrams: 21
-      },
-      variants: [
-        {
-          id: 'var-009-1',
-          colorName: 'Matte Black (with 5 Clips)',
-          colorHex: '#1B1B1B',
-          frameColor: 'Matte Black',
-          lensColor: 'Clear Base + 5 Sun/Driving Clips',
-          sku: 'SL-MAG-6IN1-BLK',
-          stock: 30,
-          size: 'Medium (53mm)',
-          images: [
-            'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80',
-            'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80'
-          ]
-        },
-        {
-          id: 'var-009-2',
-          colorName: 'Gloss Tortoise (with 5 Clips)',
-          colorHex: '#5C381E',
-          frameColor: 'Dark Tortoise Shell',
-          lensColor: 'Clear Base + 5 Sun/Driving Clips',
-          sku: 'SL-MAG-6IN1-TOR',
-          stock: 20,
-          size: 'Medium (53mm)',
-          images: [
-            'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80'
-          ]
-        }
-      ],
-      rating: 4.9,
-      reviewsCount: 84,
-      createdAt: new Date(Date.now() - 2 * 86400000).toISOString()
-    },
-    {
-      id: 'prod-010',
-      slug: 'specslook-2in1-magnetic-polarized-clip-on-eyeglasses',
-      name: 'Specslook 2-in-1 Magnetic Polarized Clip-On Eyeglasses',
-      sku: 'SL-MAG-2IN1-BLK',
-      brand: 'SPECSLOOK',
-      price: 3499,
-      salePrice: 1799,
-      description: 'Featherweight, minimalist optical eyeglasses with an integrated magnetic polarized sunglasses clip. Built with aerospace-grade Ultem polymer for incredible flexibility, extreme lightness, and seamless magnetic latching. Instant conversion from crisp optical eyeglasses to dark polarized sunglasses.',
-      shortDescription: 'Ultra-flexible optical eyeglasses with seamless magnetic polarized sunglass clip-on.',
-      category: 'Attachments',
-      subcategory: 'Clip-On Eyeglasses',
-      featured: true,
-      bestSeller: true,
-      newArrival: true,
-      stock: 40,
-      images: [
-        'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80'
-      ],
-      specifications: {
-        frameMaterial: 'Aerospace Ultem Resin',
-        lensMaterial: 'Polarized TAC Film UV400',
-        lensWidthMm: 51,
-        bridgeMm: 19,
-        templeLengthMm: 140,
-        uvProtection: '100% UV400',
-        isPolarized: true,
-        frameShape: 'Round',
-        gender: 'Unisex',
-        weightGrams: 18
-      },
-      variants: [
-        {
-          id: 'var-010-1',
-          colorName: 'Midnight Black & Gunmetal',
-          colorHex: '#18181B',
-          frameColor: 'Midnight Black',
-          lensColor: 'Clear Base + Dark Grey Polarized Clip',
-          sku: 'SL-MAG-2IN1-BLK',
-          stock: 25,
-          size: 'Medium (51mm)',
-          images: [
-            'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80'
-          ]
-        },
-        {
-          id: 'var-010-2',
-          colorName: 'Transparent Grey / Blue Polarized Clip',
-          colorHex: '#64748B',
-          frameColor: 'Translucent Grey',
-          lensColor: 'Clear Base + Deep Ocean Blue Polarized Clip',
-          sku: 'SL-MAG-2IN1-GRY',
-          stock: 15,
-          size: 'Medium (51mm)',
-          images: [
-            'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80'
-          ]
-        }
-      ],
-      rating: 4.8,
-      reviewsCount: 42,
-      createdAt: new Date(Date.now() - 3 * 86400000).toISOString()
-    }
-  ];
-
-  const categories: Category[] = [
-    {
-      id: 'cat-01',
-      slug: 'sunglasses',
-      name: 'Sunglasses',
-      description: 'Iconic silhouettes, legendary crystal lenses and 100% UV protection.',
-      image: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80',
-      itemCount: 6,
-      featured: true
-    },
-    {
-      id: 'cat-02',
-      slug: 'eyeglasses',
-      name: 'Eyeglasses',
-      description: 'Architectural frames tailored for prescription clarity and all-day comfort.',
-      image: 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=800&q=80',
-      itemCount: 4,
-      featured: true
-    },
-    {
-      id: 'cat-05',
-      slug: 'attachments',
-      name: 'Attachments',
-      description: 'Convertible 6-in-1 and 2-in-1 magnetic clip-on frames that switch seamlessly from clear optical eyeglasses into sunglasses and night vision specs.',
-      image: 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=800&q=80',
-      itemCount: 2,
-      featured: true
-    },
-    {
-      id: 'cat-03',
-      slug: 'polarized',
-      name: 'Polarized',
-      description: 'Eliminate 99.9% of blinding glare with high-contrast optical filters.',
-      image: 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=800&q=80',
-      itemCount: 5,
-      featured: true
-    },
-    {
-      id: 'cat-04',
-      slug: 'blue-light-blockers',
-      name: 'Blue Light Blockers',
-      description: 'Zero eye fatigue lenses engineered for digital devices and modern screens.',
-      image: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=800&q=80',
-      itemCount: 3,
-      featured: true
-    }
-  ];
+  const products: Product[] = [...initialProducts];
+  const categories: Category[] = [...initialCategories];
 
   const coupons: Coupon[] = [
     {
@@ -1330,24 +639,28 @@ class DatabaseService {
           });
         }
 
-        // Ensure 'Attachments' category and products exist in loaded DB
+        // Ensure all seed categories and products exist in loaded DB
         const seedData = getInitialSeedData();
         if (Array.isArray(parsed.categories)) {
-          const hasAttachments = parsed.categories.some((c: Category) => c.slug === 'attachments' || c.name?.toLowerCase() === 'attachments');
-          if (!hasAttachments) {
-            const attCat = seedData.categories.find(c => c.slug === 'attachments');
-            if (attCat) parsed.categories.push(attCat);
-          }
+          seedData.categories.forEach(sc => {
+            const exists = parsed.categories.some((c: Category) => c.slug === sc.slug || c.id === sc.id || c.name?.toLowerCase() === sc.name?.toLowerCase());
+            if (!exists) {
+              parsed.categories.push(sc);
+            }
+          });
+        } else {
+          parsed.categories = [...seedData.categories];
         }
 
         if (Array.isArray(parsed.products)) {
-          const seedAttProds = seedData.products.filter(p => p.category === 'Attachments');
-          seedAttProds.forEach(sp => {
+          seedData.products.forEach(sp => {
             const exists = parsed.products.some((p: Product) => p.id === sp.id || p.slug === sp.slug);
             if (!exists) {
               parsed.products.push(sp);
             }
           });
+        } else {
+          parsed.products = [...seedData.products];
         }
 
         // Ensure orders have prescription details populated for testing & visibility
@@ -1363,6 +676,7 @@ class DatabaseService {
           });
         }
 
+        this.saveData(parsed);
         return parsed;
       }
     } catch (err) {
@@ -1375,14 +689,21 @@ class DatabaseService {
   }
 
   private saveData(dataToSave?: DatabaseSchema) {
+    const data = dataToSave || this.data;
     try {
       if (!fs.existsSync(DATA_DIR)) {
         fs.mkdirSync(DATA_DIR, { recursive: true });
       }
-      const data = dataToSave || this.data;
       fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), 'utf-8');
     } catch (err) {
-      console.error('Failed to persist database to disk:', err);
+      console.warn('Primary DB write failed, attempting /tmp persistence:', err);
+      try {
+        const tmpDir = path.join('/tmp', 'data');
+        if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir, { recursive: true });
+        fs.writeFileSync(path.join(tmpDir, 'specslook_db.json'), JSON.stringify(data, null, 2), 'utf-8');
+      } catch (tmpErr) {
+        console.warn('Temporary file persistence also failed, continuing in memory:', tmpErr);
+      }
     }
   }
 
@@ -1450,8 +771,30 @@ class DatabaseService {
     }
 
     if (filters.category && filters.category !== 'All') {
-      const cat = filters.category.toLowerCase();
-      result = result.filter(p => p.category.toLowerCase() === cat || (p.subcategory && p.subcategory.toLowerCase() === cat));
+      const cat = filters.category.toLowerCase().trim();
+      result = result.filter(p => {
+        const pCat = (p.category || '').toLowerCase();
+        const pSub = (p.subcategory || '').toLowerCase();
+        const pName = (p.name || '').toLowerCase();
+        if (pCat === cat || pSub === cat) return true;
+        // Attachments / 6-in-1 / clip-on matching
+        if ((cat.includes('attachment') || cat.includes('6in1') || cat.includes('6-in-1') || cat.includes('clip-on')) &&
+            (pCat.includes('attachment') || pSub.includes('clip-on') || pName.includes('clip-on') || pName.includes('6-in-1'))) {
+          return true;
+        }
+        // Specific category slugs
+        if (cat === 'sunglasses' && pCat === 'sunglasses') return true;
+        if (cat === 'eyeglasses' && pCat === 'eyeglasses') return true;
+        if (cat === 'polarized' && (pCat === 'polarized' || p.specifications?.isPolarized)) return true;
+        if (cat.includes('blue-light') && (pCat.includes('blue') || pSub.includes('blue'))) return true;
+        if (cat === 'eyeglasses-men' && pCat === 'eyeglasses' && (p.specifications?.gender === 'Men' || p.specifications?.gender === 'Unisex')) return true;
+        if (cat === 'eyeglasses-women' && pCat === 'eyeglasses' && (p.specifications?.gender === 'Women' || p.specifications?.gender === 'Unisex')) return true;
+        if (cat === 'eyeglasses-kids' && pCat === 'eyeglasses' && p.specifications?.gender === 'Kids') return true;
+        if (cat === 'sunglasses-men' && pCat === 'sunglasses' && (p.specifications?.gender === 'Men' || p.specifications?.gender === 'Unisex')) return true;
+        if (cat === 'sunglasses-women' && pCat === 'sunglasses' && (p.specifications?.gender === 'Women' || p.specifications?.gender === 'Unisex')) return true;
+        if (cat === 'sunglasses-kids' && pCat === 'sunglasses' && p.specifications?.gender === 'Kids') return true;
+        return false;
+      });
     }
 
     if (filters.shape && filters.shape !== 'All') {
@@ -1593,7 +936,28 @@ class DatabaseService {
 
   // Categories
   public getCategories(): Category[] {
-    return this.data.categories;
+    return this.data.categories.map(c => {
+      const cSlug = (c.slug || '').toLowerCase();
+      const cName = (c.name || '').toLowerCase();
+      const count = this.data.products.filter(p => {
+        const pCat = (p.category || '').toLowerCase();
+        const pSub = (p.subcategory || '').toLowerCase();
+        const pName = (p.name || '').toLowerCase();
+        if (pCat === cName || pCat === cSlug || pSub === cName || pSub === cSlug) return true;
+        if ((cSlug === 'attachments' || cName.includes('attachment')) &&
+            (pCat.includes('attachment') || pSub.includes('clip-on') || pName.includes('clip-on') || pName.includes('6-in-1'))) return true;
+        if (cSlug === 'polarized' && (pCat === 'polarized' || p.specifications?.isPolarized)) return true;
+        if (cSlug.includes('blue-light') && (pCat.includes('blue') || pSub.includes('blue'))) return true;
+        if (cSlug === 'eyeglasses-men' && pCat === 'eyeglasses' && (p.specifications?.gender === 'Men' || p.specifications?.gender === 'Unisex')) return true;
+        if (cSlug === 'eyeglasses-women' && pCat === 'eyeglasses' && (p.specifications?.gender === 'Women' || p.specifications?.gender === 'Unisex')) return true;
+        if (cSlug === 'eyeglasses-kids' && pCat === 'eyeglasses' && p.specifications?.gender === 'Kids') return true;
+        if (cSlug === 'sunglasses-men' && pCat === 'sunglasses' && (p.specifications?.gender === 'Men' || p.specifications?.gender === 'Unisex')) return true;
+        if (cSlug === 'sunglasses-women' && pCat === 'sunglasses' && (p.specifications?.gender === 'Women' || p.specifications?.gender === 'Unisex')) return true;
+        if (cSlug === 'sunglasses-kids' && pCat === 'sunglasses' && p.specifications?.gender === 'Kids') return true;
+        return false;
+      }).length;
+      return { ...c, itemCount: count > 0 ? count : (c.itemCount || 0) };
+    });
   }
 
   public createCategory(cat: Omit<Category, 'id'>): Category {

@@ -111,7 +111,16 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       const saved = localStorage.getItem('specslook_products');
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          // Merge with initialProducts to ensure 6-in-1 Attachments and all seed products are present
+          const merged = [...parsed];
+          initialProducts.forEach(ip => {
+            if (!merged.some(p => p.id === ip.id || p.slug === ip.slug)) {
+              merged.push(ip);
+            }
+          });
+          return merged;
+        }
       }
     } catch {}
     return initialProducts;
@@ -122,7 +131,16 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       const saved = localStorage.getItem('specslook_categories');
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          // Merge with initialCategories to ensure Attachments and all categories are present
+          const merged = [...parsed];
+          initialCategories.forEach(ic => {
+            if (!merged.some(c => c.id === ic.id || c.slug === ic.slug)) {
+              merged.push(ic);
+            }
+          });
+          return merged;
+        }
       }
     } catch {}
     return initialCategories;
@@ -268,12 +286,26 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       ]);
 
       if (pRes.status === 'fulfilled' && pRes.value && pRes.value.length > 0) {
-        setProducts(pRes.value);
-        try { localStorage.setItem('specslook_products', JSON.stringify(pRes.value)); } catch {}
+        const fetchedProducts: Product[] = pRes.value;
+        const merged = [...fetchedProducts];
+        initialProducts.forEach(ip => {
+          if (!merged.some(p => p.id === ip.id || p.slug === ip.slug)) {
+            merged.push(ip);
+          }
+        });
+        setProducts(merged);
+        try { localStorage.setItem('specslook_products', JSON.stringify(merged)); } catch {}
       }
       if (cRes.status === 'fulfilled' && cRes.value && cRes.value.length > 0) {
-        setCategories(cRes.value);
-        try { localStorage.setItem('specslook_categories', JSON.stringify(cRes.value)); } catch {}
+        const fetchedCategories: Category[] = cRes.value;
+        const merged = [...fetchedCategories];
+        initialCategories.forEach(ic => {
+          if (!merged.some(c => c.id === ic.id || c.slug === ic.slug)) {
+            merged.push(ic);
+          }
+        });
+        setCategories(merged);
+        try { localStorage.setItem('specslook_categories', JSON.stringify(merged)); } catch {}
       }
       if (sRes.status === 'fulfilled' && sRes.value && sRes.value.length > 0) {
         setStores(sRes.value);

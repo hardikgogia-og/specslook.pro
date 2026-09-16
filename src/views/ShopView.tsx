@@ -18,7 +18,16 @@ export const ShopView: React.FC = () => {
 
   // Sync params if passed via navigation
   useEffect(() => {
-    setSelectedCategory(viewParams.category || 'All');
+    let cat = viewParams.category || 'All';
+    const lower = cat.toLowerCase();
+    if (lower === 'attachments' || lower.includes('attachment') || lower.includes('6-in-1') || lower.includes('6in1') || lower.includes('clip-on')) {
+      cat = 'Attachments';
+    } else if (lower === 'eyeglasses' || lower === 'optical') {
+      cat = 'Eyeglasses';
+    } else if (lower === 'sunglasses' || lower === 'solar') {
+      cat = 'Sunglasses';
+    }
+    setSelectedCategory(cat);
     setSelectedGender(viewParams.gender || 'All');
     setSelectedShape(viewParams.shape || 'All');
     setOnlyPolarized(viewParams.polarized === true);
@@ -58,7 +67,21 @@ export const ShopView: React.FC = () => {
     return products
       .filter((p) => {
         // Category
-        if (selectedCategory !== 'All' && p.category !== selectedCategory) return false;
+        if (selectedCategory !== 'All') {
+          const sel = selectedCategory.toLowerCase().trim();
+          const pCat = (p.category || '').toLowerCase().trim();
+          const pSub = (p.subcategory || '').toLowerCase().trim();
+          const pName = (p.name || '').toLowerCase().trim();
+
+          if (sel === 'attachments' || sel.includes('attachment') || sel.includes('6-in-1') || sel.includes('clip-on')) {
+            const isAtt = pCat.includes('attachment') || pSub.includes('attachment') || pSub.includes('clip-on') || pName.includes('clip-on') || pName.includes('6-in-1') || pName.includes('2-in-1');
+            if (!isAtt) return false;
+          } else if (sel === 'polarized') {
+            if (!p.specifications?.isPolarized && pCat !== 'polarized') return false;
+          } else {
+            if (pCat !== sel && pSub !== sel) return false;
+          }
+        }
 
         // Shape
         if (selectedShape !== 'All' && p.specifications.frameShape !== selectedShape) return false;

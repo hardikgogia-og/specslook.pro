@@ -43,7 +43,8 @@
           "stock": 16,
           "size": "Standard (50mm)",
           "images": [
-            "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80"
+            "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80"
           ]
         },
         {
@@ -106,7 +107,8 @@
           "sku": "SL-EG-SQR-MEN02-VBLK",
           "stock": 20,
           "images": [
-            "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80"
+            "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80"
           ]
         },
         {
@@ -168,7 +170,8 @@
           "sku": "SL-EG-REC-MEN03-GNM",
           "stock": 22,
           "images": [
-            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
+            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80"
           ]
         }
       ],
@@ -218,7 +221,8 @@
           "sku": "SL-EG-CAT-WOM01-RGD",
           "stock": 18,
           "images": [
-            "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80"
+            "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80"
           ]
         },
         {
@@ -280,7 +284,8 @@
           "sku": "SL-EG-RND-WOM02-CHM",
           "stock": 15,
           "images": [
-            "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80"
+            "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80"
           ]
         },
         {
@@ -342,7 +347,8 @@
           "sku": "SL-EG-GEO-WOM03-AMB",
           "stock": 20,
           "images": [
-            "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80"
+            "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80"
           ]
         }
       ],
@@ -392,7 +398,8 @@
           "sku": "SL-EG-KID-FLX01-BLU",
           "stock": 22,
           "images": [
-            "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1000&q=80"
+            "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1000&q=80"
           ]
         },
         {
@@ -454,7 +461,8 @@
           "sku": "SL-EG-KID-STD02-LME",
           "stock": 20,
           "images": [
-            "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1000&q=80"
+            "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1000&q=80"
           ]
         },
         {
@@ -516,7 +524,8 @@
           "sku": "SL-SG-AV-MEN01-GLD",
           "stock": 25,
           "images": [
-            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
+            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80"
           ]
         },
         {
@@ -578,7 +587,8 @@
           "sku": "SL-SG-JUS-MEN02-RBLK",
           "stock": 30,
           "images": [
-            "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80"
+            "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
           ]
         }
       ],
@@ -628,7 +638,8 @@
           "sku": "SL-SG-BTF-WOM01-BLK",
           "stock": 15,
           "images": [
-            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
+            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80"
           ]
         },
         {
@@ -690,7 +701,8 @@
           "sku": "SL-SG-HEX-WOM02-PNK",
           "stock": 22,
           "images": [
-            "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80"
+            "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80"
           ]
         }
       ],
@@ -740,7 +752,8 @@
           "sku": "SL-SG-KID-AV01-BLU",
           "stock": 18,
           "images": [
-            "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1000&q=80"
+            "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1000&q=80"
           ]
         },
         {
@@ -802,7 +815,8 @@
           "sku": "SL-SG-KID-WF02-ORG",
           "stock": 25,
           "images": [
-            "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1000&q=80"
+            "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1000&q=80"
           ]
         }
       ],
@@ -854,7 +868,9 @@
           "stock": 24,
           "size": "Standard (50mm)",
           "images": [
-            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
+            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80"
           ]
         },
         {
@@ -919,7 +935,9 @@
           "stock": 22,
           "size": "Standard (50mm)",
           "images": [
-            "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80"
+            "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1000&q=80"
           ]
         },
         {
@@ -983,7 +1001,8 @@
           "stock": 18,
           "size": "Standard (50mm)",
           "images": [
-            "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80"
+            "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
           ]
         },
         {
@@ -1047,7 +1066,8 @@
           "stock": 20,
           "size": "Standard (50mm)",
           "images": [
-            "https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1000&q=80"
+            "https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
           ]
         },
         {
@@ -1111,7 +1131,8 @@
           "stock": 14,
           "size": "Standard (50mm)",
           "images": [
-            "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80"
+            "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
           ]
         },
         {
@@ -1175,7 +1196,8 @@
           "stock": 30,
           "size": "Standard (50mm)",
           "images": [
-            "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80"
+            "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80"
           ]
         },
         {
@@ -1239,7 +1261,8 @@
           "stock": 8,
           "size": "Large (54mm)",
           "images": [
-            "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80"
+            "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
           ]
         },
         {
@@ -1303,7 +1326,8 @@
           "stock": 25,
           "size": "Large (54mm)",
           "images": [
-            "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80"
+            "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
           ]
         },
         {
@@ -1323,6 +1347,138 @@
       "rating": 4.8,
       "reviewsCount": 77,
       "createdAt": "2026-08-25T07:27:29.981Z"
+    },
+    {
+      "id": "prod-009",
+      "slug": "specslook-6in1-magnetic-clip-on-eyeglasses",
+      "name": "Specslook 6-in-1 Magnetic Clip-On Eyeglasses",
+      "sku": "SL-MAG-6IN1-BLK",
+      "brand": "SPECSLOOK",
+      "price": 4999,
+      "salePrice": 2499,
+      "description": "The ultimate all-in-one convertible eyewear system. Crafted around an ultra-lightweight Swiss TR90 optical base frame engineered for clear everyday prescription or computer lenses, this system includes 5 magnetic snap-on front clips: Polarized Dark Grey Sunglasses, Amber Night Driving (anti-glare & blue-blocking), Ice Blue Mirrored, Golden Yellow High-Contrast & Warm Havana Brown. Neodymium magnetic locks snap securely into place with zero wobble.",
+      "shortDescription": "Optical base frame + 5 magnetic snap-on sunglasses & night driving clip lenses with premium carry pouch.",
+      "category": "Attachments",
+      "subcategory": "Clip-On Eyeglasses",
+      "featured": true,
+      "bestSeller": true,
+      "newArrival": true,
+      "stock": 50,
+      "images": [
+        "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "specifications": {
+        "frameMaterial": "TR90 Swiss Memory Polymer",
+        "lensMaterial": "TAC Polarized + Optical Demo Base",
+        "lensWidthMm": 53,
+        "bridgeMm": 18,
+        "templeLengthMm": 142,
+        "uvProtection": "100% UV400 on all clip-ons",
+        "isPolarized": true,
+        "frameShape": "Rectangular",
+        "gender": "Unisex",
+        "weightGrams": 21
+      },
+      "variants": [
+        {
+          "id": "var-009-1",
+          "colorName": "Matte Black (with 5 Clips)",
+          "colorHex": "#1B1B1B",
+          "frameColor": "Matte Black",
+          "lensColor": "Clear Base + 5 Sun/Driving Clips",
+          "sku": "SL-MAG-6IN1-BLK",
+          "stock": 30,
+          "size": "Medium (53mm)",
+          "images": [
+            "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80"
+          ]
+        },
+        {
+          "id": "var-009-2",
+          "colorName": "Gloss Tortoise (with 5 Clips)",
+          "colorHex": "#5C381E",
+          "frameColor": "Dark Tortoise Shell",
+          "lensColor": "Clear Base + 5 Sun/Driving Clips",
+          "sku": "SL-MAG-6IN1-TOR",
+          "stock": 20,
+          "size": "Medium (53mm)",
+          "images": [
+            "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80"
+          ]
+        }
+      ],
+      "rating": 4.9,
+      "reviewsCount": 84,
+      "createdAt": "2026-09-01T08:00:00.000Z"
+    },
+    {
+      "id": "prod-010",
+      "slug": "specslook-2in1-magnetic-polarized-clip-on-eyeglasses",
+      "name": "Specslook 2-in-1 Magnetic Polarized Clip-On Eyeglasses",
+      "sku": "SL-MAG-2IN1-BLK",
+      "brand": "SPECSLOOK",
+      "price": 3499,
+      "salePrice": 1799,
+      "description": "Featherweight, minimalist optical eyeglasses with an integrated magnetic polarized sunglasses clip. Built with aerospace-grade Ultem polymer for incredible flexibility, extreme lightness, and seamless magnetic latching. Instant conversion from crisp optical eyeglasses to dark polarized sunglasses.",
+      "shortDescription": "Ultra-flexible optical eyeglasses with seamless magnetic polarized sunglass clip-on.",
+      "category": "Attachments",
+      "subcategory": "Clip-On Eyeglasses",
+      "featured": true,
+      "bestSeller": true,
+      "newArrival": true,
+      "stock": 40,
+      "images": [
+        "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "specifications": {
+        "frameMaterial": "Aerospace Ultem Resin",
+        "lensMaterial": "Polarized TAC Film UV400",
+        "lensWidthMm": 51,
+        "bridgeMm": 19,
+        "templeLengthMm": 140,
+        "uvProtection": "100% UV400",
+        "isPolarized": true,
+        "frameShape": "Round",
+        "gender": "Unisex",
+        "weightGrams": 18
+      },
+      "variants": [
+        {
+          "id": "var-010-1",
+          "colorName": "Midnight Black & Gunmetal",
+          "colorHex": "#18181B",
+          "frameColor": "Midnight Black",
+          "lensColor": "Clear Base + Dark Grey Polarized Clip",
+          "sku": "SL-MAG-2IN1-BLK",
+          "stock": 25,
+          "size": "Medium (51mm)",
+          "images": [
+            "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80"
+          ]
+        },
+        {
+          "id": "var-010-2",
+          "colorName": "Transparent Grey / Blue Polarized Clip",
+          "colorHex": "#64748B",
+          "frameColor": "Translucent Grey",
+          "lensColor": "Clear Base + Deep Ocean Blue Polarized Clip",
+          "sku": "SL-MAG-2IN1-GRY",
+          "stock": 15,
+          "size": "Medium (51mm)",
+          "images": [
+            "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80"
+          ]
+        }
+      ],
+      "rating": 4.8,
+      "reviewsCount": 42,
+      "createdAt": "2026-09-02T08:00:00.000Z"
     }
   ],
   "categories": [
@@ -1396,6 +1552,33 @@
       "description": "Safe rubberized frames, polarized shatter-resistant optics, and vibrant UV400 shades for outdoor play.",
       "image": "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=800&q=80",
       "itemCount": 4,
+      "featured": true
+    },
+    {
+      "id": "cat-attachments",
+      "slug": "attachments",
+      "name": "Attachments",
+      "description": "Convertible 6-in-1 and 2-in-1 magnetic clip-on frames that switch seamlessly from optical eyeglasses to sunglasses in 1 second.",
+      "image": "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=800&q=80",
+      "itemCount": 2,
+      "featured": true
+    },
+    {
+      "id": "cat-polarized",
+      "slug": "polarized",
+      "name": "Polarized",
+      "description": "High-definition polarized optics that eliminate 99.9% of blinding road, water, and outdoor glare.",
+      "image": "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=800&q=80",
+      "itemCount": 8,
+      "featured": true
+    },
+    {
+      "id": "cat-blue-light-blockers",
+      "slug": "blue-light-blockers",
+      "name": "Blue Light Blockers",
+      "description": "Zero eye strain anti-fatigue lenses engineered for computer screens, gaming, and digital devices.",
+      "image": "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=800&q=80",
+      "itemCount": 5,
       "featured": true
     }
   ],
@@ -1700,7 +1883,14 @@
           "timestamp": "2026-09-11T19:27:29.981Z",
           "note": "In transit to Mumbai Distribution Hub"
         }
-      ]
+      ],
+      "prescription": {
+        "mode": "upload",
+        "submittedAt": "2026-09-14T09:55:31.300Z",
+        "fileName": "Pooja_Singhania_Prescription_Slip.jpg",
+        "fileUrl": "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80",
+        "fileNotes": "Prescription card issued by Dr. Mehta Eye Clinic Bandra Mumbai on 10-Sep-2026."
+      }
     },
     {
       "id": "ord-892711",
@@ -1757,7 +1947,25 @@
           "timestamp": "2026-09-12T01:27:29.981Z",
           "note": "Under precision optical calibration in lab"
         }
-      ]
+      ],
+      "prescription": {
+        "mode": "optometrist_exam",
+        "submittedAt": "2026-09-15T15:50:31.300Z",
+        "optometristAppointment": {
+          "patientName": "Vikramaditya Rao",
+          "patientAge": 34,
+          "storeId": "store-sl1",
+          "storeName": "SPECSLOOK SL1 - DREAMZ MALL, GURUGRAM",
+          "storeAddress": "Shop No. 1, Dreamz Mall UG Floor, Sector 4-7 Circle, Gurugram, Haryana 122001",
+          "appointmentDate": "2026-09-16",
+          "timeSlot": "04:30 PM - 05:30 PM",
+          "contactNumber": "+91 97405 66789",
+          "status": "Confirmed - Client Called",
+          "calledAt": "2026-09-15T21:40:31.301Z",
+          "callNotes": "Spoke with Mr. Rao. Confirmed 4:30 PM slot. Senior optometrist assigned for computerized keratometry and progressive lens fitting.",
+          "specialInstructions": "Requires titanium frame temple adjustment for wide fit."
+        }
+      }
     },
     {
       "id": "ord-893012",
@@ -1805,7 +2013,23 @@
           "timestamp": "2026-09-12T04:27:29.981Z",
           "note": "Customer contact verified via SMS"
         }
-      ]
+      ],
+      "prescription": {
+        "mode": "manual",
+        "submittedAt": "2026-09-16T05:45:31.301Z",
+        "manualPower": {
+          "odSph": "+1.75",
+          "odCyl": "0.00",
+          "odAxis": "0°",
+          "odAdd": "+1.50",
+          "osSph": "+2.00",
+          "osCyl": "0.00",
+          "osAxis": "0°",
+          "osAdd": "+1.50",
+          "pd": "64 mm",
+          "notes": "Reading and close-work bifocals with anti-fatigue tint."
+        }
+      }
     }
   ],
   "coupons": [
@@ -2112,8 +2336,8 @@
   "admin": {
     "id": "admin-01",
     "username": "honeygogia",
-    "passwordSalt": "f3045f34c7f0e8cc4c63818378ea0109",
-    "passwordHash": "ec79771d29e00844ee8a048856b94f605e30e6410b892c8eec137a72af54719214cddaa08aec3d0addb9c77281323401c0ee4cbcb3d5addfd0ad91fa5333819a",
+    "passwordSalt": "126859fd82f6c56ce940df849c706073",
+    "passwordHash": "0a33192eaa356857eaa775d24ea80df540f7b0f1eccc9ff61ad7edd85e69c91f1c5bc394511bf124da50f8206b49bf23568464001f097d27e17da1235c103453",
     "role": "superadmin",
     "name": "Honey Gogia",
     "email": "honeygogia@specslook.com"
