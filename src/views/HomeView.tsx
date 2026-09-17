@@ -11,6 +11,7 @@ import {
   CheckCircle
 } from 'lucide-react';
 import { useStore } from '../context/StoreContext.tsx';
+import { HeroBannerSlider } from '../components/HeroBannerSlider.tsx';
 import { ProductSlider } from '../components/ProductSlider.tsx';
 import { StoreLocatorForm } from '../components/StoreLocatorForm.tsx';
 
@@ -23,7 +24,7 @@ import sunglassWomanImg from '../assets/images/sunglass_woman_face_1789314512198
 import sunglassKidImg from '../assets/images/sunglass_kid_smile_1789314525399.jpg';
 
 export const HomeView: React.FC = () => {
-  const { products, categories, stores, blogs, banners, navigateTo } = useStore();
+  const { products, categories, stores, blogs, navigateTo } = useStore();
 
   // Eyeglasses sorted with bestsellers first
   const bestSellingEyeglasses = [...products]
@@ -35,74 +36,10 @@ export const HomeView: React.FC = () => {
     .filter(p => p.category === 'Sunglasses')
     .sort((a, b) => (b.bestSeller ? 1 : 0) - (a.bestSeller ? 1 : 0));
 
-  const heroBanner = banners[0] || {
-    title: 'THE ICONS COLLECTION',
-    subtitle: 'Classic Aviator, Wayfarer and Clubmaster silhouettes re-engineered with aerospace-grade metal and precision polarized optics.',
-    badge: 'NEW SEASON DROP',
-    ctaText: 'Explore Sunglasses',
-    ctaLink: '/shop?category=Sunglasses',
-    imageUrl: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1800&q=85'
-  };
-
   return (
     <div className="bg-white min-h-screen">
-      {/* 1. HERO BANNER SECTION (High-Contrast Ray-Ban Style) */}
-      <section className="relative w-full min-h-[580px] lg:min-h-[640px] bg-neutral-950 text-white overflow-hidden flex items-center">
-        {/* Background Image with Cinematic Gradient Overlay */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src={heroBanner.imageUrl}
-            alt="Specslook Luxury Eyewear"
-            className="w-full h-full object-cover object-center opacity-65 scale-105 transition-transform duration-1000"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-neutral-950 via-neutral-950/75 to-transparent" />
-        </div>
-
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="max-w-xl space-y-6">
-            <div className="inline-flex items-center gap-2 bg-red-600/90 text-white text-[11px] font-extrabold uppercase px-3 py-1 tracking-widest rounded-xs shadow-sm">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>{heroBanner.badge || 'AUTUMN / WINTER 2026'}</span>
-            </div>
-
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white leading-none">
-              {heroBanner.title}
-            </h1>
-
-            <p className="text-sm sm:text-base text-neutral-300 font-normal leading-relaxed">
-              {heroBanner.subtitle}
-            </p>
-
-            <div className="pt-2 flex flex-col sm:flex-row gap-3">
-              <button
-                onClick={() => navigateTo('shop', { category: 'Sunglasses' })}
-                className="bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs sm:text-sm py-3.5 px-8 uppercase tracking-widest transition-colors shadow-lg flex items-center justify-center gap-2 group"
-              >
-                <span>Shop Sunglasses</span>
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </button>
-
-              <button
-                onClick={() => navigateTo('shop', { category: 'Eyeglasses' })}
-                className="bg-white/10 hover:bg-white text-white hover:text-neutral-900 font-extrabold text-xs sm:text-sm py-3.5 px-8 uppercase tracking-widest transition-all backdrop-blur-xs border border-white/30 flex items-center justify-center gap-2"
-              >
-                <span>Explore Optical</span>
-              </button>
-            </div>
-
-            <div className="pt-6 border-t border-neutral-800 flex items-center gap-6 text-xs text-neutral-400">
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-red-500" />
-                <span>100% UV400 Mineral Glass</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Award className="w-4 h-4 text-red-500" />
-                <span>Original Italian Heritage</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* 1. HERO BANNER SLIDER (Interactive High-Fashion Specslook Showcase) */}
+      <HeroBannerSlider />
 
       {/* 1.5. DEDICATED GENDER & OPTICAL CATEGORIES */}
       <section className="py-12 bg-white border-b border-neutral-200">
