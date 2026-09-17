@@ -17,9 +17,10 @@ import {
   FileText,
   Calendar
 } from 'lucide-react';
-import { Product, ProductVariant, Review, LensAddon, EYEGLASS_LENS_ADDONS, SUNGLASS_LENS_ADDONS, ATTACHMENT_LENS_ADDONS } from '../types.ts';
+import { Product, ProductVariant, Review, LensAddon, EYEGLASS_LENS_ADDONS, SUNGLASS_LENS_ADDONS, ATTACHMENT_LENS_ADDONS, SINGLE_VISION_LENS_ADDONS } from '../types.ts';
 import { useStore } from '../context/StoreContext.tsx';
 import { ProductCard } from '../components/ProductCard.tsx';
+import { LensSelectionDrawer } from '../components/LensSelectionDrawer.tsx';
 
 export const ProductDetailView: React.FC = () => {
   const { products, viewParams, navigateTo, addToCart, toggleWishlist, isInWishlist, showToast, setIsCartOpen } = useStore();
@@ -34,6 +35,7 @@ export const ProductDetailView: React.FC = () => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [selectedLensAddon, setSelectedLensAddon] = useState<LensAddon>(EYEGLASS_LENS_ADDONS[0]);
   const [quantity, setQuantity] = useState(1);
+  const [isLensDrawerOpen, setIsLensDrawerOpen] = useState(false);
 
   // Review Form
   const [showReviewForm, setShowReviewForm] = useState(false);
@@ -265,8 +267,8 @@ export const ProductDetailView: React.FC = () => {
 
   return (
     <div className="bg-white min-h-screen pb-24">
-      {/* Breadcrumb Bar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 border-b border-neutral-200 text-xs font-medium text-neutral-500 flex items-center justify-between">
+      {/* Breadcrumb Bar (Hidden on mobile per user request) */}
+      <div className="hidden md:flex max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 border-b border-neutral-200 text-xs font-medium text-neutral-500 items-center justify-between">
         <div className="flex items-center gap-2">
           <button onClick={() => navigateTo('home')} className="hover:text-neutral-900">Home</button>
           <span>/</span>
@@ -449,129 +451,124 @@ export const ProductDetailView: React.FC = () => {
               </div>
             )}
 
-            {/* Lens Technology & Power Options (Only for Eyeglasses and Sunglasses) */}
+            {/* Lens Options Card */}
             {availableLensAddons.length > 0 && (
-              <div className="space-y-2.5">
+              <div className="border border-neutral-200 bg-white p-3.5 sm:p-4 rounded-xs space-y-3 shadow-2xs">
                 <div className="flex items-center justify-between">
-                  <label className="block font-bold text-xs uppercase tracking-wider text-neutral-900 flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5 text-red-600" />
-                    <span>
-                      {isAttachment
-                        ? 'Base Optical Frame Lens Add-ons (Clip-ons convert to sunglasses)'
-                        : isSunglasses
-                          ? 'Sunglasses Lens & Power Options'
-                          : 'Glass Add-ons & Lens Package'}
+                  <div>
+                    <span className="text-xs font-black uppercase tracking-wider text-neutral-900 block">
+                      Lens & Power Options
                     </span>
-                  </label>
-                  <span className="text-[11px] text-red-600 font-bold">
-                    {selectedLensAddon.price > 0 ? `+₹${selectedLensAddon.price.toLocaleString('en-IN')}` : 'Base Price'}
-                  </span>
+                    <span className="text-[11px] text-neutral-500">
+                      Select prescription lenses or buy frame only
+                    </span>
+                  </div>
+                  {selectedLensAddon.price > 0 ? (
+                    <span className="bg-red-600 text-white text-[10px] font-black px-2 py-0.5 rounded-xs">
+                      +₹{selectedLensAddon.price.toLocaleString('en-IN')}
+                    </span>
+                  ) : (
+                    <span className="bg-neutral-100 text-neutral-700 text-[10px] font-bold px-2 py-0.5 rounded-xs">
+                      Demo Lenses (₹0)
+                    </span>
+                  )}
                 </div>
 
-                <div className="space-y-2">
-                  {availableLensAddons.map((opt) => {
-                    const isSelected = selectedLensAddon.id === opt.id;
-                    return (
-                      <div
-                        key={opt.id}
-                        onClick={() => setSelectedLensAddon(opt)}
-                        className={`p-3 border rounded-xs cursor-pointer transition-all flex flex-col gap-1.5 ${
-                          isSelected
-                            ? 'border-neutral-950 bg-neutral-900/5 ring-1 ring-neutral-950 shadow-xs'
-                            : 'border-neutral-200 hover:border-neutral-400 bg-white'
-                        }`}
-                      >
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${isSelected ? 'border-red-600 bg-red-600 text-white' : 'border-neutral-300'}`}>
-                              {isSelected && <Check className="w-2.5 h-2.5 stroke-[3]" />}
-                            </div>
-                            <span className="text-xs font-bold text-neutral-900">{opt.name}</span>
-                            {opt.tag && (
-                              <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.2 bg-red-100 text-red-700 rounded-xs">
-                                {opt.tag}
-                              </span>
-                            )}
-                          </div>
-                          <span className={`text-xs font-bold shrink-0 ${opt.price > 0 ? 'text-neutral-900' : 'text-emerald-600'}`}>
-                            {opt.price > 0 ? `+₹${opt.price.toLocaleString('en-IN')}` : 'FREE / INCLUDED'}
-                          </span>
-                        </div>
+                {/* Quick Dual Cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {/* Card 1: Buy Frame Only */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const demo = isSunglasses ? SUNGLASS_LENS_ADDONS[0] : SINGLE_VISION_LENS_ADDONS[0];
+                      setSelectedLensAddon(demo);
+                      showToast('Frame only selected with zero-power demo lenses', 'info');
+                    }}
+                    className={`p-3 border rounded-xs text-left transition-all flex items-start gap-2.5 cursor-pointer ${
+                      selectedLensAddon.id === 'none' || selectedLensAddon.id === 'sg-standard'
+                        ? 'border-neutral-900 bg-neutral-50 ring-1 ring-neutral-900'
+                        : 'border-neutral-200 hover:border-neutral-300 bg-white'
+                    }`}
+                  >
+                    <div
+                      className={`w-4 h-4 rounded-full border flex items-center justify-center mt-0.5 shrink-0 ${
+                        selectedLensAddon.id === 'none' || selectedLensAddon.id === 'sg-standard'
+                          ? 'border-neutral-900 bg-neutral-900 text-white'
+                          : 'border-neutral-300'
+                      }`}
+                    >
+                      {(selectedLensAddon.id === 'none' || selectedLensAddon.id === 'sg-standard') && (
+                        <Check className="w-2.5 h-2.5 stroke-[3]" />
+                      )}
+                    </div>
+                    <div>
+                      <span className="font-bold text-xs text-neutral-900 block">
+                        {isSunglasses ? 'Non-Powered Sun Lenses' : 'Buy Frame Only'}
+                      </span>
+                      <span className="text-[10px] text-neutral-500 block leading-tight mt-0.5">
+                        {isSunglasses ? '100% UV400 sun protection included' : 'Fitted with clear demo lenses'}
+                      </span>
+                      <span className="text-[10px] font-extrabold text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded-xs inline-block mt-1.5">
+                        ₹0 Extra
+                      </span>
+                    </div>
+                  </button>
 
-                        <p className="text-[11px] text-neutral-500 pl-6 leading-relaxed">
-                          {opt.description}
-                        </p>
-
-                        <div className="flex flex-wrap gap-1.5 pl-6 pt-0.5">
-                          {opt.features.map((feat, fIdx) => (
-                            <span key={fIdx} className="text-[10px] bg-neutral-100 text-neutral-600 px-1.5 py-0.5 rounded-xs font-medium">
-                              {feat}
-                            </span>
-                          ))}
-                        </div>
+                  {/* Card 2: Select Lenses (Opens Drawer) */}
+                  <button
+                    type="button"
+                    onClick={() => setIsLensDrawerOpen(true)}
+                    className={`p-3 border rounded-xs text-left transition-all flex items-start gap-2.5 cursor-pointer ${
+                      selectedLensAddon.id !== 'none' && selectedLensAddon.id !== 'sg-standard'
+                        ? 'border-red-600 bg-red-50/40 ring-1 ring-red-600'
+                        : 'border-red-600/70 hover:border-red-600 bg-red-50/20'
+                    }`}
+                  >
+                    <div
+                      className={`w-4 h-4 rounded-full border flex items-center justify-center mt-0.5 shrink-0 ${
+                        selectedLensAddon.id !== 'none' && selectedLensAddon.id !== 'sg-standard'
+                          ? 'border-red-600 bg-red-600 text-white'
+                          : 'border-red-400'
+                      }`}
+                    >
+                      {selectedLensAddon.id !== 'none' && selectedLensAddon.id !== 'sg-standard' && (
+                        <Check className="w-2.5 h-2.5 stroke-[3]" />
+                      )}
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-1">
+                        <Sparkles className="w-3 h-3 text-red-600" />
+                        <span className="font-bold text-xs text-neutral-900 block">Select Lenses</span>
                       </div>
-                    );
-                  })}
+                      <span className="text-[10px] text-neutral-600 block leading-tight mt-0.5">
+                        {isSunglasses ? 'Single Vision UV400, Progressive UV400' : 'Single Vision, Bi-Focal, Progressive'}
+                      </span>
+                      <span className="text-[10px] font-extrabold text-red-600 bg-red-100/70 px-1.5 py-0.2 rounded-xs inline-block mt-1.5">
+                        {isSunglasses ? 'From +₹899 (50% OFF)' : 'From +₹299 (50% OFF)'}
+                      </span>
+                    </div>
+                  </button>
                 </div>
 
-                {/* POST-CHECKOUT LENS POWER NOTICE (For Eyeglasses and Attachments OR when Sunglasses Power Addon is chosen) */}
-                {(isEyeglasses || isAttachment) && (
-                  <div className="p-3 bg-amber-50/80 border border-amber-200 rounded-xs text-xs space-y-1.5 mt-2.5">
-                    <div className="flex items-center gap-2">
-                      <span className="w-5 h-5 rounded-full bg-amber-600 text-white flex items-center justify-center text-[10px] font-bold shrink-0">
-                        ℹ️
+                {/* Selected Lens Display Strip */}
+                <div className="flex items-center justify-between p-2.5 bg-neutral-50 border border-neutral-200 rounded-xs text-xs">
+                  <div className="flex items-center gap-2 truncate pr-2">
+                    <span className="text-[10px] uppercase font-black text-neutral-500">Lens:</span>
+                    <span className="font-bold text-neutral-900 truncate">{selectedLensAddon.name}</span>
+                    {selectedLensAddon.price > 0 && (
+                      <span className="text-[10px] font-black text-red-600 shrink-0">
+                        (+₹{selectedLensAddon.price.toLocaleString('en-IN')})
                       </span>
-                      <span className="font-extrabold text-amber-950 uppercase tracking-wide text-[11px]">
-                        Power for lenses add-on will be asked post check-out
-                      </span>
-                    </div>
-                    <p className="text-[11px] text-amber-900 leading-relaxed pl-7">
-                      {isAttachment
-                        ? "Your optical base frame will be custom-fitted with your exact prescription power (or clear zero-power demo lenses). The magnetic sunglasses clips snap over smoothly anytime! Right after checkout, you can select:"
-                        : "You don't need your power numbers right now. Right after completing checkout, you will get 3 easy options:"}
-                    </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-1.5 pl-7 pt-0.5 text-[10px] font-semibold text-amber-950">
-                      <div className="bg-white/90 border border-amber-200 px-2 py-1 rounded-xs flex items-center gap-1">
-                        <FileText className="w-3 h-3 text-amber-700 shrink-0" />
-                        <span>Upload Prescription</span>
-                      </div>
-                      <div className="bg-white/90 border border-amber-200 px-2 py-1 rounded-xs flex items-center gap-1">
-                        <Eye className="w-3 h-3 text-amber-700 shrink-0" />
-                        <span>Select Power Dropdown</span>
-                      </div>
-                      <div className="bg-white/90 border border-amber-200 px-2 py-1 rounded-xs flex items-center gap-1">
-                        <Calendar className="w-3 h-3 text-amber-700 shrink-0" />
-                        <span>Free Store Eye Exam</span>
-                      </div>
-                    </div>
+                    )}
                   </div>
-                )}
-
-                {isSunglasses && selectedLensAddon.id === 'sg-powered-tinted-uv420' && (
-                  <div className="p-3 bg-amber-50/80 border border-amber-200 rounded-xs text-xs space-y-1.5 mt-2.5">
-                    <div className="flex items-center gap-2">
-                      <span className="w-5 h-5 rounded-full bg-amber-600 text-white flex items-center justify-center text-[10px] font-bold shrink-0">
-                        ℹ️
-                      </span>
-                      <span className="font-extrabold text-amber-950 uppercase tracking-wide text-[11px]">
-                        Prescription Power will be asked post check-out
-                      </span>
-                    </div>
-                    <p className="text-[11px] text-amber-900 leading-relaxed pl-7">
-                      Right after completing checkout, you can upload your prescription or select dropdown power. Our optical lab will custom-grind and tint your UV420 lenses to match the exact colour of this sunglass frame!
-                    </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 pl-7 pt-0.5 text-[10px] font-semibold text-amber-950">
-                      <div className="bg-white/90 border border-amber-200 px-2 py-1 rounded-xs flex items-center gap-1">
-                        <FileText className="w-3 h-3 text-amber-700 shrink-0" />
-                        <span>Upload Prescription</span>
-                      </div>
-                      <div className="bg-white/90 border border-amber-200 px-2 py-1 rounded-xs flex items-center gap-1">
-                        <Eye className="w-3 h-3 text-amber-700 shrink-0" />
-                        <span>Select Power Dropdown</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
+                  <button
+                    type="button"
+                    onClick={() => setIsLensDrawerOpen(true)}
+                    className="text-[11px] font-black text-red-600 hover:text-red-700 underline uppercase tracking-wider shrink-0 cursor-pointer"
+                  >
+                    {selectedLensAddon.id === 'none' || selectedLensAddon.id === 'sg-standard' ? 'Select Lenses' : 'Change Lens'}
+                  </button>
+                </div>
               </div>
             )}
 
@@ -580,7 +577,7 @@ export const ProductDetailView: React.FC = () => {
               <div>
                 <span className="font-bold text-neutral-900 uppercase tracking-wider">Total Item Price: </span>
                 <span className="text-neutral-600 font-medium">
-                  ₹{product.salePrice.toLocaleString('en-IN')} {selectedLensAddon.price > 0 && `+ ₹${selectedLensAddon.price.toLocaleString('en-IN')} (${selectedLensAddon.code})`}
+                  ₹{product.salePrice.toLocaleString('en-IN')} {selectedLensAddon.price > 0 && `+ ₹${selectedLensAddon.price.toLocaleString('en-IN')} (${selectedLensAddon.name})`}
                 </span>
               </div>
               <div className="text-right">
@@ -605,8 +602,25 @@ export const ProductDetailView: React.FC = () => {
               </span>
             </div>
 
-            {/* Action Buttons: Add to Bag & Buy Now */}
-            <div className="space-y-3 pt-2">
+            {/* Action Buttons: Select Lenses, Add to Bag & Buy Now */}
+            <div className="space-y-2.5 pt-2">
+              {/* Primary "Select Lenses" button */}
+              {availableLensAddons.length > 0 && (
+                <button
+                  id="detail-select-lenses-cta"
+                  type="button"
+                  onClick={() => setIsLensDrawerOpen(true)}
+                  className="w-full bg-red-600 hover:bg-red-700 text-white text-xs sm:text-sm font-black py-3.5 px-4 uppercase tracking-widest transition-colors flex items-center justify-center gap-2 shadow-md cursor-pointer rounded-xs"
+                >
+                  <Sparkles className="w-4 h-4 text-white" />
+                  <span>
+                    {selectedLensAddon.price > 0
+                      ? `Change Lenses (${selectedLensAddon.name})`
+                      : 'Select Lenses'}
+                  </span>
+                </button>
+              )}
+
               <div className="flex gap-3">
                 {/* Quantity */}
                 <div className="flex items-center border border-neutral-300 rounded-xs bg-white">
@@ -629,10 +643,12 @@ export const ProductDetailView: React.FC = () => {
                 <button
                   id="detail-add-to-bag"
                   onClick={handleAddToCart}
-                  className="flex-1 bg-neutral-900 hover:bg-neutral-950 text-white text-xs sm:text-sm font-extrabold py-3.5 px-4 uppercase tracking-widest transition-colors flex items-center justify-center gap-2 shadow-md"
+                  className="flex-1 bg-neutral-900 hover:bg-neutral-950 text-white text-xs sm:text-sm font-extrabold py-3.5 px-4 uppercase tracking-widest transition-colors flex items-center justify-center gap-2 shadow-md rounded-xs"
                 >
                   <ShoppingBag className="w-4 h-4" />
-                  <span>Add to Bag</span>
+                  <span>
+                    Add to Bag • ₹{(effectiveUnitPrice * quantity).toLocaleString('en-IN')}
+                  </span>
                 </button>
 
                 {/* Wishlist */}
@@ -651,7 +667,7 @@ export const ProductDetailView: React.FC = () => {
               <button
                 id="detail-buy-now"
                 onClick={handleBuyNow}
-                className="w-full bg-red-600 hover:bg-red-700 text-white text-xs sm:text-sm font-extrabold py-3.5 px-4 uppercase tracking-widest transition-colors flex items-center justify-center gap-2 shadow-md cursor-pointer"
+                className="w-full bg-neutral-800 hover:bg-neutral-900 text-white text-xs sm:text-sm font-extrabold py-3.5 px-4 uppercase tracking-widest transition-colors flex items-center justify-center gap-2 shadow-xs cursor-pointer rounded-xs"
               >
                 <Truck className="w-4 h-4 text-white" />
                 <span>Buy Now • Cash on Delivery</span>
@@ -878,6 +894,28 @@ export const ProductDetailView: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Side Slide-Over Drawer for Desktop / Fullscreen Modal on Mobile (3 Layers) */}
+      {product && (
+        <LensSelectionDrawer
+          isOpen={isLensDrawerOpen}
+          onClose={() => setIsLensDrawerOpen(false)}
+          product={product}
+          selectedLensAddon={selectedLensAddon}
+          onSelectLensAddon={(addon) => setSelectedLensAddon(addon)}
+          onConfirmAndAddToCart={(addon, target = 'cart') => {
+            setSelectedLensAddon(addon);
+            addToCart(product, activeVariant, quantity, addon.name, addon);
+            if (target === 'checkout') {
+              setIsCartOpen(false);
+              navigateTo('checkout');
+            } else {
+              setIsCartOpen(true);
+            }
+            showToast(`Added ${product.name} with ${addon.name} to bag!`, 'success');
+          }}
+        />
+      )}
     </div>
   );
 };

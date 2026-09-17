@@ -1,28 +1,37 @@
 export type OrderStatus = 'Pending' | 'Confirmed' | 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled';
 
+export type VisionType = 'single_vision' | 'bifocal' | 'progressive';
+
 export interface LensAddon {
   id: string;
   name: string;
-  price: number; // in INR e.g. 0, 299, 499, 899, 1299
+  price: number; // in INR e.g. 0, 299, 499, 599, 899, 999, 1249, 1499, 2499, 2999
+  originalPrice?: number; // Sliced 2x MRP in INR e.g. 599, 999, 1199, 1999, 2499, 2999, 4999, 5999
+  visionType?: VisionType;
   description: string;
   shortDescription?: string;
   features: string[];
   tag?: string;
+  badge?: string;
 }
 
-export const EYEGLASS_LENS_ADDONS: LensAddon[] = [
+export const SINGLE_VISION_LENS_ADDONS: LensAddon[] = [
   {
     id: 'none',
     name: 'Standard Frame / Demo Lenses',
     price: 0,
-    description: 'Complimentary high-clarity optical demo lenses pre-fitted into your frame.',
+    originalPrice: 0,
+    visionType: 'single_vision',
+    description: 'Complimentary high-clarity optical demo lenses pre-fitted into your frame (Zero power).',
     shortDescription: 'Clear optical demo lenses included',
-    features: ['Zero power demo lenses', 'Scratch-resistant hard coat', 'Ready for prescription fitting or styling']
+    features: ['Zero power demo lenses', 'Scratch-resistant hard coat', 'Ready for prescription fitting or fashion wear']
   },
   {
     id: 'sl-antiglare',
     name: 'SL Anti Glare',
     price: 299,
+    originalPrice: 599,
+    visionType: 'single_vision',
     description: 'Multi-layer anti-reflective (AR) coating designed to cancel harsh reflections, headlight halos during night driving, and overhead glare.',
     shortDescription: 'Eliminates glare & reflections for night driving & clear optics',
     features: ['Dual-side anti-reflective coating', 'Prevents night-driving headlight halos', 'Crystal-clear lens transparency', 'Easy-clean surface'],
@@ -32,6 +41,8 @@ export const EYEGLASS_LENS_ADDONS: LensAddon[] = [
     id: 'sl-blupro',
     name: 'SL BluPro UV',
     price: 499,
+    originalPrice: 999,
+    visionType: 'single_vision',
     description: 'Precision blue light filtration with complete 100% UV400 shield. Blocks harmful high-energy blue-violet rays emitted by laptops, smartphones, and monitors.',
     shortDescription: 'Blocks harmful screen blue light & 100% UV400 radiation',
     features: ['Screens & digital device eye-strain relief', '100% UV400 broad spectrum protection', 'Cuts screen fatigue & headaches', 'Natural color balance'],
@@ -41,6 +52,8 @@ export const EYEGLASS_LENS_ADDONS: LensAddon[] = [
     id: 'sl-bluultra',
     name: 'SL BluUltra UV',
     price: 899,
+    originalPrice: 1799,
+    visionType: 'single_vision',
     description: 'Premium high-index ultra-thin lenses with advanced blue light defense, super-hydrophobic smudge repellent, and anti-static dust repelling nanotechnology.',
     shortDescription: 'Advanced ultra-thin blue filter + anti-smudge nano shield',
     features: ['High-index lightweight thin profile', 'Super hydrophobic water & grease repelling', 'Oleophobic anti-fingerprint coating', 'Ultra-durable anti-scratch shield'],
@@ -50,10 +63,160 @@ export const EYEGLASS_LENS_ADDONS: LensAddon[] = [
     id: 'sl-photouv',
     name: 'SL PhotoUV (Gen 8 Photochromic lenses)',
     price: 1299,
+    originalPrice: 2599,
+    visionType: 'single_vision',
     description: 'Next-generation smart adaptive light transition lenses. 100% transparent indoors, then automatically shifts to rich dark sunglass tint within seconds under sunlight.',
     shortDescription: 'Smart 2-in-1: Clear indoors, auto-darkens to dark sunglasses outdoors',
     features: ['Gen 8 rapid photochromic transition', 'Seamless indoor-to-outdoor adaptation', '100% UV400 & glare blocking when tinted', 'One pair for reading and outdoor sunlight'],
     tag: 'Premium 2-in-1'
+  }
+];
+
+export const BIFOCAL_LENS_ADDONS: LensAddon[] = [
+  {
+    id: 'bf-hard-multicoat',
+    name: 'Hard Multicoat Bifocal Lenses',
+    price: 599,
+    originalPrice: 1199,
+    visionType: 'bifocal',
+    description: 'Dual-vision lenses with distinct D-segment for distance and near reading vision, reinforced with a hard multicoat scratch guard.',
+    shortDescription: 'Distance + reading in one lens with hard multicoat scratch guard',
+    features: ['Precision D-segment reading window', 'Hard multicoat scratch resistance', 'Anti-reflective clear glare reduction', 'Durable high-impact resin'],
+    tag: 'Standard Bifocal'
+  },
+  {
+    id: 'bf-blupro',
+    name: 'BluPro UV Bifocal Lenses',
+    price: 999,
+    originalPrice: 1999,
+    visionType: 'bifocal',
+    description: 'Dual-focal bifocal lenses with advanced blue light filtration shield protecting against digital screens, mobile phones, and 100% UV rays.',
+    shortDescription: 'Distance & reading in one pair with screen blue ray filter + UV400',
+    features: ['Distance & near reading in one frame', 'Blue light filter for digital devices', '100% UV400 broad spectrum protection', 'Multi-layer anti-glare coating'],
+    tag: 'Digital Screen Bifocal'
+  },
+  {
+    id: 'bf-bluultra',
+    name: 'BluUltra UV Bifocal Lenses',
+    price: 1249,
+    originalPrice: 2499,
+    visionType: 'bifocal',
+    description: 'Premium ultra-thin high-index bifocals equipped with hydrophobic grease & water repelling nano-coating and maximum blue ray filtration.',
+    shortDescription: 'Ultra-thin high-index bifocal + hydrophobic smudge repellent',
+    features: ['Ultra-thin high-index lightweight profile', 'Enhanced blue ray & 100% UV400 shield', 'Super hydrophobic water & oil repellent', 'Widened clarity D-segment window'],
+    tag: 'Best Seller Bifocal'
+  }
+];
+
+export const PROGRESSIVE_LENS_ADDONS: LensAddon[] = [
+  {
+    id: 'prog-hmc',
+    name: 'HMC Progressive Lenses',
+    price: 1499,
+    originalPrice: 2999,
+    visionType: 'progressive',
+    description: 'No-line multifocal lenses with smooth seamless transition between distance, intermediate (computer), and near reading vision.',
+    shortDescription: 'Zero line / no visible segment with seamless focus at all distances',
+    features: ['Zero line / no visible dividing segment', 'Seamless focus: distance, computer & reading', 'Hard multicoat anti-scratch defense', 'Wide reading sweet-spot'],
+    tag: 'All-in-One Multifocal'
+  },
+  {
+    id: 'prog-blupro',
+    name: 'BluPro Progressive (Median Corridor)',
+    price: 2499,
+    originalPrice: 4999,
+    visionType: 'progressive',
+    description: 'Advanced median corridor progressive design with digital screen blue filter and widened intermediate desktop view for natural head posture.',
+    shortDescription: 'Median corridor for smooth natural transition + digital blue block',
+    features: ['Median optical corridor for smooth eye movement', 'Computer & screen blue block filtration', '100% UV400 radiation shield', 'Faster adaptation & minimal swim effect'],
+    tag: 'Popular Progressive'
+  },
+  {
+    id: 'prog-bluultra',
+    name: 'BluUltra Digital Progressive (Freeform German Technology)',
+    price: 2999,
+    originalPrice: 5999,
+    visionType: 'progressive',
+    description: 'State-of-the-art freeform back-surface digital progressive lenses engineered with German optical precision for distortion-free panoramic vision.',
+    shortDescription: 'German freeform digital precision optics + ultra-wide panoramic corridor',
+    features: ['German freeform precision point-by-point digital optics', 'Ultra-wide panoramic peripheral vision field', 'Instant adaptation with zero swim effect', 'Ultra-thin high-index & hydrophobic nano shield'],
+    tag: 'German Tech Flagship'
+  }
+];
+
+export const EYEGLASS_LENS_ADDONS: LensAddon[] = [
+  ...SINGLE_VISION_LENS_ADDONS,
+  ...BIFOCAL_LENS_ADDONS,
+  ...PROGRESSIVE_LENS_ADDONS
+];
+
+export const SUNGLASS_SINGLE_VISION_LENS_ADDONS: LensAddon[] = [
+  {
+    id: 'sg-single-uv400',
+    name: 'Single Vision UV400 Lenses',
+    price: 899,
+    originalPrice: 1799,
+    visionType: 'single_vision',
+    description: 'Custom prescription single vision lenses tinted to match your sunglasses frame with 100% UV400 ultraviolet radiation protection.',
+    shortDescription: 'Prescription single vision with 100% UV400 block + matching sunglasses tint',
+    features: [
+      '100% UV400 ultraviolet radiation protection',
+      'Custom prescription single vision (Distance or Reading)',
+      'Matching tint shade to sunglasses frame',
+      'Hard multicoat anti-scratch defense'
+    ],
+    tag: 'UV400 Protected'
+  },
+  {
+    id: 'sg-single-japanese',
+    name: 'UV400 Thin (Japanese Lenses)',
+    price: 1199,
+    originalPrice: 2399,
+    visionType: 'single_vision',
+    description: 'Ultra-thin high-index Japanese optical lenses engineered with superior UV400 sun defense, crystal clarity, and hydrophobic smudge repellent.',
+    shortDescription: 'Japanese high-index ultra-thin resin + UV400 & hydrophobic coating',
+    features: [
+      'Japanese high-index optical resin',
+      'Ultra-thin lightweight profile for all powers',
+      '100% UV400 high-energy sun protection',
+      'Hydrophobic water, grease & dust repelling coating'
+    ],
+    tag: 'Japanese Optics'
+  }
+];
+
+export const SUNGLASS_PROGRESSIVE_LENS_ADDONS: LensAddon[] = [
+  {
+    id: 'sg-prog-regular',
+    name: 'Regular Progressive UV400',
+    price: 2999,
+    originalPrice: 5999,
+    visionType: 'progressive',
+    description: 'Seamless multifocal distance, intermediate, and near reading progressive lenses equipped with 100% UV400 protection without any dividing lines.',
+    shortDescription: 'Seamless progressive (Distance & Reading) with UV400 + zero lines',
+    features: [
+      'Seamless multi-distance focus (Distance & Reading)',
+      '100% UV400 broad spectrum sun shield',
+      'Anti-reflective back surface glare reduction',
+      'Zero visible bifocal line on sunglasses'
+    ],
+    tag: 'Regular Progressive'
+  },
+  {
+    id: 'sg-prog-goa-freeform',
+    name: 'Freeform Progressive (Prime Lenses Made in GOA)',
+    price: 4799,
+    originalPrice: 9599,
+    visionType: 'progressive',
+    description: 'High-precision digital back-surface freeform progressive lenses manufactured at the flagship Prime Optical facility in Goa for edge-to-edge panoramic clarity.',
+    shortDescription: 'Digital freeform Prime Lenses made in Goa + ultra-wide panoramic corridor',
+    features: [
+      'Prime Lenses precision-crafted in Goa facility',
+      'Digital point-by-point back-surface freeform optics',
+      'Ultra-wide distortion-free panoramic corridor',
+      '100% UV400 shield & hydrophobic scratch-proof coating'
+    ],
+    tag: 'Prime Lenses (Goa)'
   }
 ];
 
@@ -62,24 +225,13 @@ export const SUNGLASS_LENS_ADDONS: LensAddon[] = [
     id: 'sg-standard',
     name: 'Standard Non-Powered Sun Lenses',
     price: 0,
+    originalPrice: 0,
     description: 'Handcrafted 100% UV400 protective sun lenses with premium optical tint (No prescription power needed).',
     shortDescription: '100% UV400 Non-powered sun lenses included',
     features: ['Zero prescription power', '100% UV400 radiation protection', 'Glaze & glare blocking tint']
   },
-  {
-    id: 'sg-powered-tinted-uv420',
-    name: 'Powered Tinted UV420 Glasses (Exactly same colour as the Sunglasses)',
-    price: 899,
-    description: 'Custom prescription-grinded optical lenses tinted to match the exact shade and colour of the sunglasses, with full UV420 high-energy ultraviolet protection.',
-    shortDescription: 'Prescription power lenses tinted to match exact sunglass colour + UV420',
-    features: [
-      'Custom grinded to your eye prescription',
-      'Exact same colour tint as the sunglasses',
-      'UV420 high-energy ultraviolet protection',
-      'Anti-reflective back coat & scratch shield'
-    ],
-    tag: 'Exclusive Power Addon'
-  }
+  ...SUNGLASS_SINGLE_VISION_LENS_ADDONS,
+  ...SUNGLASS_PROGRESSIVE_LENS_ADDONS
 ];
 
 // Attachments Category (e.g. 6-in-1, 2-in-1 clip-ons): Optical base frame takes eyeglasses lens add-ons,

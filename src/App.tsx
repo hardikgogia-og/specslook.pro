@@ -62,6 +62,7 @@ const AppContent: React.FC = () => {
   };
 
   const isAdmin = currentView === 'admin';
+  const isProductPage = currentView === 'product';
 
   return (
     <div className="min-h-screen flex flex-col bg-white selection:bg-red-600 selection:text-white">
@@ -87,8 +88,8 @@ const AppContent: React.FC = () => {
       {/* Customer Footer (Hidden in Admin) */}
       {!isAdmin && <Footer />}
 
-      {/* Floating WhatsApp Orders Widget (+91 83688 53448) */}
-      {!isAdmin && <WhatsAppWidget phoneNumber="918368853448" />}
+      {/* Floating WhatsApp Orders Widget (+91 83688 53448) - Hidden on product pages to keep glass selection clean */}
+      {!isAdmin && !isProductPage && <WhatsAppWidget phoneNumber="918368853448" />}
     </div>
   );
 };
