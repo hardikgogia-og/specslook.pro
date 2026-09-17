@@ -18,11 +18,18 @@ export const OrderTrackingView: React.FC = () => {
 
     try {
       const res = await fetch(`/api/orders/track/${encodeURIComponent(query.trim())}`);
-      const data = await res.json();
-      if (res.ok) {
+      let data: any = null;
+      try {
+        const text = await res.text();
+        data = text ? JSON.parse(text) : null;
+      } catch {
+        data = null;
+      }
+
+      if (res.ok && data) {
         setOrder(data);
       } else {
-        setError(data.error || 'No matching order found for the provided information');
+        setError((data && data.error) || 'No matching order found for the provided information');
       }
     } catch (err) {
       setError('Connection failure while searching for order.');

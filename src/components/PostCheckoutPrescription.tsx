@@ -267,10 +267,16 @@ export const PostCheckoutPrescription: React.FC<Props> = ({ order, onUpdated }) 
         body: JSON.stringify({ prescription: payload })
       });
 
-      const updatedOrder = await res.json();
+      let updatedOrder: any = null;
+      try {
+        const text = await res.text();
+        updatedOrder = text ? JSON.parse(text) : null;
+      } catch {
+        updatedOrder = null;
+      }
       setIsSubmitting(false);
 
-      if (res.ok) {
+      if (res.ok && updatedOrder) {
         setLastPlacedOrder(updatedOrder);
         if (onUpdated) onUpdated(updatedOrder);
         setIsEditing(false);
@@ -280,7 +286,7 @@ export const PostCheckoutPrescription: React.FC<Props> = ({ order, onUpdated }) 
             : 'Prescription details saved successfully!'
         );
       } else {
-        setErrorMessage(updatedOrder.error || 'Failed to save prescription details');
+        setErrorMessage((updatedOrder && updatedOrder.error) || 'Failed to save prescription details');
       }
     } catch (err: any) {
       setIsSubmitting(false);

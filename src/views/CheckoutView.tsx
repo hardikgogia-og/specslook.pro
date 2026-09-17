@@ -14,6 +14,7 @@ import {
   PackageCheck
 } from 'lucide-react';
 import { useStore } from '../context/StoreContext.tsx';
+import { playTactileClickSound } from '../utils/audio.ts';
 
 const INDIAN_STATES = [
   'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh',
@@ -165,6 +166,7 @@ export const CheckoutView: React.FC = () => {
         }
 
         if (res.ok && placedOrder && placedOrder.id) {
+          playTactileClickSound();
           setIsSubmitting(false);
           clearCart();
           setLastPlacedOrder(placedOrder);
@@ -221,6 +223,7 @@ export const CheckoutView: React.FC = () => {
           console.warn('Storage warning:', storageErr);
         }
 
+        playTactileClickSound();
         setIsSubmitting(false);
         clearCart();
         setLastPlacedOrder(fallbackOrder);

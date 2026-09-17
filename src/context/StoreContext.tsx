@@ -288,14 +288,32 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
       if (pRes.status === 'fulfilled' && pRes.value && pRes.value.length > 0) {
         const fetchedProducts: Product[] = pRes.value;
-        const merged = [...fetchedProducts];
-        initialProducts.forEach(ip => {
-          if (!merged.some(p => p.id === ip.id || p.slug === ip.slug)) {
-            merged.push(ip);
+
+        // Retrieve any local product overrides (e.g. from admin panel saves)
+        let localOverrides: Product[] = [];
+        try {
+          const saved = localStorage.getItem('specslook_products');
+          if (saved) {
+            const parsed = JSON.parse(saved);
+            if (Array.isArray(parsed)) localOverrides = parsed;
+          }
+        } catch {}
+
+        // Merge: local overrides take precedence over stale server seed for modified products
+        const mergedMap = new Map<string, Product>();
+        fetchedProducts.forEach(p => mergedMap.set(p.id, p));
+        initialProducts.forEach(p => {
+          if (!mergedMap.has(p.id)) mergedMap.set(p.id, p);
+        });
+        localOverrides.forEach(localProd => {
+          if (localProd && localProd.id) {
+            mergedMap.set(localProd.id, localProd);
           }
         });
-        setProducts(merged);
-        try { localStorage.setItem('specslook_products', JSON.stringify(merged)); } catch {}
+
+        const finalProducts = Array.from(mergedMap.values());
+        setProducts(finalProducts);
+        try { localStorage.setItem('specslook_products', JSON.stringify(finalProducts)); } catch {}
       }
       if (cRes.status === 'fulfilled' && cRes.value && cRes.value.length > 0) {
         const fetchedCategories: Category[] = cRes.value;

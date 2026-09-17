@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { MessageCircle, X, ShoppingBag } from 'lucide-react';
+import { playTactileClickSound } from '../utils/audio';
 
 interface WhatsAppWidgetProps {
   phoneNumber?: string;
@@ -9,115 +10,19 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({
   phoneNumber = '918368853448'
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [hasPlayedVisitSound, setHasPlayedVisitSound] = useState(false);
-  const audioContextRef = useRef<AudioContext | null>(null);
-
-  // Play crisp acoustic click sound via Web Audio API (zero external network latency)
-  const playClickSound = (type: 'visit' | 'click' = 'click') => {
-    try {
-      const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
-      if (!AudioCtx) return;
-
-      if (!audioContextRef.current) {
-        audioContextRef.current = new AudioCtx();
-      }
-
-      const ctx = audioContextRef.current;
-      if (ctx.state === 'suspended') {
-        ctx.resume();
-      }
-
-      const now = ctx.currentTime;
-
-      if (type === 'visit') {
-        // Welcoming two-tone luxury optical chime
-        const osc1 = ctx.createOscillator();
-        const osc2 = ctx.createOscillator();
-        const gainNode = ctx.createGain();
-
-        osc1.type = 'sine';
-        osc1.frequency.setValueAtTime(880, now); // A5
-        osc1.frequency.exponentialRampToValueAtTime(1320, now + 0.12);
-
-        osc2.type = 'triangle';
-        osc2.frequency.setValueAtTime(440, now);
-        osc2.frequency.exponentialRampToValueAtTime(660, now + 0.15);
-
-        gainNode.gain.setValueAtTime(0.08, now);
-        gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 0.35);
-
-        osc1.connect(gainNode);
-        osc2.connect(gainNode);
-        gainNode.connect(ctx.destination);
-
-        osc1.start(now);
-        osc2.start(now);
-        osc1.stop(now + 0.35);
-        osc2.stop(now + 0.35);
-      } else {
-        // High-end tactile mechanical click
-        const osc = ctx.createOscillator();
-        const gainNode = ctx.createGain();
-
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(1200, now);
-        osc.frequency.exponentialRampToValueAtTime(300, now + 0.05);
-
-        gainNode.gain.setValueAtTime(0.18, now);
-        gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
-
-        osc.connect(gainNode);
-        gainNode.connect(ctx.destination);
-
-        osc.start(now);
-        osc.stop(now + 0.06);
-      }
-    } catch {
-      // Audio context might be restricted before interaction
-    }
-  };
-
-  // Trigger subtle welcoming click sound when visitor arrives and interacts with the page
-  useEffect(() => {
-    let triggered = false;
-
-    const handleFirstUserInteraction = () => {
-      if (!triggered && !hasPlayedVisitSound) {
-        triggered = true;
-        setHasPlayedVisitSound(true);
-        playClickSound('visit');
-      }
-      window.removeEventListener('click', handleFirstUserInteraction);
-      window.removeEventListener('keydown', handleFirstUserInteraction);
-      window.removeEventListener('touchstart', handleFirstUserInteraction);
-    };
-
-    window.addEventListener('click', handleFirstUserInteraction, { once: true });
-    window.addEventListener('keydown', handleFirstUserInteraction, { once: true });
-    window.addEventListener('touchstart', handleFirstUserInteraction, { once: true });
-
-    // Try direct audio on load (will succeed if audio already allowed)
-    const timer = setTimeout(() => {
-      if (!triggered) {
-        playClickSound('visit');
-      }
-    }, 800);
-
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener('click', handleFirstUserInteraction);
-      window.removeEventListener('keydown', handleFirstUserInteraction);
-      window.removeEventListener('touchstart', handleFirstUserInteraction);
-    };
-  }, [hasPlayedVisitSound]);
 
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
     "Hello Specslook! I'd like to place an order or inquire about eyewear & optometrist services."
   )}`;
 
   const handleOpenWhatsApp = () => {
-    playClickSound('click');
+    playTactileClickSound();
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+  };
+
+  const handleToggleOpen = () => {
+    playTactileClickSound();
+    setIsOpen(!isOpen);
   };
 
   return (
@@ -149,7 +54,7 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({
             <button
               type="button"
               onClick={() => {
-                playClickSound('click');
+                playTactileClickSound();
                 setIsOpen(false);
               }}
               className="p-1 rounded hover:bg-white/10 text-white transition-colors"
@@ -191,7 +96,7 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({
         <button
           type="button"
           onClick={() => {
-            playClickSound('click');
+            playTactileClickSound();
             setIsOpen(prev => !prev);
           }}
           className="hidden md:flex items-center gap-2 bg-white/95 backdrop-blur-md border border-neutral-200 text-neutral-900 px-3.5 py-2 rounded-full shadow-lg hover:border-neutral-400 hover:shadow-xl transition-all cursor-pointer text-xs font-bold"
@@ -206,7 +111,7 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({
           type="button"
           id="whatsapp-floating-button"
           onClick={() => {
-            playClickSound('click');
+            playTactileClickSound();
             if (isOpen) {
               handleOpenWhatsApp();
             } else {

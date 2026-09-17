@@ -20,8 +20,14 @@ export const CustomerAccountView: React.FC = () => {
 
     try {
       const res = await fetch(`/api/orders/customer/${encodeURIComponent(lookupEmail.trim())}`);
-      const data = await res.json();
-      if (res.ok) {
+      let data: any = null;
+      try {
+        const text = await res.text();
+        data = text ? JSON.parse(text) : null;
+      } catch {
+        data = null;
+      }
+      if (res.ok && Array.isArray(data)) {
         setCustomerOrders(data);
       }
     } catch (err) {
