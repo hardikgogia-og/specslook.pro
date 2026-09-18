@@ -18,7 +18,10 @@ import { ContactView } from './views/ContactView.tsx';
 import { BlogView } from './views/BlogView.tsx';
 import { AdminView } from './views/AdminView.tsx';
 import { HomeEyeTestView } from './views/HomeEyeTestView.tsx';
+import { TermsView } from './views/TermsView.tsx';
+import { PrivacyPolicyView } from './views/PrivacyPolicyView.tsx';
 import { WhatsAppWidget } from './components/WhatsAppWidget.tsx';
+import { RecentPurchasePopup } from './components/RecentPurchasePopup.tsx';
 import { updateSEO } from './utils/seo.ts';
 
 const AppContent: React.FC = () => {
@@ -183,6 +186,26 @@ const AppContent: React.FC = () => {
         description: 'Live order tracking and dispatch status for your Specslook handcrafted glasses.',
         canonicalPath: '/tracking/'
       });
+    } else if (currentView === 'terms') {
+      updateSEO({
+        title: 'Terms & Conditions | Specslook',
+        description: 'Read the official Terms and Conditions governing eyewear purchases, custom prescription lenses, Home Eye Test appointments, and warranties at Specslook.',
+        canonicalPath: '/terms-and-conditions/',
+        breadcrumbs: [
+          { name: 'Home', url: '/' },
+          { name: 'Terms and Conditions', url: '/terms-and-conditions/' }
+        ]
+      });
+    } else if (currentView === 'privacy') {
+      updateSEO({
+        title: 'Privacy Policy & Data Protection Charter | Specslook',
+        description: 'Discover how Specslook protects your personal information, optical prescriptions, and transaction data under Indian data protection regulations.',
+        canonicalPath: '/privacy-policy/',
+        breadcrumbs: [
+          { name: 'Home', url: '/' },
+          { name: 'Privacy Policy', url: '/privacy-policy/' }
+        ]
+      });
     } else if (currentView === 'admin') {
       updateSEO({
         title: 'Specslook Management Suite',
@@ -222,6 +245,10 @@ const AppContent: React.FC = () => {
       case 'blog':
       case 'blog-post':
         return <BlogView />;
+      case 'terms':
+        return <TermsView />;
+      case 'privacy':
+        return <PrivacyPolicyView />;
       case 'admin':
         return <AdminView />;
       default:
@@ -258,6 +285,9 @@ const AppContent: React.FC = () => {
 
       {/* Floating WhatsApp Orders Widget (+91 83688 53448) - Hidden on product pages to keep glass selection clean */}
       {!isAdmin && !isProductPage && <WhatsAppWidget phoneNumber="918368853448" />}
+
+      {/* Premium Recent Purchase Notification Popup */}
+      {!isAdmin && <RecentPurchasePopup />}
     </div>
   );
 };

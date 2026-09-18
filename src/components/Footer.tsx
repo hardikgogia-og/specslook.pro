@@ -162,6 +162,16 @@ export const Footer: React.FC = () => {
                 </button>
               </li>
               <li>
+                <button onClick={() => navigateTo('terms')} className="hover:text-white transition-colors">
+                  Terms & Conditions
+                </button>
+              </li>
+              <li>
+                <button onClick={() => navigateTo('privacy')} className="hover:text-white transition-colors">
+                  Privacy Policy
+                </button>
+              </li>
+              <li>
                 <button onClick={() => navigateTo('blog')} className="hover:text-white transition-colors">
                   Style Journal & Guides
                 </button>
@@ -195,8 +205,16 @@ export const Footer: React.FC = () => {
 
       {/* Bottom Bar & Payment Gateways */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-neutral-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500">
-        <div>
-          &copy; {new Date().getFullYear()} Specslook Eyewear India Pvt. Ltd. All rights reserved.
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+          <span>&copy; {new Date().getFullYear()} Specslook. All rights reserved.</span>
+          <span className="hidden sm:inline text-neutral-800">&bull;</span>
+          <button onClick={() => navigateTo('terms')} className="hover:text-neutral-300 transition-colors underline sm:no-underline">
+            Terms & Conditions
+          </button>
+          <span className="text-neutral-800">&bull;</span>
+          <button onClick={() => navigateTo('privacy')} className="hover:text-neutral-300 transition-colors underline sm:no-underline">
+            Privacy Policy
+          </button>
         </div>
         <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[11px] text-neutral-400">
           <span className="bg-emerald-950/80 text-emerald-400 px-2.5 py-1 rounded-xs border border-emerald-800 font-bold flex items-center gap-1">

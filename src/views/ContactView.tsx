@@ -52,9 +52,11 @@ export const ContactView: React.FC = () => {
                     <Phone className="w-4 h-4 text-red-500" />
                   </div>
                   <div>
-                    <span className="font-bold text-neutral-900 block">Toll-Free Concierge</span>
-                    <span className="text-neutral-600">1800-SPECSLOOK (1800-773-275)</span>
-                    <span className="text-[11px] text-neutral-400 block mt-0.5">Mon - Sun: 9:00 AM – 9:00 PM IST</span>
+                    <span className="font-bold text-neutral-900 block">Direct Concierge & Orders</span>
+                    <a href="tel:8368853448" className="text-neutral-600 hover:text-red-600 transition-colors font-medium">
+                      8368853448 (+91 83688 53448)
+                    </a>
+                    <span className="text-[11px] text-neutral-400 block mt-0.5">Mon - Sun: 9:00 AM – 9:00 PM IST &bull; WhatsApp Active</span>
                   </div>
                 </div>
 
@@ -63,8 +65,10 @@ export const ContactView: React.FC = () => {
                     <Mail className="w-4 h-4 text-red-500" />
                   </div>
                   <div>
-                    <span className="font-bold text-neutral-900 block">Client Relations Email</span>
-                    <span className="text-neutral-600">concierge@specslook.com</span>
+                    <span className="font-bold text-neutral-900 block">Client Relations & Support</span>
+                    <a href="mailto:info@specslook.com" className="text-neutral-600 hover:text-red-600 transition-colors font-medium">
+                      info@specslook.com
+                    </a>
                     <span className="text-[11px] text-neutral-400 block mt-0.5">Responses guaranteed within 2 hours</span>
                   </div>
                 </div>
@@ -74,11 +78,11 @@ export const ContactView: React.FC = () => {
                     <MapPin className="w-4 h-4 text-red-500" />
                   </div>
                   <div>
-                    <span className="font-bold text-neutral-900 block">Headquarters & Optical Lab</span>
-                    <span className="text-neutral-600">
-                      Specslook Eyewear India Pvt. Ltd.<br />
-                      Level 12, Connaught Place Central Tower,<br />
-                      New Delhi, Delhi 110001, India
+                    <span className="font-bold text-neutral-900 block">Headquarters & Optical Experience Center</span>
+                    <span className="text-neutral-600 leading-relaxed">
+                      Specslook, Dreamz Mall,<br />
+                      Sec 4-7 Circle, Gurugram,<br />
+                      Haryana - 122001, India
                     </span>
                   </div>
                 </div>

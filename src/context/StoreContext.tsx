@@ -26,6 +26,8 @@ export type AppView =
   | 'blog'
   | 'blog-post'
   | 'home-eyetest'
+  | 'terms'
+  | 'privacy'
   | 'admin';
 
 interface Toast {
@@ -392,8 +394,8 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       // 3. WordPress preserved Category URLs: /product-category/...
       const categoryMatch = rawPath.match(/^\/product-category\/([^/]+)(?:\/([^/]+))?/i);
       if (categoryMatch) {
-        const primaryCat = categoryMatch[1]?.toLowerCase() || '';
-        const subCat = categoryMatch[2]?.toLowerCase() || '';
+        const primaryCat = categoryMatch[1]?.toLowerCase().replace(/\/+$/, '') || '';
+        const subCat = categoryMatch[2]?.toLowerCase().replace(/\/+$/, '') || '';
 
         let resolvedCategory: string | undefined;
         let resolvedGender: string | undefined;
@@ -410,6 +412,10 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           else if (subCat.includes('kid')) resolvedGender = 'Kids';
         } else if (primaryCat === 'attachments') {
           resolvedCategory = 'Attachments';
+        } else if (primaryCat === 'polarized') {
+          resolvedCategory = 'Sunglasses';
+        } else if (primaryCat === 'blue-light-blockers' || primaryCat === 'blue-light') {
+          resolvedCategory = 'Eyeglasses';
         } else {
           resolvedCategory = primaryCat;
         }
@@ -459,6 +465,14 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         trackPageView('/contact-us/', 'Contact Specslook');
         return;
       }
+      const blogMatch = path.match(/^\/blog\/([^/]+)/i);
+      if (blogMatch) {
+        const blogSlug = decodeURIComponent(blogMatch[1]);
+        setCurrentView('blog-post');
+        setViewParams({ slug: blogSlug });
+        trackPageView(`/blog/${blogSlug}/`, 'Eyewear Journal');
+        return;
+      }
       if (path === '/blog' || hash === 'blog') {
         setCurrentView('blog');
         setViewParams({});
@@ -481,6 +495,28 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         setCurrentView('account');
         setViewParams({});
         trackPageView('/account/', 'My Account');
+        return;
+      }
+      if (
+        path === '/terms-and-conditions' ||
+        path === '/terms' ||
+        hash === 'terms' ||
+        hash === 'terms-and-conditions'
+      ) {
+        setCurrentView('terms');
+        setViewParams({});
+        trackPageView('/terms-and-conditions/', 'Terms and Conditions');
+        return;
+      }
+      if (
+        path === '/privacy-policy' ||
+        path === '/privacy' ||
+        hash === 'privacy' ||
+        hash === 'privacy-policy'
+      ) {
+        setCurrentView('privacy');
+        setViewParams({});
+        trackPageView('/privacy-policy/', 'Privacy Policy');
         return;
       }
 
@@ -512,22 +548,37 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       targetUrl = '/admin';
     } else if (view === 'product') {
       const slugOrId = params.slug || params.id || '';
-      targetUrl = slugOrId ? `/product/${encodeURIComponent(slugOrId)}/` : '/shop';
+      targetUrl = slugOrId ? `/product/${encodeURIComponent(slugOrId)}/` : '/shop/';
+    } else if (view === 'blog-post') {
+      const slug = params.slug || '';
+      targetUrl = slug ? `/blog/${encodeURIComponent(slug)}/` : '/blog/';
     } else if (view === 'shop') {
       if (params.category === 'Eyeglasses' && params.gender === 'Women') {
         targetUrl = '/product-category/eyewear/womeneyewear/';
       } else if (params.category === 'Eyeglasses' && params.gender === 'Men') {
         targetUrl = '/product-category/eyewear/meneyewear/';
+      } else if (params.category === 'Eyeglasses' && params.gender === 'Kids') {
+        targetUrl = '/product-category/eyewear/kidseyewear/';
+      } else if (params.category === 'Sunglasses' && params.gender === 'Women') {
+        targetUrl = '/product-category/sunglasses/women/';
+      } else if (params.category === 'Sunglasses' && params.gender === 'Men') {
+        targetUrl = '/product-category/sunglasses/men/';
+      } else if (params.category === 'Sunglasses' && params.gender === 'Kids') {
+        targetUrl = '/product-category/sunglasses/kids/';
       } else if (params.category === 'Sunglasses') {
         targetUrl = '/product-category/sunglasses/';
       } else if (params.category === 'Eyeglasses') {
         targetUrl = '/product-category/eyeglasses/';
       } else if (params.category === 'Attachments') {
         targetUrl = '/product-category/attachments/';
+      } else if (params.category === 'Polarized' || params.polarized) {
+        targetUrl = '/product-category/polarized/';
+      } else if (params.category === 'Blue Light Blockers') {
+        targetUrl = '/product-category/blue-light-blockers/';
       } else if (params.category) {
         targetUrl = `/shop?category=${encodeURIComponent(params.category)}`;
       } else {
-        targetUrl = '/shop';
+        targetUrl = '/shop/';
       }
     } else if (view === 'stores') {
       targetUrl = '/store/';
@@ -545,6 +596,10 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       targetUrl = '/tracking/';
     } else if (view === 'account') {
       targetUrl = '/account/';
+    } else if (view === 'terms') {
+      targetUrl = '/terms-and-conditions/';
+    } else if (view === 'privacy') {
+      targetUrl = '/privacy-policy/';
     } else {
       targetUrl = '/';
     }

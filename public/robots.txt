@@ -2,6 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /api/
-Disallow: /tracking
+Disallow: /checkout/
+Disallow: /account/
 
 Sitemap: https://specslook.com/sitemap.xml

@@ -69,17 +69,100 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
+// 301 Permanent Redirects for legacy URLs to preserve search equity without chains or loops
+const legacy301Redirects: Record<string, string> = {
+  '/about-us': '/about/',
+  '/about-us/': '/about/',
+  '/stores': '/store/',
+  '/stores/': '/store/',
+  '/contact': '/contact-us/',
+  '/contact/': '/contact-us/',
+  '/home-eyetest': '/home/home-eyetest/',
+  '/home-eyetest/': '/home/home-eyetest/',
+  '/eyetest': '/home/home-eyetest/',
+  '/eyetest/': '/home/home-eyetest/',
+  '/cart': '/checkout/',
+  '/cart/': '/checkout/',
+  '/my-account': '/account/',
+  '/my-account/': '/account/',
+  '/terms': '/terms-and-conditions/',
+  '/terms/': '/terms-and-conditions/',
+  '/privacy': '/privacy-policy/',
+  '/privacy/': '/privacy-policy/'
+};
+
+app.use((req: Request, res: Response, next: NextFunction) => {
+  const target = legacy301Redirects[req.path];
+  if (target) {
+    // 301 permanent redirect directly to destination without chain or loop
+    return res.redirect(301, target);
+  }
+  next();
+});
+
 // Serve sitemap.xml and robots.txt directly
 app.get('/sitemap.xml', (req: Request, res: Response) => {
-  const sitemapPath = path.join(process.cwd(), 'public', 'sitemap.xml');
-  res.setHeader('Content-Type', 'application/xml');
-  res.sendFile(sitemapPath);
+  const possiblePaths = [
+    path.join(process.cwd(), 'public', 'sitemap.xml'),
+    path.join(process.cwd(), 'dist', 'sitemap.xml')
+  ];
+  for (const p of possiblePaths) {
+    if (fs.existsSync(p)) {
+      res.setHeader('Content-Type', 'application/xml; charset=utf-8');
+      return res.sendFile(p);
+    }
+  }
+
+  // Dynamic XML generation fallback
+  try {
+    const products = dbService.getProducts();
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://specslook.com/</loc><lastmod>2026-09-18</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>
+  <url><loc>https://specslook.com/shop/</loc><lastmod>2026-09-18</lastmod><changefreq>daily</changefreq><priority>0.95</priority></url>
+  <url><loc>https://specslook.com/about/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://specslook.com/store/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://specslook.com/home/home-eyetest/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://specslook.com/contact-us/</loc><lastmod>2026-09-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://specslook.com/blog/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://specslook.com/terms-and-conditions/</loc><lastmod>2026-09-18</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://specslook.com/privacy-policy/</loc><lastmod>2026-09-18</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://specslook.com/product-category/eyeglasses/</loc><lastmod>2026-09-18</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://specslook.com/product-category/eyewear/womeneyewear/</loc><lastmod>2026-09-18</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://specslook.com/product-category/eyewear/meneyewear/</loc><lastmod>2026-09-18</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://specslook.com/product-category/eyewear/kidseyewear/</loc><lastmod>2026-09-18</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
+  <url><loc>https://specslook.com/product-category/sunglasses/</loc><lastmod>2026-09-18</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://specslook.com/product-category/sunglasses/women/</loc><lastmod>2026-09-18</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://specslook.com/product-category/sunglasses/men/</loc><lastmod>2026-09-18</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://specslook.com/product-category/sunglasses/kids/</loc><lastmod>2026-09-18</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
+  <url><loc>https://specslook.com/product-category/attachments/</loc><lastmod>2026-09-18</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
+  <url><loc>https://specslook.com/product-category/polarized/</loc><lastmod>2026-09-18</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
+  <url><loc>https://specslook.com/product-category/blue-light-blockers/</loc><lastmod>2026-09-18</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
+${products.map(p => `  <url><loc>https://specslook.com/product/${encodeURIComponent(p.slug)}/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>`).join('\n')}
+  <url><loc>https://specslook.com/blog/the-legendary-aviator-style-history/</loc><lastmod>2026-09-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://specslook.com/blog/polarized-vs-non-polarized-eyewear-guide/</loc><lastmod>2026-09-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://specslook.com/blog/how-to-choose-frames-for-your-face-shape/</loc><lastmod>2026-09-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+</urlset>`;
+    res.setHeader('Content-Type', 'application/xml; charset=utf-8');
+    return res.send(xml);
+  } catch {
+    return res.status(500).send('Error generating sitemap');
+  }
 });
 
 app.get('/robots.txt', (req: Request, res: Response) => {
-  const robotsPath = path.join(process.cwd(), 'public', 'robots.txt');
-  res.setHeader('Content-Type', 'text/plain');
-  res.sendFile(robotsPath);
+  const possiblePaths = [
+    path.join(process.cwd(), 'public', 'robots.txt'),
+    path.join(process.cwd(), 'dist', 'robots.txt')
+  ];
+  for (const p of possiblePaths) {
+    if (fs.existsSync(p)) {
+      res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+      return res.sendFile(p);
+    }
+  }
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+  res.send("User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /api/\nDisallow: /checkout/\nDisallow: /account/\n\nSitemap: https://specslook.com/sitemap.xml\n");
 });
 
 // Serve uploaded photos statically

@@ -102,8 +102,8 @@ export function updateJsonLd(params: {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     '@id': `${SITE_DOMAIN}/#organization`,
-    name: 'Specslook Eyewear',
-    legalName: 'Specslook Eyewear India Pvt. Ltd.',
+    name: 'Specslook',
+    legalName: 'Specslook',
     url: `${SITE_DOMAIN}/`,
     logo: {
       '@type': 'ImageObject',
@@ -115,15 +115,16 @@ export function updateJsonLd(params: {
       '@type': 'ContactPoint',
       telephone: '+91-8368853448',
       contactType: 'customer service',
+      email: 'info@specslook.com',
       areaServed: 'IN',
       availableLanguage: ['en', 'hi']
     },
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Level 12, Connaught Place Central Tower',
-      addressLocality: 'New Delhi',
-      addressRegion: 'Delhi',
-      postalCode: '110001',
+      streetAddress: 'Specslook, Dreamz Mall, Sec 4-7 Circle',
+      addressLocality: 'Gurugram',
+      addressRegion: 'Haryana',
+      postalCode: '122001',
       addressCountry: 'IN'
     },
     sameAs: [
