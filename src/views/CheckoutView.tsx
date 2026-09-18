@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { useStore } from '../context/StoreContext.tsx';
 import { playTactileClickSound } from '../utils/audio.ts';
+import { trackInitiateCheckout, trackPurchase } from '../utils/analytics.ts';
 
 const INDIAN_STATES = [
   'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh',
@@ -75,6 +76,16 @@ export const CheckoutView: React.FC = () => {
   const shippingFee = cartSubtotal >= FREE_SHIPPING_THRESHOLD ? 0 : 199;
   const discountAmount = appliedCoupon ? appliedCoupon.discount : 0;
   const grandTotal = Math.max(0, cartSubtotal - discountAmount + shippingFee);
+
+  React.useEffect(() => {
+    if (cart && cart.length > 0) {
+      try {
+        trackInitiateCheckout(cart, grandTotal, appliedCoupon?.code);
+      } catch (err) {
+        console.warn('trackInitiateCheckout error:', err);
+      }
+    }
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -166,6 +177,11 @@ export const CheckoutView: React.FC = () => {
         }
 
         if (res.ok && placedOrder && placedOrder.id) {
+          try {
+            trackPurchase(placedOrder);
+          } catch (analyticsErr) {
+            console.warn('trackPurchase error:', analyticsErr);
+          }
           playTactileClickSound();
           setIsSubmitting(false);
           clearCart();
@@ -221,6 +237,12 @@ export const CheckoutView: React.FC = () => {
           localStorage.setItem('specslook_orders', JSON.stringify(existing));
         } catch (storageErr) {
           console.warn('Storage warning:', storageErr);
+        }
+
+        try {
+          trackPurchase(fallbackOrder);
+        } catch (analyticsErr) {
+          console.warn('trackPurchase error:', analyticsErr);
         }
 
         playTactileClickSound();

@@ -131,6 +131,17 @@ export const Footer: React.FC = () => {
             <h5 className="text-white font-bold text-xs tracking-widest uppercase mb-4">Client Care</h5>
             <ul className="space-y-2.5 text-xs text-neutral-400 font-medium">
               <li>
+                <button onClick={() => navigateTo('home-eyetest')} className="hover:text-white transition-colors flex items-center gap-1.5 text-emerald-400">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                  Home Eye Test (Doorstep)
+                </button>
+              </li>
+              <li>
+                <button onClick={() => navigateTo('shop', { category: 'Eyeglasses', gender: 'Women' })} className="hover:text-white transition-colors">
+                  Women's Eyewear Collection
+                </button>
+              </li>
+              <li>
                 <button onClick={() => navigateTo('tracking')} className="hover:text-white transition-colors flex items-center gap-1">
                   Track Your Shipment
                 </button>
@@ -142,12 +153,12 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <button onClick={() => navigateTo('about')} className="hover:text-white transition-colors">
-                  Our Optical Lab
+                  Our Optical Lab & Story
                 </button>
               </li>
               <li>
                 <button onClick={() => navigateTo('contact')} className="hover:text-white transition-colors">
-                  Customer Concierge
+                  Customer Concierge (Contact Us)
                 </button>
               </li>
               <li>

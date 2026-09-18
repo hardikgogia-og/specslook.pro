@@ -21,6 +21,8 @@ import { Product, ProductVariant, Review, LensAddon, EYEGLASS_LENS_ADDONS, SUNGL
 import { useStore } from '../context/StoreContext.tsx';
 import { ProductCard } from '../components/ProductCard.tsx';
 import { LensSelectionDrawer } from '../components/LensSelectionDrawer.tsx';
+import { updateSEO } from '../utils/seo.ts';
+import { trackViewContent } from '../utils/analytics.ts';
 
 export const ProductDetailView: React.FC = () => {
   const { products, viewParams, navigateTo, addToCart, toggleWishlist, isInWishlist, showToast, setIsCartOpen } = useStore();
@@ -120,6 +122,32 @@ export const ProductDetailView: React.FC = () => {
       setSelectedLensAddon(getInitialAddon(found.category));
       setRelated(products.filter(p => p.id !== found!.id && (p.category === found!.category || p.brand === found!.brand)).slice(0, 4));
       setLoading(false);
+
+      // Update dynamic SEO & Schema.org JSON-LD for this product
+      try {
+        updateSEO({
+          title: `${found.name} | Specslook Eyewear`,
+          description: found.shortDescription || found.description || `Shop ${found.name} handcrafted with Japanese titanium & Italian acetate. Cash on delivery & doorstep trials.`,
+          canonicalPath: `/product/${found.slug}/`,
+          ogImage: found.images?.[0],
+          ogType: 'product',
+          product: found,
+          breadcrumbs: [
+            { name: 'Home', url: '/' },
+            { name: found.category || 'Shop', url: `/product-category/${(found.category || 'eyewear').toLowerCase()}/` },
+            { name: found.name, url: `/product/${found.slug}/` }
+          ]
+        });
+      } catch (seoErr) {
+        console.warn('ProductDetailView SEO error:', seoErr);
+      }
+
+      // Fire ecommerce ViewContent
+      try {
+        trackViewContent(found);
+      } catch (analyticsErr) {
+        console.warn('trackViewContent error:', analyticsErr);
+      }
     }
 
     // 3. Attempt background fetch to get latest database updates or user reviews

@@ -9,6 +9,7 @@ import {
   initialCoupons
 } from '../data/seedData.ts';
 import { getBlogImage } from '../data/blogImages.ts';
+import { initAnalytics, trackAddToCart, trackPageView } from '../utils/analytics.ts';
 
 export type AppView =
   | 'home'
@@ -24,6 +25,7 @@ export type AppView =
   | 'contact'
   | 'blog'
   | 'blog-post'
+  | 'home-eyetest'
   | 'admin';
 
 interface Toast {
@@ -358,10 +360,12 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   useEffect(() => {
     fetchData();
+    initAnalytics();
 
     // Check URL pathname, search query, and hash for seamless client-side routing
     const syncRouteFromUrl = () => {
-      const path = window.location.pathname.replace(/\/+$/, '') || '/';
+      const rawPath = window.location.pathname;
+      const path = rawPath.replace(/\/+$/, '') || '/';
       const hash = window.location.hash.replace('#', '').replace(/\/+$/, '');
       const search = new URLSearchParams(window.location.search);
 
@@ -369,70 +373,122 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       if (path === '/admin' || hash === 'admin' || search.get('view') === 'admin') {
         setCurrentView('admin');
         setViewParams({});
+        trackPageView('/admin', 'Admin Dashboard');
         return;
       }
 
-      // 2. Product route: /product/:slug or /products/:slug or ?product=:slug
+      // 2. Product route: /product/:slug, /product/:slug/, /products/:slug, ?product=:slug
       const productMatch = path.match(/^\/(?:product|products)\/([^/]+)/i);
       const hashProductMatch = hash.match(/^(?:product|products)\/([^/]+)/i);
       const productSlugOrId = productMatch?.[1] || hashProductMatch?.[1] || search.get('product') || search.get('slug') || search.get('id');
       if (productSlugOrId) {
+        const decoded = decodeURIComponent(productSlugOrId);
         setCurrentView('product');
-        setViewParams({ slug: decodeURIComponent(productSlugOrId), id: decodeURIComponent(productSlugOrId) });
+        setViewParams({ slug: decoded, id: decoded });
+        trackPageView(`/product/${decoded}/`);
         return;
       }
 
-      // 3. Shop route: /shop, /catalog, #shop
+      // 3. WordPress preserved Category URLs: /product-category/...
+      const categoryMatch = rawPath.match(/^\/product-category\/([^/]+)(?:\/([^/]+))?/i);
+      if (categoryMatch) {
+        const primaryCat = categoryMatch[1]?.toLowerCase() || '';
+        const subCat = categoryMatch[2]?.toLowerCase() || '';
+
+        let resolvedCategory: string | undefined;
+        let resolvedGender: string | undefined;
+
+        if (primaryCat === 'eyewear' || primaryCat === 'eyeglasses') {
+          resolvedCategory = 'Eyeglasses';
+          if (subCat.includes('women')) resolvedGender = 'Women';
+          else if (subCat.includes('men')) resolvedGender = 'Men';
+          else if (subCat.includes('kid')) resolvedGender = 'Kids';
+        } else if (primaryCat === 'sunglasses') {
+          resolvedCategory = 'Sunglasses';
+          if (subCat.includes('women')) resolvedGender = 'Women';
+          else if (subCat.includes('men')) resolvedGender = 'Men';
+          else if (subCat.includes('kid')) resolvedGender = 'Kids';
+        } else if (primaryCat === 'attachments') {
+          resolvedCategory = 'Attachments';
+        } else {
+          resolvedCategory = primaryCat;
+        }
+
+        setCurrentView('shop');
+        setViewParams({ category: resolvedCategory, gender: resolvedGender, subcategory: subCat || undefined });
+        trackPageView(rawPath, `${resolvedCategory || 'Shop'} Collection`);
+        return;
+      }
+
+      // 4. Shop route: /shop, /catalog, #shop
       if (path === '/shop' || path === '/catalog' || hash === 'shop' || search.get('view') === 'shop') {
         const category = search.get('category') || undefined;
+        const gender = search.get('gender') || undefined;
         setCurrentView('shop');
-        setViewParams(category ? { category } : {});
+        setViewParams(category ? { category, gender } : (gender ? { gender } : {}));
+        trackPageView('/shop', 'All Eyewear');
         return;
       }
 
-      // 4. Stores route: /stores or #stores
-      if (path === '/stores' || hash === 'stores' || search.get('view') === 'stores') {
+      // 5. Preserved Store route: /store/, /store, /stores/, /stores
+      if (path === '/store' || path === '/stores' || hash === 'stores' || search.get('view') === 'stores') {
         setCurrentView('stores');
         setViewParams({});
+        trackPageView('/store/', 'Flagship Boutiques');
         return;
       }
 
-      // 5. Static & auxiliary pages
+      // 6. Preserved Home Eye Test: /home/home-eyetest/, /home/home-eyetest, /home-eyetest
+      if (path === '/home/home-eyetest' || path === '/home-eyetest' || hash === 'home-eyetest' || search.get('view') === 'home-eyetest') {
+        setCurrentView('home-eyetest');
+        setViewParams({});
+        trackPageView('/home/home-eyetest/', 'Home Eye Test');
+        return;
+      }
+
+      // 7. Preserved Static & auxiliary pages
       if (path === '/about' || hash === 'about') {
         setCurrentView('about');
         setViewParams({});
+        trackPageView('/about/', 'About Specslook');
         return;
       }
-      if (path === '/contact' || hash === 'contact') {
+      if (path === '/contact-us' || path === '/contact' || hash === 'contact') {
         setCurrentView('contact');
         setViewParams({});
+        trackPageView('/contact-us/', 'Contact Specslook');
         return;
       }
       if (path === '/blog' || hash === 'blog') {
         setCurrentView('blog');
         setViewParams({});
+        trackPageView('/blog/', 'Eyewear Journal');
         return;
       }
       if (path === '/checkout' || path === '/cart' || hash === 'checkout') {
         setCurrentView('checkout');
         setViewParams({});
+        trackPageView('/checkout/', 'Secure Checkout');
         return;
       }
       if (path === '/tracking' || hash === 'tracking') {
         setCurrentView('tracking');
         setViewParams({});
+        trackPageView('/tracking/', 'Track Order');
         return;
       }
       if (path === '/account' || hash === 'account') {
         setCurrentView('account');
         setViewParams({});
+        trackPageView('/account/', 'My Account');
         return;
       }
 
-      // Default home
+      // Default home: /
       if (path === '/' || path === '') {
         setCurrentView('home');
         setViewParams({});
+        trackPageView('/', 'Specslook | Luxury Eyewear & Sunglasses');
       }
     };
 
@@ -450,29 +506,45 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setCurrentView(view);
     setViewParams(params);
 
-    // Synchronize browser URL bar for shareable links and clean navigation
+    // Synchronize browser URL bar for shareable links preserving exact WordPress URL structure with trailing slashes
     let targetUrl = '/';
     if (view === 'admin') {
       targetUrl = '/admin';
     } else if (view === 'product') {
       const slugOrId = params.slug || params.id || '';
-      targetUrl = slugOrId ? `/product/${encodeURIComponent(slugOrId)}` : '/shop';
+      targetUrl = slugOrId ? `/product/${encodeURIComponent(slugOrId)}/` : '/shop';
     } else if (view === 'shop') {
-      targetUrl = params.category ? `/shop?category=${encodeURIComponent(params.category)}` : '/shop';
+      if (params.category === 'Eyeglasses' && params.gender === 'Women') {
+        targetUrl = '/product-category/eyewear/womeneyewear/';
+      } else if (params.category === 'Eyeglasses' && params.gender === 'Men') {
+        targetUrl = '/product-category/eyewear/meneyewear/';
+      } else if (params.category === 'Sunglasses') {
+        targetUrl = '/product-category/sunglasses/';
+      } else if (params.category === 'Eyeglasses') {
+        targetUrl = '/product-category/eyeglasses/';
+      } else if (params.category === 'Attachments') {
+        targetUrl = '/product-category/attachments/';
+      } else if (params.category) {
+        targetUrl = `/shop?category=${encodeURIComponent(params.category)}`;
+      } else {
+        targetUrl = '/shop';
+      }
     } else if (view === 'stores') {
-      targetUrl = '/stores';
+      targetUrl = '/store/';
+    } else if (view === 'home-eyetest') {
+      targetUrl = '/home/home-eyetest/';
     } else if (view === 'about') {
-      targetUrl = '/about';
+      targetUrl = '/about/';
     } else if (view === 'contact') {
-      targetUrl = '/contact';
+      targetUrl = '/contact-us/';
     } else if (view === 'blog') {
-      targetUrl = '/blog';
+      targetUrl = '/blog/';
     } else if (view === 'checkout') {
-      targetUrl = '/checkout';
+      targetUrl = '/checkout/';
     } else if (view === 'tracking') {
-      targetUrl = '/tracking';
+      targetUrl = '/tracking/';
     } else if (view === 'account') {
-      targetUrl = '/account';
+      targetUrl = '/account/';
     } else {
       targetUrl = '/';
     }
@@ -481,6 +553,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       if (window.location.pathname !== targetUrl && window.location.pathname + window.location.search !== targetUrl) {
         window.history.pushState({ view, params }, '', targetUrl);
       }
+      trackPageView(targetUrl);
     } catch {
       // Graceful fallback for strict sandbox environments
     }
@@ -551,6 +624,12 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
     showToast(`Added ${product.name} to bag`);
     setIsCartOpen(true);
+
+    try {
+      trackAddToCart(product, quantity, variant, finalAddon);
+    } catch (err) {
+      console.warn('trackAddToCart error:', err);
+    }
   };
 
   const updateCartQuantity = (productId: string, variantId: string | undefined, qty: number, lensAddonId?: string) => {

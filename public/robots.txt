@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/
+Disallow: /tracking
+
+Sitemap: https://specslook.com/sitemap.xml

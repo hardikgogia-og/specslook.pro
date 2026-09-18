@@ -626,6 +626,33 @@ export const HomeView: React.FC = () => {
 
         {/* LOCATE A STORE IN YOUR CITY FORM */}
         <StoreLocatorForm variant="dark" className="mt-14" />
+
+        {/* DOORSTEP HOME EYE TEST BANNER */}
+        <div className="mt-8 bg-neutral-900 text-white rounded-xs p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 border border-neutral-800">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/40">
+              <Sparkles className="w-6 h-6" />
+            </div>
+            <div>
+              <div className="inline-flex items-center gap-2 text-emerald-400 font-bold text-xs uppercase tracking-wider mb-1">
+                <span>Free Doorstep Service</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                <span>Delhi NCR</span>
+              </div>
+              <h3 className="text-xl font-bold text-white tracking-tight">Prefer Eye Examination at Home or Office?</h3>
+              <p className="text-xs text-neutral-400 mt-1 max-w-xl">
+                Certified optometrists visit your location with 14-point computerized Zeiss diagnostic equipment and 100+ frames to try on.
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={() => navigateTo('home-eyetest')}
+            className="w-full md:w-auto shrink-0 bg-emerald-400 hover:bg-emerald-500 text-neutral-950 font-extrabold text-xs py-3.5 px-6 uppercase tracking-wider rounded-xs transition-colors flex items-center justify-center gap-2"
+          >
+            <span>Book Home Eye Test</span>
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        </div>
       </section>
 
       {/* 6. JOURNAL / BLOG PREVIEW */}

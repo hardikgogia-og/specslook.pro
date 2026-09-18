@@ -335,6 +335,21 @@ export const Navbar: React.FC = () => {
           </button>
 
           <button
+            onClick={() => handleNavClick('home-eyetest')}
+            className={`transition-colors py-2 relative flex items-center gap-1 hover:text-red-600 ${
+              currentView === 'home-eyetest' ? 'text-red-600 font-bold' : 'text-neutral-800'
+            }`}
+          >
+            <span>Home Eye Test</span>
+            <span className="text-[9px] font-black uppercase px-1.5 py-0.5 bg-emerald-600 text-white rounded-xs tracking-wider">
+              Free
+            </span>
+            {currentView === 'home-eyetest' && (
+              <span className="absolute bottom-0 inset-x-0 h-0.5 bg-red-600"></span>
+            )}
+          </button>
+
+          <button
             onClick={() => handleNavClick('stores')}
             className="text-neutral-800 hover:text-red-600 transition-colors py-2"
           >
@@ -576,6 +591,15 @@ export const Navbar: React.FC = () => {
             className="py-2.5 px-3 text-left font-bold text-sm text-neutral-900 hover:bg-neutral-100 rounded-sm"
           >
             Shop All Frames
+          </button>
+          <button
+            onClick={() => handleNavClick('home-eyetest')}
+            className="py-2.5 px-3 text-left font-bold text-sm text-neutral-900 hover:bg-neutral-100 rounded-sm flex items-center justify-between"
+          >
+            <span>Home Eye Test</span>
+            <span className="text-[9px] font-black uppercase px-1.5 py-0.5 bg-emerald-600 text-white rounded-xs">
+              Book Free
+            </span>
           </button>
           <button
             onClick={() => handleNavClick('stores')}

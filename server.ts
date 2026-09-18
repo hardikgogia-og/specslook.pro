@@ -69,6 +69,19 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
+// Serve sitemap.xml and robots.txt directly
+app.get('/sitemap.xml', (req: Request, res: Response) => {
+  const sitemapPath = path.join(process.cwd(), 'public', 'sitemap.xml');
+  res.setHeader('Content-Type', 'application/xml');
+  res.sendFile(sitemapPath);
+});
+
+app.get('/robots.txt', (req: Request, res: Response) => {
+  const robotsPath = path.join(process.cwd(), 'public', 'robots.txt');
+  res.setHeader('Content-Type', 'text/plain');
+  res.sendFile(robotsPath);
+});
+
 // Serve uploaded photos statically
 app.use('/uploads', express.static(uploadsDir));
 

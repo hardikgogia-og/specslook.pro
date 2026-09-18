@@ -23,9 +23,25 @@
       ]
     }
   ],
+  "redirects": [
+    { "source": "/about-us", "destination": "/about/", "permanent": true },
+    { "source": "/about-us/", "destination": "/about/", "permanent": true },
+    { "source": "/stores", "destination": "/store/", "permanent": true },
+    { "source": "/stores/", "destination": "/store/", "permanent": true },
+    { "source": "/contact", "destination": "/contact-us/", "permanent": true },
+    { "source": "/contact/", "destination": "/contact-us/", "permanent": true },
+    { "source": "/home-eyetest", "destination": "/home/home-eyetest/", "permanent": true },
+    { "source": "/home-eyetest/", "destination": "/home/home-eyetest/", "permanent": true },
+    { "source": "/eyetest", "destination": "/home/home-eyetest/", "permanent": true },
+    { "source": "/eyetest/", "destination": "/home/home-eyetest/", "permanent": true },
+    { "source": "/cart", "destination": "/checkout/", "permanent": true },
+    { "source": "/cart/", "destination": "/checkout/", "permanent": true },
+    { "source": "/my-account", "destination": "/account/", "permanent": true },
+    { "source": "/my-account/", "destination": "/account/", "permanent": true }
+  ],
   "rewrites": [
     {
-      "source": "/((?!api/|uploads/|assets/).*)",
+      "source": "/((?!api/|uploads/|assets/|sitemap\\.xml|robots\\.txt).*)",
       "destination": "/index.html"
     }
   ]
