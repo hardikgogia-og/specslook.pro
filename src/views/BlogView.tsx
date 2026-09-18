@@ -2,6 +2,7 @@ import React from 'react';
 import { Calendar, User, Clock, ArrowLeft, ArrowRight, Tag, Share2 } from 'lucide-react';
 import { useStore } from '../context/StoreContext.tsx';
 import { BlogPost } from '../types.ts';
+import { getBlogImage } from '../data/blogImages.ts';
 
 export const BlogView: React.FC = () => {
   const { blogs, viewParams, navigateTo, showToast } = useStore();
@@ -55,9 +56,12 @@ export const BlogView: React.FC = () => {
           {/* Hero Article Image */}
           <div className="mt-8 aspect-16/9 bg-neutral-100 rounded-xs overflow-hidden border border-neutral-200 shadow-sm">
             <img
-              src={activePost.imageUrl}
+              src={getBlogImage(activePost)}
               alt={activePost.title}
               className="w-full h-full object-cover"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1200&q=85';
+              }}
             />
           </div>
 
@@ -141,9 +145,12 @@ export const BlogView: React.FC = () => {
               <div>
                 <div className="aspect-16/10 bg-neutral-100 overflow-hidden relative">
                   <img
-                    src={post.imageUrl}
+                    src={getBlogImage(post)}
                     alt={post.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80';
+                    }}
                   />
                   <span className="absolute top-3 left-3 bg-neutral-950/90 text-white text-[10px] font-extrabold px-2.5 py-0.5 uppercase tracking-wider backdrop-blur-xs">
                     {post.category}

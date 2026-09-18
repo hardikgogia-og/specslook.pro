@@ -1675,7 +1675,8 @@ export const initialBlogs: BlogPost[] = [
     "authorRole": "Head of Optical Heritage",
     "publishedAt": "2026-08-28",
     "readTime": "4 min read",
-    "image": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80",
+    "image": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1200&q=85",
+    "imageUrl": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1200&q=85",
     "category": "Heritage & Design",
     "tags": [
       "Aviator",
@@ -1694,7 +1695,8 @@ export const initialBlogs: BlogPost[] = [
     "authorRole": "Lead Optometrist",
     "publishedAt": "2026-09-02",
     "readTime": "5 min read",
-    "image": "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=800&q=80",
+    "image": "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1200&q=85",
+    "imageUrl": "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1200&q=85",
     "category": "Eye Health",
     "tags": [
       "Polarized",
@@ -1712,7 +1714,8 @@ export const initialBlogs: BlogPost[] = [
     "authorRole": "Fashion Director",
     "publishedAt": "2026-09-08",
     "readTime": "6 min read",
-    "image": "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=800&q=80",
+    "image": "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1200&q=85",
+    "imageUrl": "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1200&q=85",
     "category": "Style & Trends",
     "tags": [
       "Face Shape",

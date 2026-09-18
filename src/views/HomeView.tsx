@@ -16,12 +16,13 @@ import { ProductSlider } from '../components/ProductSlider.tsx';
 import { StoreLocatorForm } from '../components/StoreLocatorForm.tsx';
 
 // AI-Generated Category Backgrounds (Matching Characters Looking Left)
-import eyeglassManImg from '../assets/images/eyeglass_man_left_1789315377577.jpg';
+import eyeglassManImg from '../assets/images/man_glasses_1789719136120.jpg';
 import eyeglassWomanImg from '../assets/images/eyeglass_woman_left_1789315396068.jpg';
 import eyeglassKidImg from '../assets/images/eyeglass_kid_left_1789315413137.jpg';
 import sunglassManImg from '../assets/images/sunglass_man_face_1789314497936.jpg';
 import sunglassWomanImg from '../assets/images/sunglass_woman_face_1789314512198.jpg';
 import sunglassKidImg from '../assets/images/sunglass_kid_smile_1789314525399.jpg';
+import { getBlogImage } from '../data/blogImages.ts';
 
 export const HomeView: React.FC = () => {
   const { products, categories, stores, blogs, navigateTo } = useStore();
@@ -63,7 +64,7 @@ export const HomeView: React.FC = () => {
             {/* Eyeglasses for Men */}
             <div
               onClick={() => navigateTo('shop', { category: 'Eyeglasses', gender: 'Men' })}
-              className="group relative overflow-hidden rounded-xs min-h-[320px] sm:min-h-[350px] p-6 flex flex-col justify-between cursor-pointer border border-neutral-800 shadow-lg hover:shadow-2xl transition-all duration-300"
+              className="group relative overflow-hidden rounded-xs min-h-[320px] sm:min-h-[350px] p-6 flex flex-col justify-between cursor-pointer border border-neutral-700/80 shadow-lg hover:shadow-2xl transition-all duration-300"
             >
               <img
                 src={eyeglassManImg}
@@ -71,22 +72,23 @@ export const HomeView: React.FC = () => {
                 className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/60 to-neutral-950/20 group-hover:from-neutral-950 group-hover:via-neutral-950/70 transition-colors" />
+              {/* Eye-catching high visibility overlay: clear picture with readable bottom text */}
+              <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/15 to-transparent group-hover:from-neutral-950/90 transition-colors" />
 
               <div className="relative z-10 flex items-center justify-between">
-                <span className="text-[10px] font-black uppercase tracking-widest text-white bg-red-600 px-2.5 py-1 rounded-xs shadow-xs">
+                <span className="text-[10px] font-black uppercase tracking-widest text-white bg-red-600 px-2.5 py-1 rounded-xs shadow-md">
                   OPTICAL FOR MEN
                 </span>
-                <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-xs flex items-center justify-center text-white group-hover:bg-red-600 transition-colors">
+                <div className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-xs flex items-center justify-center text-white group-hover:bg-red-600 transition-colors border border-white/20">
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                 </div>
               </div>
 
               <div className="relative z-10 space-y-1.5">
-                <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white drop-shadow-sm">
+                <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white drop-shadow-md">
                   Eyeglasses for Men
                 </h3>
-                <p className="text-xs text-neutral-200 leading-relaxed font-normal">
+                <p className="text-xs text-neutral-200 leading-relaxed font-normal drop-shadow-xs">
                   Structured titanium and bold acetate frames crafted for masculine facial geometry.
                 </p>
                 <div className="pt-2 text-xs font-bold text-red-400 group-hover:text-white flex items-center gap-1.5 transition-colors">
@@ -99,7 +101,7 @@ export const HomeView: React.FC = () => {
             {/* Eyeglasses for Women */}
             <div
               onClick={() => navigateTo('shop', { category: 'Eyeglasses', gender: 'Women' })}
-              className="group relative overflow-hidden rounded-xs min-h-[320px] sm:min-h-[350px] p-6 flex flex-col justify-between cursor-pointer border border-neutral-800 shadow-lg hover:shadow-2xl transition-all duration-300"
+              className="group relative overflow-hidden rounded-xs min-h-[320px] sm:min-h-[350px] p-6 flex flex-col justify-between cursor-pointer border border-neutral-700/80 shadow-lg hover:shadow-2xl transition-all duration-300"
             >
               <img
                 src={eyeglassWomanImg}
@@ -107,22 +109,23 @@ export const HomeView: React.FC = () => {
                 className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/60 to-neutral-950/20 group-hover:from-neutral-950 group-hover:via-neutral-950/70 transition-colors" />
+              {/* Eye-catching high visibility overlay: clear picture with readable bottom text */}
+              <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/15 to-transparent group-hover:from-neutral-950/90 transition-colors" />
 
               <div className="relative z-10 flex items-center justify-between">
-                <span className="text-[10px] font-black uppercase tracking-widest text-white bg-red-600 px-2.5 py-1 rounded-xs shadow-xs">
+                <span className="text-[10px] font-black uppercase tracking-widest text-white bg-red-600 px-2.5 py-1 rounded-xs shadow-md">
                   OPTICAL FOR WOMEN
                 </span>
-                <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-xs flex items-center justify-center text-white group-hover:bg-red-600 transition-colors">
+                <div className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-xs flex items-center justify-center text-white group-hover:bg-red-600 transition-colors border border-white/20">
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                 </div>
               </div>
 
               <div className="relative z-10 space-y-1.5">
-                <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white drop-shadow-sm">
+                <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white drop-shadow-md">
                   Eyeglasses for Women
                 </h3>
-                <p className="text-xs text-neutral-200 leading-relaxed font-normal">
+                <p className="text-xs text-neutral-200 leading-relaxed font-normal drop-shadow-xs">
                   Elegant cat-eye, soft round, and refined lightweight metals with luxury detailing.
                 </p>
                 <div className="pt-2 text-xs font-bold text-red-400 group-hover:text-white flex items-center gap-1.5 transition-colors">
@@ -135,7 +138,7 @@ export const HomeView: React.FC = () => {
             {/* Eyeglasses for Kids */}
             <div
               onClick={() => navigateTo('shop', { category: 'Eyeglasses', gender: 'Kids' })}
-              className="group relative overflow-hidden rounded-xs min-h-[320px] sm:min-h-[350px] p-6 flex flex-col justify-between cursor-pointer border border-neutral-800 shadow-lg hover:shadow-2xl transition-all duration-300"
+              className="group relative overflow-hidden rounded-xs min-h-[320px] sm:min-h-[350px] p-6 flex flex-col justify-between cursor-pointer border border-neutral-700/80 shadow-lg hover:shadow-2xl transition-all duration-300"
             >
               <img
                 src={eyeglassKidImg}
@@ -143,22 +146,23 @@ export const HomeView: React.FC = () => {
                 className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/60 to-neutral-950/20 group-hover:from-neutral-950 group-hover:via-neutral-950/70 transition-colors" />
+              {/* Eye-catching high visibility overlay: clear picture with readable bottom text */}
+              <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/15 to-transparent group-hover:from-neutral-950/90 transition-colors" />
 
               <div className="relative z-10 flex items-center justify-between">
-                <span className="text-[10px] font-black uppercase tracking-widest text-white bg-red-600 px-2.5 py-1 rounded-xs shadow-xs">
+                <span className="text-[10px] font-black uppercase tracking-widest text-white bg-red-600 px-2.5 py-1 rounded-xs shadow-md">
                   JUNIOR OPTICAL
                 </span>
-                <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-xs flex items-center justify-center text-white group-hover:bg-red-600 transition-colors">
+                <div className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-xs flex items-center justify-center text-white group-hover:bg-red-600 transition-colors border border-white/20">
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                 </div>
               </div>
 
               <div className="relative z-10 space-y-1.5">
-                <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white drop-shadow-sm">
+                <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white drop-shadow-md">
                   Eyeglasses for Kids
                 </h3>
-                <p className="text-xs text-neutral-200 leading-relaxed font-normal">
+                <p className="text-xs text-neutral-200 leading-relaxed font-normal drop-shadow-xs">
                   Impact-resistant, flexible lightweight frames with blue-light filter for school screens.
                 </p>
                 <div className="pt-2 text-xs font-bold text-red-400 group-hover:text-white flex items-center gap-1.5 transition-colors">
@@ -171,7 +175,7 @@ export const HomeView: React.FC = () => {
             {/* Sunglasses for Men */}
             <div
               onClick={() => navigateTo('shop', { category: 'Sunglasses', gender: 'Men' })}
-              className="group relative overflow-hidden rounded-xs min-h-[320px] sm:min-h-[350px] p-6 flex flex-col justify-between cursor-pointer border border-neutral-800 shadow-lg hover:shadow-2xl transition-all duration-300"
+              className="group relative overflow-hidden rounded-xs min-h-[320px] sm:min-h-[350px] p-6 flex flex-col justify-between cursor-pointer border border-neutral-700/80 shadow-lg hover:shadow-2xl transition-all duration-300"
             >
               <img
                 src={sunglassManImg}
@@ -179,22 +183,23 @@ export const HomeView: React.FC = () => {
                 className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/60 to-neutral-950/20 group-hover:from-neutral-950 group-hover:via-neutral-950/70 transition-colors" />
+              {/* Eye-catching high visibility overlay: clear picture with readable bottom text */}
+              <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/15 to-transparent group-hover:from-neutral-950/90 transition-colors" />
 
               <div className="relative z-10 flex items-center justify-between">
-                <span className="text-[10px] font-black uppercase tracking-widest text-white bg-red-600 px-2.5 py-1 rounded-xs shadow-xs">
+                <span className="text-[10px] font-black uppercase tracking-widest text-white bg-red-600 px-2.5 py-1 rounded-xs shadow-md">
                   SOLAR FOR MEN
                 </span>
-                <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-xs flex items-center justify-center text-white group-hover:bg-red-600 transition-colors">
+                <div className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-xs flex items-center justify-center text-white group-hover:bg-red-600 transition-colors border border-white/20">
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                 </div>
               </div>
 
               <div className="relative z-10 space-y-1.5">
-                <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white drop-shadow-sm">
+                <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white drop-shadow-md">
                   Sunglasses for Men
                 </h3>
-                <p className="text-xs text-neutral-200 leading-relaxed font-normal">
+                <p className="text-xs text-neutral-200 leading-relaxed font-normal drop-shadow-xs">
                   Military Aviators, bold square Wayfarers, and driving polarized sunglasses.
                 </p>
                 <div className="pt-2 text-xs font-bold text-red-400 group-hover:text-white flex items-center gap-1.5 transition-colors">
@@ -207,7 +212,7 @@ export const HomeView: React.FC = () => {
             {/* Sunglasses for Women */}
             <div
               onClick={() => navigateTo('shop', { category: 'Sunglasses', gender: 'Women' })}
-              className="group relative overflow-hidden rounded-xs min-h-[320px] sm:min-h-[350px] p-6 flex flex-col justify-between cursor-pointer border border-neutral-800 shadow-lg hover:shadow-2xl transition-all duration-300"
+              className="group relative overflow-hidden rounded-xs min-h-[320px] sm:min-h-[350px] p-6 flex flex-col justify-between cursor-pointer border border-neutral-700/80 shadow-lg hover:shadow-2xl transition-all duration-300"
             >
               <img
                 src={sunglassWomanImg}
@@ -215,22 +220,23 @@ export const HomeView: React.FC = () => {
                 className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/60 to-neutral-950/20 group-hover:from-neutral-950 group-hover:via-neutral-950/70 transition-colors" />
+              {/* Eye-catching high visibility overlay: clear picture with readable bottom text */}
+              <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/15 to-transparent group-hover:from-neutral-950/90 transition-colors" />
 
               <div className="relative z-10 flex items-center justify-between">
-                <span className="text-[10px] font-black uppercase tracking-widest text-white bg-red-600 px-2.5 py-1 rounded-xs shadow-xs">
+                <span className="text-[10px] font-black uppercase tracking-widest text-white bg-red-600 px-2.5 py-1 rounded-xs shadow-md">
                   SOLAR FOR WOMEN
                 </span>
-                <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-xs flex items-center justify-center text-white group-hover:bg-red-600 transition-colors">
+                <div className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-xs flex items-center justify-center text-white group-hover:bg-red-600 transition-colors border border-white/20">
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                 </div>
               </div>
 
               <div className="relative z-10 space-y-1.5">
-                <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white drop-shadow-sm">
+                <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white drop-shadow-md">
                   Sunglasses for Women
                 </h3>
-                <p className="text-xs text-neutral-200 leading-relaxed font-normal">
+                <p className="text-xs text-neutral-200 leading-relaxed font-normal drop-shadow-xs">
                   Oversized butterfly, hexagonal metallic silhouettes, and UV400 gradient lenses.
                 </p>
                 <div className="pt-2 text-xs font-bold text-red-400 group-hover:text-white flex items-center gap-1.5 transition-colors">
@@ -243,7 +249,7 @@ export const HomeView: React.FC = () => {
             {/* Sunglasses for Kids */}
             <div
               onClick={() => navigateTo('shop', { category: 'Sunglasses', gender: 'Kids' })}
-              className="group relative overflow-hidden rounded-xs min-h-[320px] sm:min-h-[350px] p-6 flex flex-col justify-between cursor-pointer border border-neutral-800 shadow-lg hover:shadow-2xl transition-all duration-300"
+              className="group relative overflow-hidden rounded-xs min-h-[320px] sm:min-h-[350px] p-6 flex flex-col justify-between cursor-pointer border border-neutral-700/80 shadow-lg hover:shadow-2xl transition-all duration-300"
             >
               <img
                 src={sunglassKidImg}
@@ -251,22 +257,23 @@ export const HomeView: React.FC = () => {
                 className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/60 to-neutral-950/20 group-hover:from-neutral-950 group-hover:via-neutral-950/70 transition-colors" />
+              {/* Eye-catching high visibility overlay: clear picture with readable bottom text */}
+              <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/15 to-transparent group-hover:from-neutral-950/90 transition-colors" />
 
               <div className="relative z-10 flex items-center justify-between">
-                <span className="text-[10px] font-black uppercase tracking-widest text-white bg-red-600 px-2.5 py-1 rounded-xs shadow-xs">
+                <span className="text-[10px] font-black uppercase tracking-widest text-white bg-red-600 px-2.5 py-1 rounded-xs shadow-md">
                   JUNIOR SOLAR
                 </span>
-                <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-xs flex items-center justify-center text-white group-hover:bg-red-600 transition-colors">
+                <div className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-xs flex items-center justify-center text-white group-hover:bg-red-600 transition-colors border border-white/20">
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                 </div>
               </div>
 
               <div className="relative z-10 space-y-1.5">
-                <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white drop-shadow-sm">
+                <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white drop-shadow-md">
                   Sunglasses for Kids
                 </h3>
-                <p className="text-xs text-neutral-200 leading-relaxed font-normal">
+                <p className="text-xs text-neutral-200 leading-relaxed font-normal drop-shadow-xs">
                   UV400 shatterproof polarized protection in fun, durable rubberized frames.
                 </p>
                 <div className="pt-2 text-xs font-bold text-red-400 group-hover:text-white flex items-center gap-1.5 transition-colors">
@@ -649,12 +656,20 @@ export const HomeView: React.FC = () => {
                 onClick={() => navigateTo('blog-post', { slug: post.slug })}
                 className="group bg-white border border-neutral-200 rounded-xs overflow-hidden cursor-pointer hover:shadow-md transition-all"
               >
-                <div className="aspect-16/9 bg-neutral-100 overflow-hidden">
+                <div className="aspect-16/9 bg-neutral-100 overflow-hidden relative">
                   <img
-                    src={post.imageUrl}
+                    src={getBlogImage(post)}
                     alt={post.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80';
+                    }}
                   />
+                  <div className="absolute top-2.5 left-2.5">
+                    <span className="bg-neutral-950/80 backdrop-blur-xs text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-xs tracking-wider">
+                      {post.category}
+                    </span>
+                  </div>
                 </div>
                 <div className="p-5">
                   <div className="flex items-center justify-between text-[11px] text-neutral-500 mb-2">

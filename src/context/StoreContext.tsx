@@ -8,6 +8,7 @@ import {
   initialBanners,
   initialCoupons
 } from '../data/seedData.ts';
+import { getBlogImage } from '../data/blogImages.ts';
 
 export type AppView =
   | 'home'
@@ -163,10 +164,20 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       const saved = localStorage.getItem('specslook_blogs');
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed.map((b: BlogPost) => ({
+            ...b,
+            image: getBlogImage(b),
+            imageUrl: getBlogImage(b)
+          }));
+        }
       }
     } catch {}
-    return initialBlogs;
+    return initialBlogs.map((b: BlogPost) => ({
+      ...b,
+      image: getBlogImage(b),
+      imageUrl: getBlogImage(b)
+    }));
   });
 
   const [banners, setBanners] = useState<Banner[]>(() => {

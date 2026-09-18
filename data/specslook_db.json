@@ -2197,7 +2197,8 @@
       "authorRole": "Head of Optical Heritage",
       "publishedAt": "2026-08-28",
       "readTime": "4 min read",
-      "image": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80",
+      "image": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1200&q=85",
+      "imageUrl": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1200&q=85",
       "category": "Heritage & Design",
       "tags": [
         "Aviator",
@@ -2216,7 +2217,8 @@
       "authorRole": "Lead Optometrist",
       "publishedAt": "2026-09-02",
       "readTime": "5 min read",
-      "image": "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=800&q=80",
+      "image": "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1200&q=85",
+      "imageUrl": "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1200&q=85",
       "category": "Eye Health",
       "tags": [
         "Polarized",
@@ -2234,7 +2236,8 @@
       "authorRole": "Fashion Director",
       "publishedAt": "2026-09-08",
       "readTime": "6 min read",
-      "image": "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=800&q=80",
+      "image": "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1200&q=85",
+      "imageUrl": "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1200&q=85",
       "category": "Style & Trends",
       "tags": [
         "Face Shape",
@@ -2385,8 +2388,8 @@
   "admin": {
     "id": "admin-01",
     "username": "honeygogia",
-    "passwordSalt": "96b872ac10d37f098382f9b104400af5",
-    "passwordHash": "4dbc363c9e47249969b95d18571e25f75843cf6042436acbb8806f2d18e47bb2157c33c7d53bacc567e2280923d9d1bcb79439ea0861a0501196f100868a7805",
+    "passwordSalt": "898c23bf2c380ca47b0f34d0733f8722",
+    "passwordHash": "3b8318259212e23b0f95e80156e3803507833ba12945259cb26909895c8809872dbf99a7b27641f5d1d0a0ce3578f617048c3cc0aaa8fc8eb03bbd269d41e46f",
     "role": "superadmin",
     "name": "Honey Gogia",
     "email": "honeygogia@specslook.com"

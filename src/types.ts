@@ -459,6 +459,7 @@ export interface BlogPost {
   publishedAt: string;
   readTime: string;
   image: string;
+  imageUrl?: string;
   category: string;
   tags: string[];
 }
