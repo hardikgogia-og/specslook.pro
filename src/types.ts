@@ -500,3 +500,11 @@ export interface AdminStats {
   monthlyRevenue: { month: string; revenue: number; orders: number }[];
   statusDistribution: { status: OrderStatus; count: number }[];
 }
+
+export interface AdminUser {
+  id: string;
+  username: string;
+  name: string;
+  email: string;
+  role: 'superadmin' | 'admin' | string;
+}

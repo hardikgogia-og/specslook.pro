@@ -1,0 +1,56 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Admin role verification helper
+    function isAdmin() {
+      return request.auth != null && (
+        request.auth.token.role == 'superadmin' ||
+        request.auth.token.role == 'admin' ||
+        request.auth.token.email == 'honeygogia@specslook.com' ||
+        request.auth.token.email == 'honey@specslook.com'
+      );
+    }
+
+    // Public catalog read; Admin restricted write/update/delete
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /stores/{storeId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /blogs/{blogId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /banners/{bannerId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /coupons/{couponId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Orders: Customer can submit; Admin has full access
+    match /orders/{orderId} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin() || (request.auth != null && request.auth.uid == resource.data.customerId);
+    }
+
+    // Admin users collection
+    match /admin_users/{userId} {
+      allow read, write: if isAdmin();
+    }
+  }
+}

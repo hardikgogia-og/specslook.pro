@@ -93,9 +93,11 @@ interface StoreContextType {
   lastPlacedOrder: Order | null;
   setLastPlacedOrder: (order: Order | null) => void;
 
-  // Admin Auth
+  // Admin Auth - Secure session-backed state
   adminToken: string | null;
   adminUser: any | null;
+  adminAuthLoading: boolean;
+  verifyAdminSession: () => Promise<boolean>;
   loginAdmin: (token: string, user: any) => void;
   logoutAdmin: () => void;
 
@@ -104,12 +106,42 @@ interface StoreContextType {
   showToast: (message: string, type?: 'success' | 'error' | 'info') => void;
 }
 
+// Synchronous route resolver to eliminate visual jumping / flashing before hydration
+const getInitialRoute = (): { view: AppView; params: Record<string, any> } => {
+  if (typeof window === 'undefined') return { view: 'home', params: {} };
+  const rawPath = window.location.pathname;
+  const path = rawPath.replace(/\/+$/, '') || '/';
+  const hash = window.location.hash.replace('#', '').replace(/\/+$/, '');
+  const search = new URLSearchParams(window.location.search);
+
+  if (path === '/admin' || hash === 'admin' || search.get('view') === 'admin') {
+    return { view: 'admin', params: {} };
+  }
+  const productMatch = path.match(/^\/(?:product|products)\/([^/]+)/i);
+  const hashProductMatch = hash.match(/^(?:product|products)\/([^/]+)/i);
+  const productSlugOrId = productMatch?.[1] || hashProductMatch?.[1] || search.get('product') || search.get('slug') || search.get('id');
+  if (productSlugOrId) {
+    const decoded = decodeURIComponent(productSlugOrId);
+    return { view: 'product', params: { slug: decoded, id: decoded } };
+  }
+  if (path === '/checkout' || hash === 'checkout') return { view: 'checkout', params: {} };
+  if (path === '/tracking' || hash === 'tracking') return { view: 'tracking', params: {} };
+  if (path === '/account' || hash === 'account') return { view: 'account', params: {} };
+  if (path === '/stores' || path === '/store' || hash === 'stores') return { view: 'stores', params: {} };
+  if (path === '/blog' || path === '/blogs' || hash === 'blog') return { view: 'blog', params: {} };
+  if (path === '/about' || hash === 'about') return { view: 'about', params: {} };
+  if (path === '/contact' || path === '/contact-us' || hash === 'contact') return { view: 'contact', params: {} };
+  if (path === '/shop' || hash === 'shop') return { view: 'shop', params: {} };
+  return { view: 'home', params: {} };
+};
+
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
 
 export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Navigation
-  const [currentView, setCurrentView] = useState<AppView>('home');
-  const [viewParams, setViewParams] = useState<Record<string, any>>({});
+  // Navigation initialized synchronously from browser URL
+  const initialRoute = getInitialRoute();
+  const [currentView, setCurrentView] = useState<AppView>(initialRoute.view);
+  const [viewParams, setViewParams] = useState<Record<string, any>>(initialRoute.params);
 
   // Data initialized with fallback seed data for instant Vercel/offline reliability
   const [products, setProducts] = useState<Product[]>(() => {
@@ -222,23 +254,36 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discount: number; message: string } | null>(null);
   const [lastPlacedOrder, setLastPlacedOrder] = useState<Order | null>(null);
 
-  // Admin Auth
-  const [adminToken, setAdminToken] = useState<string | null>(() => {
-    try {
-      return localStorage.getItem('specslook_admin_token');
-    } catch {
-      return null;
-    }
-  });
+  // Admin Auth - Persistent cross-device session without reliance on localStorage/sessionStorage
+  const [adminToken, setAdminToken] = useState<string | null>(null);
+  const [adminUser, setAdminUser] = useState<any | null>(null);
+  const [adminAuthLoading, setAdminAuthLoading] = useState<boolean>(true);
 
-  const [adminUser, setAdminUser] = useState<any | null>(() => {
+  // Verifies admin session with the server using httpOnly session cookie or Bearer token
+  const verifyAdminSession = async (): Promise<boolean> => {
     try {
-      const saved = localStorage.getItem('specslook_admin_user');
-      return saved ? JSON.parse(saved) : null;
+      const res = await fetch('/api/auth/admin/me', {
+        credentials: 'include'
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.user) {
+          setAdminUser(data.user);
+          setAdminToken(data.token || 'sl_adm_session_active');
+          return true;
+        }
+      }
+      setAdminUser(null);
+      setAdminToken(null);
+      return false;
     } catch {
-      return null;
+      setAdminUser(null);
+      setAdminToken(null);
+      return false;
+    } finally {
+      setAdminAuthLoading(false);
     }
-  });
+  };
 
   // Toast notifications
   const [toasts, setToasts] = useState<Toast[]>([]);
@@ -303,32 +348,8 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
       if (pRes.status === 'fulfilled' && pRes.value && pRes.value.length > 0) {
         const fetchedProducts: Product[] = pRes.value;
-
-        // Retrieve any local product overrides (e.g. from admin panel saves)
-        let localOverrides: Product[] = [];
-        try {
-          const saved = localStorage.getItem('specslook_products');
-          if (saved) {
-            const parsed = JSON.parse(saved);
-            if (Array.isArray(parsed)) localOverrides = parsed;
-          }
-        } catch {}
-
-        // Merge: local overrides take precedence over stale server seed for modified products
-        const mergedMap = new Map<string, Product>();
-        fetchedProducts.forEach(p => mergedMap.set(p.id, p));
-        initialProducts.forEach(p => {
-          if (!mergedMap.has(p.id)) mergedMap.set(p.id, p);
-        });
-        localOverrides.forEach(localProd => {
-          if (localProd && localProd.id) {
-            mergedMap.set(localProd.id, localProd);
-          }
-        });
-
-        const finalProducts = Array.from(mergedMap.values());
-        setProducts(finalProducts);
-        try { localStorage.setItem('specslook_products', JSON.stringify(finalProducts)); } catch {}
+        setProducts(fetchedProducts);
+        try { localStorage.setItem('specslook_products', JSON.stringify(fetchedProducts)); } catch {}
       }
       if (cRes.status === 'fulfilled' && cRes.value && cRes.value.length > 0) {
         const fetchedCategories: Category[] = cRes.value;
@@ -361,6 +382,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   useEffect(() => {
+    verifyAdminSession();
     fetchData();
     initAnalytics();
 
@@ -829,34 +851,32 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     showToast('Coupon removed', 'info');
   };
 
-  // Admin Auth
+  // Admin Auth - Secure session without localStorage dependency
   const loginAdmin = (token: string, user: any) => {
     setAdminToken(token);
     setAdminUser(user);
+    setAdminAuthLoading(false);
     try {
-      localStorage.setItem('specslook_admin_token', token);
-      localStorage.setItem('specslook_admin_user', JSON.stringify(user));
-    } catch (e) {
-      console.error(e);
-    }
+      localStorage.removeItem('specslook_admin_token');
+      localStorage.removeItem('specslook_admin_user');
+    } catch {}
     showToast(`Welcome back, ${user.name || 'Admin'}`);
   };
 
   const logoutAdmin = () => {
-    if (adminToken) {
-      fetch('/api/auth/admin/logout', {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${adminToken}` }
-      }).catch(console.error);
-    }
+    fetch('/api/auth/admin/logout', {
+      method: 'POST',
+      headers: adminToken ? { Authorization: `Bearer ${adminToken}` } : {},
+      credentials: 'include'
+    }).catch(console.error);
+
     setAdminToken(null);
     setAdminUser(null);
+    setAdminAuthLoading(false);
     try {
       localStorage.removeItem('specslook_admin_token');
       localStorage.removeItem('specslook_admin_user');
-    } catch (e) {
-      console.error(e);
-    }
+    } catch {}
     showToast('Logged out of Admin Portal', 'info');
   };
 
@@ -1159,6 +1179,8 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         setLastPlacedOrder,
         adminToken,
         adminUser,
+        adminAuthLoading,
+        verifyAdminSession,
         loginAdmin,
         logoutAdmin,
         toasts,

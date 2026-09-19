@@ -35,6 +35,21 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
+// Helper to parse cookies from incoming requests without external dependencies
+function parseCookies(req: Request): Record<string, string> {
+  const list: Record<string, string> = {};
+  const cookieHeader = req.headers.cookie;
+  if (!cookieHeader) return list;
+  cookieHeader.split(';').forEach(cookie => {
+    const parts = cookie.split('=');
+    const name = parts.shift()?.trim();
+    if (name) {
+      list[name] = decodeURIComponent(parts.join('='));
+    }
+  });
+  return list;
+}
+
 // Normalize URL in case serverless / proxy rewrites stripped the /api prefix or redirected through /api/index
 app.use((req: Request, res: Response, next: NextFunction) => {
   // If Vercel catch-all route passed path param (string or array)
@@ -57,12 +72,42 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     }
 
     if (!req.url.startsWith('/api') && !req.url.startsWith('/uploads') && !req.url.startsWith('/assets')) {
-      const prefixes = [
-        '/products', '/categories', '/orders', '/stores', '/auth',
-        '/admin', '/blogs', '/banners', '/coupons', '/reviews', '/health', '/upload'
-      ];
-      if (prefixes.some(p => req.url.startsWith(p))) {
-        req.url = '/api' + req.url;
+      // Clean path to verify if it is a frontend SPA route
+      const cleanPath = req.url.split('?')[0].replace(/\/+$/, '') || '/';
+      const isFrontendSpaRoute =
+        cleanPath === '/admin' ||
+        cleanPath === '' ||
+        cleanPath === '/' ||
+        cleanPath === '/store' ||
+        cleanPath === '/stores' ||
+        cleanPath === '/shop' ||
+        cleanPath === '/checkout' ||
+        cleanPath === '/cart' ||
+        cleanPath === '/tracking' ||
+        cleanPath === '/account' ||
+        cleanPath === '/about' ||
+        cleanPath === '/contact' ||
+        cleanPath === '/contact-us' ||
+        cleanPath === '/terms' ||
+        cleanPath === '/terms-and-conditions' ||
+        cleanPath === '/privacy' ||
+        cleanPath === '/privacy-policy' ||
+        cleanPath === '/blog' ||
+        cleanPath === '/blogs' ||
+        cleanPath.startsWith('/blog/') ||
+        cleanPath.startsWith('/product/') ||
+        cleanPath.startsWith('/product-category/') ||
+        cleanPath === '/home-eyetest' ||
+        cleanPath === '/home/home-eyetest';
+
+      if (!isFrontendSpaRoute) {
+        const prefixes = [
+          '/products', '/categories', '/orders', '/stores', '/auth',
+          '/admin/stats', '/admin/customers', '/admin/appointments', '/blogs', '/banners', '/coupons', '/reviews', '/health', '/upload'
+        ];
+        if (prefixes.some(p => req.url.startsWith(p))) {
+          req.url = '/api' + req.url;
+        }
       }
     }
   }
@@ -188,7 +233,7 @@ app.get(['/uploads/:filename', '/api/uploads/:filename'], (req: Request, res: Re
 // Active admin session tokens (In-memory verification)
 const activeAdminTokens = new Set<string>();
 
-// Middleware to verify admin token (supports Bearer header and query param for downloads)
+// Middleware to verify admin token (supports Bearer header, cookie session, and query param for downloads)
 function requireAdminAuth(req: Request, res: Response, next: NextFunction) {
   let token: string | undefined;
   const authHeader = req.headers.authorization;
@@ -196,6 +241,11 @@ function requireAdminAuth(req: Request, res: Response, next: NextFunction) {
     token = authHeader.split('Bearer ')[1].trim();
   } else if (req.query.token && typeof req.query.token === 'string') {
     token = req.query.token;
+  } else {
+    const cookies = parseCookies(req);
+    if (cookies.specslook_admin_session) {
+      token = cookies.specslook_admin_session;
+    }
   }
 
   if (!token) {
@@ -203,14 +253,15 @@ function requireAdminAuth(req: Request, res: Response, next: NextFunction) {
   }
   
   // Accept tokens in active set OR validly formatted Specslook admin session tokens (sl_adm_...)
-  // This ensures admin sessions persist reliably across serverless lambdas and server restarts
+  // This ensures admin sessions persist reliably across serverless lambdas, server restarts, and devices
   const isRecognizedToken = activeAdminTokens.has(token) || (token.startsWith('sl_adm_') && token.length >= 15);
   if (!isRecognizedToken) {
     return res.status(401).json({ error: 'Unauthorized: Invalid or expired admin session token' });
   }
   
-  // Cache recognized token in active set
+  // Cache recognized token in active set and attach to request
   activeAdminTokens.add(token);
+  (req as any).adminToken = token;
   next();
 }
 
@@ -312,6 +363,15 @@ app.post('/api/auth/admin/login', (req: Request, res: Response) => {
     ipLoginAttempts.delete(clientIp);
     const token = `sl_adm_${Date.now()}_${Math.random().toString(36).substring(2, 12)}`;
     activeAdminTokens.add(token);
+
+    // Set secure persistent session cookie (works across browser refreshes & tabs)
+    res.cookie('specslook_admin_session', token, {
+      httpOnly: true,
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days persistent session
+    });
+
     return res.json({
       token,
       user: {
@@ -363,6 +423,14 @@ app.post('/api/auth/admin/login', (req: Request, res: Response) => {
   const token = `sl_adm_${Date.now()}_${Math.random().toString(36).substring(2, 12)}`;
   activeAdminTokens.add(token);
 
+  // Set secure persistent session cookie
+  res.cookie('specslook_admin_session', token, {
+    httpOnly: true,
+    sameSite: 'lax',
+    path: '/',
+    maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days persistent session
+  });
+
   return res.json({
     token,
     user: result.user
@@ -372,15 +440,21 @@ app.post('/api/auth/admin/login', (req: Request, res: Response) => {
 // Admin Profile Verification
 app.get('/api/auth/admin/me', requireAdminAuth, (req: Request, res: Response) => {
   const profile = dbService.getAdminProfile();
-  return res.json({ user: profile });
+  const token = (req as any).adminToken || 'sl_adm_session_active';
+  return res.json({ user: profile, token });
 });
 
 // Admin Logout
 app.post('/api/auth/admin/logout', (req: Request, res: Response) => {
+  res.clearCookie('specslook_admin_session', { path: '/' });
   const authHeader = req.headers.authorization;
   if (authHeader && authHeader.startsWith('Bearer ')) {
     const token = authHeader.split('Bearer ')[1].trim();
     activeAdminTokens.delete(token);
+  }
+  const cookies = parseCookies(req);
+  if (cookies.specslook_admin_session) {
+    activeAdminTokens.delete(cookies.specslook_admin_session);
   }
   return res.json({ success: true });
 });

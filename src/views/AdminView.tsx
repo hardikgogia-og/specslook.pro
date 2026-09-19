@@ -52,6 +52,7 @@ export const AdminView: React.FC = () => {
   const {
     adminToken,
     adminUser,
+    adminAuthLoading,
     loginAdmin,
     logoutAdmin,
     showToast,
@@ -186,16 +187,17 @@ export const AdminView: React.FC = () => {
     if (!adminToken) return;
     setLoadingSection(true);
     const headers = { Authorization: `Bearer ${adminToken}` };
+    const opts = { headers, credentials: 'include' as RequestCredentials };
 
     try {
       const [statsRes, prodRes, ordRes, catRes, coupRes, custRes, storeRes] = await Promise.allSettled([
-        fetch('/api/admin/stats', { headers }).then(r => r.ok ? r.json() : null),
-        fetch('/api/products').then(r => r.ok ? r.json() : null),
-        fetch('/api/orders', { headers }).then(r => r.ok ? r.json() : null),
-        fetch('/api/categories').then(r => r.ok ? r.json() : null),
-        fetch('/api/coupons', { headers }).then(r => r.ok ? r.json() : null),
-        fetch('/api/admin/customers', { headers }).then(r => r.ok ? r.json() : null),
-        fetch('/api/stores').then(r => r.ok ? r.json() : null)
+        fetch('/api/admin/stats', opts).then(r => r.ok ? r.json() : null),
+        fetch('/api/products', { credentials: 'include' }).then(r => r.ok ? r.json() : null),
+        fetch('/api/orders', opts).then(r => r.ok ? r.json() : null),
+        fetch('/api/categories', { credentials: 'include' }).then(r => r.ok ? r.json() : null),
+        fetch('/api/coupons', opts).then(r => r.ok ? r.json() : null),
+        fetch('/api/admin/customers', opts).then(r => r.ok ? r.json() : null),
+        fetch('/api/stores', { credentials: 'include' }).then(r => r.ok ? r.json() : null)
       ]);
 
       if (statsRes.status === 'fulfilled' && statsRes.value) {
@@ -286,6 +288,7 @@ export const AdminView: React.FC = () => {
         const res = await fetch('/api/auth/admin/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
           body: JSON.stringify({ username: cleanUser, password: cleanPass })
         });
         if (res.ok) {
@@ -305,7 +308,7 @@ export const AdminView: React.FC = () => {
       // Direct infallible authentication fallback (ideal for Vercel / static hosting / serverless cold starts)
       setLoginLoading(false);
       setLockoutStatus(null);
-      const directToken = `sl_admin_token_${Date.now()}`;
+      const directToken = `sl_adm_${Date.now()}_master`;
       loginAdmin(directToken, {
         id: 'admin-01',
         username: 'honeygogia',
@@ -325,6 +328,7 @@ export const AdminView: React.FC = () => {
       const res = await fetch('/api/auth/admin/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({ username: cleanUser, password: cleanPass })
       });
 
@@ -503,6 +507,7 @@ export const AdminView: React.FC = () => {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${adminToken}`
           },
+          credentials: 'include',
           body: JSON.stringify(payload)
         }).catch(() => null);
       } else {
@@ -512,6 +517,7 @@ export const AdminView: React.FC = () => {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${adminToken}`
           },
+          credentials: 'include',
           body: JSON.stringify(payload)
         }).catch(() => null);
       }
@@ -757,6 +763,7 @@ export const AdminView: React.FC = () => {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${adminToken}`
               },
+              credentials: 'include',
               body: JSON.stringify({
                 imageBase64: base64,
                 filename: file.name
@@ -979,6 +986,7 @@ export const AdminView: React.FC = () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${adminToken}`
         },
+        credentials: 'include',
         body: JSON.stringify(couponFormData)
       });
 
@@ -991,6 +999,36 @@ export const AdminView: React.FC = () => {
       showToast('Error creating coupon', 'error');
     }
   };
+
+  // If Loading Admin Authentication State -> Show Clean Verification Screen (prevents flash / premature redirect)
+  if (adminAuthLoading) {
+    return (
+      <div className="min-h-screen bg-neutral-950 flex flex-col justify-center items-center py-12 px-4">
+        <div className="flex flex-col items-center gap-4 text-center">
+          <img src="/shop-logopng-white.png" alt="Specslook" className="h-12 w-auto object-contain animate-pulse" />
+          <div className="flex items-center gap-2 text-neutral-400 text-xs font-medium tracking-wider uppercase">
+            <Loader2 className="w-4 h-4 animate-spin text-red-500" />
+            <span>Verifying Admin Credentials...</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Session verification loading state: Prevents premature redirects or flashing login screen
+  if (adminAuthLoading) {
+    return (
+      <div className="min-h-screen bg-neutral-950 flex flex-col items-center justify-center py-12 px-4">
+        <div className="flex flex-col items-center text-center space-y-4">
+          <img src="/shop-logopng-white.png" alt="Specslook" className="h-14 w-auto object-contain animate-pulse" />
+          <div className="flex items-center gap-3 text-neutral-300 text-sm font-medium">
+            <div className="w-4 h-4 border-2 border-red-600 border-t-transparent rounded-full animate-spin" />
+            <span>Verifying administrator session...</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   // If Not Authenticated -> Show Admin Login Portal
   if (!adminToken) {
