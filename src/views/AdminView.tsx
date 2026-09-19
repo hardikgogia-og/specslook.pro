@@ -499,42 +499,15 @@ export const AdminView: React.FC = () => {
     };
 
     try {
-      let res: Response | null = null;
       if (editingProductId) {
-        res = await fetch(`/api/products/${editingProductId}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${adminToken}`
-          },
-          credentials: 'include',
-          body: JSON.stringify(payload)
-        }).catch(() => null);
+        const updated = await updateProduct(editingProductId, payload);
+        if (updated) {
+          setAdminProducts(prev => prev.map(p => (p.id === editingProductId || p.slug === editingProductId) ? updated : p));
+        }
+        showToast('Product updated successfully! Visible on all customer devices.', 'success');
       } else {
-        res = await fetch('/api/products', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${adminToken}`
-          },
-          credentials: 'include',
-          body: JSON.stringify(payload)
-        }).catch(() => null);
-      }
-
-      let savedProduct: Product | null = null;
-      if (res && res.ok) {
-        savedProduct = await res.json().catch(() => null);
-      }
-
-      if (editingProductId) {
-        await updateProduct(editingProductId, payload);
-        setAdminProducts(prev => prev.map(p => (p.id === editingProductId || p.slug === editingProductId) ? { ...p, ...payload } : p));
-        showToast('Product updated successfully! Changes saved to database and live store.', 'success');
-      } else {
-        const created: Product = savedProduct || {
+        const newProductPayload: Omit<Product, 'id'> = {
           ...payload,
-          id: `prod-${Date.now().toString(36)}`,
           slug: payload.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
           brand: 'SPECSLOOK LUXURY',
           rating: 4.9,
@@ -556,53 +529,18 @@ export const AdminView: React.FC = () => {
             }
           ]
         };
-        await addProduct(created);
-        setAdminProducts(prev => [created, ...prev]);
-        showToast('New product created successfully! Visible to customers now.', 'success');
+        const created = await addProduct(newProductPayload);
+        setAdminProducts(prev => [created, ...prev.filter(p => p.id !== created.id)]);
+        showToast('New product created successfully! Visible on all customer devices.', 'success');
       }
 
       setIsProductModalOpen(false);
       setEditingProductId(null);
       await loadAdminData();
-      refreshProducts();
+      await refreshProducts();
     } catch (err: any) {
-      console.warn('Network error saving product, synced locally:', err);
-      if (editingProductId) {
-        await updateProduct(editingProductId, payload);
-        setAdminProducts(prev => prev.map(p => (p.id === editingProductId || p.slug === editingProductId) ? { ...p, ...payload } : p));
-        showToast('Changes saved locally and to live store!', 'success');
-      } else {
-        const created: Product = {
-          ...payload,
-          id: `prod-${Date.now().toString(36)}`,
-          slug: payload.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-          brand: 'SPECSLOOK LUXURY',
-          rating: 4.9,
-          reviewsCount: 12,
-          featured: true,
-          newArrival: true,
-          bestSeller: false,
-          createdAt: new Date().toISOString(),
-          variants: [
-            {
-              id: 'var-1',
-              colorName: 'Classic Finish',
-              colorHex: '#1a1a1a',
-              frameColor: 'Jet Black',
-              lensColor: 'Standard UV400',
-              images: payload.images,
-              stock: payload.stock,
-              sku: `${payload.sku}-01`
-            }
-          ]
-        };
-        await addProduct(created);
-        setAdminProducts(prev => [created, ...prev]);
-        showToast('Product saved locally and to live store!', 'success');
-      }
-      setIsProductModalOpen(false);
-      setEditingProductId(null);
-      refreshProducts();
+      console.error('Error saving product:', err);
+      showToast(err.message || 'Failed to save product to backend database.', 'error');
     } finally {
       setIsSavingProduct(false);
     }
@@ -781,11 +719,14 @@ export const AdminView: React.FC = () => {
           uploadedUrls.push(photoUrl);
         }
 
-        // Add uploaded URLs to product images
-        setProductFormData(prev => ({
-          ...prev,
-          images: [...prev.images, ...uploadedUrls]
-        }));
+        // Add uploaded URLs to product images - place newly uploaded photos FIRST and filter placeholder sample
+        setProductFormData(prev => {
+          const filtered = prev.images.filter(img => !img.includes('photo-1572635196237-14b3f281503f'));
+          return {
+            ...prev,
+            images: [...uploadedUrls, ...filtered]
+          };
+        });
 
         showToast(`Added ${uploadedUrls.length} photo(s) from computer! Click "Save Changes" to persist.`, 'success');
       }
@@ -813,14 +754,11 @@ export const AdminView: React.FC = () => {
 
   // Remove image in Product Form
   const handleRemoveImage = (index: number) => {
-    if (productFormData.images.length <= 1) {
-      showToast('Product must have at least one image', 'error');
-      return;
-    }
     setProductFormData(prev => ({
       ...prev,
       images: prev.images.filter((_, idx) => idx !== index)
     }));
+    showToast('Photo removed from product');
   };
 
   // Quick Modal: Set Primary Cover Photo in Database
@@ -1465,7 +1403,7 @@ export const AdminView: React.FC = () => {
                       lensWidthMm: 58,
                       bridgeMm: 14,
                       templeLengthMm: 140,
-                      images: ['https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=800&q=80']
+                      images: []
                     });
                     setIsProductModalOpen(true);
                   }}
@@ -2527,11 +2465,19 @@ export const AdminView: React.FC = () => {
                 </div>
 
                 {/* Uploaded Photos Thumbnails & Controls */}
-                {productFormData.images.length > 0 && (
+                {productFormData.images.length === 0 ? (
+                  <div className="border border-neutral-200 bg-neutral-50 rounded-xs p-4 text-center">
+                    <p className="text-xs font-semibold text-neutral-700">No photos attached yet</p>
+                    <p className="text-[11px] text-neutral-500 mt-0.5">Click "Upload From Computer / Phone" above or paste an image URL below to attach product photos.</p>
+                  </div>
+                ) : (
                   <div className="space-y-1.5 pt-1">
-                    <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider">
-                      Attached Product Images ({productFormData.images.length})
-                    </span>
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider">
+                        Attached Product Images ({productFormData.images.length})
+                      </span>
+                      <span className="text-[10px] text-neutral-400">First image will be the main cover</span>
+                    </div>
                     <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-2">
                       {productFormData.images.map((img, idx) => (
                         <div
@@ -2564,16 +2510,14 @@ export const AdminView: React.FC = () => {
                               </button>
                             )}
 
-                            {productFormData.images.length > 1 && (
-                              <button
-                                type="button"
-                                onClick={() => handleRemoveImage(idx)}
-                                className="text-red-500 hover:text-red-700 p-0.5 cursor-pointer"
-                                title="Remove photo"
-                              >
-                                <Trash2 className="w-3 h-3" />
-                              </button>
-                            )}
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveImage(idx)}
+                              className="text-red-500 hover:text-red-700 p-0.5 cursor-pointer ml-auto"
+                              title="Remove photo"
+                            >
+                              <Trash2 className="w-3 h-3" />
+                            </button>
                           </div>
 
                           {img.startsWith('/uploads/') && (

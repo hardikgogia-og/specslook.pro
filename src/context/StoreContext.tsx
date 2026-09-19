@@ -314,32 +314,33 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   }, [wishlist]);
 
-  // Fetch initial data with resilient fallback
+  // Fetch initial data with resilient fallback and dynamic cache-busting
   const fetchData = async () => {
     setLoadingData(true);
     try {
+      const timestamp = Date.now();
       const [pRes, cRes, sRes, bRes, bnRes] = await Promise.allSettled([
-        fetch('/api/products').then(async r => {
+        fetch(`/api/products?_t=${timestamp}`, { cache: 'no-store' }).then(async r => {
           if (!r.ok) return null;
           const data = await r.json();
           return Array.isArray(data) ? data : null;
         }),
-        fetch('/api/categories').then(async r => {
+        fetch(`/api/categories?_t=${timestamp}`, { cache: 'no-store' }).then(async r => {
           if (!r.ok) return null;
           const data = await r.json();
           return Array.isArray(data) ? data : null;
         }),
-        fetch('/api/stores').then(async r => {
+        fetch(`/api/stores?_t=${timestamp}`, { cache: 'no-store' }).then(async r => {
           if (!r.ok) return null;
           const data = await r.json();
           return Array.isArray(data) ? data : null;
         }),
-        fetch('/api/blogs').then(async r => {
+        fetch(`/api/blogs?_t=${timestamp}`, { cache: 'no-store' }).then(async r => {
           if (!r.ok) return null;
           const data = await r.json();
           return Array.isArray(data) ? data : null;
         }),
-        fetch('/api/banners').then(async r => {
+        fetch(`/api/banners?_t=${timestamp}`, { cache: 'no-store' }).then(async r => {
           if (!r.ok) return null;
           const data = await r.json();
           return Array.isArray(data) ? data : null;
@@ -385,6 +386,26 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     verifyAdminSession();
     fetchData();
     initAnalytics();
+
+    // Dynamically refresh products when switching back to tab/window (e.g. mobile app switch or admin tab switch)
+    const handleVisibilityOrFocus = () => {
+      if (document.visibilityState === 'visible') {
+        fetchData();
+      }
+    };
+    window.addEventListener('visibilitychange', handleVisibilityOrFocus);
+    window.addEventListener('focus', handleVisibilityOrFocus);
+
+    // Cross-tab synchronization via storage events
+    const handleStorage = (e: StorageEvent) => {
+      if (e.key === 'specslook_products' && e.newValue) {
+        try {
+          const parsed = JSON.parse(e.newValue);
+          if (Array.isArray(parsed)) setProducts(parsed);
+        } catch {}
+      }
+    };
+    window.addEventListener('storage', handleStorage);
 
     // Check URL pathname, search query, and hash for seamless client-side routing
     const syncRouteFromUrl = () => {
@@ -880,67 +901,47 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     showToast('Logged out of Admin Portal', 'info');
   };
 
-  // Category Mutations (Syncs with server when online, persists locally)
+  // Category Mutations (Authoritative sync with server database)
   const addCategory = async (catData: Omit<Category, 'id'>): Promise<Category> => {
-    const newCat: Category = {
-      ...catData,
-      id: `cat-${Date.now().toString(36)}`
-    };
-    try {
-      if (adminToken) {
-        const res = await fetch('/api/categories', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${adminToken}`
-          },
-          body: JSON.stringify(catData)
-        });
-        if (res.ok) {
-          const created = await res.json();
-          setCategories(prev => {
-            const next = [...prev, created];
-            try { localStorage.setItem('specslook_categories', JSON.stringify(next)); } catch {}
-            return next;
-          });
-          return created;
-        }
-      }
-    } catch {
-      console.warn('Category saved locally (offline sync)');
+    const res = await fetch('/api/categories', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(adminToken ? { Authorization: `Bearer ${adminToken}` } : {})
+      },
+      credentials: 'include',
+      body: JSON.stringify(catData)
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || `Failed to create category (${res.status})`);
     }
+    const created: Category = await res.json();
     setCategories(prev => {
-      const next = [...prev, newCat];
+      const next = [...prev, created];
       try { localStorage.setItem('specslook_categories', JSON.stringify(next)); } catch {}
       return next;
     });
-    return newCat;
+    return created;
   };
 
   const updateCategory = async (id: string, updates: Partial<Category>): Promise<Category | null> => {
-    try {
-      if (adminToken) {
-        await fetch(`/api/categories/${id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${adminToken}`
-          },
-          body: JSON.stringify(updates)
-        });
-      }
-    } catch {
-      console.warn('Category updated locally (offline sync)');
+    const res = await fetch(`/api/categories/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(adminToken ? { Authorization: `Bearer ${adminToken}` } : {})
+      },
+      credentials: 'include',
+      body: JSON.stringify(updates)
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || `Failed to update category (${res.status})`);
     }
-    let updated: Category | null = null;
+    const updated: Category = await res.json();
     setCategories(prev => {
-      const next = prev.map(c => {
-        if (c.id === id) {
-          updated = { ...c, ...updates };
-          return updated;
-        }
-        return c;
-      });
+      const next = prev.map(c => c.id === id ? updated : c);
       try { localStorage.setItem('specslook_categories', JSON.stringify(next)); } catch {}
       return next;
     });
@@ -948,15 +949,16 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   const deleteCategory = async (id: string): Promise<boolean> => {
-    try {
-      if (adminToken) {
-        await fetch(`/api/categories/${id}`, {
-          method: 'DELETE',
-          headers: { 'Authorization': `Bearer ${adminToken}` }
-        });
-      }
-    } catch {
-      console.warn('Category deleted locally (offline sync)');
+    const res = await fetch(`/api/categories/${id}`, {
+      method: 'DELETE',
+      headers: {
+        ...(adminToken ? { Authorization: `Bearer ${adminToken}` } : {})
+      },
+      credentials: 'include'
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || `Failed to delete category (${res.status})`);
     }
     setCategories(prev => {
       const next = prev.filter(c => c.id !== id);
@@ -966,67 +968,47 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return true;
   };
 
-  // Store Mutations (Syncs with server when online, persists locally)
+  // Store Mutations (Authoritative sync with server database)
   const addStore = async (storeData: Omit<StoreLocation, 'id'>): Promise<StoreLocation> => {
-    const newStore: StoreLocation = {
-      ...storeData,
-      id: `store-${Date.now().toString(36)}`
-    };
-    try {
-      if (adminToken) {
-        const res = await fetch('/api/stores', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${adminToken}`
-          },
-          body: JSON.stringify(storeData)
-        });
-        if (res.ok) {
-          const created = await res.json();
-          setStores(prev => {
-            const next = [...prev, created];
-            try { localStorage.setItem('specslook_stores', JSON.stringify(next)); } catch {}
-            return next;
-          });
-          return created;
-        }
-      }
-    } catch {
-      console.warn('Store saved locally (offline sync)');
+    const res = await fetch('/api/stores', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(adminToken ? { Authorization: `Bearer ${adminToken}` } : {})
+      },
+      credentials: 'include',
+      body: JSON.stringify(storeData)
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || `Failed to create store (${res.status})`);
     }
+    const created: StoreLocation = await res.json();
     setStores(prev => {
-      const next = [...prev, newStore];
+      const next = [...prev, created];
       try { localStorage.setItem('specslook_stores', JSON.stringify(next)); } catch {}
       return next;
     });
-    return newStore;
+    return created;
   };
 
   const updateStore = async (id: string, updates: Partial<StoreLocation>): Promise<StoreLocation | null> => {
-    try {
-      if (adminToken) {
-        await fetch(`/api/stores/${id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${adminToken}`
-          },
-          body: JSON.stringify(updates)
-        });
-      }
-    } catch {
-      console.warn('Store updated locally (offline sync)');
+    const res = await fetch(`/api/stores/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(adminToken ? { Authorization: `Bearer ${adminToken}` } : {})
+      },
+      credentials: 'include',
+      body: JSON.stringify(updates)
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || `Failed to update store (${res.status})`);
     }
-    let updated: StoreLocation | null = null;
+    const updated: StoreLocation = await res.json();
     setStores(prev => {
-      const next = prev.map(s => {
-        if (s.id === id) {
-          updated = { ...s, ...updates };
-          return updated;
-        }
-        return s;
-      });
+      const next = prev.map(s => s.id === id ? updated : s);
       try { localStorage.setItem('specslook_stores', JSON.stringify(next)); } catch {}
       return next;
     });
@@ -1034,15 +1016,16 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   const deleteStore = async (id: string): Promise<boolean> => {
-    try {
-      if (adminToken) {
-        await fetch(`/api/stores/${id}`, {
-          method: 'DELETE',
-          headers: { 'Authorization': `Bearer ${adminToken}` }
-        });
-      }
-    } catch {
-      console.warn('Store deleted locally (offline sync)');
+    const res = await fetch(`/api/stores/${id}`, {
+      method: 'DELETE',
+      headers: {
+        ...(adminToken ? { Authorization: `Bearer ${adminToken}` } : {})
+      },
+      credentials: 'include'
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || `Failed to delete store (${res.status})`);
     }
     setStores(prev => {
       const next = prev.filter(s => s.id !== id);
@@ -1052,67 +1035,47 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return true;
   };
 
-  // Product Mutations (Syncs with server when online, persists locally)
+  // Product Mutations (Authoritative sync with server database)
   const addProduct = async (prodData: Omit<Product, 'id'>): Promise<Product> => {
-    const newProd: Product = {
-      ...prodData,
-      id: `prod-${Date.now().toString(36)}`
-    };
-    try {
-      if (adminToken) {
-        const res = await fetch('/api/products', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${adminToken}`
-          },
-          body: JSON.stringify(prodData)
-        });
-        if (res.ok) {
-          const created = await res.json();
-          setProducts(prev => {
-            const next = [created, ...prev];
-            try { localStorage.setItem('specslook_products', JSON.stringify(next)); } catch {}
-            return next;
-          });
-          return created;
-        }
-      }
-    } catch {
-      console.warn('Product saved locally (offline sync)');
+    const res = await fetch('/api/products', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(adminToken ? { Authorization: `Bearer ${adminToken}` } : {})
+      },
+      credentials: 'include',
+      body: JSON.stringify(prodData)
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || `Failed to create product (${res.status})`);
     }
+    const created: Product = await res.json();
     setProducts(prev => {
-      const next = [newProd, ...prev];
+      const next = [created, ...prev.filter(p => p.id !== created.id)];
       try { localStorage.setItem('specslook_products', JSON.stringify(next)); } catch {}
       return next;
     });
-    return newProd;
+    return created;
   };
 
   const updateProduct = async (id: string, updates: Partial<Product>): Promise<Product | null> => {
-    try {
-      if (adminToken) {
-        await fetch(`/api/products/${id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${adminToken}`
-          },
-          body: JSON.stringify(updates)
-        });
-      }
-    } catch {
-      console.warn('Product updated locally (offline sync)');
+    const res = await fetch(`/api/products/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(adminToken ? { Authorization: `Bearer ${adminToken}` } : {})
+      },
+      credentials: 'include',
+      body: JSON.stringify(updates)
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || `Failed to update product (${res.status})`);
     }
-    let updated: Product | null = null;
+    const updated: Product = await res.json();
     setProducts(prev => {
-      const next = prev.map(p => {
-        if (p.id === id) {
-          updated = { ...p, ...updates };
-          return updated;
-        }
-        return p;
-      });
+      const next = prev.map(p => (p.id === id || p.slug === id) ? updated : p);
       try { localStorage.setItem('specslook_products', JSON.stringify(next)); } catch {}
       return next;
     });
@@ -1120,18 +1083,19 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   const deleteProduct = async (id: string): Promise<boolean> => {
-    try {
-      if (adminToken) {
-        await fetch(`/api/products/${id}`, {
-          method: 'DELETE',
-          headers: { 'Authorization': `Bearer ${adminToken}` }
-        });
-      }
-    } catch {
-      console.warn('Product deleted locally (offline sync)');
+    const res = await fetch(`/api/products/${id}`, {
+      method: 'DELETE',
+      headers: {
+        ...(adminToken ? { Authorization: `Bearer ${adminToken}` } : {})
+      },
+      credentials: 'include'
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || `Failed to delete product (${res.status})`);
     }
     setProducts(prev => {
-      const next = prev.filter(p => p.id !== id);
+      const next = prev.filter(p => p.id !== id && p.slug !== id);
       try { localStorage.setItem('specslook_products', JSON.stringify(next)); } catch {}
       return next;
     });

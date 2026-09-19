@@ -707,6 +707,23 @@ class DatabaseService {
         fs.mkdirSync(DATA_DIR, { recursive: true });
       }
       fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), 'utf-8');
+
+      // Also ensure root data/specslook_db.json is kept strictly up-to-date
+      const rootDbFile = path.join(process.cwd(), 'data', 'specslook_db.json');
+      if (DB_FILE !== rootDbFile) {
+        try {
+          const rootDir = path.dirname(rootDbFile);
+          if (!fs.existsSync(rootDir)) fs.mkdirSync(rootDir, { recursive: true });
+          fs.writeFileSync(rootDbFile, JSON.stringify(data, null, 2), 'utf-8');
+        } catch {}
+      }
+
+      // Also mirror to /tmp/data/specslook_db.json for serverless/container resilience
+      try {
+        const tmpDir = path.join('/tmp', 'data');
+        if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir, { recursive: true });
+        fs.writeFileSync(path.join(tmpDir, 'specslook_db.json'), JSON.stringify(data, null, 2), 'utf-8');
+      } catch {}
     } catch (err) {
       console.warn('Primary DB write failed, attempting /tmp persistence:', err);
       try {

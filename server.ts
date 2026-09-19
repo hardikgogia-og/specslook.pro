@@ -50,6 +50,15 @@ function parseCookies(req: Request): Record<string, string> {
   return list;
 }
 
+// Prevent all client/proxy caching of dynamic API data so admin updates reflect instantly on all customer devices
+app.use('/api', (req: Request, res: Response, next: NextFunction) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  res.setHeader('Surrogate-Control', 'no-store');
+  next();
+});
+
 // Normalize URL in case serverless / proxy rewrites stripped the /api prefix or redirected through /api/index
 app.use((req: Request, res: Response, next: NextFunction) => {
   // If Vercel catch-all route passed path param (string or array)
@@ -210,11 +219,12 @@ app.get('/robots.txt', (req: Request, res: Response) => {
   res.send("User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /api/\nDisallow: /checkout/\nDisallow: /account/\n\nSitemap: https://specslook.com/sitemap.xml\n");
 });
 
-// Serve uploaded photos statically
-app.use('/uploads', express.static(uploadsDir));
+// Serve uploaded photos statically with high-performance caching
+app.use('/uploads', express.static(uploadsDir, { maxAge: '30d', immutable: true }));
+app.use('/public/uploads', express.static(uploadsDir, { maxAge: '30d', immutable: true }));
 
 // Fallback dynamic photo server for serverless or multi-folder deployments
-app.get(['/uploads/:filename', '/api/uploads/:filename'], (req: Request, res: Response) => {
+app.get(['/uploads/:filename', '/api/uploads/:filename', '/public/uploads/:filename'], (req: Request, res: Response) => {
   const filename = path.basename(req.params.filename);
   const possiblePaths = [
     path.join(uploadsDir, filename),
@@ -224,6 +234,7 @@ app.get(['/uploads/:filename', '/api/uploads/:filename'], (req: Request, res: Re
   ];
   for (const p of possiblePaths) {
     if (fs.existsSync(p)) {
+      res.setHeader('Cache-Control', 'public, max-age=2592000, immutable');
       return res.sendFile(p);
     }
   }
@@ -592,6 +603,15 @@ function saveUploadedBase64Image(payload: string, rawFilename?: string): { url: 
       console.warn('Could not mirror upload to dist/uploads (non-fatal):', mirrorErr);
     }
 
+    // Also mirror to /tmp/uploads for container/serverless environments
+    try {
+      const tmpUploadsDir = path.join('/tmp', 'uploads');
+      if (!fs.existsSync(tmpUploadsDir)) {
+        fs.mkdirSync(tmpUploadsDir, { recursive: true });
+      }
+      fs.writeFileSync(path.join(tmpUploadsDir, uniqueName), buffer);
+    } catch {}
+
     return {
       url: `/uploads/${uniqueName}`,
       filename: uniqueName,
@@ -658,9 +678,13 @@ app.post(['/api/products/:id/upload-image', '/products/:id/upload-image'], requi
 
     // Enter the image into the product's images in database
     const currentImages = Array.isArray(product.images) ? [...product.images] : [];
-    const updatedImages = isPrimary
-      ? [saved.url, ...currentImages.filter(img => img !== saved.url)]
-      : [...currentImages, saved.url];
+    // If explicitly marked isPrimary, OR if the product only has a single default sample image, make it primary
+    const isOnlyDefaultSample = currentImages.length === 1 && currentImages[0].includes('photo-1572635196237-14b3f281503f');
+    const shouldBePrimary = isPrimary !== false && (isPrimary === true || isOnlyDefaultSample || currentImages.length === 0);
+
+    const updatedImages = shouldBePrimary
+      ? [saved.url, ...currentImages.filter(img => img !== saved.url && !img.includes('photo-1572635196237-14b3f281503f'))]
+      : [...currentImages.filter(img => img !== saved.url), saved.url];
 
     const updatedProduct = dbService.updateProduct(product.id, { images: updatedImages });
 

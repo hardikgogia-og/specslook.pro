@@ -57,6 +57,7 @@
           "stock": 12,
           "size": "Standard (50mm)",
           "images": [
+            "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80",
             "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80"
           ]
         }
@@ -2388,8 +2389,8 @@
   "admin": {
     "id": "admin-01",
     "username": "honeygogia",
-    "passwordSalt": "a2af29910ff1ce2b087d0efbe2447f70",
-    "passwordHash": "c4fd40be5851567358a95755812c75fbf2471e5a3ae7325ce233a9292032ea44e80b9eb89caa5c710eba4f0e387a7b416553bf9ff26e591d44140f0991891642",
+    "passwordSalt": "d83df634ecc459db496912f30286c496",
+    "passwordHash": "4fc2c5abc56a19ef75e1858bcd9cac5f65e918da8db45fa3a24c4678591a67ee3f28551a4f78a14275048b8d6931d6b066e6b18c146e80aac2a27491136839e4",
     "role": "superadmin",
     "name": "Honey Gogia",
     "email": "honeygogia@specslook.com"
