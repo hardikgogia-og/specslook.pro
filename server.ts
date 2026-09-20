@@ -526,31 +526,60 @@ app.get('/api/products/:idOrSlug', (req: Request, res: Response) => {
 });
 
 // Admin Create Product
-app.post('/api/products', requireAdminAuth, (req: Request, res: Response) => {
+app.post('/api/products', requireAdminAuth, async (req: Request, res: Response) => {
   try {
-    const product = dbService.createProduct(req.body);
+    const gitToken = (req.headers['x-github-token'] as string) || '';
+    const gitRepo = (req.headers['x-github-repo'] as string) || '';
+    const product = await dbService.createProduct(req.body, { gitToken, gitRepo });
     return res.status(201).json(product);
   } catch (err: any) {
+    console.error('Error creating product:', err);
     return res.status(400).json({ error: err.message || 'Failed to create product' });
   }
 });
 
 // Admin Update Product
-app.put('/api/products/:id', requireAdminAuth, (req: Request, res: Response) => {
-  const updated = dbService.updateProduct(req.params.id, req.body);
-  if (!updated) {
-    return res.status(404).json({ error: 'Product not found' });
+app.put('/api/products/:id', requireAdminAuth, async (req: Request, res: Response) => {
+  try {
+    const gitToken = (req.headers['x-github-token'] as string) || '';
+    const gitRepo = (req.headers['x-github-repo'] as string) || '';
+    const updated = await dbService.updateProduct(req.params.id, req.body, { gitToken, gitRepo });
+    if (!updated) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+    return res.json(updated);
+  } catch (err: any) {
+    console.error('Error updating product:', err);
+    return res.status(400).json({ error: err.message || 'Failed to update product' });
   }
-  return res.json(updated);
 });
 
 // Admin Delete Product
-app.delete('/api/products/:id', requireAdminAuth, (req: Request, res: Response) => {
-  const deleted = dbService.deleteProduct(req.params.id);
-  if (!deleted) {
-    return res.status(404).json({ error: 'Product not found' });
+app.delete('/api/products/:id', requireAdminAuth, async (req: Request, res: Response) => {
+  try {
+    const gitToken = (req.headers['x-github-token'] as string) || '';
+    const gitRepo = (req.headers['x-github-repo'] as string) || '';
+    const deleted = await dbService.deleteProduct(req.params.id, { gitToken, gitRepo });
+    if (!deleted) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+    return res.json({ success: true, message: 'Product deleted successfully' });
+  } catch (err: any) {
+    console.error('Error deleting product:', err);
+    return res.status(400).json({ error: err.message || 'Failed to delete product' });
   }
-  return res.json({ success: true, message: 'Product deleted successfully' });
+});
+
+// Admin: Test GitHub Personal Access Token & Repository Connection
+app.post('/api/admin/github-test', requireAdminAuth, async (req: Request, res: Response) => {
+  try {
+    const gitToken = (req.headers['x-github-token'] as string) || (req.body?.gitToken as string) || '';
+    const gitRepo = (req.headers['x-github-repo'] as string) || (req.body?.gitRepo as string) || '';
+    const result = await dbService.testGitHubConnection({ gitToken, gitRepo });
+    return res.json(result);
+  } catch (err: any) {
+    return res.status(400).json({ error: err.message || 'GitHub connection test failed' });
+  }
 });
 
 // Helper to save base64 uploaded image from local system to disk
@@ -662,7 +691,7 @@ app.post(['/api/upload', '/upload'], requireAdminAuth, (req: Request, res: Respo
 });
 
 // Admin: Direct Photo Upload for an existing Product (Saves photo & enters image into database)
-app.post(['/api/products/:id/upload-image', '/products/:id/upload-image'], requireAdminAuth, (req: Request, res: Response) => {
+app.post(['/api/products/:id/upload-image', '/products/:id/upload-image'], requireAdminAuth, async (req: Request, res: Response) => {
   try {
     const { imageBase64, filename, isPrimary } = req.body;
     if (!imageBase64) {
@@ -686,7 +715,9 @@ app.post(['/api/products/:id/upload-image', '/products/:id/upload-image'], requi
       ? [saved.url, ...currentImages.filter(img => img !== saved.url && !img.includes('photo-1572635196237-14b3f281503f'))]
       : [...currentImages.filter(img => img !== saved.url), saved.url];
 
-    const updatedProduct = dbService.updateProduct(product.id, { images: updatedImages });
+    const gitToken = (req.headers['x-github-token'] as string) || '';
+    const gitRepo = (req.headers['x-github-repo'] as string) || '';
+    const updatedProduct = await dbService.updateProduct(product.id, { images: updatedImages }, { gitToken, gitRepo });
 
     return res.json({
       success: true,

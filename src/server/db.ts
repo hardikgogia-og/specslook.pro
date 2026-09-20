@@ -19,9 +19,24 @@ import type {
 } from '../types.ts';
 import { initialProducts, initialCategories } from '../data/seedData.ts';
 
-const IS_VERCEL = Boolean(process.env.VERCEL || process.env.VERCEL_ENV || process.env.NOW_REGION);
-const DATA_DIR = IS_VERCEL ? path.join('/tmp', 'data') : path.join(process.cwd(), 'data');
-const DB_FILE = IS_VERCEL ? path.join('/tmp', 'data', 'specslook_db.json') : path.join(DATA_DIR, 'specslook_db.json');
+export interface GitSyncOptions {
+  gitToken?: string;
+  gitRepo?: string;
+}
+
+export function parseGitHubRepo(repoStr: string): { owner: string; repo: string } | null {
+  if (!repoStr) return null;
+  const clean = repoStr
+    .trim()
+    .replace(/^https?:\/\/github\.com\//i, '')
+    .replace(/\.git$/i, '')
+    .replace(/^\/+|\/+$/g, '');
+  const parts = clean.split('/');
+  if (parts.length >= 2 && parts[0] && parts[1]) {
+    return { owner: parts[0].trim(), repo: parts[1].trim() };
+  }
+  return null;
+}
 
 export interface AdminUser {
   id: string;
@@ -609,15 +624,9 @@ class DatabaseService {
 
   private loadData(): DatabaseSchema {
     try {
-      if (!fs.existsSync(DATA_DIR)) {
-        fs.mkdirSync(DATA_DIR, { recursive: true });
-      }
-
       const rootDbFile = path.join(process.cwd(), 'data', 'specslook_db.json');
-      const targetFile = fs.existsSync(DB_FILE) ? DB_FILE : (fs.existsSync(rootDbFile) ? rootDbFile : null);
-
-      if (targetFile) {
-        const raw = fs.readFileSync(targetFile, 'utf-8');
+      if (fs.existsSync(rootDbFile)) {
+        const raw = fs.readFileSync(rootDbFile, 'utf-8');
         const parsed = JSON.parse(raw);
         // Ensure admin credentials always match honeygogia & HoneyGogia1001
         const correctAdmin = hashPassword('HoneyGogia1001');
@@ -640,7 +649,6 @@ class DatabaseService {
           });
         }
 
-        // Maintain loaded categories and products from persistent database
         const seedData = getInitialSeedData();
         if (Array.isArray(parsed.categories) && parsed.categories.length > 0) {
           seedData.categories.forEach(sc => {
@@ -657,7 +665,6 @@ class DatabaseService {
           parsed.products = [...seedData.products];
         }
 
-        // Ensure all seed coupons exist in loaded DB
         if (Array.isArray(parsed.coupons)) {
           seedData.coupons.forEach(sc => {
             const exists = parsed.coupons.some((c: Coupon) => c && c.code && c.code.toUpperCase() === sc.code.toUpperCase());
@@ -669,84 +676,226 @@ class DatabaseService {
           parsed.coupons = [...seedData.coupons];
         }
 
-        // Ensure orders have prescription details populated for testing & visibility
-        if (Array.isArray(parsed.orders)) {
-          const seedOrders = getInitialSeedData().orders;
-          parsed.orders.forEach((o: Order) => {
-            if (!o.prescription) {
-              const matchingSeed = seedOrders.find(so => so.id === o.id || so.orderNumber === o.orderNumber);
-              if (matchingSeed && matchingSeed.prescription) {
-                o.prescription = matchingSeed.prescription;
-              }
-            }
-          });
-        }
-
-        this.saveData(parsed);
         return parsed;
       }
     } catch (err) {
-      console.error('Error reading DB file, initializing fresh seed:', err);
+      console.error('Error reading static data/specslook_db.json on startup:', err);
     }
 
-    const seed = getInitialSeedData();
-    this.saveData(seed);
-    return seed;
+    return getInitialSeedData();
   }
 
-  private saveData(dataToSave?: DatabaseSchema) {
-    const data = dataToSave || this.data;
-    try {
-      if (!fs.existsSync(DATA_DIR)) {
-        fs.mkdirSync(DATA_DIR, { recursive: true });
-      }
-      fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), 'utf-8');
+  // Filesystem writes removed per Git-based headless store architecture.
+  // Updates persist to memory and synchronize directly via GitHub REST API.
+  private saveData(_dataToSave?: DatabaseSchema) {
+    // In-memory persistence. No local fs writing.
+  }
 
-      // Also ensure root data/specslook_db.json is kept strictly up-to-date
-      const rootDbFile = path.join(process.cwd(), 'data', 'specslook_db.json');
-      if (DB_FILE !== rootDbFile) {
+  /**
+   * Syncs inventory changes directly to the remote Git repository using GitHub REST API.
+   * Fetches the current SHA, updates products in memory, base64 encodes the payload,
+   * and executes a PUT commit to data/specslook_db.json.
+   */
+  public async syncToGitHubContents(
+    action: 'create' | 'update' | 'delete',
+    productIdentifier: string,
+    gitOptions?: GitSyncOptions
+  ): Promise<{ success: boolean; sha?: string; message?: string }> {
+    const rawToken = gitOptions?.gitToken?.trim();
+    const rawRepo = gitOptions?.gitRepo?.trim();
+
+    if (!rawToken || !rawRepo) {
+      console.log(`[GitHub REST API] In-memory update applied for "${productIdentifier}" (${action}). Notice: x-github-token or x-github-repo header omitted.`);
+      return { success: true, message: 'Updated in server memory' };
+    }
+
+    const parsedRepo = parseGitHubRepo(rawRepo);
+    if (!parsedRepo) {
+      throw new Error(`Invalid GitHub repository path "${rawRepo}". Expected format: "owner/repo" (e.g. "username/repository")`);
+    }
+
+    const { owner, repo } = parsedRepo;
+    const cleanToken = rawToken.replace(/^(bearer|token)\s+/i, '').trim();
+    const filePath = 'data/specslook_db.json';
+    const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`;
+
+    console.log(`[GitHub REST API] Fetching current sha from: ${apiUrl}`);
+
+    let currentSha: string | undefined;
+    let remotePayload: DatabaseSchema = { ...this.data };
+
+    try {
+      const getRes = await fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${cleanToken}`,
+          'Accept': 'application/vnd.github.v3+json',
+          'User-Agent': 'Specslook-Headless-Store/1.0'
+        }
+      });
+
+      if (getRes.status === 200) {
+        const fileData: any = await getRes.json();
+        currentSha = fileData.sha;
+        if (fileData.content) {
+          try {
+            // Strip any newlines or spaces GitHub inserts in base64 string
+            const cleanedB64 = fileData.content.replace(/[\r\n\s]/g, '');
+            const decodedJson = Buffer.from(cleanedB64, 'base64').toString('utf-8');
+            remotePayload = JSON.parse(decodedJson);
+          } catch (decodeErr) {
+            console.warn('[GitHub REST API] Could not decode existing remote content, using current in-memory database:', decodeErr);
+            remotePayload = { ...this.data };
+          }
+        }
+      } else if (getRes.status === 404) {
+        console.log(`[GitHub REST API] ${filePath} not found in ${owner}/${repo}. Initializing new file.`);
+        remotePayload = { ...this.data };
+      } else {
+        const errJson: any = await getRes.json().catch(() => ({}));
+        const errMsg = errJson.message || `HTTP ${getRes.status}`;
+        console.error('[GitHub REST API GET Error]:', getRes.status, errJson);
+        throw new Error(`GitHub API error (${getRes.status}): ${errMsg}. Verify that your PAT token has "contents:write" permission on ${owner}/${repo}.`);
+      }
+    } catch (networkErr: any) {
+      if (networkErr.message?.includes('GitHub API error') || networkErr.message?.includes('Invalid GitHub repository')) {
+        throw networkErr;
+      }
+      console.error('[GitHub REST API Network Error]:', networkErr);
+      throw new Error(`Failed to reach GitHub API: ${networkErr.message}`);
+    }
+
+    // Synchronize current products in memory to remotePayload
+    remotePayload.products = [...this.data.products];
+    if (!remotePayload.categories || remotePayload.categories.length === 0) {
+      remotePayload.categories = [...this.data.categories];
+    }
+
+    // Base64 encode the new payload safely using Buffer
+    const newJsonString = JSON.stringify(remotePayload, null, 2);
+    const newBase64Payload = Buffer.from(newJsonString, 'utf-8').toString('base64');
+
+    const actionText = action === 'create' ? 'Add product' : (action === 'update' ? 'Update product' : 'Delete product');
+    const commitMessage = `chore(inventory): ${actionText} "${productIdentifier}" via Specslook Admin`;
+
+    const putBody: any = {
+      message: commitMessage,
+      content: newBase64Payload
+    };
+    if (currentSha) {
+      putBody.sha = currentSha;
+    }
+
+    console.log(`[GitHub REST API] Committing payload to ${apiUrl}...`);
+
+    const putRes = await fetch(apiUrl, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${cleanToken}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json',
+        'User-Agent': 'Specslook-Headless-Store/1.0'
+      },
+      body: JSON.stringify(putBody)
+    });
+
+    if (!putRes.ok) {
+      const putErrJson: any = await putRes.json().catch(() => ({}));
+      console.error('[GitHub REST API PUT Error]:', putRes.status, putErrJson);
+      throw new Error(`GitHub commit failed (${putRes.status}): ${putErrJson.message || 'Check repository access and PAT token permissions'}`);
+    }
+
+    const putResult: any = await putRes.json().catch(() => ({}));
+    const newSha = putResult?.content?.sha || putResult?.commit?.sha || currentSha;
+    console.log(`[GitHub REST API Success] Committed to ${owner}/${repo} at data/specslook_db.json (New SHA: ${newSha})`);
+
+    return {
+      success: true,
+      sha: newSha,
+      message: `Committed update to GitHub repository ${owner}/${repo}`
+    };
+  }
+
+  /**
+   * Quick connection test for admin UI
+   */
+  public async testGitHubConnection(gitOptions: GitSyncOptions): Promise<{
+    connected: boolean;
+    owner: string;
+    repo: string;
+    fileExists: boolean;
+    sha?: string;
+    productCount?: number;
+    message: string;
+  }> {
+    const rawToken = gitOptions?.gitToken?.trim();
+    const rawRepo = gitOptions?.gitRepo?.trim();
+
+    if (!rawToken || !rawRepo) {
+      throw new Error('Please provide both GitHub Personal Access Token (PAT) and Repository Path (owner/repo).');
+    }
+
+    const parsed = parseGitHubRepo(rawRepo);
+    if (!parsed) {
+      throw new Error(`Invalid repository format "${rawRepo}". Use "owner/repo" (e.g. "username/repository").`);
+    }
+
+    const { owner, repo } = parsed;
+    const cleanToken = rawToken.replace(/^(bearer|token)\s+/i, '').trim();
+    const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/data/specslook_db.json`;
+
+    const res = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${cleanToken}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'User-Agent': 'Specslook-Headless-Store/1.0'
+      }
+    });
+
+    if (res.status === 200) {
+      const data: any = await res.json();
+      let count = 0;
+      if (data.content) {
         try {
-          const rootDir = path.dirname(rootDbFile);
-          if (!fs.existsSync(rootDir)) fs.mkdirSync(rootDir, { recursive: true });
-          fs.writeFileSync(rootDbFile, JSON.stringify(data, null, 2), 'utf-8');
+          const cleaned = data.content.replace(/[\r\n\s]/g, '');
+          const decoded = Buffer.from(cleaned, 'base64').toString('utf-8');
+          const parsedDb = JSON.parse(decoded);
+          if (Array.isArray(parsedDb.products)) count = parsedDb.products.length;
         } catch {}
       }
-
-      // Also mirror to /tmp/data/specslook_db.json for serverless/container resilience
-      try {
-        const tmpDir = path.join('/tmp', 'data');
-        if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir, { recursive: true });
-        fs.writeFileSync(path.join(tmpDir, 'specslook_db.json'), JSON.stringify(data, null, 2), 'utf-8');
-      } catch {}
-
-      // Keep src/data/seedData.ts synchronized so client initial bundle & incognito/offline windows immediately reflect fresh data
-      try {
-        const seedTsPath = path.join(process.cwd(), 'src', 'data', 'seedData.ts');
-        if (fs.existsSync(path.dirname(seedTsPath))) {
-          const fileContent = `import type { Product, Category, StoreLocation, BlogPost, Banner, Coupon, Customer, Review, Order } from '../types.ts';\n\n` +
-            `export const initialProducts: Product[] = ${JSON.stringify(data.products || [], null, 2)};\n\n` +
-            `export const initialCategories: Category[] = ${JSON.stringify(data.categories || [], null, 2)};\n\n` +
-            `export const initialStores: StoreLocation[] = ${JSON.stringify(data.stores || [], null, 2)};\n\n` +
-            `export const initialBlogs: BlogPost[] = ${JSON.stringify(data.blogs || [], null, 2)};\n\n` +
-            `export const initialBanners: Banner[] = ${JSON.stringify(data.banners || [], null, 2)};\n\n` +
-            `export const initialCoupons: Coupon[] = ${JSON.stringify(data.coupons || [], null, 2)};\n\n` +
-            `export const initialCustomers: Customer[] = ${JSON.stringify(data.customers || [], null, 2)};\n\n` +
-            `export const initialReviews: Review[] = ${JSON.stringify(data.reviews || [], null, 2)};\n\n` +
-            `export const initialOrders: Order[] = ${JSON.stringify(data.orders || [], null, 2)};\n`;
-          fs.writeFileSync(seedTsPath, fileContent, 'utf-8');
+      return {
+        connected: true,
+        owner,
+        repo,
+        fileExists: true,
+        sha: data.sha,
+        productCount: count,
+        message: `Successfully connected to repository ${owner}/${repo}! "data/specslook_db.json" found (${count} products, sha: ${data.sha?.slice(0, 7)}).`
+      };
+    } else if (res.status === 404) {
+      const repoCheck = await fetch(`https://api.github.com/repos/${owner}/${repo}`, {
+        headers: {
+          'Authorization': `Bearer ${cleanToken}`,
+          'Accept': 'application/vnd.github.v3+json',
+          'User-Agent': 'Specslook-Headless-Store/1.0'
         }
-      } catch (seedErr) {
-        console.warn('Syncing seedData.ts skipped:', seedErr);
+      });
+      if (repoCheck.status === 200) {
+        return {
+          connected: true,
+          owner,
+          repo,
+          fileExists: false,
+          message: `Connected to repository ${owner}/${repo}! "data/specslook_db.json" will be automatically created and committed upon your first inventory action.`
+        };
+      } else {
+        const repoErr: any = await repoCheck.json().catch(() => ({}));
+        throw new Error(`Repository "${owner}/${repo}" not found or token lacks access (${repoCheck.status}: ${repoErr.message || 'Not Found'})`);
       }
-    } catch (err) {
-      console.warn('Primary DB write failed, attempting /tmp persistence:', err);
-      try {
-        const tmpDir = path.join('/tmp', 'data');
-        if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir, { recursive: true });
-        fs.writeFileSync(path.join(tmpDir, 'specslook_db.json'), JSON.stringify(data, null, 2), 'utf-8');
-      } catch (tmpErr) {
-        console.warn('Temporary file persistence also failed, continuing in memory:', tmpErr);
-      }
+    } else {
+      const err: any = await res.json().catch(() => ({}));
+      throw new Error(`GitHub API error (${res.status}): ${err.message || 'Authentication failed'}`);
     }
   }
 
@@ -905,7 +1054,10 @@ class DatabaseService {
     );
   }
 
-  public createProduct(productData: Omit<Product, 'id' | 'createdAt'>): Product {
+  public async createProduct(
+    productData: Omit<Product, 'id' | 'createdAt'>,
+    gitOptions?: GitSyncOptions
+  ): Promise<Product> {
     const id = `prod-${Date.now().toString(36)}`;
     const variants = productData.variants && productData.variants.length > 0
       ? productData.variants.map((v, i) => i === 0 ? { ...v, images: (v.images && v.images.length > 0 ? v.images : productData.images) } : v)
@@ -929,10 +1081,18 @@ class DatabaseService {
     };
     this.data.products.unshift(newProduct);
     this.saveData();
+
+    // Synchronize to GitHub repository data/specslook_db.json via GitHub Contents REST API
+    await this.syncToGitHubContents('create', newProduct.name || newProduct.id, gitOptions);
+
     return newProduct;
   }
 
-  public updateProduct(id: string, updates: Partial<Product>): Product | null {
+  public async updateProduct(
+    id: string,
+    updates: Partial<Product>,
+    gitOptions?: GitSyncOptions
+  ): Promise<Product | null> {
     if (!id) return null;
     const cleanId = decodeURIComponent(id).trim().toLowerCase();
     const index = this.data.products.findIndex(p =>
@@ -996,18 +1156,28 @@ class DatabaseService {
       ...(updatedVariants.length > 0 ? { variants: updatedVariants } : {})
     };
     this.saveData();
+
+    // Synchronize to GitHub repository data/specslook_db.json via GitHub Contents REST API
+    await this.syncToGitHubContents('update', this.data.products[index].name || cleanId, gitOptions);
+
     return this.data.products[index];
   }
 
-  public deleteProduct(id: string): boolean {
+  public async deleteProduct(id: string, gitOptions?: GitSyncOptions): Promise<boolean> {
     if (!id) return false;
     const cleanId = decodeURIComponent(id).trim().toLowerCase();
+    const targetProduct = this.data.products.find(p =>
+      p.id.toLowerCase() === cleanId || p.slug.toLowerCase() === cleanId
+    );
     const initialLen = this.data.products.length;
     this.data.products = this.data.products.filter(p =>
       p.id.toLowerCase() !== cleanId && p.slug.toLowerCase() !== cleanId
     );
     const deleted = this.data.products.length < initialLen;
-    if (deleted) this.saveData();
+    if (deleted) {
+      this.saveData();
+      await this.syncToGitHubContents('delete', targetProduct?.name || cleanId, gitOptions);
+    }
     return deleted;
   }
 

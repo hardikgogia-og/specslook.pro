@@ -1060,13 +1060,28 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return true;
   };
 
-  // Product Mutations (Authoritative sync with server database)
+  // Helper to dynamically extract GitHub PAT and Repository from localStorage for Git-based headless store persistence
+  const getGitSyncHeaders = (): Record<string, string> => {
+    try {
+      const pat = localStorage.getItem('specslook_github_pat') || localStorage.getItem('specslook_github_token') || '';
+      const repo = localStorage.getItem('specslook_github_repo') || '';
+      const headers: Record<string, string> = {};
+      if (pat.trim()) headers['x-github-token'] = pat.trim();
+      if (repo.trim()) headers['x-github-repo'] = repo.trim();
+      return headers;
+    } catch {
+      return {};
+    }
+  };
+
+  // Product Mutations (Authoritative sync with server database & GitHub REST API)
   const addProduct = async (prodData: Omit<Product, 'id'>): Promise<Product> => {
     const res = await fetch('/api/products', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        ...(adminToken ? { Authorization: `Bearer ${adminToken}` } : {})
+        ...(adminToken ? { Authorization: `Bearer ${adminToken}` } : {}),
+        ...getGitSyncHeaders()
       },
       credentials: 'include',
       body: JSON.stringify(prodData)
@@ -1092,7 +1107,8 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        ...(adminToken ? { Authorization: `Bearer ${adminToken}` } : {})
+        ...(adminToken ? { Authorization: `Bearer ${adminToken}` } : {}),
+        ...getGitSyncHeaders()
       },
       credentials: 'include',
       body: JSON.stringify(updates)
@@ -1125,7 +1141,8 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const res = await fetch(`/api/products/${cleanId}`, {
       method: 'DELETE',
       headers: {
-        ...(adminToken ? { Authorization: `Bearer ${adminToken}` } : {})
+        ...(adminToken ? { Authorization: `Bearer ${adminToken}` } : {}),
+        ...getGitSyncHeaders()
       },
       credentials: 'include'
     });

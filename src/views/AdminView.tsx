@@ -40,7 +40,9 @@ import {
   User,
   EyeOff,
   ShieldAlert,
-  Printer
+  Printer,
+  GitBranch,
+  Key
 } from 'lucide-react';
 import { useStore } from '../context/StoreContext.tsx';
 import { compressImageFile } from '../utils/apiHelper.ts';
@@ -137,6 +139,91 @@ export const AdminView: React.FC = () => {
   const [isDragOverQuickModal, setIsDragOverQuickModal] = useState(false);
   const formFileInputRef = useRef<HTMLInputElement>(null);
   const quickFileInputRef = useRef<HTMLInputElement>(null);
+
+  // GitHub REST API Git-Based Store Persistence States (stored in admin's localStorage)
+  const [githubPat, setGithubPat] = useState(() => {
+    try {
+      return localStorage.getItem('specslook_github_pat') || localStorage.getItem('specslook_github_token') || '';
+    } catch {
+      return '';
+    }
+  });
+  const [githubRepo, setGithubRepo] = useState(() => {
+    try {
+      return localStorage.getItem('specslook_github_repo') || '';
+    } catch {
+      return '';
+    }
+  });
+  const [showGithubPat, setShowGithubPat] = useState(false);
+  const [isGitConfigOpen, setIsGitConfigOpen] = useState(true);
+  const [gitTestStatus, setGitTestStatus] = useState<{
+    loading: boolean;
+    connected?: boolean;
+    message?: string;
+    error?: string;
+    sha?: string;
+  } | null>(null);
+
+  const handleSaveGitCredentials = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    try {
+      localStorage.setItem('specslook_github_pat', githubPat.trim());
+      localStorage.setItem('specslook_github_token', githubPat.trim());
+      localStorage.setItem('specslook_github_repo', githubRepo.trim());
+      showToast('GitHub PAT & Repository path saved locally to browser storage!', 'success');
+      setGitTestStatus(null);
+    } catch (err: any) {
+      showToast('Could not save credentials to local storage: ' + err.message, 'error');
+    }
+  };
+
+  const handleTestGitConnection = async () => {
+    if (!githubPat.trim() || !githubRepo.trim()) {
+      showToast('Please enter both GitHub Personal Access Token (PAT) and Repository Path', 'error');
+      return;
+    }
+    // Auto-save values to localStorage
+    handleSaveGitCredentials();
+
+    setGitTestStatus({ loading: true });
+    try {
+      const res = await fetch('/api/admin/github-test', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${adminToken}`,
+          'x-github-token': githubPat.trim(),
+          'x-github-repo': githubRepo.trim()
+        },
+        body: JSON.stringify({ gitToken: githubPat.trim(), gitRepo: githubRepo.trim() })
+      });
+      const data = await res.json();
+      if (res.ok && data.connected) {
+        setGitTestStatus({
+          loading: false,
+          connected: true,
+          message: data.message,
+          sha: data.sha
+        });
+        showToast('GitHub repository connected successfully!', 'success');
+      } else {
+        setGitTestStatus({
+          loading: false,
+          connected: false,
+          error: data.error || 'Connection failed'
+        });
+        showToast(data.error || 'GitHub connection failed', 'error');
+      }
+    } catch (err: any) {
+      setGitTestStatus({
+        loading: false,
+        connected: false,
+        error: err.message || 'Network error connecting to GitHub'
+      });
+      showToast('GitHub connection test failed', 'error');
+    }
+  };
 
   // Product Modal (Add / Edit)
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
@@ -549,17 +636,29 @@ export const AdminView: React.FC = () => {
   const handleDeleteProduct = async (id: string, name: string) => {
     if (!window.confirm(`Are you sure you want to delete "${name}"?`)) return;
     try {
-      const res = await fetch(`/api/products/${id}`, {
+      const gitHeaders: Record<string, string> = {};
+      const pat = (githubPat || localStorage.getItem('specslook_github_pat') || '').trim();
+      const repo = (githubRepo || localStorage.getItem('specslook_github_repo') || '').trim();
+      if (pat) gitHeaders['x-github-token'] = pat;
+      if (repo) gitHeaders['x-github-repo'] = repo;
+
+      const res = await fetch(`/api/products/${encodeURIComponent(id)}`, {
         method: 'DELETE',
-        headers: { Authorization: `Bearer ${adminToken}` }
+        headers: {
+          Authorization: `Bearer ${adminToken}`,
+          ...gitHeaders
+        }
       });
       if (res.ok) {
-        showToast(`Product "${name}" deleted`);
+        showToast(`Product "${name}" deleted from store and synced to GitHub repository!`, 'success');
         loadAdminData();
         refreshProducts();
+      } else {
+        const err = await res.json().catch(() => ({}));
+        showToast(err.error || 'Failed to delete product', 'error');
       }
-    } catch (err) {
-      showToast('Failed to delete product', 'error');
+    } catch (err: any) {
+      showToast(err.message || 'Failed to delete product', 'error');
     }
   };
 
@@ -633,11 +732,18 @@ export const AdminView: React.FC = () => {
 
           let uploadedUrl = base64;
           try {
+            const gitHeaders: Record<string, string> = {};
+            const pat = (githubPat || localStorage.getItem('specslook_github_pat') || '').trim();
+            const repo = (githubRepo || localStorage.getItem('specslook_github_repo') || '').trim();
+            if (pat) gitHeaders['x-github-token'] = pat;
+            if (repo) gitHeaders['x-github-repo'] = repo;
+
             const res = await fetch(`/api/products/${targetProductId}/upload-image`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${adminToken}`
+                Authorization: `Bearer ${adminToken}`,
+                ...gitHeaders
               },
               body: JSON.stringify({
                 imageBase64: base64,
@@ -1347,8 +1453,170 @@ export const AdminView: React.FC = () => {
 
         {/* TAB 2: PRODUCTS MANAGEMENT */}
         {activeTab === 'products' && (
-          <div className="bg-white p-6 border border-neutral-200 rounded-xs shadow-xs space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-neutral-200">
+          <div className="space-y-6">
+            {/* GitHub REST API Git-Based Store Credentials & Persistence Card */}
+            <div className="bg-white border border-neutral-200 rounded-xs shadow-xs overflow-hidden">
+              <div className="p-4 bg-neutral-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-xs bg-neutral-800 border border-neutral-700 flex items-center justify-center text-red-500">
+                    <GitBranch className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h3 className="font-extrabold text-xs uppercase tracking-wider text-white">
+                        Git-Based Headless Store Persistence (GitHub REST API)
+                      </h3>
+                      {githubPat && githubRepo ? (
+                        <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-xs bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                          <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                          Configured ({githubRepo})
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase px-2 py-0.5 rounded-xs bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                          <AlertTriangle className="w-3 h-3 text-amber-400" />
+                          Credentials Required
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-[11px] text-neutral-400">
+                      Product mutations (create/edit/delete) propagate to GitHub Contents REST API and commit directly to <code className="text-neutral-200 bg-neutral-800 px-1 py-0.5 rounded-xs">data/specslook_db.json</code>.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setIsGitConfigOpen(!isGitConfigOpen)}
+                    className="text-xs text-neutral-300 hover:text-white bg-neutral-800 hover:bg-neutral-700 px-3 py-1.5 rounded-xs transition-colors cursor-pointer border border-neutral-700 font-bold"
+                  >
+                    {isGitConfigOpen ? 'Hide Settings' : 'Configure Credentials'}
+                  </button>
+                </div>
+              </div>
+
+              {isGitConfigOpen && (
+                <form onSubmit={handleSaveGitCredentials} className="p-5 bg-neutral-50 border-t border-neutral-200 space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* GitHub PAT Input */}
+                    <div>
+                      <label htmlFor="github-pat-input" className="block text-xs font-extrabold uppercase tracking-wider text-neutral-700 mb-1.5 flex items-center justify-between">
+                        <span className="flex items-center gap-1">
+                          <Key className="w-3.5 h-3.5 text-neutral-500" />
+                          GitHub Personal Access Token (PAT)
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => setShowGithubPat(!showGithubPat)}
+                          className="text-[10px] text-neutral-500 hover:text-neutral-800 flex items-center gap-1 cursor-pointer"
+                        >
+                          {showGithubPat ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
+                          {showGithubPat ? 'Hide' : 'Reveal'}
+                        </button>
+                      </label>
+                      <input
+                        id="github-pat-input"
+                        type={showGithubPat ? 'text' : 'password'}
+                        value={githubPat}
+                        onChange={(e) => setGithubPat(e.target.value)}
+                        placeholder="ghp_xxxxxxxxxxxxxxxxxxxx or github_pat_..."
+                        className="w-full text-xs px-3 py-2 border border-neutral-300 bg-white rounded-xs focus:outline-none focus:border-neutral-900 font-mono"
+                      />
+                      <p className="mt-1 text-[10px] text-neutral-500">
+                        Saved in your local browser storage. Passed dynamically in <code className="bg-neutral-200/60 px-1 py-0.5 rounded-xs">x-github-token</code> header. Requires repo &gt; contents:write permission.
+                      </p>
+                    </div>
+
+                    {/* Repository Path Input */}
+                    <div>
+                      <label htmlFor="github-repo-input" className="block text-xs font-extrabold uppercase tracking-wider text-neutral-700 mb-1.5 flex items-center gap-1">
+                        <GitBranch className="w-3.5 h-3.5 text-neutral-500" />
+                        Repository Path (owner/repo)
+                      </label>
+                      <input
+                        id="github-repo-input"
+                        type="text"
+                        value={githubRepo}
+                        onChange={(e) => setGithubRepo(e.target.value)}
+                        placeholder="owner/repo (e.g. username/specslook-store)"
+                        className="w-full text-xs px-3 py-2 border border-neutral-300 bg-white rounded-xs focus:outline-none focus:border-neutral-900 font-mono"
+                      />
+                      <p className="mt-1 text-[10px] text-neutral-500">
+                        Target repository path. Passed dynamically in <code className="bg-neutral-200/60 px-1 py-0.5 rounded-xs">x-github-repo</code> header for inventory mutations.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Actions & Connection Feedback */}
+                  <div className="pt-2 flex flex-wrap items-center justify-between gap-3 border-t border-neutral-200">
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="submit"
+                        className="bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-extrabold px-4 py-2 uppercase tracking-wider rounded-xs transition-colors flex items-center gap-1.5 cursor-pointer"
+                      >
+                        <Check className="w-3.5 h-3.5 text-emerald-400" />
+                        <span>Save Credentials</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={handleTestGitConnection}
+                        disabled={gitTestStatus?.loading || !githubPat || !githubRepo}
+                        className="bg-white hover:bg-neutral-100 text-neutral-800 border border-neutral-300 text-xs font-extrabold px-4 py-2 uppercase tracking-wider rounded-xs transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                      >
+                        {gitTestStatus?.loading ? (
+                          <Loader2 className="w-3.5 h-3.5 animate-spin text-neutral-600" />
+                        ) : (
+                          <RefreshCw className="w-3.5 h-3.5 text-neutral-600" />
+                        )}
+                        <span>{gitTestStatus?.loading ? 'Testing...' : 'Test Connection'}</span>
+                      </button>
+                    </div>
+
+                    <div className="text-[11px] text-neutral-500">
+                      Static local source: <code className="bg-neutral-200/60 px-1 py-0.5 rounded-xs font-mono">data/specslook_db.json</code>
+                    </div>
+                  </div>
+
+                  {/* Test Connection Result Alert */}
+                  {gitTestStatus && (
+                    <div className={`p-3 rounded-xs text-xs flex items-start gap-2 ${
+                      gitTestStatus.connected
+                        ? 'bg-emerald-50 text-emerald-900 border border-emerald-200'
+                        : (gitTestStatus.loading ? 'bg-neutral-100 text-neutral-700' : 'bg-red-50 text-red-900 border border-red-200')
+                    }`}>
+                      {gitTestStatus.connected ? (
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                      ) : gitTestStatus.loading ? (
+                        <Loader2 className="w-4 h-4 animate-spin text-neutral-600 shrink-0 mt-0.5" />
+                      ) : (
+                        <AlertTriangle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+                      )}
+                      <div>
+                        <div className="font-bold">
+                          {gitTestStatus.connected
+                            ? 'Connection Verified'
+                            : gitTestStatus.loading
+                            ? 'Verifying GitHub Repository & File SHA...'
+                            : 'Connection Failed'}
+                        </div>
+                        <div className="text-[11px] mt-0.5">
+                          {gitTestStatus.message || gitTestStatus.error}
+                        </div>
+                        {gitTestStatus.sha && (
+                          <div className="text-[10px] font-mono text-emerald-800 mt-1">
+                            Remote Target SHA: {gitTestStatus.sha}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </form>
+              )}
+            </div>
+
+            <div className="bg-white p-6 border border-neutral-200 rounded-xs shadow-xs space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-neutral-200">
               <div className="flex items-center gap-3">
                 <h3 className="font-extrabold text-sm uppercase tracking-wider text-neutral-900">
                   Eyewear Product Catalog ({activeAdminProducts.length})
@@ -1505,6 +1773,7 @@ export const AdminView: React.FC = () => {
               </table>
             </div>
           </div>
+        </div>
         )}
 
         {/* TAB 3: ORDERS MANAGEMENT */}
