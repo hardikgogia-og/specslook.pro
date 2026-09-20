@@ -17,8 +17,7 @@
       "newArrival": true,
       "stock": 42,
       "images": [
-        "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80",
-        "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80"
+        "/uploads/cd6159f3-65c7-4ff2-94fe-fac752_1789917546278_48tap.webp"
       ],
       "specifications": {
         "frameMaterial": "Aerospace Titanium & Italian Mazzucchelli Acetate",
@@ -26,11 +25,11 @@
         "lensWidthMm": 52,
         "bridgeMm": 18,
         "templeLengthMm": 145,
-        "uvProtection": "100% UV400 Optical Filter",
+        "uvProtection": "100% UV400 Protection",
         "isPolarized": false,
         "frameShape": "Clubmaster",
         "gender": "Men",
-        "weightGrams": 19
+        "weightGrams": 28
       },
       "variants": [
         {
@@ -43,8 +42,7 @@
           "stock": 16,
           "size": "Standard (50mm)",
           "images": [
-            "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80",
-            "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80"
+            "/uploads/cd6159f3-65c7-4ff2-94fe-fac752_1789917546278_48tap.webp"
           ]
         },
         {
@@ -57,8 +55,7 @@
           "stock": 12,
           "size": "Standard (50mm)",
           "images": [
-            "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80",
-            "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80"
+            "/uploads/cd6159f3-65c7-4ff2-94fe-fac752_1789917546278_48tap.webp"
           ]
         }
       ],
