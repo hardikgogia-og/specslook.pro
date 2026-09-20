@@ -192,7 +192,7 @@ export const AdminView: React.FC = () => {
     try {
       const [statsRes, prodRes, ordRes, catRes, coupRes, custRes, storeRes] = await Promise.allSettled([
         fetch('/api/admin/stats', opts).then(r => r.ok ? r.json() : null),
-        fetch('/api/products', { credentials: 'include' }).then(r => r.ok ? r.json() : null),
+        fetch(`/api/products?_t=${Date.now()}`, { credentials: 'include', cache: 'no-store' }).then(r => r.ok ? r.json() : null),
         fetch('/api/orders', opts).then(r => r.ok ? r.json() : null),
         fetch('/api/categories', { credentials: 'include' }).then(r => r.ok ? r.json() : null),
         fetch('/api/coupons', opts).then(r => r.ok ? r.json() : null),
@@ -566,23 +566,23 @@ export const AdminView: React.FC = () => {
   const handleOpenEditProduct = (prod: Product) => {
     setEditingProductId(prod.id);
     setProductFormData({
-      name: prod.name,
-      sku: prod.sku,
-      category: prod.category,
-      price: prod.price,
-      salePrice: prod.salePrice,
-      stock: prod.stock,
-      description: prod.description,
-      shortDescription: prod.shortDescription,
-      frameMaterial: prod.specifications.frameMaterial,
-      lensMaterial: prod.specifications.lensMaterial,
-      frameShape: prod.specifications.frameShape,
-      gender: prod.specifications.gender,
-      isPolarized: prod.specifications.isPolarized,
-      lensWidthMm: prod.specifications.lensWidthMm,
-      bridgeMm: prod.specifications.bridgeMm,
-      templeLengthMm: prod.specifications.templeLengthMm,
-      images: prod.images
+      name: prod.name || '',
+      sku: prod.sku || '',
+      category: prod.category || 'Eyeglasses',
+      price: prod.price || 4990,
+      salePrice: prod.salePrice || 3990,
+      stock: prod.stock !== undefined ? prod.stock : 10,
+      description: prod.description || '',
+      shortDescription: prod.shortDescription || '',
+      frameMaterial: prod.specifications?.frameMaterial || 'Handcrafted Italian Mazzucchelli Acetate',
+      lensMaterial: prod.specifications?.lensMaterial || 'Diamond Crystal Mineral Glass',
+      frameShape: prod.specifications?.frameShape || 'Aviator',
+      gender: prod.specifications?.gender || 'Unisex',
+      isPolarized: Boolean(prod.specifications?.isPolarized),
+      lensWidthMm: prod.specifications?.lensWidthMm || 58,
+      bridgeMm: prod.specifications?.bridgeMm || 14,
+      templeLengthMm: prod.specifications?.templeLengthMm || 140,
+      images: Array.isArray(prod.images) ? [...prod.images] : []
     });
     setIsProductModalOpen(true);
   };

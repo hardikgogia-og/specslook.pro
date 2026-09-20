@@ -314,17 +314,37 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   }, [wishlist]);
 
+  // Refresh products directly from server with dynamic cache-busting
+  const refreshProducts = async (): Promise<void> => {
+    try {
+      const timestamp = Date.now();
+      const res = await fetch(`/api/products?_t=${timestamp}`, {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          Pragma: 'no-cache'
+        }
+      });
+      if (!res.ok) return;
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) {
+        setProducts(data);
+        try { localStorage.setItem('specslook_products', JSON.stringify(data)); } catch {}
+      }
+    } catch (err) {
+      console.warn('StoreContext: refreshProducts error:', err);
+    }
+  };
+
   // Fetch initial data with resilient fallback and dynamic cache-busting
   const fetchData = async () => {
     setLoadingData(true);
+    // Fire off product refresh immediately
+    refreshProducts().catch(() => {});
+
     try {
       const timestamp = Date.now();
-      const [pRes, cRes, sRes, bRes, bnRes] = await Promise.allSettled([
-        fetch(`/api/products?_t=${timestamp}`, { cache: 'no-store' }).then(async r => {
-          if (!r.ok) return null;
-          const data = await r.json();
-          return Array.isArray(data) ? data : null;
-        }),
+      const [cRes, sRes, bRes, bnRes] = await Promise.allSettled([
         fetch(`/api/categories?_t=${timestamp}`, { cache: 'no-store' }).then(async r => {
           if (!r.ok) return null;
           const data = await r.json();
@@ -347,11 +367,6 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         })
       ]);
 
-      if (pRes.status === 'fulfilled' && pRes.value && pRes.value.length > 0) {
-        const fetchedProducts: Product[] = pRes.value;
-        setProducts(fetchedProducts);
-        try { localStorage.setItem('specslook_products', JSON.stringify(fetchedProducts)); } catch {}
-      }
       if (cRes.status === 'fulfilled' && cRes.value && cRes.value.length > 0) {
         const fetchedCategories: Category[] = cRes.value;
         const merged = [...fetchedCategories];
@@ -390,7 +405,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     // Dynamically refresh products when switching back to tab/window (e.g. mobile app switch or admin tab switch)
     const handleVisibilityOrFocus = () => {
       if (document.visibilityState === 'visible') {
-        fetchData();
+        refreshProducts();
       }
     };
     window.addEventListener('visibilitychange', handleVisibilityOrFocus);
@@ -406,6 +421,16 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       }
     };
     window.addEventListener('storage', handleStorage);
+
+    // Custom cross-component event listener
+    const handleCustomProductSync = (e: any) => {
+      if (e.detail && Array.isArray(e.detail)) {
+        setProducts(e.detail);
+      } else {
+        refreshProducts();
+      }
+    };
+    window.addEventListener('specslook-products-updated', handleCustomProductSync);
 
     // Check URL pathname, search query, and hash for seamless client-side routing
     const syncRouteFromUrl = () => {
@@ -1052,15 +1077,18 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
     const created: Product = await res.json();
     setProducts(prev => {
-      const next = [created, ...prev.filter(p => p.id !== created.id)];
+      const next = [created, ...prev.filter(p => p.id !== created.id && p.slug !== created.slug)];
       try { localStorage.setItem('specslook_products', JSON.stringify(next)); } catch {}
+      window.dispatchEvent(new CustomEvent('specslook-products-updated', { detail: next }));
       return next;
     });
+    refreshProducts().catch(() => {});
     return created;
   };
 
   const updateProduct = async (id: string, updates: Partial<Product>): Promise<Product | null> => {
-    const res = await fetch(`/api/products/${id}`, {
+    const cleanId = encodeURIComponent(id);
+    const res = await fetch(`/api/products/${cleanId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -1075,15 +1103,26 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
     const updated: Product = await res.json();
     setProducts(prev => {
-      const next = prev.map(p => (p.id === id || p.slug === id) ? updated : p);
-      try { localStorage.setItem('specslook_products', JSON.stringify(next)); } catch {}
-      return next;
+      let matched = false;
+      const next = prev.map(p => {
+        if (p.id === id || p.slug === id || p.id === updated.id || (updated.slug && p.slug === updated.slug)) {
+          matched = true;
+          return updated;
+        }
+        return p;
+      });
+      const finalList = matched ? next : [updated, ...next];
+      try { localStorage.setItem('specslook_products', JSON.stringify(finalList)); } catch {}
+      window.dispatchEvent(new CustomEvent('specslook-products-updated', { detail: finalList }));
+      return finalList;
     });
+    refreshProducts().catch(() => {});
     return updated;
   };
 
   const deleteProduct = async (id: string): Promise<boolean> => {
-    const res = await fetch(`/api/products/${id}`, {
+    const cleanId = encodeURIComponent(id);
+    const res = await fetch(`/api/products/${cleanId}`, {
       method: 'DELETE',
       headers: {
         ...(adminToken ? { Authorization: `Bearer ${adminToken}` } : {})
@@ -1097,8 +1136,10 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setProducts(prev => {
       const next = prev.filter(p => p.id !== id && p.slug !== id);
       try { localStorage.setItem('specslook_products', JSON.stringify(next)); } catch {}
+      window.dispatchEvent(new CustomEvent('specslook-products-updated', { detail: next }));
       return next;
     });
+    refreshProducts().catch(() => {});
     return true;
   };
 
@@ -1114,7 +1155,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         blogs,
         banners,
         loadingData,
-        refreshProducts: fetchData,
+        refreshProducts,
         addCategory,
         updateCategory,
         deleteCategory,

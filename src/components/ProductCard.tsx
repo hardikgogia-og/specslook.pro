@@ -13,18 +13,23 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
-  const activeVariant = product.variants[selectedVariantIndex] || product.variants[0];
+  const variants = Array.isArray(product.variants) ? product.variants : [];
+  const activeVariant = variants[selectedVariantIndex] || variants[0];
+  const images = Array.isArray(product.images) && product.images.length > 0 ? product.images : (activeVariant?.images || []);
+  const fallbackImg = 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=800&q=80';
   // Prioritize the admin-configured primary product image for the initial presentation,
   // switching to variant-specific imagery when a secondary color swatch is actively clicked
   const displayImage = (selectedVariantIndex > 0 && activeVariant?.images?.[0])
     ? activeVariant.images[0]
-    : (product.images?.[0] || activeVariant?.images?.[0]);
+    : (images[0] || activeVariant?.images?.[0] || fallbackImg);
   const secondaryImage = (selectedVariantIndex > 0 && activeVariant?.images?.[1])
     ? activeVariant.images[1]
-    : (product.images?.[1] || displayImage);
+    : (images[1] || displayImage);
   const inWishlist = isInWishlist(product.id);
 
-  const discountPercent = Math.round(((product.price - product.salePrice) / product.price) * 100);
+  const price = Number(product.price) || 4990;
+  const salePrice = Number(product.salePrice) || price;
+  const discountPercent = price > salePrice ? Math.round(((price - salePrice) / price) * 100) : 0;
 
   return (
     <div
@@ -40,7 +45,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             {discountPercent}% OFF
           </span>
         )}
-        {product.specifications.isPolarized && (
+        {product.specifications?.isPolarized && (
           <span className="bg-neutral-950 text-white font-medium text-[9px] tracking-widest px-1.5 py-0.5 uppercase flex items-center gap-1 border border-neutral-800">
             <ShieldCheck className="w-2.5 h-2.5 text-amber-400" />
             POLARIZED
@@ -103,8 +108,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <div>
           {/* Shape and Category Tag */}
           <div className="flex items-center justify-between text-[11px] uppercase tracking-widest text-neutral-500 font-medium mb-1">
-            <span>{product.specifications.frameShape} • {product.category}</span>
-            <span className="text-[10px] text-neutral-400">{product.specifications.gender}</span>
+            <span>{product.specifications?.frameShape || 'Eyewear'} • {product.category || 'Collection'}</span>
+            <span className="text-[10px] text-neutral-400">{product.specifications?.gender || 'Unisex'}</span>
           </div>
 
           {/* Product Title */}
@@ -122,11 +127,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
 
         {/* Color Swatches */}
-        {product.variants.length > 1 && (
+        {variants.length > 1 && (
           <div className="flex items-center gap-1.5 pt-1">
-            {product.variants.map((v, idx) => (
+            {variants.map((v, idx) => (
               <button
-                key={v.id}
+                key={v.id || idx}
                 onClick={(e) => {
                   e.stopPropagation();
                   setSelectedVariantIndex(idx);
@@ -141,7 +146,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               />
             ))}
             <span className="text-[10px] text-neutral-400 ml-1">
-              +{product.variants.length} colors
+              +{variants.length} colors
             </span>
           </div>
         )}

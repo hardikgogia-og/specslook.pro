@@ -3,6 +3,7 @@ import path from 'path';
 import crypto from 'crypto';
 import type {
   Product,
+  ProductSpecification,
   Category,
   Order,
   Coupon,
@@ -639,9 +640,9 @@ class DatabaseService {
           });
         }
 
-        // Ensure all seed categories and products exist in loaded DB
+        // Maintain loaded categories and products from persistent database
         const seedData = getInitialSeedData();
-        if (Array.isArray(parsed.categories)) {
+        if (Array.isArray(parsed.categories) && parsed.categories.length > 0) {
           seedData.categories.forEach(sc => {
             const exists = parsed.categories.some((c: Category) => c.slug === sc.slug || c.id === sc.id || c.name?.toLowerCase() === sc.name?.toLowerCase());
             if (!exists) {
@@ -652,14 +653,7 @@ class DatabaseService {
           parsed.categories = [...seedData.categories];
         }
 
-        if (Array.isArray(parsed.products)) {
-          seedData.products.forEach(sp => {
-            const exists = parsed.products.some((p: Product) => p.id === sp.id || p.slug === sp.slug);
-            if (!exists) {
-              parsed.products.push(sp);
-            }
-          });
-        } else {
+        if (!Array.isArray(parsed.products) || parsed.products.length === 0) {
           parsed.products = [...seedData.products];
         }
 
@@ -724,6 +718,26 @@ class DatabaseService {
         if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir, { recursive: true });
         fs.writeFileSync(path.join(tmpDir, 'specslook_db.json'), JSON.stringify(data, null, 2), 'utf-8');
       } catch {}
+
+      // Keep src/data/seedData.ts synchronized so client initial bundle & incognito/offline windows immediately reflect fresh data
+      try {
+        const seedTsPath = path.join(process.cwd(), 'src', 'data', 'seedData.ts');
+        if (fs.existsSync(path.dirname(seedTsPath))) {
+          const fileContent = `import type { Product, Category, StoreLocation, BlogPost, Banner, Coupon, Customer, Review, Order } from '../types.ts';\n\n` +
+            `export const initialProducts: Product[] = ${JSON.stringify(data.products || [], null, 2)};\n\n` +
+            `export const initialCategories: Category[] = ${JSON.stringify(data.categories || [], null, 2)};\n\n` +
+            `export const initialStores: StoreLocation[] = ${JSON.stringify(data.stores || [], null, 2)};\n\n` +
+            `export const initialBlogs: BlogPost[] = ${JSON.stringify(data.blogs || [], null, 2)};\n\n` +
+            `export const initialBanners: Banner[] = ${JSON.stringify(data.banners || [], null, 2)};\n\n` +
+            `export const initialCoupons: Coupon[] = ${JSON.stringify(data.coupons || [], null, 2)};\n\n` +
+            `export const initialCustomers: Customer[] = ${JSON.stringify(data.customers || [], null, 2)};\n\n` +
+            `export const initialReviews: Review[] = ${JSON.stringify(data.reviews || [], null, 2)};\n\n` +
+            `export const initialOrders: Order[] = ${JSON.stringify(data.orders || [], null, 2)};\n`;
+          fs.writeFileSync(seedTsPath, fileContent, 'utf-8');
+        }
+      } catch (seedErr) {
+        console.warn('Syncing seedData.ts skipped:', seedErr);
+      }
     } catch (err) {
       console.warn('Primary DB write failed, attempting /tmp persistence:', err);
       try {
@@ -882,7 +896,13 @@ class DatabaseService {
   }
 
   public getProductByIdOrSlug(idOrSlug: string): Product | undefined {
-    return this.data.products.find(p => p.id === idOrSlug || p.slug === idOrSlug);
+    if (!idOrSlug) return undefined;
+    const clean = decodeURIComponent(idOrSlug).trim().toLowerCase();
+    return this.data.products.find(p =>
+      (p.id && p.id.toLowerCase() === clean) ||
+      (p.slug && p.slug.toLowerCase() === clean) ||
+      (p.sku && p.sku.toLowerCase() === clean)
+    );
   }
 
   public createProduct(productData: Omit<Product, 'id' | 'createdAt'>): Product {
@@ -913,7 +933,13 @@ class DatabaseService {
   }
 
   public updateProduct(id: string, updates: Partial<Product>): Product | null {
-    const index = this.data.products.findIndex(p => p.id === id);
+    if (!id) return null;
+    const cleanId = decodeURIComponent(id).trim().toLowerCase();
+    const index = this.data.products.findIndex(p =>
+      (p.id && p.id.toLowerCase() === cleanId) ||
+      (p.slug && p.slug.toLowerCase() === cleanId) ||
+      (p.sku && p.sku.toLowerCase() === cleanId)
+    );
     if (index === -1) return null;
 
     let updatedVariants = updates.variants
@@ -932,6 +958,17 @@ class DatabaseService {
           ...updatedVariants[0],
           images: [...updates.images]
         };
+      } else {
+        updatedVariants = [{
+          id: `var-${this.data.products[index].id}-1`,
+          colorName: 'Standard',
+          colorHex: '#111111',
+          frameColor: 'Standard',
+          lensColor: 'Standard',
+          images: [...updates.images],
+          sku: updates.sku || this.data.products[index].sku,
+          stock: updates.stock !== undefined ? updates.stock : this.data.products[index].stock
+        }];
       }
 
       if (deletedImages.length > 0) {
@@ -946,9 +983,16 @@ class DatabaseService {
       }
     }
 
+    // Preserve and merge specifications safely
+    const updatedSpecifications = {
+      ...(this.data.products[index].specifications || {}),
+      ...(updates.specifications || {})
+    };
+
     this.data.products[index] = {
       ...this.data.products[index],
       ...updates,
+      specifications: updatedSpecifications as ProductSpecification,
       ...(updatedVariants.length > 0 ? { variants: updatedVariants } : {})
     };
     this.saveData();
@@ -956,8 +1000,12 @@ class DatabaseService {
   }
 
   public deleteProduct(id: string): boolean {
+    if (!id) return false;
+    const cleanId = decodeURIComponent(id).trim().toLowerCase();
     const initialLen = this.data.products.length;
-    this.data.products = this.data.products.filter(p => p.id !== id);
+    this.data.products = this.data.products.filter(p =>
+      p.id.toLowerCase() !== cleanId && p.slug.toLowerCase() !== cleanId
+    );
     const deleted = this.data.products.length < initialLen;
     if (deleted) this.saveData();
     return deleted;

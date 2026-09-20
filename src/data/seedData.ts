@@ -8,7 +8,7 @@ export const initialProducts: Product[] = [
     "sku": "SL-EG-BRW-MEN01",
     "brand": "SPECSLOOK",
     "price": 6990,
-    "salePrice": 4490,
+    "salePrice": 5490,
     "description": "Masterfully crafted from aerospace-grade Japanese titanium and hand-beveled Italian acetate. The Executive Titanium Browline delivers refined authority and featherlight comfort for long workdays in front of spreadsheets and boardroom presentations.",
     "shortDescription": "Aerospace-grade titanium browline with hand-beveled acetate and ergonomic nose-pads.",
     "category": "Eyeglasses",
@@ -16,7 +16,7 @@ export const initialProducts: Product[] = [
     "featured": true,
     "bestSeller": true,
     "newArrival": true,
-    "stock": 28,
+    "stock": 42,
     "images": [
       "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80",
       "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80"
@@ -58,6 +58,7 @@ export const initialProducts: Product[] = [
         "stock": 12,
         "size": "Standard (50mm)",
         "images": [
+          "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80",
           "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80"
         ]
       }
@@ -197,7 +198,8 @@ export const initialProducts: Product[] = [
     "newArrival": true,
     "stock": 32,
     "images": [
-      "/uploads/portfolio-4_1789456608433_k4h20.png"
+      "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80"
     ],
     "specifications": {
       "frameMaterial": "Monel Metal & 18K Rose Gold Plating",
@@ -205,11 +207,11 @@ export const initialProducts: Product[] = [
       "lensWidthMm": 51,
       "bridgeMm": 17,
       "templeLengthMm": 140,
-      "uvProtection": "100% UV400 Protection",
+      "uvProtection": "100% UV400",
       "isPolarized": false,
       "frameShape": "Cat-Eye",
       "gender": "Women",
-      "weightGrams": 28
+      "weightGrams": 18
     },
     "variants": [
       {
@@ -221,7 +223,8 @@ export const initialProducts: Product[] = [
         "sku": "SL-EG-CAT-WOM01-RGD",
         "stock": 18,
         "images": [
-          "/uploads/portfolio-4_1789456608433_k4h20.png"
+          "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80",
+          "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80"
         ]
       },
       {
@@ -233,7 +236,7 @@ export const initialProducts: Product[] = [
         "sku": "SL-EG-CAT-WOM01-RGB",
         "stock": 14,
         "images": [
-          "/uploads/portfolio-4_1789456608433_k4h20.png"
+          "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80"
         ]
       }
     ],
@@ -1392,7 +1395,8 @@ export const initialProducts: Product[] = [
         "size": "Medium (53mm)",
         "images": [
           "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80",
-          "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
+          "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80",
+          "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80"
         ]
       },
       {
@@ -1456,7 +1460,8 @@ export const initialProducts: Product[] = [
         "stock": 25,
         "size": "Medium (51mm)",
         "images": [
-          "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80"
+          "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80",
+          "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80"
         ]
       },
       {
@@ -1486,7 +1491,7 @@ export const initialCategories: Category[] = [
     "name": "Eyeglasses",
     "description": "Precision optical frames tailored for prescription clarity, digital screen comfort, and bespoke styling.",
     "image": "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=800&q=80",
-    "itemCount": 9,
+    "itemCount": 12,
     "featured": true
   },
   {
@@ -1495,34 +1500,7 @@ export const initialCategories: Category[] = [
     "name": "Sunglasses",
     "description": "Iconic silhouettes, legendary crystal lenses, 100% UV400 shield and high-contrast polarization.",
     "image": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80",
-    "itemCount": 13,
-    "featured": true
-  },
-  {
-    "id": "cat-attachments",
-    "slug": "attachments",
-    "name": "Attachments",
-    "description": "Convertible 6-in-1 and 2-in-1 magnetic clip-on frames that switch seamlessly from optical eyeglasses to sunglasses in 1 second.",
-    "image": "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=800&q=80",
-    "itemCount": 2,
-    "featured": true
-  },
-  {
-    "id": "cat-polarized",
-    "slug": "polarized",
-    "name": "Polarized",
-    "description": "High-definition polarized optics that eliminate 99.9% of blinding road, water, and outdoor glare.",
-    "image": "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=800&q=80",
-    "itemCount": 8,
-    "featured": true
-  },
-  {
-    "id": "cat-blue-light-blockers",
-    "slug": "blue-light-blockers",
-    "name": "Blue Light Blockers",
-    "description": "Zero eye strain anti-fatigue lenses engineered for computer screens, gaming, and digital devices.",
-    "image": "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=800&q=80",
-    "itemCount": 5,
+    "itemCount": 12,
     "featured": true
   },
   {
@@ -1577,6 +1555,33 @@ export const initialCategories: Category[] = [
     "description": "Safe rubberized frames, polarized shatter-resistant optics, and vibrant UV400 shades for outdoor play.",
     "image": "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=800&q=80",
     "itemCount": 4,
+    "featured": true
+  },
+  {
+    "id": "cat-attachments",
+    "slug": "attachments",
+    "name": "Attachments",
+    "description": "Convertible 6-in-1 and 2-in-1 magnetic clip-on frames that switch seamlessly from optical eyeglasses to sunglasses in 1 second.",
+    "image": "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=800&q=80",
+    "itemCount": 2,
+    "featured": true
+  },
+  {
+    "id": "cat-polarized",
+    "slug": "polarized",
+    "name": "Polarized",
+    "description": "High-definition polarized optics that eliminate 99.9% of blinding road, water, and outdoor glare.",
+    "image": "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=800&q=80",
+    "itemCount": 8,
+    "featured": true
+  },
+  {
+    "id": "cat-blue-light-blockers",
+    "slug": "blue-light-blockers",
+    "name": "Blue Light Blockers",
+    "description": "Zero eye strain anti-fatigue lenses engineered for computer screens, gaming, and digital devices.",
+    "image": "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=800&q=80",
+    "itemCount": 5,
     "featured": true
   }
 ];
@@ -1775,7 +1780,7 @@ export const initialCoupons: Coupon[] = [
     "maxDiscount": 1500,
     "isActive": true,
     "expiryDate": "2026-12-31",
-    "usageCount": 84
+    "usageCount": 85
   },
   {
     "id": "coup-02",
@@ -1855,6 +1860,17 @@ export const initialCustomers: Customer[] = [
     "totalSpent": 4089,
     "lastOrderDate": "2026-09-13",
     "createdAt": "2026-09-13"
+  },
+  {
+    "id": "cust-mu473b22",
+    "name": "Rahul Sharma",
+    "email": "rahul.sharma@example.com",
+    "phone": "9876543210",
+    "city": "Gurugram",
+    "ordersCount": 1,
+    "totalSpent": 6291,
+    "lastOrderDate": "2026-09-16",
+    "createdAt": "2026-09-16"
   }
 ];
 
@@ -1892,6 +1908,44 @@ export const initialReviews: Review[] = [
 ];
 
 export const initialOrders: Order[] = [
+  {
+    "id": "ord-mu473b22",
+    "orderNumber": "SL-469282",
+    "createdAt": "2026-09-16T14:27:36.506Z",
+    "customer": {
+      "fullName": "Rahul Sharma",
+      "email": "rahul.sharma@example.com",
+      "phone": "9876543210",
+      "addressLine1": "Plot 42, Sector 14",
+      "city": "Gurugram",
+      "state": "Haryana",
+      "pinCode": "122001"
+    },
+    "items": [
+      {
+        "productId": "prod-eye-men-01",
+        "productName": "Specslook Executive Titanium Browline Eyeglasses",
+        "price": 6990,
+        "quantity": 1
+      }
+    ],
+    "subtotal": 6990,
+    "discount": 699,
+    "couponCode": "SPECS10",
+    "shippingFee": 0,
+    "total": 6291,
+    "paymentMethod": "cod",
+    "paymentStatus": "Pending",
+    "orderStatus": "Pending",
+    "estimatedDeliveryDate": "2026-09-20",
+    "timeline": [
+      {
+        "status": "Pending",
+        "timestamp": "2026-09-16T14:27:36.506Z",
+        "note": "Order placed via Cash on Delivery"
+      }
+    ]
+  },
   {
     "id": "ord-mtzzf07z",
     "orderNumber": "SL-166703",
@@ -2195,7 +2249,7 @@ export const initialOrders: Order[] = [
     ],
     "prescription": {
       "mode": "upload",
-      "submittedAt": "2026-09-13T07:29:30.475Z",
+      "submittedAt": "2026-09-14T09:55:31.300Z",
       "fileName": "Pooja_Singhania_Prescription_Slip.jpg",
       "fileUrl": "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80",
       "fileNotes": "Prescription card issued by Dr. Mehta Eye Clinic Bandra Mumbai on 10-Sep-2026."
@@ -2259,7 +2313,7 @@ export const initialOrders: Order[] = [
     ],
     "prescription": {
       "mode": "optometrist_exam",
-      "submittedAt": "2026-09-14T13:24:30.475Z",
+      "submittedAt": "2026-09-15T15:50:31.300Z",
       "optometristAppointment": {
         "patientName": "Vikramaditya Rao",
         "patientAge": 34,
@@ -2270,7 +2324,7 @@ export const initialOrders: Order[] = [
         "timeSlot": "04:30 PM - 05:30 PM",
         "contactNumber": "+91 97405 66789",
         "status": "Confirmed - Client Called",
-        "calledAt": "2026-09-14T19:14:30.475Z",
+        "calledAt": "2026-09-15T21:40:31.301Z",
         "callNotes": "Spoke with Mr. Rao. Confirmed 4:30 PM slot. Senior optometrist assigned for computerized keratometry and progressive lens fitting.",
         "specialInstructions": "Requires titanium frame temple adjustment for wide fit."
       }
@@ -2325,7 +2379,7 @@ export const initialOrders: Order[] = [
     ],
     "prescription": {
       "mode": "manual",
-      "submittedAt": "2026-09-15T03:19:30.475Z",
+      "submittedAt": "2026-09-16T05:45:31.301Z",
       "manualPower": {
         "odSph": "+1.75",
         "odCyl": "0.00",

@@ -321,13 +321,13 @@ export interface ShippingAddress {
   city: string;
   state: string;
   pinCode: string;
-  country: string;
+  country?: string;
 }
 
 export interface OrderItem {
   productId: string;
   productName: string;
-  sku: string;
+  sku?: string;
   variantName?: string;
   image?: string;
   price: number; // Unit price including lens add-on
@@ -337,7 +337,7 @@ export interface OrderItem {
   selectedLensType?: string;
   lensAddon?: LensAddon;
   quantity: number;
-  total: number;
+  total?: number;
 }
 
 export interface OrderTimeline {
