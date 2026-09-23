@@ -882,8 +882,13 @@
           "sku": "SL-SG-KID-WF02-ORG",
           "stock": 25,
           "images": [
-            "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1000&q=80",
-            "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1000&q=80"
+            "https://m.media-amazon.com/images/I/41F65LyeRaL._SX679_.jpg",
+            "https://m.media-amazon.com/images/I/61B3XKYLXSL._SX679_.jpg",
+            "https://m.media-amazon.com/images/I/61Pd6Fh09JL._SX679_.jpg",
+            "https://m.media-amazon.com/images/I/61JkE6m0-XL._SX679_.jpg",
+            "https://m.media-amazon.com/images/I/71Gjv+-ojcL._SX679_.jpg",
+            "https://m.media-amazon.com/images/I/71SzbYItI3L._SX679_.jpg",
+            "https://m.media-amazon.com/images/I/71lVdzWJUaL._SX679_.jpg"
           ]
         }
       ],
