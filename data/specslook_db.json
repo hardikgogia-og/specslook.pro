@@ -36,9 +36,9 @@
       "variants": [
         {
           "id": "var-egm1-1",
-          "colorName": "Rose/Pink",
+          "colorName": "Pink",
           "colorHex": "#FFB6C1",
-          "frameColor": "Rose/Pink",
+          "frameColor": "Pink",
           "lensColor": "Clear Optical Demo",
           "sku": "SL-EG-TIT-CAT-4P",
           "stock": 16,
