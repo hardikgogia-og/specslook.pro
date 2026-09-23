@@ -717,8 +717,8 @@
       "name": "Specslook Hexagonal Rose Gold Sunglasses",
       "sku": "SL-SG-HEX-WOM02",
       "brand": "SPECSLOOK",
-      "price": 9490,
-      "salePrice": 6290,
+      "price": 2000,
+      "salePrice": 499,
       "description": "Slender hexagonal metal geometry in radiant 18K rose gold. Fitted with flat crystal pink-champagne flash mirror lenses that offer stunning reflective warmth and full UV400 defense.",
       "shortDescription": "Slim hexagonal wireframe with pink-champagne flash crystal lenses.",
       "category": "Sunglasses",
@@ -728,8 +728,9 @@
       "newArrival": false,
       "stock": 22,
       "images": [
-        "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80",
-        "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80"
+        "https://m.media-amazon.com/images/I/51py0GmlQ5L._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/51O09DfScHL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/61ClA1+29TL._SX679_.jpg"
       ],
       "specifications": {
         "frameMaterial": "18K Rose Gold Ion-Plated Metal",
@@ -737,11 +738,11 @@
         "lensWidthMm": 51,
         "bridgeMm": 21,
         "templeLengthMm": 145,
-        "uvProtection": "100% UV400",
+        "uvProtection": "100% UV400 Protection",
         "isPolarized": false,
         "frameShape": "Hexagonal",
         "gender": "Women",
-        "weightGrams": 27
+        "weightGrams": 28
       },
       "variants": [
         {
