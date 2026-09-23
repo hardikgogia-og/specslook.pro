@@ -536,8 +536,8 @@
       "name": "Specslook Aviator Pilot Polarized Gold Sunglasses",
       "sku": "SL-SG-AV-MEN01",
       "brand": "SPECSLOOK",
-      "price": 9990,
-      "salePrice": 6990,
+      "price": 4000,
+      "salePrice": 799,
       "description": "The pinnacle of masculine aviator design. Features 18K gold-electroplated double bridge metal with authentic emerald green polarized crystal lenses for razor-sharp visual fidelity on road drives and bright sunny days.",
       "shortDescription": "18K gold plated pilot frame with emerald green crystal polarized glass.",
       "category": "Sunglasses",
@@ -547,8 +547,9 @@
       "newArrival": false,
       "stock": 45,
       "images": [
-        "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80",
-        "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80"
+        "https://m.media-amazon.com/images/I/51Z-nfSqd+L._SX569_.jpg",
+        "https://m.media-amazon.com/images/I/51HkQhzcSxL._SX569_.jpg",
+        "https://m.media-amazon.com/images/I/61LGVLENSML._SX569_.jpg"
       ],
       "specifications": {
         "frameMaterial": "Monel Metal with 18K Gold Finish",
@@ -556,11 +557,11 @@
         "lensWidthMm": 58,
         "bridgeMm": 14,
         "templeLengthMm": 135,
-        "uvProtection": "100% UV400 Polarization",
+        "uvProtection": "100% UV400 Protection",
         "isPolarized": true,
         "frameShape": "Aviator",
         "gender": "Men",
-        "weightGrams": 31
+        "weightGrams": 28
       },
       "variants": [
         {
