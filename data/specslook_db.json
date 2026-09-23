@@ -3,11 +3,11 @@
     {
       "id": "prod-eye-men-01",
       "slug": "specslook-executive-titanium-browline",
-      "name": "Specslook Executive Titanium Cateye Eyeglasses",
+      "name": "Specslook Executive Titanium Browline Eyeglasses",
       "sku": "SL-EG-BRW-MEN01",
       "brand": "SPECSLOOK",
-      "price": 2499,
-      "salePrice": 799,
+      "price": 6990,
+      "salePrice": 5490,
       "description": "Masterfully crafted from aerospace-grade Japanese titanium and hand-beveled Italian acetate. The Executive Titanium Browline delivers refined authority and featherlight comfort for long workdays in front of spreadsheets and boardroom presentations.",
       "shortDescription": "Aerospace-grade titanium browline with hand-beveled acetate and ergonomic nose-pads.",
       "category": "Eyeglasses",
@@ -70,11 +70,11 @@
     {
       "id": "prod-eye-men-02",
       "slug": "specslook-matte-black-wayfarer-optical",
-      "name": "Specslook Matte Black Square Optical Eyeglasses",
+      "name": "Specslook BOLD  Black Square Optical Eyeglasses",
       "sku": "SL-EG-SQR-MEN02",
       "brand": "SPECSLOOK",
       "price": 5490,
-      "salePrice": 3290,
+      "salePrice": 549,
       "description": "An understated modern square silhouette engineered in ultra-flexible Swiss TR90 memory polymer with velvet touch matte finish. Perfectly balances comfort, durability, and bold facial framing.",
       "shortDescription": "Velvet-touch matte black square frames with German 5-barrel spring hinges.",
       "category": "Eyeglasses",
@@ -84,8 +84,10 @@
       "newArrival": true,
       "stock": 35,
       "images": [
-        "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80",
-        "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80"
+        "https://m.media-amazon.com/images/I/310LtlpSkbL.jpg",
+        "https://m.media-amazon.com/images/I/31EW4pKNu6L.jpg",
+        "https://m.media-amazon.com/images/I/41cflsmRolL.jpg",
+        "https://m.media-amazon.com/images/I/51RXE0mfi+L.jpg"
       ],
       "specifications": {
         "frameMaterial": "Swiss EMS TR90 Polymer",
@@ -93,11 +95,11 @@
         "lensWidthMm": 54,
         "bridgeMm": 17,
         "templeLengthMm": 142,
-        "uvProtection": "100% UV400",
+        "uvProtection": "100% UV400 Protection",
         "isPolarized": false,
         "frameShape": "Square",
         "gender": "Men",
-        "weightGrams": 16
+        "weightGrams": 28
       },
       "variants": [
         {
