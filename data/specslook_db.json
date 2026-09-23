@@ -1190,22 +1190,23 @@
     {
       "id": "prod-006",
       "slug": "blue-light-blocker-pro-acetate",
-      "name": "Specslook Blue-Cut Optics Elite",
+      "name": "Specslook Aqua Brown Large Square",
       "sku": "SL-EG-7040-BLU",
       "brand": "SPECSLOOK",
-      "price": 8990,
-      "salePrice": 5990,
+      "price": 2000,
+      "salePrice": 549,
       "description": "Engineered for digital nomads, professionals and gamers. Specslook Blue-Cut lenses filter out harmful high-energy blue-violet light (HEV) emitted by digital screens, smartphones, and LEDs. Reduces digital eye strain, glare, headaches and improves sleep quality. Handcrafted lightweight acetate frame for all-day ergonomic comfort.",
       "shortDescription": "Ergonomic Japanese acetate eyeglasses with zero-glare blue-light filtering lenses.",
-      "category": "Blue Light Blockers",
+      "category": "Eyeglasses",
       "subcategory": "Eyeglasses",
       "featured": true,
       "bestSeller": true,
       "newArrival": false,
       "stock": 50,
       "images": [
-        "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80",
-        "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80"
+        "https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_Unisex_Aqua_Brown_Color_Large_Size_Square_Frame_AntGlare_Lenses_Optical_Frame__AG221BW__R2TJ2MEC9P_2025-08-16_3.jpg",
+        "https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_Unisex_Aqua_Brown_Color_Large_Size_Square_Frame_AntGlare_Lenses_Optical_Frame__AG221BW__QQFHKARPET_2025-08-16_2.jpg",
+        "https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_Unisex_Aqua_Brown_Color_Large_Size_Square_Frame_AntGlare_Lenses_Optical_Frame__AG221BW__SUQ4RX58LR_2025-08-16_5.jpg"
       ],
       "specifications": {
         "frameMaterial": "Ultra-light Italian Acetate & Beta Titanium",
@@ -1213,11 +1214,11 @@
         "lensWidthMm": 52,
         "bridgeMm": 18,
         "templeLengthMm": 142,
-        "uvProtection": "100% UV400 + 40% HEV Blue Light",
+        "uvProtection": "100% UV400 Protection",
         "isPolarized": false,
         "frameShape": "Square",
         "gender": "Unisex",
-        "weightGrams": 22
+        "weightGrams": 28
       },
       "variants": [
         {
