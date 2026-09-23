@@ -267,12 +267,12 @@
     {
       "id": "prod-eye-wom-02",
       "slug": "specslook-champagne-crystal-round-optical",
-      "name": "Specslook Champagne Crystal Petite Round Eyeglasses",
+      "name": "SL Bold Oversized Square Eyeglasses",
       "sku": "SL-EG-RND-WOM02",
       "brand": "SPECSLOOK",
-      "price": 5990,
-      "salePrice": 3690,
-      "description": "Translucent champagne crystal bio-acetate sculpted into a gentle rounded wire shape. Softens sharp facial lines while offering a luminous, youthful glow under daylight.",
+      "price": 2600,
+      "salePrice": 799,
+      "description": "Gloss Black crystal bio-acetate sculpted into a gentle Bold shape. Softens sharp facial lines while offering a luminous, youthful and Powerful Glow.",
       "shortDescription": "Luminous crystal champagne bio-acetate with custom metal temple filigree.",
       "category": "Eyeglasses",
       "subcategory": "Women",
@@ -281,8 +281,11 @@
       "newArrival": true,
       "stock": 25,
       "images": [
-        "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80",
-        "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80"
+        "https://m.media-amazon.com/images/I/51NO-lJarVL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/51o5O0erw3L._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/51k4DbGIwLL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/71Va8kJyvOL._SY741_.jpg",
+        "https://m.media-amazon.com/images/I/71+yFQc3XGL._SX679_.jpg"
       ],
       "specifications": {
         "frameMaterial": "Crystal Bio-Acetate",
@@ -290,11 +293,11 @@
         "lensWidthMm": 49,
         "bridgeMm": 19,
         "templeLengthMm": 138,
-        "uvProtection": "100% UV400",
+        "uvProtection": "100% UV400 Protection",
         "isPolarized": false,
-        "frameShape": "Round",
+        "frameShape": "Square",
         "gender": "Women",
-        "weightGrams": 17
+        "weightGrams": 28
       },
       "variants": [
         {
