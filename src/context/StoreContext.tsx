@@ -9,8 +9,14 @@ import {
   initialCoupons
 } from '../data/seedData.ts';
 import { getBlogImage } from '../data/blogImages.ts';
+import { getStoreImage } from '../data/storeImages.ts';
 import { initAnalytics, trackAddToCart, trackPageView } from '../utils/analytics.ts';
-import { syncCatalogToGitHubDirect, fetchCatalogFromGitHub, getStoredGitHubCredentials } from '../utils/githubGitService.ts';
+import {
+  syncCatalogToGitHubDirect,
+  fetchCatalogFromGitHub,
+  getStoredGitHubCredentials,
+  parseGitHubRepo
+} from '../utils/githubGitService.ts';
 
 export type AppView =
   | 'home'
@@ -191,10 +197,18 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       const saved = localStorage.getItem('specslook_stores');
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed.map((s: StoreLocation) => ({
+            ...s,
+            image: getStoreImage(s)
+          }));
+        }
       }
     } catch {}
-    return initialStores;
+    return initialStores.map((s: StoreLocation) => ({
+      ...s,
+      image: getStoreImage(s)
+    }));
   });
 
   const [blogs, setBlogs] = useState<BlogPost[]>(() => {
@@ -345,10 +359,15 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   }, [wishlist]);
 
-  // Refresh products directly from server with dynamic cache-busting and GitHub fallback
+  // Refresh products directly with multi-tier resilience:
+  // 1. API endpoint /api/products (Server/Dev)
+  // 2. Direct static database asset /data/specslook_db.json (Vercel/Static hosting/Zero backend)
+  // 3. Direct GitHub fetch (via credentials if admin, or raw public repository if customer)
   const refreshProducts = async (): Promise<void> => {
+    const timestamp = Date.now();
+
+    // 1. Server API /api/products
     try {
-      const timestamp = Date.now();
       const res = await fetch(`/api/products?_t=${timestamp}`, {
         cache: 'no-store',
         headers: {
@@ -371,14 +390,63 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       console.warn('StoreContext: refreshProducts server fetch note:', err);
     }
 
-    // Direct GitHub fallback: if credentials are saved, sync from repository data/specslook_db.json
+    // 2. Direct static database JSON fallback (works universally on all devices, Vercel, static hosting)
+    try {
+      const staticRes = await fetch(`/data/specslook_db.json?_t=${timestamp}`, {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          Pragma: 'no-cache'
+        }
+      });
+      if (staticRes.ok) {
+        const contentType = staticRes.headers.get('content-type') || '';
+        if (contentType.includes('application/json') || contentType.includes('text/plain')) {
+          const dbData = await staticRes.json();
+          if (dbData && Array.isArray(dbData.products) && dbData.products.length > 0) {
+            setProducts(dbData.products);
+            try { localStorage.setItem('specslook_products', JSON.stringify(dbData.products)); } catch {}
+            if (Array.isArray(dbData.categories) && dbData.categories.length > 0) {
+              setCategories(dbData.categories);
+              try { localStorage.setItem('specslook_categories', JSON.stringify(dbData.categories)); } catch {}
+            }
+            if (Array.isArray(dbData.stores) && dbData.stores.length > 0) {
+              setStores(dbData.stores);
+              try { localStorage.setItem('specslook_stores', JSON.stringify(dbData.stores)); } catch {}
+            }
+            return;
+          }
+        }
+      }
+    } catch (staticErr) {
+      console.warn('StoreContext: static specslook_db.json fallback note:', staticErr);
+    }
+
+    // 3. Direct GitHub fallback (with or without stored credentials)
     try {
       const creds = getStoredGitHubCredentials();
+      const repo = creds?.repo || 'hardikgogia175/specslook';
       if (creds?.token && creds?.repo) {
         const gitData = await fetchCatalogFromGitHub(creds.token, creds.repo);
         if (gitData?.schema?.products && Array.isArray(gitData.schema.products) && gitData.schema.products.length > 0) {
           setProducts(gitData.schema.products);
           try { localStorage.setItem('specslook_products', JSON.stringify(gitData.schema.products)); } catch {}
+          return;
+        }
+      } else if (repo) {
+        // Direct public repository read without requiring any admin login
+        const parsed = parseGitHubRepo(repo);
+        if (parsed) {
+          const rawUrl = `https://raw.githubusercontent.com/${parsed.owner}/${parsed.repo}/main/data/specslook_db.json?_t=${timestamp}`;
+          const rawRes = await fetch(rawUrl, { cache: 'no-store' });
+          if (rawRes.ok) {
+            const rawJson = await rawRes.json();
+            if (rawJson && Array.isArray(rawJson.products) && rawJson.products.length > 0) {
+              setProducts(rawJson.products);
+              try { localStorage.setItem('specslook_products', JSON.stringify(rawJson.products)); } catch {}
+              return;
+            }
+          }
         }
       }
     } catch (gitErr) {
@@ -389,8 +457,11 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   // Fetch initial data with resilient fallback and dynamic cache-busting
   const fetchData = async () => {
     setLoadingData(true);
-    // Fire off product refresh immediately
-    refreshProducts().catch(() => {});
+    try {
+      await refreshProducts();
+    } catch (err) {
+      console.warn('StoreContext: initial product refresh note:', err);
+    }
 
     try {
       const timestamp = Date.now();
@@ -429,8 +500,12 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         try { localStorage.setItem('specslook_categories', JSON.stringify(merged)); } catch {}
       }
       if (sRes.status === 'fulfilled' && sRes.value && sRes.value.length > 0) {
-        setStores(sRes.value);
-        try { localStorage.setItem('specslook_stores', JSON.stringify(sRes.value)); } catch {}
+        const mappedStores = sRes.value.map((s: StoreLocation) => ({
+          ...s,
+          image: getStoreImage(s)
+        }));
+        setStores(mappedStores);
+        try { localStorage.setItem('specslook_stores', JSON.stringify(mappedStores)); } catch {}
       }
       if (bRes.status === 'fulfilled' && bRes.value && bRes.value.length > 0) {
         setBlogs(bRes.value);

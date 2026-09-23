@@ -336,6 +336,9 @@ export const ProductDetailView: React.FC = () => {
               <img
                 src={currentImage}
                 alt={product.name}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=800&q=80';
+                }}
                 className="w-full h-full object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-110"
               />
 

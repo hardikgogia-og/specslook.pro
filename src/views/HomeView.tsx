@@ -23,6 +23,7 @@ import sunglassManImg from '../assets/images/sunglass_man_face_1789314497936.jpg
 import sunglassWomanImg from '../assets/images/sunglass_woman_face_1789314512198.jpg';
 import sunglassKidImg from '../assets/images/sunglass_kid_smile_1789314525399.jpg';
 import { getBlogImage } from '../data/blogImages.ts';
+import { getStoreImage } from '../data/storeImages.ts';
 
 export const HomeView: React.FC = () => {
   const { products, categories, stores, blogs, navigateTo } = useStore();
@@ -602,16 +603,26 @@ export const HomeView: React.FC = () => {
               onClick={() => navigateTo('stores')}
               className="group bg-white border border-neutral-200 overflow-hidden hover:border-neutral-900 hover:shadow-lg transition-all cursor-pointer rounded-xs"
             >
-              <div className="aspect-16/9 overflow-hidden bg-neutral-100">
+              <div className="aspect-16/9 overflow-hidden bg-neutral-100 relative">
                 <img
-                  src={(store as any).image || (store as any).imageUrl}
+                  src={getStoreImage(store)}
                   alt={store.name}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = (store as any).image || '/assets/stores/sl1_store.jpg';
+                  }}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
+                <span className={`absolute top-2.5 right-2.5 text-[9px] font-black px-2 py-0.5 uppercase tracking-wider rounded-xs shadow-xs ${
+                  store.id === 'store-sl1' || store.name.includes('SL1')
+                    ? 'bg-amber-400 text-neutral-950 font-black'
+                    : 'bg-neutral-950/80 text-white backdrop-blur-xs'
+                }`}>
+                  {store.id === 'store-sl1' || store.name.includes('SL1') ? 'Mini Store' : 'Boutique'}
+                </span>
               </div>
               <div className="p-5">
                 <div className="text-[11px] font-bold text-red-600 uppercase tracking-wider">
-                  {store.city} Flagship
+                  {store.id === 'store-sl1' || store.name.includes('SL1') ? `${store.city} Mini Store` : `${store.city} Boutique`}
                 </div>
                 <h3 className="font-extrabold text-base text-neutral-900 mt-1">{store.name}</h3>
                 <p className="text-xs text-neutral-500 mt-1 line-clamp-2">{store.address}</p>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Plus, Edit2, Trash2, MapPin, Phone, Mail, Clock, Check, X, Image as ImageIcon } from 'lucide-react';
 import { StoreLocation } from '../../types.ts';
 import { useStore } from '../../context/StoreContext.tsx';
+import { getStoreImage } from '../../data/storeImages.ts';
 
 interface AdminStoreManagerProps {
   stores: StoreLocation[];
@@ -9,6 +10,11 @@ interface AdminStoreManagerProps {
 }
 
 const STORE_IMAGE_PRESETS = [
+  { label: 'SPECSLOOK SL1 - Dreamz Mall (Mini)', url: '/assets/stores/sl1_store.jpg' },
+  { label: 'SPECSLOOK SL2 - Sec 5 Circle', url: '/assets/stores/sl2_store.jpg' },
+  { label: 'SPECSLOOK SL3 - Sector 85', url: '/assets/stores/sl3_store.jpg' },
+  { label: 'SPECSLOOK SL4 - Sector 103', url: '/assets/stores/sl4_store.jpg' },
+  { label: 'SPECSLOOK SL5 - Sector 89', url: '/assets/stores/sl5_store.jpg' },
   { label: 'Flagship Lounge (DLF)', url: 'https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=1000&q=80' },
   { label: 'Heritage Boutique (CP)', url: 'https://images.unsplash.com/photo-1582533561751-ef6f6ab93a2e?auto=format&fit=crop&w=1000&q=80' },
   { label: 'Mall Experience Center', url: 'https://images.unsplash.com/photo-1555421689-491a97ff2040?auto=format&fit=crop&w=1000&q=80' },
@@ -162,8 +168,11 @@ export const AdminStoreManager: React.FC<AdminStoreManagerProps> = ({ stores, on
             {/* Boutique Image Preview */}
             <div className="relative h-44 bg-neutral-100 overflow-hidden group">
               <img
-                src={store.image || STORE_IMAGE_PRESETS[0].url}
+                src={getStoreImage(store)}
                 alt={store.name}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = store.image || STORE_IMAGE_PRESETS[0].url;
+                }}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent flex items-end p-4">

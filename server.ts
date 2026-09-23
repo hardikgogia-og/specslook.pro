@@ -223,6 +223,11 @@ app.get('/robots.txt', (req: Request, res: Response) => {
 app.use('/uploads', express.static(uploadsDir, { maxAge: '30d', immutable: true }));
 app.use('/public/uploads', express.static(uploadsDir, { maxAge: '30d', immutable: true }));
 
+// Serve public static assets (stores, logos, icons, fonts)
+const publicDir = path.join(process.cwd(), 'public');
+app.use(express.static(publicDir, { maxAge: '7d' }));
+app.use('/assets', express.static(path.join(publicDir, 'assets'), { maxAge: '30d', immutable: true }));
+
 // Fallback dynamic photo server for serverless or multi-folder deployments
 app.get(['/uploads/:filename', '/api/uploads/:filename', '/public/uploads/:filename'], (req: Request, res: Response) => {
   const filename = path.basename(req.params.filename);
@@ -471,8 +476,21 @@ app.post('/api/auth/admin/logout', (req: Request, res: Response) => {
 });
 
 // -------------------------------------------------------------
-// PRODUCTS ROUTES
+// PRODUCTS & DATABASE ROUTES
 // -------------------------------------------------------------
+
+// Static Database JSON Endpoint (directly accessible by all customer devices & crawlers)
+app.get(['/data/specslook_db.json', '/public/data/specslook_db.json'], (_req: Request, res: Response) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+
+  const rootDbFile = path.join(process.cwd(), 'data', 'specslook_db.json');
+  if (fs.existsSync(rootDbFile)) {
+    return res.sendFile(rootDbFile);
+  }
+  return res.json(dbService.getAllData());
+});
 
 // Get all products with filters and search
 app.get('/api/products', (req: Request, res: Response) => {

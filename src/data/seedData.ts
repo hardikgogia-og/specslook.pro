@@ -1592,23 +1592,23 @@ export const initialStores: StoreLocation[] = [
     "name": "SPECSLOOK SL1",
     "city": "Gurugram",
     "address": "Dreamz Mall, Sector 4 / 7, Gurugram, Haryana - 122001",
-    "phone": "+91 98110 54101",
+    "phone": "+91 83688 53448",
     "email": "sl1.dreamz@specslook.com",
     "timings": "Mon - Sun: 10:30 AM - 9:30 PM",
     "features": [
-      "Flagship Optical Lounge",
+      "Mini Optical Studio",
       "Comprehensive Zeiss Eye Exam",
       "Custom Prescription Lens Lab",
       "Complimentary Ultrasonic Cleaning"
     ],
-    "image": "https://images.unsplash.com/photo-1555529771-835f59fc5efe?auto=format&fit=crop&w=800&q=80"
+    "image": "/assets/stores/sl1_store.jpg"
   },
   {
     "id": "store-sl2",
     "name": "SPECSLOOK SL2",
     "city": "Gurugram",
     "address": "Sec 5 Circle, Railway Road, Gurugram, Haryana - 122006",
-    "phone": "+91 98110 54102",
+    "phone": "+91 83688 53448",
     "email": "sl2.sec5@specslook.com",
     "timings": "Mon - Sun: 10:30 AM - 9:30 PM",
     "features": [
@@ -1617,14 +1617,14 @@ export const initialStores: StoreLocation[] = [
       "Zero-Power Blue Cut Testing Bar",
       "Same-Day Lens Dispensing"
     ],
-    "image": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80"
+    "image": "/assets/stores/sl2_store.jpg"
   },
   {
     "id": "store-sl3",
     "name": "SPECSLOOK SL3",
     "city": "Gurugram",
     "address": "Sector 85, Multi-Brand Eyewear Boulevard, Gurugram, Haryana - 122004",
-    "phone": "+91 98110 54103",
+    "phone": "+91 83688 53448",
     "email": "sl3.sec85@specslook.com",
     "timings": "Mon - Sun: 10:30 AM - 9:30 PM",
     "features": [
@@ -1633,14 +1633,14 @@ export const initialStores: StoreLocation[] = [
       "Polarized Glare Simulator",
       "VIP Doorstep Trial Service"
     ],
-    "image": "https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?auto=format&fit=crop&w=800&q=80"
+    "image": "/assets/stores/sl3_store.jpg"
   },
   {
     "id": "store-sl4",
     "name": "SPECSLOOK SL4",
     "city": "Gurugram",
     "address": "Sector 103, Dwarka Expressway Corridor, Gurugram, Haryana - 122006",
-    "phone": "+91 98110 54104",
+    "phone": "+91 83688 53448",
     "email": "sl4.sec103@specslook.com",
     "timings": "Mon - Sun: 10:30 AM - 9:30 PM",
     "features": [
@@ -1649,14 +1649,14 @@ export const initialStores: StoreLocation[] = [
       "High-Index Ultra-Thin Lenses",
       "Contact Lens Solutions Bar"
     ],
-    "image": "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&w=800&q=80"
+    "image": "/assets/stores/sl4_store.jpg"
   },
   {
     "id": "store-sl5",
     "name": "SPECSLOOK SL5",
     "city": "Gurugram",
     "address": "Sector 89, New Gurugram Commercial Hub, Gurugram, Haryana - 122505",
-    "phone": "+91 98110 54105",
+    "phone": "+91 83688 53448",
     "email": "sl5.sec89@specslook.com",
     "timings": "Mon - Sun: 10:30 AM - 9:30 PM",
     "features": [
@@ -1665,7 +1665,7 @@ export const initialStores: StoreLocation[] = [
       "Bespoke Laser Monogramming",
       "Valet Parking Available"
     ],
-    "image": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80"
+    "image": "/assets/stores/sl5_store.jpg"
   }
 ];
 

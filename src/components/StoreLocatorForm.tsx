@@ -245,12 +245,12 @@ export const StoreLocatorForm: React.FC<StoreLocatorFormProps> = ({ variant = 'c
                   <span>Doorstep Optical Concierge For {cityName}</span>
                 </div>
                 <p className="text-xs text-neutral-300 leading-relaxed">
-                  While our primary company-owned Flagship Boutiques (SL1 through SL5) are located in Gurugram, Specslook provides <strong>Complimentary Express Air Delivery</strong>, <strong>Doorstep Try-On Kits</strong>, and <strong>14-Day Zero-Risk Return Guarantees</strong> across {cityName} and nationwide.
+                  While our primary company-owned Boutiques & Mini Studios (SL1 through SL5) are located in Gurugram, Specslook provides <strong>Complimentary Express Air Delivery</strong>, <strong>Doorstep Try-On Kits</strong>, and <strong>14-Day Zero-Risk Return Guarantees</strong> across {cityName} and nationwide.
                 </p>
                 <div className="p-3 bg-neutral-900 border border-neutral-800 text-xs text-neutral-400 space-y-1">
                   <div className="font-semibold text-white">Direct Concierge Assistance:</div>
-                  <div>Phone: <a href="tel:+919811054101" className="text-red-400 underline">+91 98110 54101</a> (10:00 AM - 8:00 PM)</div>
-                  <div>WhatsApp: <span className="text-emerald-400 font-medium">+91 98110 54101</span> (Chat with an Optometrist)</div>
+                  <div>Phone: <a href="tel:+918368853448" className="text-red-400 underline">+91 83688 53448</a> (10:00 AM - 8:00 PM)</div>
+                  <div>WhatsApp: <a href="https://wa.me/918368853448" target="_blank" rel="noopener noreferrer" className="text-emerald-400 font-medium hover:underline">+91 83688 53448</a> (Chat with an Optometrist)</div>
                 </div>
               </div>
             )}

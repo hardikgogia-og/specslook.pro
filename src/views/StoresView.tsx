@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { useStore } from '../context/StoreContext.tsx';
 import { StoreLocatorForm } from '../components/StoreLocatorForm.tsx';
+import { getStoreImage } from '../data/storeImages.ts';
 
 export const StoresView: React.FC = () => {
   const { stores, showToast, navigateTo } = useStore();
@@ -150,12 +151,22 @@ export const StoresView: React.FC = () => {
             >
               <div className="aspect-16/10 bg-neutral-100 overflow-hidden relative">
                 <img
-                  src={(store as any).image || (store as any).imageUrl}
+                  src={getStoreImage(store)}
                   alt={store.name}
-                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = (store as any).image || '/assets/stores/sl1_store.jpg';
+                  }}
+                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                 />
                 <span className="absolute top-3 left-3 bg-neutral-950/90 text-white text-[10px] font-extrabold px-2.5 py-0.5 uppercase tracking-wider backdrop-blur-xs">
                   {store.city}
+                </span>
+                <span className={`absolute top-3 right-3 text-[10px] font-black px-2.5 py-0.5 uppercase tracking-wider shadow-xs rounded-xs ${
+                  store.id === 'store-sl1' || store.name.includes('SL1')
+                    ? 'bg-amber-400 text-neutral-950 font-black'
+                    : 'bg-neutral-950/90 text-white backdrop-blur-xs'
+                }`}>
+                  {store.id === 'store-sl1' || store.name.includes('SL1') ? 'Mini Store' : 'Boutique'}
                 </span>
               </div>
 

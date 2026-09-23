@@ -85,6 +85,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           src={isHovered && secondaryImage ? secondaryImage : displayImage}
           alt={product.name}
           loading="lazy"
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = fallbackImg;
+          }}
           className="w-full h-full object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-105"
         />
 

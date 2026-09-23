@@ -45,7 +45,7 @@
   ],
   "rewrites": [
     {
-      "source": "/((?!api/|uploads/|assets/|sitemap\\.xml|robots\\.txt).*)",
+      "source": "/((?!api/|data/|uploads/|assets/|sitemap\\.xml|robots\\.txt).*)",
       "destination": "/index.html"
     }
   ]

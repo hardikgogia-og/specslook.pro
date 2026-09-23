@@ -747,7 +747,8 @@ export const AdminView: React.FC = () => {
               if (resData.product) {
                 latestProduct = resData.product;
               }
-              if (resData.url) {
+              // If server provided an external CDN or cloud URL, use it; otherwise retain self-contained base64
+              if (resData.url && !resData.url.startsWith('/uploads/')) {
                 uploadedUrl = resData.url;
               }
             }
@@ -806,7 +807,7 @@ export const AdminView: React.FC = () => {
 
             if (res.ok) {
               const data = await res.json();
-              if (data.url) photoUrl = data.url;
+              if (data.url && !data.url.startsWith('/uploads/')) photoUrl = data.url;
             }
           } catch (err) {
             console.warn('API /api/upload unavailable, using compressed data URI:', err);

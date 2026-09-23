@@ -120,55 +120,55 @@ function getInitialSeedData(): DatabaseSchema {
       name: 'SPECSLOOK SL1',
       city: 'Gurugram',
       address: 'Dreamz Mall, Sector 4 / 7, Gurugram, Haryana - 122001',
-      phone: '+91 98110 54101',
+      phone: '+91 83688 53448',
       email: 'sl1.dreamz@specslook.com',
       timings: 'Mon - Sun: 10:30 AM - 9:30 PM',
-      features: ['Flagship Optical Lounge', 'Comprehensive Zeiss Eye Exam', 'Custom Prescription Lens Lab', 'Complimentary Ultrasonic Cleaning'],
-      image: 'https://images.unsplash.com/photo-1555529771-835f59fc5efe?auto=format&fit=crop&w=800&q=80'
+      features: ['Mini Optical Studio', 'Comprehensive Zeiss Eye Exam', 'Custom Prescription Lens Lab', 'Complimentary Ultrasonic Cleaning'],
+      image: '/assets/stores/sl1_store.jpg'
     },
     {
       id: 'store-sl2',
       name: 'SPECSLOOK SL2',
       city: 'Gurugram',
       address: 'Sec 5 Circle, Railway Road, Gurugram, Haryana - 122006',
-      phone: '+91 98110 54102',
+      phone: '+91 83688 53448',
       email: 'sl2.sec5@specslook.com',
       timings: 'Mon - Sun: 10:30 AM - 9:30 PM',
       features: ['Iconic Aviator & Wayfarer Vault', '3D Facial Scanning & Fitting', 'Zero-Power Blue Cut Testing Bar', 'Same-Day Lens Dispensing'],
-      image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80'
+      image: '/assets/stores/sl2_store.jpg'
     },
     {
       id: 'store-sl3',
       name: 'SPECSLOOK SL3',
       city: 'Gurugram',
       address: 'Sector 85, Multi-Brand Eyewear Boulevard, Gurugram, Haryana - 122004',
-      phone: '+91 98110 54103',
+      phone: '+91 83688 53448',
       email: 'sl3.sec85@specslook.com',
       timings: 'Mon - Sun: 10:30 AM - 9:30 PM',
       features: ['Handcrafted Titanium & Acetate Gallery', 'Certified Senior Optometrists', 'Polarized Glare Simulator', 'VIP Doorstep Trial Service'],
-      image: 'https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?auto=format&fit=crop&w=800&q=80'
+      image: '/assets/stores/sl3_store.jpg'
     },
     {
       id: 'store-sl4',
       name: 'SPECSLOOK SL4',
       city: 'Gurugram',
       address: 'Sector 103, Dwarka Expressway Corridor, Gurugram, Haryana - 122006',
-      phone: '+91 98110 54104',
+      phone: '+91 83688 53448',
       email: 'sl4.sec103@specslook.com',
       timings: 'Mon - Sun: 10:30 AM - 9:30 PM',
       features: ['Express Precision Optical Lab', 'Junior Eyewear & Flexible Frames', 'High-Index Ultra-Thin Lenses', 'Contact Lens Solutions Bar'],
-      image: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&w=800&q=80'
+      image: '/assets/stores/sl4_store.jpg'
     },
     {
       id: 'store-sl5',
       name: 'SPECSLOOK SL5',
       city: 'Gurugram',
       address: 'Sector 89, New Gurugram Commercial Hub, Gurugram, Haryana - 122505',
-      phone: '+91 98110 54105',
+      phone: '+91 83688 53448',
       email: 'sl5.sec89@specslook.com',
       timings: 'Mon - Sun: 10:30 AM - 9:30 PM',
       features: ['Haute Eyewear & Solar Atelier', 'Computer Vision Eye Strain Clinic', 'Bespoke Laser Monogramming', 'Valet Parking Available'],
-      image: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80'
+      image: '/assets/stores/sl5_store.jpg'
     }
   ];
 
@@ -617,15 +617,45 @@ Whether you're navigating highway asphalt on bright afternoons or relaxing near 
 
 class DatabaseService {
   private data: DatabaseSchema;
+  private lastMtime: number = 0;
 
   constructor() {
     this.data = this.loadData();
+  }
+
+  /**
+   * Automatically re-parses data/specslook_db.json if modified on disk
+   * (e.g. after a git pull, admin edit, or external tool synchronization).
+   */
+  public reloadIfModified(): boolean {
+    try {
+      const rootDbFile = path.join(process.cwd(), 'data', 'specslook_db.json');
+      if (fs.existsSync(rootDbFile)) {
+        const stats = fs.statSync(rootDbFile);
+        if (stats.mtimeMs > this.lastMtime) {
+          console.log(`[dbService] Detected modification in data/specslook_db.json (mtime: ${stats.mtimeMs} > ${this.lastMtime}). Reloading fresh catalog...`);
+          this.data = this.loadData();
+          return true;
+        }
+      }
+    } catch (err) {
+      console.warn('[dbService] reloadIfModified check note:', err);
+    }
+    return false;
+  }
+
+  public getAllData(): DatabaseSchema {
+    this.reloadIfModified();
+    return this.data;
   }
 
   private loadData(): DatabaseSchema {
     try {
       const rootDbFile = path.join(process.cwd(), 'data', 'specslook_db.json');
       if (fs.existsSync(rootDbFile)) {
+        const stats = fs.statSync(rootDbFile);
+        this.lastMtime = stats.mtimeMs;
+
         const raw = fs.readFileSync(rootDbFile, 'utf-8');
         const parsed = JSON.parse(raw);
         // Ensure admin credentials always match honeygogia & HoneyGogia1001
@@ -685,10 +715,29 @@ class DatabaseService {
     return getInitialSeedData();
   }
 
-  // Filesystem writes removed per Git-based headless store architecture.
-  // Updates persist to memory and synchronize directly via GitHub REST API.
-  private saveData(_dataToSave?: DatabaseSchema) {
-    // In-memory persistence. No local fs writing.
+  // Persists updates to both data/specslook_db.json and public/data/specslook_db.json
+  // so any client device worldwide can immediately access the latest catalog.
+  private saveData(dataToSave?: DatabaseSchema) {
+    const payload = dataToSave || this.data;
+    try {
+      const rootDbFile = path.join(process.cwd(), 'data', 'specslook_db.json');
+      const publicDbDir = path.join(process.cwd(), 'public', 'data');
+      const publicDbFile = path.join(publicDbDir, 'specslook_db.json');
+
+      const jsonStr = JSON.stringify(payload, null, 2);
+      fs.writeFileSync(rootDbFile, jsonStr, 'utf-8');
+
+      if (!fs.existsSync(publicDbDir)) {
+        fs.mkdirSync(publicDbDir, { recursive: true });
+      }
+      fs.writeFileSync(publicDbFile, jsonStr, 'utf-8');
+
+      const stats = fs.statSync(rootDbFile);
+      this.lastMtime = stats.mtimeMs;
+      console.log(`[dbService] Successfully saved ${payload.products?.length || 0} products to disk at ${rootDbFile} and ${publicDbFile}`);
+    } catch (err) {
+      console.warn('[dbService] Could not write specslook_db.json to disk (e.g. read-only serverless filesystem):', err);
+    }
   }
 
   /**
@@ -948,6 +997,7 @@ class DatabaseService {
     maxPrice?: number;
     sort?: string;
   }): Product[] {
+    this.reloadIfModified();
     let result = [...this.data.products];
 
     if (!filters) return result;
@@ -1046,6 +1096,7 @@ class DatabaseService {
 
   public getProductByIdOrSlug(idOrSlug: string): Product | undefined {
     if (!idOrSlug) return undefined;
+    this.reloadIfModified();
     const clean = decodeURIComponent(idOrSlug).trim().toLowerCase();
     return this.data.products.find(p =>
       (p.id && p.id.toLowerCase() === clean) ||

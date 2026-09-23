@@ -164,12 +164,12 @@ export const AboutView: React.FC = () => {
             <div className="p-5 bg-white border border-neutral-200 rounded-xs space-y-2 hover:border-neutral-900 transition-colors">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-black text-neutral-950">SPECSLOOK SL1</span>
-                <span className="text-[10px] bg-red-600 text-white font-bold px-2 py-0.5 rounded-xs uppercase">Flagship</span>
+                <span className="text-[10px] bg-amber-500 text-neutral-950 font-black px-2 py-0.5 rounded-xs uppercase tracking-wide">Mini</span>
               </div>
               <div className="text-xs font-bold text-red-600">DREAMZ MALL, GURUGRAM</div>
               <p className="text-xs text-neutral-500">Dreamz Mall, Sector 4 / 7, Gurugram, Haryana - 122001</p>
               <div className="text-[11px] text-neutral-700 pt-2 border-t border-neutral-100 font-semibold">
-                Tel: +91 98110 54101 &bull; Open 10:30 AM - 9:30 PM
+                Tel: +91 83688 53448 &bull; Open 10:30 AM - 9:30 PM
               </div>
             </div>
 
@@ -181,7 +181,7 @@ export const AboutView: React.FC = () => {
               <div className="text-xs font-bold text-red-600">SEC 5 CIRCLE, GURUGRAM</div>
               <p className="text-xs text-neutral-500">Sec 5 Circle, Railway Road, Gurugram, Haryana - 122006</p>
               <div className="text-[11px] text-neutral-700 pt-2 border-t border-neutral-100 font-semibold">
-                Tel: +91 98110 54102 &bull; Open 10:30 AM - 9:30 PM
+                Tel: +91 83688 53448 &bull; Open 10:30 AM - 9:30 PM
               </div>
             </div>
 
@@ -193,7 +193,7 @@ export const AboutView: React.FC = () => {
               <div className="text-xs font-bold text-red-600">SECTOR 85, GURUGRAM</div>
               <p className="text-xs text-neutral-500">Sector 85, Multi-Brand Boulevard, Gurugram, Haryana - 122004</p>
               <div className="text-[11px] text-neutral-700 pt-2 border-t border-neutral-100 font-semibold">
-                Tel: +91 98110 54103 &bull; Open 10:30 AM - 9:30 PM
+                Tel: +91 83688 53448 &bull; Open 10:30 AM - 9:30 PM
               </div>
             </div>
 
@@ -205,7 +205,7 @@ export const AboutView: React.FC = () => {
               <div className="text-xs font-bold text-red-600">SECTOR 103, GURUGRAM</div>
               <p className="text-xs text-neutral-500">Sector 103, Dwarka Expressway Corridor, Gurugram, Haryana - 122006</p>
               <div className="text-[11px] text-neutral-700 pt-2 border-t border-neutral-100 font-semibold">
-                Tel: +91 98110 54104 &bull; Open 10:30 AM - 9:30 PM
+                Tel: +91 83688 53448 &bull; Open 10:30 AM - 9:30 PM
               </div>
             </div>
 
@@ -217,7 +217,7 @@ export const AboutView: React.FC = () => {
               <div className="text-xs font-bold text-red-600">SECTOR 89, GURUGRAM</div>
               <p className="text-xs text-neutral-500">Sector 89, New Gurugram Commercial Hub, Gurugram, Haryana - 122505</p>
               <div className="text-[11px] text-neutral-700 pt-2 border-t border-neutral-100 font-semibold">
-                Tel: +91 98110 54105 &bull; Open 10:30 AM - 9:30 PM
+                Tel: +91 83688 53448 &bull; Open 10:30 AM - 9:30 PM
               </div>
             </div>
 
