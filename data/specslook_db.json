@@ -463,11 +463,11 @@
     {
       "id": "prod-eye-kid-02",
       "slug": "specslook-junior-study-blue-block-kids",
-      "name": "Specslook Junior Active Study Eyeglasses",
+      "name": "Specslook Junior Flex N.Blue Round EyeGlasses",
       "sku": "SL-EG-KID-STD02",
       "brand": "SPECSLOOK JUNIOR",
-      "price": 3490,
-      "salePrice": 1990,
+      "price": 2000,
+      "salePrice": 598,
       "description": "Lightweight ergonomic study eyeglasses fitted with anti-slip silicone ear-grips to prevent slipping while writing or reading. Pair with SL BluPro or SL Anti Glare for optimum digital screen learning comfort.",
       "shortDescription": "Anti-slip ear hooks with featherlight build designed for classroom concentration.",
       "category": "Eyeglasses",
@@ -477,8 +477,10 @@
       "newArrival": false,
       "stock": 35,
       "images": [
-        "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1000&q=80",
-        "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1000&q=80"
+        "https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_I_Dark_Blue_Color_I_Hip_Hop_Kids_Collection_I_Matte_Finished_I_Computer_Gaming_Glasses_I_For_Boys_and_Girls_I_Boys_and_Girls_I_Age_Group_6_12__1003DBL__P18V0M1317_2025-07-17_2.jpg",
+        "https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_I_Dark_Blue_Color_I_Hip_Hop_Kids_Collection_I_Matte_Finished_I_Computer_Gaming_Glasses_I_For_Boys_and_Girls_I_Boys_and_Girls_I_Age_Group_6_12__1003DBL__O9JH2S771I_2025-07-17_1.jpg",
+        "https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_I_Dark_Blue_Color_I_Hip_Hop_Kids_Collection_I_Matte_Finished_I_Computer_Gaming_Glasses_I_For_Boys_and_Girls_I_Boys_and_Girls_I_Age_Group_6_12__1003DBL__W8DYV3Y7EB_2025-07-17_3.jpg",
+        "https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_I_Dark_Blue_Color_I_Hip_Hop_Kids_Collection_I_Matte_Finished_I_Computer_Gaming_Glasses_I_For_Boys_and_Girls_I_Boys_and_Girls_I_Age_Group_6_12__1003DBL__81YCIXGWFF_2025-07-17_4.jpg"
       ],
       "specifications": {
         "frameMaterial": "Eco-Flex TR90",
@@ -486,11 +488,11 @@
         "lensWidthMm": 46,
         "bridgeMm": 16,
         "templeLengthMm": 130,
-        "uvProtection": "100% UV400",
+        "uvProtection": "100% UV400 Protection",
         "isPolarized": false,
         "frameShape": "Square",
         "gender": "Kids",
-        "weightGrams": 11
+        "weightGrams": 28
       },
       "variants": [
         {
