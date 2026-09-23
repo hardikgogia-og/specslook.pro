@@ -1,14 +1,14 @@
 {
   "products": [
     {
-      "id": "prod-eye-men-01",
-      "slug": "specslook-executive-titanium-browline",
-      "name": "SL Executive Titanium Cateye  Eyeglasses",
+      "id": "prod-eye-women-cateye-tit04",
+      "slug": "specslook-executive-titanium-cateye",
+      "name": "SL Executive Titanium Cateye Eyeglasses",
       "sku": "SL-EG-TIT-CATPNK-4",
       "brand": "SPECSLOOK",
-      "price": 6990,
-      "salePrice": 5490,
-      "description": "Masterfully crafted from aerospace-grade Japanese titanium and hand-beveled Italian acetate. The Executive Titanium Browline delivers refined authority and featherlight comfort for long workdays in front of spreadsheets and boardroom presentations.",
+      "price": 2400,
+      "salePrice": 799,
+      "description": "Masterfully crafted from aerospace-grade Japanese titanium and hand-beveled Italian acetate. The Executive Titanium Series by Specslook delivers refined authority and featherlight comfort for long workdays in front of spreadsheets and boardroom presentations.",
       "shortDescription": "Aerospace-grade titanium browline with hand-beveled acetate and ergonomic nose-pads.",
       "category": "Eyeglasses",
       "subcategory": "Men",
