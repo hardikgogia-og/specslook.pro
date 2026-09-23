@@ -1,10 +1,26 @@
 import React, { useState } from 'react';
-import { MapPin, Phone, Mail, Clock, Calendar, Check, ShieldCheck, Sparkles, Navigation } from 'lucide-react';
+import {
+  MapPin,
+  Phone,
+  Mail,
+  Clock,
+  Calendar,
+  Check,
+  ShieldCheck,
+  Sparkles,
+  Navigation,
+  Award,
+  TrendingUp,
+  Building2,
+  Store,
+  ArrowRight,
+  BadgeCheck
+} from 'lucide-react';
 import { useStore } from '../context/StoreContext.tsx';
 import { StoreLocatorForm } from '../components/StoreLocatorForm.tsx';
 
 export const StoresView: React.FC = () => {
-  const { stores, showToast } = useStore();
+  const { stores, showToast, navigateTo } = useStore();
   const [selectedStore, setSelectedStore] = useState(stores[0]?.name || 'SPECSLOOK SL1');
   const [bookingDate, setBookingDate] = useState('');
   const [bookingTime, setBookingTime] = useState('11:00 AM');
@@ -21,22 +37,92 @@ export const StoresView: React.FC = () => {
 
   return (
     <div className="bg-white min-h-screen pb-24">
+      {/* Top Survey Notification Strip */}
+      <div className="bg-neutral-950 text-neutral-300 py-2.5 px-4 border-b border-neutral-900 text-center text-xs">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-2 sm:gap-6 font-medium">
+          <span className="inline-flex items-center gap-1.5 text-emerald-400 font-bold">
+            <BadgeCheck className="w-4 h-4 text-emerald-400" />
+            OFFICIAL RETAIL AUDIT 2026:
+          </span>
+          <span>Survey conducted by the <strong>Sarvya Bharat Optical Association</strong></span>
+          <span className="hidden sm:inline text-neutral-600">&bull;</span>
+          <span className="text-white font-semibold">65+ Standalone Company Stores &bull; 250+ Partnered Clinical Stores</span>
+          <span className="hidden md:inline text-neutral-600">&bull;</span>
+          <span className="text-amber-300 font-bold">Generating 85% of Brand Revenue</span>
+        </div>
+      </div>
+
       {/* Header */}
       <div className="bg-neutral-950 text-white py-16 px-4 sm:px-6 lg:px-8 border-b border-neutral-900">
-        <div className="max-w-7xl mx-auto text-center max-w-2xl">
-          <div className="text-xs font-extrabold text-red-600 uppercase tracking-widest mb-1">
-            FLAGSHIP BOUTIQUES & LABS
+        <div className="max-w-7xl mx-auto text-center max-w-3xl space-y-4">
+          <div className="text-xs font-extrabold text-red-600 uppercase tracking-widest">
+            GLOBAL RETAIL FOOTPRINT & CLINICAL HUBS
           </div>
           <h1 className="text-3xl sm:text-5xl font-black uppercase tracking-tight">
-            Our Flagship Stores
+            Our Flagship Stores & Partner Clinics
           </h1>
-          <p className="text-xs sm:text-sm text-neutral-400 mt-2">
-            Experience our full eyewear archive in person, tailored bespoke fitting, and complimentary 14-point Zeiss eye examinations.
+          <p className="text-xs sm:text-sm text-neutral-300 max-w-2xl mx-auto leading-relaxed">
+            Specslook operates <strong>65+ standalone company-owned stores worldwide</strong> and <strong>250+ partnered clinical stores</strong> as of 2026 in a verified survey conducted by the <strong>Sarvya Bharat Optical Association</strong> — proudly generating <strong>85% of brand revenue</strong> through tactile customer experience and computerized Zeiss eye testing.
           </p>
+
+          {/* Quick Metrics Bar */}
+          <div className="pt-4 grid grid-cols-2 md:grid-cols-4 gap-3 max-w-4xl mx-auto text-left">
+            <div className="bg-neutral-900/90 border border-neutral-800 p-3.5 rounded-xs">
+              <div className="text-2xl font-black text-white">65+</div>
+              <div className="text-[11px] font-bold text-red-500 uppercase tracking-wider">Company-Owned Stores</div>
+              <div className="text-[10px] text-neutral-400">Standalone boutiques worldwide</div>
+            </div>
+
+            <div className="bg-neutral-900/90 border border-neutral-800 p-3.5 rounded-xs">
+              <div className="text-2xl font-black text-white">250+</div>
+              <div className="text-[11px] font-bold text-emerald-400 uppercase tracking-wider">Partnered Clinical Stores</div>
+              <div className="text-[10px] text-neutral-400">Sarvya Bharat Optical Survey 2026</div>
+            </div>
+
+            <div className="bg-neutral-900/90 border border-neutral-800 p-3.5 rounded-xs">
+              <div className="text-2xl font-black text-white">85%</div>
+              <div className="text-[11px] font-bold text-amber-400 uppercase tracking-wider">Retail Store Revenue</div>
+              <div className="text-[10px] text-neutral-400">Generated via brick-and-mortar</div>
+            </div>
+
+            <div className="bg-neutral-900/90 border border-neutral-800 p-3.5 rounded-xs">
+              <div className="text-2xl font-black text-white">55+</div>
+              <div className="text-[11px] font-bold text-blue-400 uppercase tracking-wider">Franchise Investors</div>
+              <div className="text-[10px] text-neutral-400">24-Month Buyback Guarantee</div>
+            </div>
+          </div>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 space-y-12">
+        {/* FRANCHISE PARTNERSHIP CALLOUT BANNER */}
+        <div className="bg-gradient-to-r from-neutral-950 via-neutral-900 to-neutral-950 text-white border border-neutral-800 p-6 sm:p-8 rounded-xs shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-red-600/10 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="space-y-2 relative z-10 max-w-2xl">
+            <div className="inline-flex items-center gap-1.5 text-red-400 text-[10px] font-black uppercase tracking-widest bg-red-950/60 border border-red-800/60 px-2.5 py-0.5 rounded-xs">
+              <Sparkles className="w-3 h-3" />
+              FRANCHISE EXPANSION PROGRAM
+            </div>
+            <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white">
+              Launch a Specslook Store in Your City
+            </h3>
+            <p className="text-xs text-neutral-300 leading-relaxed">
+              Explore our <strong>2 Franchise Models</strong>: <strong>Mini Store FOFO</strong> (₹7–10 Lakhs, ROI ~15 Months) or <strong>Specslook FLAGSHIP (FOCO Model)</strong> (₹20 Lakhs, ROI 8–11 Months). Both deliver high margins and high volume with a contractual <strong>24-Month Buyback Guarantee</strong>. Already trusted by 55+ investors nationwide.
+            </p>
+          </div>
+
+          <div className="relative z-10 shrink-0 flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+            <button
+              onClick={() => navigateTo('franchise')}
+              className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white text-xs font-black uppercase tracking-widest px-6 py-3.5 transition-colors shadow-lg shadow-red-900/40 inline-flex items-center justify-center gap-2"
+            >
+              <span>Explore Franchise Models</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
         {/* LOCATE A STORE IN YOUR CITY Form */}
         <StoreLocatorForm variant="dark" />
 

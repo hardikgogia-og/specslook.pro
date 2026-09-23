@@ -46,6 +46,7 @@ import {
 } from 'lucide-react';
 import { useStore } from '../context/StoreContext.tsx';
 import { compressImageFile } from '../utils/apiHelper.ts';
+import { testGitHubConnectionDirect, getStoredGitHubCredentials } from '../utils/githubGitService.ts';
 import { Product, Order, OrderStatus, Category, Coupon, OptometristAppointment, PrescriptionSubmission, ManualEyePower, StoreLocation } from '../types.ts';
 import { AdminCategoryManager } from '../components/admin/AdminCategoryManager.tsx';
 import { AdminStoreManager } from '../components/admin/AdminStoreManager.tsx';
@@ -64,7 +65,8 @@ export const AdminView: React.FC = () => {
     categories,
     stores,
     updateProduct,
-    addProduct
+    addProduct,
+    deleteProduct
   } = useStore();
 
   // Login Form States - Secure credentials (no prefilled values or hardcoded sample password display)
@@ -188,33 +190,36 @@ export const AdminView: React.FC = () => {
 
     setGitTestStatus({ loading: true });
     try {
-      const res = await fetch('/api/admin/github-test', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${adminToken}`,
-          'x-github-token': githubPat.trim(),
-          'x-github-repo': githubRepo.trim()
-        },
-        body: JSON.stringify({ gitToken: githubPat.trim(), gitRepo: githubRepo.trim() })
-      });
-      const data = await res.json();
-      if (res.ok && data.connected) {
+      // Direct GitHub REST API connection - completely client-side, zero backend / Vercel HTML routing issues
+      const directResult = await testGitHubConnectionDirect(githubPat.trim(), githubRepo.trim());
+      if (directResult.connected) {
         setGitTestStatus({
           loading: false,
           connected: true,
-          message: data.message,
-          sha: data.sha
+          message: directResult.message || `Connected to repository ${githubRepo.trim()}`,
+          sha: directResult.sha
         });
         showToast('GitHub repository connected successfully!', 'success');
-      } else {
+        refreshProducts();
+        return;
+      }
+
+      if (directResult.error) {
         setGitTestStatus({
           loading: false,
           connected: false,
-          error: data.error || 'Connection failed'
+          error: directResult.error
         });
-        showToast(data.error || 'GitHub connection failed', 'error');
+        showToast(directResult.error, 'error');
+        return;
       }
+
+      setGitTestStatus({
+        loading: false,
+        connected: false,
+        error: 'Unable to connect to GitHub repository'
+      });
+      showToast('GitHub connection test failed', 'error');
     } catch (err: any) {
       setGitTestStatus({
         loading: false,
@@ -555,10 +560,11 @@ export const AdminView: React.FC = () => {
       showToast('Please enter an SKU number', 'error');
       return;
     }
-    if (productFormData.images.length === 0) {
-      showToast('Please attach at least one product photo or image URL', 'error');
-      return;
-    }
+
+    // If user removed default images and hasn't added new ones yet, provide a sleek placeholder image
+    const finalImages = productFormData.images.length > 0
+      ? productFormData.images
+      : ['https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80'];
 
     setIsSavingProduct(true);
     const payload = {
@@ -570,7 +576,7 @@ export const AdminView: React.FC = () => {
       stock: Number(productFormData.stock) >= 0 ? Number(productFormData.stock) : 10,
       description: productFormData.description || 'Handcrafted luxury eyewear with precision optics.',
       shortDescription: productFormData.shortDescription || productFormData.name,
-      images: productFormData.images,
+      images: finalImages,
       specifications: {
         frameMaterial: productFormData.frameMaterial || 'Handcrafted Italian Mazzucchelli Acetate',
         lensMaterial: productFormData.lensMaterial || 'Diamond Crystal Mineral Glass',
@@ -627,7 +633,7 @@ export const AdminView: React.FC = () => {
       await refreshProducts();
     } catch (err: any) {
       console.error('Error saving product:', err);
-      showToast(err.message || 'Failed to save product to backend database.', 'error');
+      showToast(err.message || 'Failed to save product.', 'error');
     } finally {
       setIsSavingProduct(false);
     }
@@ -636,27 +642,11 @@ export const AdminView: React.FC = () => {
   const handleDeleteProduct = async (id: string, name: string) => {
     if (!window.confirm(`Are you sure you want to delete "${name}"?`)) return;
     try {
-      const gitHeaders: Record<string, string> = {};
-      const pat = (githubPat || localStorage.getItem('specslook_github_pat') || '').trim();
-      const repo = (githubRepo || localStorage.getItem('specslook_github_repo') || '').trim();
-      if (pat) gitHeaders['x-github-token'] = pat;
-      if (repo) gitHeaders['x-github-repo'] = repo;
-
-      const res = await fetch(`/api/products/${encodeURIComponent(id)}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${adminToken}`,
-          ...gitHeaders
-        }
-      });
-      if (res.ok) {
-        showToast(`Product "${name}" deleted from store and synced to GitHub repository!`, 'success');
-        loadAdminData();
-        refreshProducts();
-      } else {
-        const err = await res.json().catch(() => ({}));
-        showToast(err.error || 'Failed to delete product', 'error');
-      }
+      await deleteProduct(id);
+      setAdminProducts(prev => prev.filter(p => p.id !== id && p.slug !== id));
+      showToast(`Product "${name}" deleted successfully!`, 'success');
+      await loadAdminData();
+      await refreshProducts();
     } catch (err: any) {
       showToast(err.message || 'Failed to delete product', 'error');
     }
@@ -875,24 +865,16 @@ export const AdminView: React.FC = () => {
     currentImgs.unshift(target);
 
     try {
-      const res = await fetch(`/api/products/${photoUploadTargetProd.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${adminToken}`
-        },
-        body: JSON.stringify({ images: currentImgs })
-      });
-
-      if (res.ok) {
-        const updated = await res.json();
+      const updated = await updateProduct(photoUploadTargetProd.id, { images: currentImgs });
+      if (updated) {
         setPhotoUploadTargetProd(updated);
-        showToast('Primary cover photo updated in database', 'success');
-        loadAdminData();
-        refreshProducts();
+        setAdminProducts(prev => prev.map(p => p.id === updated.id ? updated : p));
       }
-    } catch (err) {
-      showToast('Failed to update primary photo', 'error');
+      showToast('Primary cover photo updated and synced!', 'success');
+      await loadAdminData();
+      await refreshProducts();
+    } catch (err: any) {
+      showToast(err.message || 'Failed to update primary photo', 'error');
     }
   };
 
@@ -906,24 +888,16 @@ export const AdminView: React.FC = () => {
     const currentImgs = photoUploadTargetProd.images.filter((_, i) => i !== index);
 
     try {
-      const res = await fetch(`/api/products/${photoUploadTargetProd.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${adminToken}`
-        },
-        body: JSON.stringify({ images: currentImgs })
-      });
-
-      if (res.ok) {
-        const updated = await res.json();
+      const updated = await updateProduct(photoUploadTargetProd.id, { images: currentImgs });
+      if (updated) {
         setPhotoUploadTargetProd(updated);
-        showToast('Photo removed from product database', 'success');
-        loadAdminData();
-        refreshProducts();
+        setAdminProducts(prev => prev.map(p => p.id === updated.id ? updated : p));
       }
-    } catch (err) {
-      showToast('Failed to remove photo', 'error');
+      showToast('Photo removed from product and synced!', 'success');
+      await loadAdminData();
+      await refreshProducts();
+    } catch (err: any) {
+      showToast(err.message || 'Failed to remove photo', 'error');
     }
   };
 

@@ -13,6 +13,7 @@ import { OrderConfirmationView } from './views/OrderConfirmationView.tsx';
 import { OrderTrackingView } from './views/OrderTrackingView.tsx';
 import { CustomerAccountView } from './views/CustomerAccountView.tsx';
 import { StoresView } from './views/StoresView.tsx';
+import { FranchiseView } from './views/FranchiseView.tsx';
 import { AboutView } from './views/AboutView.tsx';
 import { ContactView } from './views/ContactView.tsx';
 import { BlogView } from './views/BlogView.tsx';
@@ -64,6 +65,16 @@ const AppContent: React.FC = () => {
         breadcrumbs: [
           { name: 'Home', url: '/' },
           { name: 'Stores', url: '/store/' }
+        ]
+      });
+    } else if (currentView === 'franchise') {
+      updateSEO({
+        title: 'Specslook Franchise Opportunities | Mini Store FOFO & Flagship Models',
+        description: 'Partner with Specslook optical chain. Explore Mini Store FOFO (₹7-10L) and Flagship (₹20L) models with 24-month buyback guarantee and fast ROI.',
+        canonicalPath: '/franchise/',
+        breadcrumbs: [
+          { name: 'Home', url: '/' },
+          { name: 'Franchise', url: '/franchise/' }
         ]
       });
     } else if (currentView === 'home-eyetest') {
@@ -236,6 +247,8 @@ const AppContent: React.FC = () => {
         return <CustomerAccountView />;
       case 'stores':
         return <StoresView />;
+      case 'franchise':
+        return <FranchiseView />;
       case 'home-eyetest':
         return <HomeEyeTestView />;
       case 'about':

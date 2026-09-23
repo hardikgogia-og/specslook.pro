@@ -351,9 +351,26 @@ export const Navbar: React.FC = () => {
 
           <button
             onClick={() => handleNavClick('stores')}
-            className="text-neutral-800 hover:text-red-600 transition-colors py-2"
+            className={`transition-colors py-2 hover:text-red-600 ${
+              currentView === 'stores' ? 'text-red-600 font-bold' : 'text-neutral-800'
+            }`}
           >
             Our Stores
+          </button>
+
+          <button
+            onClick={() => handleNavClick('franchise')}
+            className={`transition-colors py-2 relative flex items-center gap-1 hover:text-red-600 ${
+              currentView === 'franchise' ? 'text-red-600 font-bold' : 'text-neutral-800'
+            }`}
+          >
+            <span>Franchise</span>
+            <span className="text-[9px] font-black uppercase px-1.5 py-0.5 bg-red-600 text-white rounded-xs tracking-wider">
+              High ROI
+            </span>
+            {currentView === 'franchise' && (
+              <span className="absolute bottom-0 inset-x-0 h-0.5 bg-red-600"></span>
+            )}
           </button>
 
           <button
@@ -606,6 +623,15 @@ export const Navbar: React.FC = () => {
             className="py-2.5 px-3 text-left font-bold text-sm text-neutral-900 hover:bg-neutral-100 rounded-sm"
           >
             Our Stores & Boutiques
+          </button>
+          <button
+            onClick={() => handleNavClick('franchise')}
+            className="py-2.5 px-3 text-left font-bold text-sm text-neutral-900 hover:bg-neutral-100 rounded-sm flex items-center justify-between"
+          >
+            <span>Franchise Opportunities</span>
+            <span className="text-[9px] font-black uppercase px-1.5 py-0.5 bg-red-600 text-white rounded-xs">
+              24M Buyback
+            </span>
           </button>
           <button
             onClick={() => handleNavClick('about')}

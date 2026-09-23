@@ -148,7 +148,13 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <button onClick={() => navigateTo('stores')} className="hover:text-white transition-colors">
-                  Book Store Eye Exam
+                  Our Flagship Stores
+                </button>
+              </li>
+              <li>
+                <button onClick={() => navigateTo('franchise')} className="hover:text-white transition-colors flex items-center gap-1.5 text-amber-400 font-semibold">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                  Franchise Partnerships (24M Buyback)
                 </button>
               </li>
               <li>

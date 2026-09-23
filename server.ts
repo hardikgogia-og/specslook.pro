@@ -111,8 +111,8 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
       if (!isFrontendSpaRoute) {
         const prefixes = [
-          '/products', '/categories', '/orders', '/stores', '/auth',
-          '/admin/stats', '/admin/customers', '/admin/appointments', '/blogs', '/banners', '/coupons', '/reviews', '/health', '/upload'
+          '/products', '/categories', '/orders', '/stores', '/auth', '/admin',
+          '/blogs', '/banners', '/coupons', '/reviews', '/health', '/upload'
         ];
         if (prefixes.some(p => req.url.startsWith(p))) {
           req.url = '/api' + req.url;

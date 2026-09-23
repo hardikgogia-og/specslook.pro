@@ -10,6 +10,7 @@ import {
 } from '../data/seedData.ts';
 import { getBlogImage } from '../data/blogImages.ts';
 import { initAnalytics, trackAddToCart, trackPageView } from '../utils/analytics.ts';
+import { syncCatalogToGitHubDirect, fetchCatalogFromGitHub, getStoredGitHubCredentials } from '../utils/githubGitService.ts';
 
 export type AppView =
   | 'home'
@@ -22,6 +23,7 @@ export type AppView =
   | 'account'
   | 'about'
   | 'stores'
+  | 'franchise'
   | 'contact'
   | 'blog'
   | 'blog-post'
@@ -254,9 +256,22 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discount: number; message: string } | null>(null);
   const [lastPlacedOrder, setLastPlacedOrder] = useState<Order | null>(null);
 
-  // Admin Auth - Persistent cross-device session without reliance on localStorage/sessionStorage
-  const [adminToken, setAdminToken] = useState<string | null>(null);
-  const [adminUser, setAdminUser] = useState<any | null>(null);
+  // Admin Auth - Resilient cross-device & page-refresh session
+  const [adminToken, setAdminToken] = useState<string | null>(() => {
+    try {
+      return sessionStorage.getItem('specslook_admin_token') || localStorage.getItem('specslook_admin_token') || null;
+    } catch {
+      return null;
+    }
+  });
+  const [adminUser, setAdminUser] = useState<any | null>(() => {
+    try {
+      const saved = sessionStorage.getItem('specslook_admin_user') || localStorage.getItem('specslook_admin_user');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
   const [adminAuthLoading, setAdminAuthLoading] = useState<boolean>(true);
 
   // Verifies admin session with the server using httpOnly session cookie or Bearer token
@@ -269,17 +284,33 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         const data = await res.json();
         if (data && data.user) {
           setAdminUser(data.user);
-          setAdminToken(data.token || 'sl_adm_session_active');
+          const t = data.token || 'sl_adm_session_active';
+          setAdminToken(t);
+          try {
+            sessionStorage.setItem('specslook_admin_token', t);
+            localStorage.setItem('specslook_admin_token', t);
+            sessionStorage.setItem('specslook_admin_user', JSON.stringify(data.user));
+            localStorage.setItem('specslook_admin_user', JSON.stringify(data.user));
+          } catch {}
           return true;
         }
       }
-      setAdminUser(null);
-      setAdminToken(null);
-      return false;
+      // If server returns 401 explicitly, clear session; if 404 (e.g. static Vercel), preserve stored session if valid
+      if (res.status === 401) {
+        setAdminUser(null);
+        setAdminToken(null);
+        try {
+          sessionStorage.removeItem('specslook_admin_token');
+          localStorage.removeItem('specslook_admin_token');
+          sessionStorage.removeItem('specslook_admin_user');
+          localStorage.removeItem('specslook_admin_user');
+        } catch {}
+        return false;
+      }
+      return !!adminToken;
     } catch {
-      setAdminUser(null);
-      setAdminToken(null);
-      return false;
+      // Offline / serverless cold-start: preserve local admin session
+      return !!adminToken;
     } finally {
       setAdminAuthLoading(false);
     }
@@ -314,7 +345,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   }, [wishlist]);
 
-  // Refresh products directly from server with dynamic cache-busting
+  // Refresh products directly from server with dynamic cache-busting and GitHub fallback
   const refreshProducts = async (): Promise<void> => {
     try {
       const timestamp = Date.now();
@@ -325,14 +356,33 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           Pragma: 'no-cache'
         }
       });
-      if (!res.ok) return;
-      const data = await res.json();
-      if (Array.isArray(data) && data.length > 0) {
-        setProducts(data);
-        try { localStorage.setItem('specslook_products', JSON.stringify(data)); } catch {}
+      if (res.ok) {
+        const contentType = res.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) {
+          const data = await res.json();
+          if (Array.isArray(data) && data.length > 0) {
+            setProducts(data);
+            try { localStorage.setItem('specslook_products', JSON.stringify(data)); } catch {}
+            return;
+          }
+        }
       }
     } catch (err) {
-      console.warn('StoreContext: refreshProducts error:', err);
+      console.warn('StoreContext: refreshProducts server fetch note:', err);
+    }
+
+    // Direct GitHub fallback: if credentials are saved, sync from repository data/specslook_db.json
+    try {
+      const creds = getStoredGitHubCredentials();
+      if (creds?.token && creds?.repo) {
+        const gitData = await fetchCatalogFromGitHub(creds.token, creds.repo);
+        if (gitData?.schema?.products && Array.isArray(gitData.schema.products) && gitData.schema.products.length > 0) {
+          setProducts(gitData.schema.products);
+          try { localStorage.setItem('specslook_products', JSON.stringify(gitData.schema.products)); } catch {}
+        }
+      }
+    } catch (gitErr) {
+      console.warn('StoreContext: refreshProducts GitHub fetch note:', gitErr);
     }
   };
 
@@ -897,14 +947,18 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     showToast('Coupon removed', 'info');
   };
 
-  // Admin Auth - Secure session without localStorage dependency
+  // Admin Auth - Secure persistent session across reloads
   const loginAdmin = (token: string, user: any) => {
     setAdminToken(token);
     setAdminUser(user);
     setAdminAuthLoading(false);
     try {
-      localStorage.removeItem('specslook_admin_token');
-      localStorage.removeItem('specslook_admin_user');
+      sessionStorage.setItem('specslook_admin_token', token);
+      localStorage.setItem('specslook_admin_token', token);
+      if (user) {
+        sessionStorage.setItem('specslook_admin_user', JSON.stringify(user));
+        localStorage.setItem('specslook_admin_user', JSON.stringify(user));
+      }
     } catch {}
     showToast(`Welcome back, ${user.name || 'Admin'}`);
   };
@@ -920,7 +974,9 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setAdminUser(null);
     setAdminAuthLoading(false);
     try {
+      sessionStorage.removeItem('specslook_admin_token');
       localStorage.removeItem('specslook_admin_token');
+      sessionStorage.removeItem('specslook_admin_user');
       localStorage.removeItem('specslook_admin_user');
     } catch {}
     showToast('Logged out of Admin Portal', 'info');
@@ -1074,89 +1130,178 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   };
 
-  // Product Mutations (Authoritative sync with server database & GitHub REST API)
+  // Product Mutations (Authoritative sync with server database & direct GitHub REST API)
   const addProduct = async (prodData: Omit<Product, 'id'>): Promise<Product> => {
-    const res = await fetch('/api/products', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        ...(adminToken ? { Authorization: `Bearer ${adminToken}` } : {}),
-        ...getGitSyncHeaders()
-      },
-      credentials: 'include',
-      body: JSON.stringify(prodData)
-    });
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.error || `Failed to create product (${res.status})`);
+    const newId = `prod-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
+    const created: Product = {
+      ...prodData,
+      id: newId,
+      slug: prodData.slug || prodData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+    } as Product;
+
+    // 1. Immediately update state and localStorage so changes persist across reload
+    const nextList = [created, ...products.filter(p => p.id !== created.id && p.slug !== created.slug)];
+    setProducts(nextList);
+    try { localStorage.setItem('specslook_products', JSON.stringify(nextList)); } catch {}
+    window.dispatchEvent(new CustomEvent('specslook-products-updated', { detail: nextList }));
+
+    // 2. Direct GitHub sync from client
+    try {
+      const creds = getStoredGitHubCredentials();
+      if (creds?.token && creds?.repo) {
+        await syncCatalogToGitHubDirect({
+          action: 'create',
+          productName: created.name || created.id,
+          allProducts: nextList,
+          categories,
+          stores,
+          token: creds.token,
+          repo: creds.repo
+        });
+      }
+    } catch (gitErr: any) {
+      console.error('GitHub direct commit error on addProduct:', gitErr);
+      throw gitErr;
     }
-    const created: Product = await res.json();
-    setProducts(prev => {
-      const next = [created, ...prev.filter(p => p.id !== created.id && p.slug !== created.slug)];
-      try { localStorage.setItem('specslook_products', JSON.stringify(next)); } catch {}
-      window.dispatchEvent(new CustomEvent('specslook-products-updated', { detail: next }));
-      return next;
-    });
-    refreshProducts().catch(() => {});
+
+    // 3. Fallback server sync for local / Cloud Run backend
+    try {
+      const res = await fetch('/api/products', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(adminToken ? { Authorization: `Bearer ${adminToken}` } : {}),
+          ...getGitSyncHeaders()
+        },
+        credentials: 'include',
+        body: JSON.stringify(prodData)
+      });
+      if (res.ok) {
+        const ct = res.headers.get('content-type') || '';
+        if (ct.includes('application/json')) {
+          const serverProd = await res.json().catch(() => null);
+          if (serverProd && serverProd.id) {
+            setProducts(prev => prev.map(p => p.id === newId ? serverProd : p));
+          }
+        }
+      }
+    } catch (serverErr) {
+      console.log('Backend sync note on addProduct (expected on static Vercel):', serverErr);
+    }
+
     return created;
   };
 
   const updateProduct = async (id: string, updates: Partial<Product>): Promise<Product | null> => {
-    const cleanId = encodeURIComponent(id);
-    const res = await fetch(`/api/products/${cleanId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        ...(adminToken ? { Authorization: `Bearer ${adminToken}` } : {}),
-        ...getGitSyncHeaders()
-      },
-      credentials: 'include',
-      body: JSON.stringify(updates)
+    // 1. Immediately update state and localStorage
+    let updatedProduct: Product | null = null;
+    const nextList = products.map(p => {
+      if (p.id === id || p.slug === id) {
+        updatedProduct = { ...p, ...updates };
+        return updatedProduct;
+      }
+      return p;
     });
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.error || `Failed to update product (${res.status})`);
+
+    if (!updatedProduct) {
+      updatedProduct = { id, ...updates } as Product;
+      nextList.unshift(updatedProduct);
     }
-    const updated: Product = await res.json();
-    setProducts(prev => {
-      let matched = false;
-      const next = prev.map(p => {
-        if (p.id === id || p.slug === id || p.id === updated.id || (updated.slug && p.slug === updated.slug)) {
-          matched = true;
-          return updated;
-        }
-        return p;
+
+    setProducts(nextList);
+    try { localStorage.setItem('specslook_products', JSON.stringify(nextList)); } catch {}
+    window.dispatchEvent(new CustomEvent('specslook-products-updated', { detail: nextList }));
+
+    // 2. Direct GitHub sync from client
+    try {
+      const creds = getStoredGitHubCredentials();
+      if (creds?.token && creds?.repo) {
+        await syncCatalogToGitHubDirect({
+          action: 'update',
+          productName: updatedProduct.name || updatedProduct.id,
+          allProducts: nextList,
+          categories,
+          stores,
+          token: creds.token,
+          repo: creds.repo
+        });
+      }
+    } catch (gitErr: any) {
+      console.error('GitHub direct commit error on updateProduct:', gitErr);
+      throw gitErr;
+    }
+
+    // 3. Fallback server sync for local / Cloud Run backend
+    try {
+      const cleanId = encodeURIComponent(id);
+      const res = await fetch(`/api/products/${cleanId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(adminToken ? { Authorization: `Bearer ${adminToken}` } : {}),
+          ...getGitSyncHeaders()
+        },
+        credentials: 'include',
+        body: JSON.stringify(updates)
       });
-      const finalList = matched ? next : [updated, ...next];
-      try { localStorage.setItem('specslook_products', JSON.stringify(finalList)); } catch {}
-      window.dispatchEvent(new CustomEvent('specslook-products-updated', { detail: finalList }));
-      return finalList;
-    });
-    refreshProducts().catch(() => {});
-    return updated;
+      if (res.ok) {
+        const ct = res.headers.get('content-type') || '';
+        if (ct.includes('application/json')) {
+          const serverProd = await res.json().catch(() => null);
+          if (serverProd && serverProd.id) {
+            updatedProduct = serverProd;
+          }
+        }
+      }
+    } catch (serverErr) {
+      console.log('Backend sync note on updateProduct (expected on static Vercel):', serverErr);
+    }
+
+    return updatedProduct;
   };
 
   const deleteProduct = async (id: string): Promise<boolean> => {
-    const cleanId = encodeURIComponent(id);
-    const res = await fetch(`/api/products/${cleanId}`, {
-      method: 'DELETE',
-      headers: {
-        ...(adminToken ? { Authorization: `Bearer ${adminToken}` } : {}),
-        ...getGitSyncHeaders()
-      },
-      credentials: 'include'
-    });
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.error || `Failed to delete product (${res.status})`);
+    // 1. Immediately update state and localStorage
+    const targetProduct = products.find(p => p.id === id || p.slug === id);
+    const nextList = products.filter(p => p.id !== id && p.slug !== id);
+    setProducts(nextList);
+    try { localStorage.setItem('specslook_products', JSON.stringify(nextList)); } catch {}
+    window.dispatchEvent(new CustomEvent('specslook-products-updated', { detail: nextList }));
+
+    // 2. Direct GitHub sync from client
+    try {
+      const creds = getStoredGitHubCredentials();
+      if (creds?.token && creds?.repo) {
+        await syncCatalogToGitHubDirect({
+          action: 'delete',
+          productName: targetProduct?.name || id,
+          allProducts: nextList,
+          categories,
+          stores,
+          token: creds.token,
+          repo: creds.repo
+        });
+      }
+    } catch (gitErr: any) {
+      console.error('GitHub direct commit error on deleteProduct:', gitErr);
+      throw gitErr;
     }
-    setProducts(prev => {
-      const next = prev.filter(p => p.id !== id && p.slug !== id);
-      try { localStorage.setItem('specslook_products', JSON.stringify(next)); } catch {}
-      window.dispatchEvent(new CustomEvent('specslook-products-updated', { detail: next }));
-      return next;
-    });
-    refreshProducts().catch(() => {});
+
+    // 3. Fallback server sync for local / Cloud Run backend
+    try {
+      const cleanId = encodeURIComponent(id);
+      await fetch(`/api/products/${cleanId}`, {
+        method: 'DELETE',
+        headers: {
+          ...(adminToken ? { Authorization: `Bearer ${adminToken}` } : {}),
+          ...getGitSyncHeaders()
+        },
+        credentials: 'include'
+      });
+    } catch (serverErr) {
+      console.log('Backend sync note on deleteProduct (expected on static Vercel):', serverErr);
+    }
+
     return true;
   };
 
