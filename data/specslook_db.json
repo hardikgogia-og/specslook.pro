@@ -3,8 +3,8 @@
     {
       "id": "prod-eye-men-01",
       "slug": "specslook-executive-titanium-browline",
-      "name": "Specslook Executive Titanium Browline Eyeglasses",
-      "sku": "SL-EG-BRW-MEN01",
+      "name": "SL Executive Titanium Cateye  Eyeglasses",
+      "sku": "SL-EG-TIT-CATPNK-4",
       "brand": "SPECSLOOK",
       "price": 6990,
       "salePrice": 5490,
@@ -84,7 +84,8 @@
       "newArrival": true,
       "stock": 35,
       "images": [
-        "https://m.media-amazon.com/images/I/51RXE0mfi+L.jpg"
+        "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80"
       ],
       "specifications": {
         "frameMaterial": "Swiss EMS TR90 Polymer",
@@ -92,11 +93,11 @@
         "lensWidthMm": 54,
         "bridgeMm": 17,
         "templeLengthMm": 142,
-        "uvProtection": "100% UV400 Protection",
+        "uvProtection": "100% UV400",
         "isPolarized": false,
         "frameShape": "Square",
         "gender": "Men",
-        "weightGrams": 28
+        "weightGrams": 16
       },
       "variants": [
         {
