@@ -197,12 +197,12 @@
     {
       "id": "prod-eye-wom-01",
       "slug": "specslook-rose-gold-cat-eye-optical",
-      "name": "Specslook Rose Gold Cat-Eye Optical Eyeglasses",
+      "name": "Specslook Bold Leopard Square Eyeglasses",
       "sku": "SL-EG-CAT-WOM01",
       "brand": "SPECSLOOK",
-      "price": 6490,
-      "salePrice": 3990,
-      "description": "An alluring feminine cat-eye frame featuring subtle geometric wing tips in 18K rose gold ion plating. Delivers an immediate face-lifting visual lift and effortless everyday glamour.",
+      "price": 2000,
+      "salePrice": 549,
+      "description": "An alluring feminine Leopard frame featuring subtle geometric wing tips icons in 18K rose gold ion plating. Delivers an immediate face-lifting visual lift and effortless everyday glamour with Bold Aesthetics along with all day comfort.",
       "shortDescription": "18K rose-gold plated cat-eye silhouette with subtle geometric temple tips.",
       "category": "Eyeglasses",
       "subcategory": "Women",
@@ -211,8 +211,10 @@
       "newArrival": true,
       "stock": 32,
       "images": [
-        "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80",
-        "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80"
+        "https://m.media-amazon.com/images/I/617pTPJmKDL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/5139-0CIckL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/71SlVjnlWiL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/71RAbZw0kUL._SX679_.jpg"
       ],
       "specifications": {
         "frameMaterial": "Monel Metal & 18K Rose Gold Plating",
@@ -220,11 +222,11 @@
         "lensWidthMm": 51,
         "bridgeMm": 17,
         "templeLengthMm": 140,
-        "uvProtection": "100% UV400",
+        "uvProtection": "100% UV400 Protection",
         "isPolarized": false,
-        "frameShape": "Cat-Eye",
+        "frameShape": "Square",
         "gender": "Women",
-        "weightGrams": 18
+        "weightGrams": 28
       },
       "variants": [
         {
