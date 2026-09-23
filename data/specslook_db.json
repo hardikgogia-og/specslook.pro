@@ -1413,19 +1413,21 @@
       "sku": "SL-MAG-6IN1-BLK",
       "brand": "SPECSLOOK",
       "price": 4999,
-      "salePrice": 2499,
-      "description": "The ultimate all-in-one convertible eyewear system. Crafted around an ultra-lightweight Swiss TR90 optical base frame engineered for clear everyday prescription or computer lenses, this system includes 5 magnetic snap-on front clips: Polarized Dark Grey Sunglasses, Amber Night Driving (anti-glare & blue-blocking), Ice Blue Mirrored, Golden Yellow High-Contrast & Warm Havana Brown. Neodymium magnetic locks snap securely into place with zero wobble.",
+      "salePrice": 1499,
+      "description": "The ultimate all-in-one convertible eyewear system. Crafted around an ultra-lightweight Swiss TR90 optical base frame engineered for clear everyday prescription or computer lenses, this system includes 5  magnetic snap-on front clips: Polarized Dark Grey Sunglasses, Amber Night Driving (anti-glare & blue-blocking), Ice Blue Mirrored, Golden Yellow High-Contrast & Warm Havana Brown. Neodymium magnetic locks snap securely into place with zero wobble.",
       "shortDescription": "Optical base frame + 5 magnetic snap-on sunglasses & night driving clip lenses with premium carry pouch.",
       "category": "Attachments",
       "subcategory": "Clip-On Eyeglasses",
       "featured": true,
       "bestSeller": true,
       "newArrival": true,
-      "stock": 50,
+      "stock": 79,
       "images": [
-        "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80",
-        "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80",
-        "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80"
+        "https://thecraze.in/cdn/shop/files/HDCRAFTER-6-in-1-Clip-On-Glasses-Men-Women-TR90-Prescription-Eye-Glasses-Frame-Optical-Magnetic_fb11f78c-b595-4a50-ba09-16b8b9daa356.webp?v=1787084406",
+        "https://thecraze.in/cdn/shop/files/HDCRAFTER-6-in-1-Clip-On-Glasses-Men-Women-TR90-Prescription-Eye-Glasses-Frame-Optical-Magnetic_79c2645f-6425-4eb3-8875-b2101ea80d08.webp?v=1787084405",
+        "https://thecraze.in/cdn/shop/files/HDCRAFTER-6-in-1-Clip-On-Glasses-Men-Women-TR90-Prescription-Eye-Glasses-Frame-Optical-Magnetic_b06c68cf-67af-40b7-9a7d-311fd76b0925.webp?v=1787084405",
+        "https://thecraze.in/cdn/shop/files/HDCRAFTER-6-in-1-Clip-On-Glasses-Men-Women-TR90-Prescription-Eye-Glasses-Frame-Optical-Magnetic_1ece32c5-6ee7-4692-8289-0cb427ac3cb2.webp?v=1787084406",
+        "https://thecraze.in/cdn/shop/files/HDCRAFTER-6-in-1-Clip-On-Glasses-Men-Women-TR90-Prescription-Eye-Glasses-Frame-Optical-Magnetic_9cda764a-30b1-486b-97f6-5c5c585e11f9.webp?v=1787084405"
       ],
       "specifications": {
         "frameMaterial": "TR90 Swiss Memory Polymer",
@@ -1433,11 +1435,11 @@
         "lensWidthMm": 53,
         "bridgeMm": 18,
         "templeLengthMm": 142,
-        "uvProtection": "100% UV400 on all clip-ons",
+        "uvProtection": "100% UV400 Protection",
         "isPolarized": true,
         "frameShape": "Rectangular",
         "gender": "Unisex",
-        "weightGrams": 21
+        "weightGrams": 28
       },
       "variants": [
         {
@@ -1564,7 +1566,7 @@
       "name": "Eyeglasses for Men",
       "description": "Executive titanium, matte black rectangulars, and bold acetate browlines built for professional sharpness.",
       "image": "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=800&q=80",
-      "itemCount": 2,
+      "itemCount": 3,
       "featured": true
     },
     {
@@ -1573,7 +1575,7 @@
       "name": "Eyeglasses for Women",
       "description": "Sculpted cat-eyes, elegant champagne crystal rounds, and featherlight rose-gold geometric frames.",
       "image": "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=800&q=80",
-      "itemCount": 4,
+      "itemCount": 5,
       "featured": true
     },
     {
