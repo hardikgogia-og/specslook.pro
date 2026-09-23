@@ -1484,11 +1484,11 @@
     {
       "id": "prod-010",
       "slug": "specslook-2in1-magnetic-polarized-clip-on-eyeglasses",
-      "name": "Specslook 2-in-1 Magnetic Polarized Clip-On Eyeglasses",
+      "name": "Specslook 6-in-1 Magnetic Polarized Clip-On Eyeglasses Wayfarer",
       "sku": "SL-MAG-2IN1-BLK",
       "brand": "SPECSLOOK",
-      "price": 3499,
-      "salePrice": 1799,
+      "price": 4999,
+      "salePrice": 1499,
       "description": "Featherweight, minimalist optical eyeglasses with an integrated magnetic polarized sunglasses clip. Built with aerospace-grade Ultem polymer for incredible flexibility, extreme lightness, and seamless magnetic latching. Instant conversion from crisp optical eyeglasses to dark polarized sunglasses.",
       "shortDescription": "Ultra-flexible optical eyeglasses with seamless magnetic polarized sunglass clip-on.",
       "category": "Attachments",
@@ -1498,8 +1498,11 @@
       "newArrival": true,
       "stock": 40,
       "images": [
-        "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80",
-        "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80"
+        "https://m.media-amazon.com/images/I/71AxPMp4ZeL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/719Vu2KrxBL._SY741_.jpg",
+        "https://m.media-amazon.com/images/I/71UgaTPdiCL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/71s6FvWLUwL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/61sBocBS80L._SX679_.jpg"
       ],
       "specifications": {
         "frameMaterial": "Aerospace Ultem Resin",
@@ -1507,11 +1510,11 @@
         "lensWidthMm": 51,
         "bridgeMm": 19,
         "templeLengthMm": 140,
-        "uvProtection": "100% UV400",
+        "uvProtection": "100% UV400 Protection",
         "isPolarized": true,
-        "frameShape": "Round",
+        "frameShape": "Wayfarer",
         "gender": "Unisex",
-        "weightGrams": 18
+        "weightGrams": 28
       },
       "variants": [
         {
