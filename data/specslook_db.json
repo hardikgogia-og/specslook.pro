@@ -238,8 +238,10 @@
           "sku": "SL-EG-CAT-WOM01-RGD",
           "stock": 18,
           "images": [
-            "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80",
-            "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80"
+            "https://m.media-amazon.com/images/I/617pTPJmKDL._SX679_.jpg",
+            "https://m.media-amazon.com/images/I/5139-0CIckL._SX679_.jpg",
+            "https://m.media-amazon.com/images/I/71SlVjnlWiL._SX679_.jpg",
+            "https://m.media-amazon.com/images/I/71RAbZw0kUL._SX679_.jpg"
           ]
         },
         {
@@ -251,7 +253,10 @@
           "sku": "SL-EG-CAT-WOM01-RGB",
           "stock": 14,
           "images": [
-            "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80"
+            "https://m.media-amazon.com/images/I/617pTPJmKDL._SX679_.jpg",
+            "https://m.media-amazon.com/images/I/5139-0CIckL._SX679_.jpg",
+            "https://m.media-amazon.com/images/I/71SlVjnlWiL._SX679_.jpg",
+            "https://m.media-amazon.com/images/I/71RAbZw0kUL._SX679_.jpg"
           ]
         }
       ],
