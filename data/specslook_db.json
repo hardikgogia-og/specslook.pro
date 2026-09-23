@@ -70,11 +70,11 @@
     {
       "id": "prod-eye-men-02",
       "slug": "specslook-matte-black-wayfarer-optical",
-      "name": "Specslook BOLD  Black Square Optical Eyeglasses",
+      "name": "Specslook Matte Black Square Optical Eyeglasses",
       "sku": "SL-EG-SQR-MEN02",
       "brand": "SPECSLOOK",
       "price": 5490,
-      "salePrice": 549,
+      "salePrice": 3290,
       "description": "An understated modern square silhouette engineered in ultra-flexible Swiss TR90 memory polymer with velvet touch matte finish. Perfectly balances comfort, durability, and bold facial framing.",
       "shortDescription": "Velvet-touch matte black square frames with German 5-barrel spring hinges.",
       "category": "Eyeglasses",
@@ -84,9 +84,6 @@
       "newArrival": true,
       "stock": 35,
       "images": [
-        "https://m.media-amazon.com/images/I/310LtlpSkbL.jpg",
-        "https://m.media-amazon.com/images/I/31EW4pKNu6L.jpg",
-        "https://m.media-amazon.com/images/I/41cflsmRolL.jpg",
         "https://m.media-amazon.com/images/I/51RXE0mfi+L.jpg"
       ],
       "specifications": {
