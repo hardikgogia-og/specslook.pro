@@ -641,8 +641,10 @@
           "sku": "SL-SG-JUS-MEN02-RBLK",
           "stock": 30,
           "images": [
-            "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80",
-            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
+            "https://m.media-amazon.com/images/I/41yqM8NP0qL._SX679_.jpg",
+            "https://m.media-amazon.com/images/I/41TB36voUIL._SX679_.jpg",
+            "https://m.media-amazon.com/images/I/71PX38uuB0L._SX679_.jpg",
+            "https://m.media-amazon.com/images/I/71M0axxOGEL._SX679_.jpg"
           ]
         }
       ],
