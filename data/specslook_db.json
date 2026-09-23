@@ -393,12 +393,12 @@
     {
       "id": "prod-eye-kid-01",
       "slug": "specslook-junior-flex-tr90-kids-glasses",
-      "name": "Specslook Junior Flex-TR90 Unbreakable Kids Eyeglasses",
+      "name": "Specslook Junior Flex-TR90 Kids Eyeglasses",
       "sku": "SL-EG-KID-FLX01",
       "brand": "SPECSLOOK JUNIOR",
-      "price": 3990,
-      "salePrice": 2490,
-      "description": "Specially engineered for kids aged 5 to 14. Molded from 180-degree flexible Swiss TR90 medical-grade polymer with zero metal screws to eliminate injury risk during sports or playground activity.",
+      "price": 2000,
+      "salePrice": 599,
+      "description": "Specially engineered for kids aged 5 to 14. Molded from 180-degree flexible Swiss TR90 medical-grade polymer with Stainless screws to eliminate injury risk during sports or playground activity.",
       "shortDescription": "180-degree bendable medical polymer with drop-safe magnetic hinge protection.",
       "category": "Eyeglasses",
       "subcategory": "Kids",
@@ -407,8 +407,10 @@
       "newArrival": true,
       "stock": 40,
       "images": [
-        "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1000&q=80",
-        "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1000&q=80"
+        "https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_I_Hip_Hop_Kids_Collection_I_Matte_Finished_I_Computer_Gaming_Glasses_I_For_Girls_I_Age_Group_6_12__1008RD__C0NAHV16QA_2025-07-17_2.jpg",
+        "https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_I_Hip_Hop_Kids_Collection_I_Matte_Finished_I_Computer_Gaming_Glasses_I_For_Girls_I_Age_Group_6_12__1008RD__AEQ3VJNQB5_2025-07-17_1.jpg",
+        "https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_I_Hip_Hop_Kids_Collection_I_Matte_Finished_I_Computer_Gaming_Glasses_I_For_Girls_I_Age_Group_6_12__1008RD__8OTA7KJ5F1_2025-07-17_3.jpg",
+        "https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_I_Hip_Hop_Kids_Collection_I_Matte_Finished_I_Computer_Gaming_Glasses_I_For_Girls_I_Age_Group_6_12__1008RD__F7ZJVYKHOG_2025-07-17_4.jpg"
       ],
       "specifications": {
         "frameMaterial": "Medical Swiss TR90 (Hypoallergenic & BPA Free)",
@@ -416,11 +418,11 @@
         "lensWidthMm": 45,
         "bridgeMm": 15,
         "templeLengthMm": 128,
-        "uvProtection": "100% UV400 Child Protection",
+        "uvProtection": "100% UV400 Protection",
         "isPolarized": false,
         "frameShape": "Round",
         "gender": "Kids",
-        "weightGrams": 12
+        "weightGrams": 28
       },
       "variants": [
         {
