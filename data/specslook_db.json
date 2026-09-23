@@ -434,8 +434,10 @@
           "sku": "SL-EG-KID-FLX01-BLU",
           "stock": 22,
           "images": [
-            "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1000&q=80",
-            "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1000&q=80"
+            "https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_I_Hip_Hop_Kids_Collection_I_Matte_Finished_I_Computer_Gaming_Glasses_I_For_Girls_I_Age_Group_6_12__1008RD__C0NAHV16QA_2025-07-17_2.jpg",
+            "https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_I_Hip_Hop_Kids_Collection_I_Matte_Finished_I_Computer_Gaming_Glasses_I_For_Girls_I_Age_Group_6_12__1008RD__AEQ3VJNQB5_2025-07-17_1.jpg",
+            "https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_I_Hip_Hop_Kids_Collection_I_Matte_Finished_I_Computer_Gaming_Glasses_I_For_Girls_I_Age_Group_6_12__1008RD__8OTA7KJ5F1_2025-07-17_3.jpg",
+            "https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_I_Hip_Hop_Kids_Collection_I_Matte_Finished_I_Computer_Gaming_Glasses_I_For_Girls_I_Age_Group_6_12__1008RD__F7ZJVYKHOG_2025-07-17_4.jpg"
           ]
         },
         {
@@ -447,7 +449,10 @@
           "sku": "SL-EG-KID-FLX01-PNK",
           "stock": 18,
           "images": [
-            "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1000&q=80"
+            "https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_I_Hip_Hop_Kids_Collection_I_Matte_Finished_I_Computer_Gaming_Glasses_I_For_Girls_I_Age_Group_6_12__1008RD__C0NAHV16QA_2025-07-17_2.jpg",
+            "https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_I_Hip_Hop_Kids_Collection_I_Matte_Finished_I_Computer_Gaming_Glasses_I_For_Girls_I_Age_Group_6_12__1008RD__AEQ3VJNQB5_2025-07-17_1.jpg",
+            "https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_I_Hip_Hop_Kids_Collection_I_Matte_Finished_I_Computer_Gaming_Glasses_I_For_Girls_I_Age_Group_6_12__1008RD__8OTA7KJ5F1_2025-07-17_3.jpg",
+            "https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_I_Hip_Hop_Kids_Collection_I_Matte_Finished_I_Computer_Gaming_Glasses_I_For_Girls_I_Age_Group_6_12__1008RD__F7ZJVYKHOG_2025-07-17_4.jpg"
           ]
         }
       ],
