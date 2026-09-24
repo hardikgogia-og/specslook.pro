@@ -10,21 +10,12 @@ interface ProductCardProps {
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const { navigateTo, addToCart, toggleWishlist, isInWishlist } = useStore();
-  const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
-  const variants = Array.isArray(product.variants) ? product.variants : [];
-  const activeVariant = variants[selectedVariantIndex] || variants[0];
-  const images = Array.isArray(product.images) && product.images.length > 0 ? product.images : (activeVariant?.images || []);
+  const images = Array.isArray(product.images) && product.images.length > 0 ? product.images : [];
   const fallbackImg = 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=800&q=80';
-  // Prioritize the admin-configured primary product image for the initial presentation,
-  // switching to variant-specific imagery when a secondary color swatch is actively clicked
-  const displayImage = (selectedVariantIndex > 0 && activeVariant?.images?.[0])
-    ? activeVariant.images[0]
-    : (images[0] || activeVariant?.images?.[0] || fallbackImg);
-  const secondaryImage = (selectedVariantIndex > 0 && activeVariant?.images?.[1])
-    ? activeVariant.images[1]
-    : (images[1] || displayImage);
+  const displayImage = images[0] || fallbackImg;
+  const secondaryImage = images[1] || displayImage;
   const inWishlist = isInWishlist(product.id);
 
   const price = Number(product.price) || 4990;
@@ -125,34 +116,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
           {/* SKU & Short Specs */}
           <p className="text-xs text-neutral-500 line-clamp-1 mt-0.5">
-            {activeVariant?.colorName || product.shortDescription}
+            {product.shortDescription || product.specifications?.frameMaterial || ''}
           </p>
         </div>
-
-        {/* Color Swatches */}
-        {variants.length > 1 && (
-          <div className="flex items-center gap-1.5 pt-1">
-            {variants.map((v, idx) => (
-              <button
-                key={v.id || idx}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setSelectedVariantIndex(idx);
-                }}
-                title={v.colorName}
-                className={`w-4 h-4 rounded-full border transition-all ${
-                  selectedVariantIndex === idx
-                    ? 'ring-2 ring-neutral-900 ring-offset-1 scale-110'
-                    : 'border-neutral-300 opacity-80 hover:opacity-100'
-                }`}
-                style={{ backgroundColor: v.colorHex }}
-              />
-            ))}
-            <span className="text-[10px] text-neutral-400 ml-1">
-              +{variants.length} colors
-            </span>
-          </div>
-        )}
 
         {/* Pricing & Add to Cart */}
         <div className="pt-2 border-t border-neutral-100 flex items-center justify-between mt-auto">
@@ -174,7 +140,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             id={`add-to-cart-${product.id}`}
             onClick={(e) => {
               e.stopPropagation();
-              addToCart(product, activeVariant);
+              addToCart(product);
             }}
             aria-label="Add to Bag"
             className="bg-neutral-900 hover:bg-red-600 text-white w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center transition-colors shadow-xs group/btn active:scale-95"

@@ -609,18 +609,7 @@ export const AdminView: React.FC = () => {
           newArrival: true,
           bestSeller: false,
           createdAt: new Date().toISOString(),
-          variants: [
-            {
-              id: 'var-1',
-              colorName: 'Classic Finish',
-              colorHex: '#1a1a1a',
-              frameColor: 'Jet Black',
-              lensColor: 'Standard UV400',
-              images: payload.images,
-              stock: payload.stock,
-              sku: `${payload.sku}-01`
-            }
-          ]
+          variants: []
         };
         const created = await addProduct(newProductPayload);
         setAdminProducts(prev => [created, ...prev.filter(p => p.id !== created.id)]);

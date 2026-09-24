@@ -483,10 +483,7 @@ export const CheckoutView: React.FC = () => {
               <div className="max-h-64 overflow-y-auto divide-y divide-neutral-100 pr-1 space-y-3">
                 {cart.map((item, idx) => {
                   const unitPrice = item.product.salePrice + (item.lensAddon?.price || 0);
-                  const isSecondaryVariant = !!(item.variant && item.product.variants && item.product.variants.findIndex(v => v.id === item.variant?.id) > 0);
-                  const itemImage = (isSecondaryVariant && item.variant?.images?.[0])
-                    ? item.variant.images[0]
-                    : (item.product.images?.[0] || item.variant?.images?.[0]);
+                  const itemImage = item.product.images?.[0] || 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=800&q=80';
                   return (
                     <div key={idx} className="pt-3 first:pt-0 flex items-center gap-3">
                       <div className="w-14 h-14 bg-neutral-100 p-1 rounded-xs border border-neutral-200/80 shrink-0">
@@ -499,7 +496,7 @@ export const CheckoutView: React.FC = () => {
                       <div className="flex-1 text-xs">
                         <h4 className="font-bold text-neutral-900 line-clamp-1">{item.product.name}</h4>
                         <div className="text-[11px] text-neutral-500">
-                          Qty: {item.quantity} {item.variant && `• ${item.variant.colorName}`}
+                          Qty: {item.quantity}
                         </div>
                         {item.lensAddon && (
                           <div className="text-[10px] text-neutral-600 font-medium mt-0.5">

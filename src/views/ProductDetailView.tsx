@@ -17,7 +17,7 @@ import {
   FileText,
   Calendar
 } from 'lucide-react';
-import { Product, ProductVariant, Review, LensAddon, EYEGLASS_LENS_ADDONS, SUNGLASS_LENS_ADDONS, ATTACHMENT_LENS_ADDONS, SINGLE_VISION_LENS_ADDONS } from '../types.ts';
+import { Product, Review, LensAddon, EYEGLASS_LENS_ADDONS, SUNGLASS_LENS_ADDONS, ATTACHMENT_LENS_ADDONS, SINGLE_VISION_LENS_ADDONS } from '../types.ts';
 import { useStore } from '../context/StoreContext.tsx';
 import { ProductCard } from '../components/ProductCard.tsx';
 import { LensSelectionDrawer } from '../components/LensSelectionDrawer.tsx';
@@ -33,7 +33,6 @@ export const ProductDetailView: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   // Active selections
-  const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [selectedLensAddon, setSelectedLensAddon] = useState<LensAddon>(EYEGLASS_LENS_ADDONS[0]);
   const [quantity, setQuantity] = useState(1);
@@ -117,7 +116,6 @@ export const ProductDetailView: React.FC = () => {
 
     if (found) {
       setProduct(found);
-      setSelectedVariantIndex(0);
       setActiveImageIndex(0);
       setSelectedLensAddon(getInitialAddon(found.category));
       setRelated(products.filter(p => p.id !== found!.id && (p.category === found!.category || p.brand === found!.brand)).slice(0, 4));
@@ -223,25 +221,22 @@ export const ProductDetailView: React.FC = () => {
         ? SUNGLASS_LENS_ADDONS
         : [];
 
-  const activeVariant: ProductVariant = product.variants[selectedVariantIndex] || product.variants[0];
-  // If customer explicitly clicks a secondary color variant (index > 0), lead with that variant's images;
-  // otherwise, respect the admin-curated product.images gallery order as the primary presentation
-  const allImages = (selectedVariantIndex > 0 && activeVariant?.images && activeVariant.images.length > 0)
-    ? activeVariant.images
-    : (product.images && product.images.length > 0 ? product.images : (activeVariant?.images || []));
+  const allImages = (product.images && product.images.length > 0)
+    ? product.images
+    : ['https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=800&q=80'];
 
-  const currentImage = allImages[activeImageIndex] || product.images[0] || activeVariant?.images?.[0];
+  const currentImage = allImages[activeImageIndex] || allImages[0];
   const inWishlist = isInWishlist(product.id);
   const discountPercent = Math.round(((product.price - product.salePrice) / product.price) * 100);
 
   const effectiveUnitPrice = product.salePrice + selectedLensAddon.price;
 
   const handleAddToCart = () => {
-    addToCart(product, activeVariant, quantity, selectedLensAddon.name, selectedLensAddon);
+    addToCart(product, undefined, quantity, selectedLensAddon.name, selectedLensAddon);
   };
 
   const handleBuyNow = () => {
-    addToCart(product, activeVariant, quantity, selectedLensAddon.name, selectedLensAddon);
+    addToCart(product, undefined, quantity, selectedLensAddon.name, selectedLensAddon);
     setIsCartOpen(false);
     navigateTo('checkout');
   };
@@ -397,7 +392,7 @@ export const ProductDetailView: React.FC = () => {
             <div>
               <div className="flex items-center justify-between text-xs text-neutral-500 uppercase tracking-widest font-semibold mb-1">
                 <span>{product.brand} • {product.category}</span>
-                <span className="text-neutral-400">SKU: {activeVariant?.sku || product.sku}</span>
+                <span className="text-neutral-400">SKU: {product.sku}</span>
               </div>
 
               <h1 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-neutral-900">
@@ -445,42 +440,6 @@ export const ProductDetailView: React.FC = () => {
                 </span>
               </div>
             </div>
-
-            {/* Color Variant Selector */}
-            {product.variants.length > 0 && (
-              <div className="space-y-2.5">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-neutral-900 uppercase">
-                    Color: <span className="font-medium text-neutral-600">{activeVariant.colorName}</span>
-                  </span>
-                  <span className="text-[11px] text-neutral-500">
-                    Lens: {activeVariant.lensColor}
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  {product.variants.map((v, idx) => (
-                    <button
-                      key={v.id}
-                      onClick={() => {
-                        setSelectedVariantIndex(idx);
-                        setActiveImageIndex(0);
-                      }}
-                      className={`relative p-1 rounded-full border-2 transition-all ${
-                        selectedVariantIndex === idx
-                          ? 'border-neutral-950 scale-110'
-                          : 'border-transparent hover:border-neutral-400'
-                      }`}
-                    >
-                      <span
-                        className="block w-6 h-6 rounded-full border border-neutral-300 shadow-inner"
-                        style={{ backgroundColor: v.colorHex }}
-                      />
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
 
             {/* Lens Options Card */}
             {availableLensAddons.length > 0 && (
@@ -936,7 +895,7 @@ export const ProductDetailView: React.FC = () => {
           onSelectLensAddon={(addon) => setSelectedLensAddon(addon)}
           onConfirmAndAddToCart={(addon, target = 'cart') => {
             setSelectedLensAddon(addon);
-            addToCart(product, activeVariant, quantity, addon.name, addon);
+            addToCart(product, undefined, quantity, addon.name, addon);
             if (target === 'checkout') {
               setIsCartOpen(false);
               navigateTo('checkout');

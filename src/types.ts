@@ -285,7 +285,7 @@ export interface Product {
   stock: number;
   images: string[];
   specifications: ProductSpecification;
-  variants: ProductVariant[];
+  variants?: ProductVariant[];
   rating: number;
   reviewsCount: number;
   createdAt: string;

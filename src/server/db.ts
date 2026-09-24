@@ -76,7 +76,7 @@ export function verifyPassword(password: string, salt: string, expectedHash: str
 function getInitialSeedData(): DatabaseSchema {
   const adminCredentials = hashPassword('HoneyGogia1001');
 
-  const products: Product[] = [...initialProducts];
+  const products: Product[] = initialProducts.map(p => ({ ...p, variants: [] }));
   const categories: Category[] = [...initialCategories];
 
   const coupons: Coupon[] = [
@@ -670,12 +670,10 @@ class DatabaseService {
           email: 'honeygogia@specslook.com'
         };
 
-        // Ensure products have variants[0].images in exact sync with product.images
+        // Ensure products have empty variants
         if (Array.isArray(parsed.products)) {
           parsed.products.forEach((p: Product) => {
-            if (Array.isArray(p.images) && Array.isArray(p.variants) && p.variants.length > 0) {
-              p.variants[0] = { ...p.variants[0], images: [...p.images] };
-            }
+            p.variants = [];
           });
         }
 
@@ -1110,24 +1108,11 @@ class DatabaseService {
     gitOptions?: GitSyncOptions
   ): Promise<Product> {
     const id = `prod-${Date.now().toString(36)}`;
-    const variants = productData.variants && productData.variants.length > 0
-      ? productData.variants.map((v, i) => i === 0 ? { ...v, images: (v.images && v.images.length > 0 ? v.images : productData.images) } : v)
-      : [{
-          id: `var-${id}-1`,
-          colorName: 'Standard',
-          colorHex: '#111111',
-          frameColor: 'Standard',
-          lensColor: 'Standard',
-          images: productData.images,
-          sku: productData.sku,
-          stock: productData.stock
-        }];
-
     const newProduct: Product = {
       ...productData,
       id,
       slug: productData.slug || productData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-      variants,
+      variants: [],
       createdAt: new Date().toISOString()
     };
     this.data.products.unshift(newProduct);
@@ -1153,47 +1138,6 @@ class DatabaseService {
     );
     if (index === -1) return null;
 
-    let updatedVariants = updates.variants
-      ? [...updates.variants]
-      : (this.data.products[index].variants ? [...this.data.products[index].variants] : []);
-
-    // When product images are updated/changed in admin panel, synchronize the primary variant (variants[0])
-    // and purge deleted images from all variants so deleted defaults are completely eradicated
-    if (updates.images && Array.isArray(updates.images)) {
-      const deletedImages = (this.data.products[index].images || []).filter(
-        oldImg => !updates.images!.includes(oldImg)
-      );
-
-      if (updatedVariants.length > 0) {
-        updatedVariants[0] = {
-          ...updatedVariants[0],
-          images: [...updates.images]
-        };
-      } else {
-        updatedVariants = [{
-          id: `var-${this.data.products[index].id}-1`,
-          colorName: 'Standard',
-          colorHex: '#111111',
-          frameColor: 'Standard',
-          lensColor: 'Standard',
-          images: [...updates.images],
-          sku: updates.sku || this.data.products[index].sku,
-          stock: updates.stock !== undefined ? updates.stock : this.data.products[index].stock
-        }];
-      }
-
-      if (deletedImages.length > 0) {
-        updatedVariants = updatedVariants.map((variant, vIdx) => {
-          if (vIdx === 0) return variant;
-          const cleaned = (variant.images || []).filter(img => !deletedImages.includes(img));
-          return {
-            ...variant,
-            images: cleaned.length > 0 ? cleaned : [...updates.images!]
-          };
-        });
-      }
-    }
-
     // Preserve and merge specifications safely
     const updatedSpecifications = {
       ...(this.data.products[index].specifications || {}),
@@ -1204,7 +1148,7 @@ class DatabaseService {
       ...this.data.products[index],
       ...updates,
       specifications: updatedSpecifications as ProductSpecification,
-      ...(updatedVariants.length > 0 ? { variants: updatedVariants } : {})
+      variants: []
     };
     this.saveData();
 

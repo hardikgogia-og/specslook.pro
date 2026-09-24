@@ -124,10 +124,7 @@ export const CartDrawer: React.FC = () => {
               </div>
             ) : (
               cart.map((item, index) => {
-                const isSecondaryVariant = !!(item.variant && item.product.variants && item.product.variants.findIndex(v => v.id === item.variant?.id) > 0);
-                const itemImage = (isSecondaryVariant && item.variant?.images?.[0])
-                  ? item.variant.images[0]
-                  : (item.product.images?.[0] || item.variant?.images?.[0]);
+                const itemImage = item.product.images?.[0] || 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=800&q=80';
                 return (
                   <div
                     key={`${item.productId}-${item.variantId || 'novar'}-${item.lensAddon?.id || 'none'}-${index}`}
@@ -159,7 +156,6 @@ export const CartDrawer: React.FC = () => {
                         </div>
 
                         <div className="text-[11px] text-neutral-500 mt-0.5 space-y-0.5">
-                          {item.variant && <div>Color: <span className="font-medium text-neutral-700">{item.variant.colorName}</span></div>}
                           {item.lensAddon ? (
                             <div className="text-[10px] text-neutral-700 bg-neutral-100/90 border border-neutral-200 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-xs mt-1">
                               <span className="font-semibold">{item.lensAddon.name}</span>
