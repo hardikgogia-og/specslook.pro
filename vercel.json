@@ -1,5 +1,10 @@
 {
   "version": 2,
+  "functions": {
+    "api/**/*.ts": {
+      "includeFiles": "data/**,public/data/**"
+    }
+  },
   "headers": [
     {
       "source": "/api/(.*)",
@@ -9,6 +14,15 @@
         { "key": "Access-Control-Allow-Methods", "value": "GET,OPTIONS,PATCH,DELETE,POST,PUT" },
         { "key": "Access-Control-Allow-Headers", "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization, x-github-token, x-github-repo" },
         { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" }
+      ]
+    },
+    {
+      "source": "/data/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0" },
+        { "key": "Pragma", "value": "no-cache" },
+        { "key": "Expires", "value": "0" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
       ]
     },
     {

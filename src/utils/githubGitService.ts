@@ -387,6 +387,28 @@ export async function syncCatalogToGitHubDirect(params: {
 
   console.log(`[GitHub Git Service] Successfully committed to ${owner}/${repo} at ${FILE_PATH} (SHA: ${newSha})`);
 
+  // Also sync public/data/specslook_db.json so Vercel static deployment matches immediately
+  try {
+    const publicFileUrl = `https://api.github.com/repos/${owner}/${repo}/contents/public/data/specslook_db.json`;
+    let publicSha: string | undefined;
+    const pubGetRes = await fetch(publicFileUrl, { method: 'GET', headers });
+    if (pubGetRes.status === 200) {
+      const pubData = await pubGetRes.json();
+      publicSha = pubData.sha;
+    }
+    await fetch(publicFileUrl, {
+      method: 'PUT',
+      headers,
+      body: JSON.stringify({
+        message: `chore(public-db): sync public/data/specslook_db.json with ${FILE_PATH}`,
+        content: base64Content,
+        ...(publicSha ? { sha: publicSha } : {})
+      })
+    });
+  } catch (pubErr) {
+    console.warn('[GitHub Git Service] public/data/specslook_db.json secondary sync note:', pubErr);
+  }
+
   return {
     success: true,
     sha: newSha,

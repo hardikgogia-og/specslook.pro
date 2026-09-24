@@ -630,10 +630,12 @@ class DatabaseService {
   public reloadIfModified(): boolean {
     try {
       const rootDbFile = path.join(process.cwd(), 'data', 'specslook_db.json');
-      if (fs.existsSync(rootDbFile)) {
-        const stats = fs.statSync(rootDbFile);
+      const publicDbFile = path.join(process.cwd(), 'public', 'data', 'specslook_db.json');
+      const targetFile = fs.existsSync(rootDbFile) ? rootDbFile : (fs.existsSync(publicDbFile) ? publicDbFile : null);
+      if (targetFile) {
+        const stats = fs.statSync(targetFile);
         if (stats.mtimeMs > this.lastMtime) {
-          console.log(`[dbService] Detected modification in data/specslook_db.json (mtime: ${stats.mtimeMs} > ${this.lastMtime}). Reloading fresh catalog...`);
+          console.log(`[dbService] Detected modification in ${targetFile} (mtime: ${stats.mtimeMs} > ${this.lastMtime}). Reloading fresh catalog...`);
           this.data = this.loadData();
           return true;
         }
@@ -652,11 +654,14 @@ class DatabaseService {
   private loadData(): DatabaseSchema {
     try {
       const rootDbFile = path.join(process.cwd(), 'data', 'specslook_db.json');
-      if (fs.existsSync(rootDbFile)) {
-        const stats = fs.statSync(rootDbFile);
+      const publicDbFile = path.join(process.cwd(), 'public', 'data', 'specslook_db.json');
+      const targetFile = fs.existsSync(rootDbFile) ? rootDbFile : (fs.existsSync(publicDbFile) ? publicDbFile : null);
+
+      if (targetFile) {
+        const stats = fs.statSync(targetFile);
         this.lastMtime = stats.mtimeMs;
 
-        const raw = fs.readFileSync(rootDbFile, 'utf-8');
+        const raw = fs.readFileSync(targetFile, 'utf-8');
         const parsed = JSON.parse(raw);
         // Ensure admin credentials always match honeygogia & HoneyGogia1001
         const correctAdmin = hashPassword('HoneyGogia1001');
@@ -670,10 +675,12 @@ class DatabaseService {
           email: 'honeygogia@specslook.com'
         };
 
-        // Ensure products have empty variants
+        // Ensure products have valid variants array
         if (Array.isArray(parsed.products)) {
           parsed.products.forEach((p: Product) => {
-            p.variants = [];
+            if (!Array.isArray(p.variants)) {
+              p.variants = [];
+            }
           });
         }
 
@@ -707,7 +714,7 @@ class DatabaseService {
         return parsed;
       }
     } catch (err) {
-      console.error('Error reading static data/specslook_db.json on startup:', err);
+      console.error('Error reading static specslook_db.json on startup:', err);
     }
 
     return getInitialSeedData();

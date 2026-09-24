@@ -414,6 +414,14 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
               setStores(dbData.stores);
               try { localStorage.setItem('specslook_stores', JSON.stringify(dbData.stores)); } catch {}
             }
+            if (Array.isArray(dbData.blogs) && dbData.blogs.length > 0) {
+              setBlogs(dbData.blogs);
+              try { localStorage.setItem('specslook_blogs', JSON.stringify(dbData.blogs)); } catch {}
+            }
+            if (Array.isArray(dbData.banners) && dbData.banners.length > 0) {
+              setBanners(dbData.banners);
+              try { localStorage.setItem('specslook_banners', JSON.stringify(dbData.banners)); } catch {}
+            }
             return;
           }
         }
