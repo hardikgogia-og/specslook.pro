@@ -153,8 +153,10 @@ export const StoresView: React.FC = () => {
                 <img
                   src={getStoreImage(store)}
                   alt={store.name}
+                  loading="lazy"
+                  decoding="async"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = (store as any).image || '/assets/stores/sl1_store.jpg';
+                    (e.target as HTMLImageElement).src = (store as any).image || '/assets/stores/sl1_store.webp';
                   }}
                   className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                 />

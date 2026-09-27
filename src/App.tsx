@@ -1,29 +1,42 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense, lazy } from 'react';
 import { StoreProvider, useStore } from './context/StoreContext.tsx';
 import { Navbar } from './components/Navbar.tsx';
 import { Footer } from './components/Footer.tsx';
 import { CartDrawer } from './components/CartDrawer.tsx';
 
-// Views
+// Eager view for instant homepage first paint
 import { HomeView } from './views/HomeView.tsx';
-import { ShopView } from './views/ShopView.tsx';
-import { ProductDetailView } from './views/ProductDetailView.tsx';
-import { CheckoutView } from './views/CheckoutView.tsx';
-import { OrderConfirmationView } from './views/OrderConfirmationView.tsx';
-import { OrderTrackingView } from './views/OrderTrackingView.tsx';
-import { CustomerAccountView } from './views/CustomerAccountView.tsx';
-import { StoresView } from './views/StoresView.tsx';
-import { FranchiseView } from './views/FranchiseView.tsx';
-import { AboutView } from './views/AboutView.tsx';
-import { ContactView } from './views/ContactView.tsx';
-import { BlogView } from './views/BlogView.tsx';
-import { AdminView } from './views/AdminView.tsx';
-import { HomeEyeTestView } from './views/HomeEyeTestView.tsx';
-import { TermsView } from './views/TermsView.tsx';
-import { PrivacyPolicyView } from './views/PrivacyPolicyView.tsx';
+
+// Code-split dynamic views for superfast page loads
+const ShopView = lazy(() => import('./views/ShopView.tsx').then(m => ({ default: m.ShopView })));
+const ProductDetailView = lazy(() => import('./views/ProductDetailView.tsx').then(m => ({ default: m.ProductDetailView })));
+const CheckoutView = lazy(() => import('./views/CheckoutView.tsx').then(m => ({ default: m.CheckoutView })));
+const OrderConfirmationView = lazy(() => import('./views/OrderConfirmationView.tsx').then(m => ({ default: m.OrderConfirmationView })));
+const OrderTrackingView = lazy(() => import('./views/OrderTrackingView.tsx').then(m => ({ default: m.OrderTrackingView })));
+const CustomerAccountView = lazy(() => import('./views/CustomerAccountView.tsx').then(m => ({ default: m.CustomerAccountView })));
+const StoresView = lazy(() => import('./views/StoresView.tsx').then(m => ({ default: m.StoresView })));
+const FranchiseView = lazy(() => import('./views/FranchiseView.tsx').then(m => ({ default: m.FranchiseView })));
+const AboutView = lazy(() => import('./views/AboutView.tsx').then(m => ({ default: m.AboutView })));
+const ContactView = lazy(() => import('./views/ContactView.tsx').then(m => ({ default: m.ContactView })));
+const BlogView = lazy(() => import('./views/BlogView.tsx').then(m => ({ default: m.BlogView })));
+const AdminView = lazy(() => import('./views/AdminView.tsx').then(m => ({ default: m.AdminView })));
+const HomeEyeTestView = lazy(() => import('./views/HomeEyeTestView.tsx').then(m => ({ default: m.HomeEyeTestView })));
+const TermsView = lazy(() => import('./views/TermsView.tsx').then(m => ({ default: m.TermsView })));
+const PrivacyPolicyView = lazy(() => import('./views/PrivacyPolicyView.tsx').then(m => ({ default: m.PrivacyPolicyView })));
+
 import { WhatsAppWidget } from './components/WhatsAppWidget.tsx';
 import { RecentPurchasePopup } from './components/RecentPurchasePopup.tsx';
 import { updateSEO } from './utils/seo.ts';
+
+const ViewLoadingFallback: React.FC = () => (
+  <div className="min-h-[50vh] flex flex-col items-center justify-center p-12">
+    <div className="fixed top-0 inset-x-0 h-0.5 bg-neutral-100 z-50 overflow-hidden">
+      <div className="h-full bg-red-600 animate-pulse w-full" />
+    </div>
+    <div className="w-8 h-8 border-2 border-neutral-200 border-t-red-600 rounded-full animate-spin mb-3" />
+    <span className="text-[10px] uppercase tracking-widest text-neutral-400 font-bold">Loading...</span>
+  </div>
+);
 
 const AppContent: React.FC = () => {
   const { currentView, viewParams, toastMessage } = useStore();
@@ -32,6 +45,20 @@ const AppContent: React.FC = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, [currentView]);
+
+  // Prefetch frequent customer views on idle to make route transitions instant
+  useEffect(() => {
+    const prefetchRoutes = () => {
+      import('./views/ShopView.tsx');
+      import('./views/ProductDetailView.tsx');
+      import('./views/StoresView.tsx');
+    };
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(prefetchRoutes, { timeout: 2500 });
+    } else {
+      setTimeout(prefetchRoutes, 1500);
+    }
+  }, []);
 
   // Dynamic SEO metadata updates across pages
   useEffect(() => {
@@ -288,9 +315,11 @@ const AppContent: React.FC = () => {
       {/* Customer Navigation Bar (Hidden in Admin for dedicated focus) */}
       {!isAdmin && <Navbar />}
 
-      {/* Dynamic View Body */}
+      {/* Dynamic View Body wrapped in Suspense for instant chunk loading */}
       <main className="flex-1">
-        {renderCurrentView()}
+        <Suspense fallback={<ViewLoadingFallback />}>
+          {renderCurrentView()}
+        </Suspense>
       </main>
 
       {/* Customer Footer (Hidden in Admin) */}

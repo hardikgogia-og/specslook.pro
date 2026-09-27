@@ -22,6 +22,7 @@ export type AppView =
   | 'home'
   | 'shop'
   | 'product'
+  | 'try-on'
   | 'cart'
   | 'checkout'
   | 'confirmation'
@@ -112,6 +113,12 @@ interface StoreContextType {
   // Toast
   toasts: Toast[];
   showToast: (message: string, type?: 'success' | 'error' | 'info') => void;
+
+  // Virtual Try-On
+  isTryOnOpen: boolean;
+  tryOnProduct: Product | null;
+  openTryOn: (product?: Product) => void;
+  closeTryOn: () => void;
 }
 
 // Synchronous route resolver to eliminate visual jumping / flashing before hydration
@@ -124,6 +131,9 @@ const getInitialRoute = (): { view: AppView; params: Record<string, any> } => {
 
   if (path === '/admin' || hash === 'admin' || search.get('view') === 'admin') {
     return { view: 'admin', params: {} };
+  }
+  if (path === '/try-on' || path === '/virtual-try-on' || hash === 'try-on' || hash === 'virtual-try-on' || search.get('view') === 'try-on') {
+    return { view: 'try-on', params: {} };
   }
   const productMatch = path.match(/^\/(?:product|products)\/([^/]+)/i);
   const hashProductMatch = hash.match(/^(?:product|products)\/([^/]+)/i);
@@ -265,6 +275,23 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       return [];
     }
   });
+
+  // Virtual Try-On Modal & Product State
+  const [isTryOnOpen, setIsTryOnOpen] = useState(false);
+  const [tryOnProduct, setTryOnProduct] = useState<Product | null>(null);
+
+  const openTryOn = (product?: Product) => {
+    if (product) {
+      setTryOnProduct(product);
+    } else if (!tryOnProduct && products.length > 0) {
+      setTryOnProduct(products[0]);
+    }
+    setIsTryOnOpen(true);
+  };
+
+  const closeTryOn = () => {
+    setIsTryOnOpen(false);
+  };
 
   // Coupon & Orders
   const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discount: number; message: string } | null>(null);
@@ -627,7 +654,15 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         return;
       }
 
-      // 4. Shop route: /shop, /catalog, #shop
+      // 4. Try-On route: /try-on, /virtual-try-on, #try-on
+      if (path === '/try-on' || path === '/virtual-try-on' || hash === 'try-on' || hash === 'virtual-try-on' || search.get('view') === 'try-on') {
+        setCurrentView('try-on');
+        setViewParams({});
+        trackPageView('/try-on/', '3D Virtual Try-On Studio');
+        return;
+      }
+
+      // 5. Shop route: /shop, /catalog, #shop
       if (path === '/shop' || path === '/catalog' || hash === 'shop' || search.get('view') === 'shop') {
         const category = search.get('category') || undefined;
         const gender = search.get('gender') || undefined;
@@ -781,6 +816,8 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       } else {
         targetUrl = '/shop/';
       }
+    } else if (view === 'try-on') {
+      targetUrl = '/try-on/';
     } else if (view === 'stores') {
       targetUrl = '/store/';
     } else if (view === 'home-eyetest') {
@@ -1434,7 +1471,11 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         loginAdmin,
         logoutAdmin,
         toasts,
-        showToast
+        showToast,
+        isTryOnOpen,
+        tryOnProduct,
+        openTryOn,
+        closeTryOn
       }}
     >
       {children}

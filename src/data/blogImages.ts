@@ -1,6 +1,6 @@
-import pilotAviatorImg from '../assets/images/pilot_aviator_1789719151649.jpg';
-import polarizedVsTintImg from '../assets/images/polarized_vs_tint_1789719165304.jpg';
-import faceShapesImg from '../assets/images/faces_eyewear_1789719179405.jpg';
+import pilotAviatorImg from '../assets/images/pilot_aviator_1789719151649.webp';
+import polarizedVsTintImg from '../assets/images/polarized_vs_tint_1789719165304.webp';
+import faceShapesImg from '../assets/images/faces_eyewear_1789719179405.webp';
 
 export const blogImages: Record<string, string> = {
   'blog-01': pilotAviatorImg,

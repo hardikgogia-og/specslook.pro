@@ -331,6 +331,9 @@ export const ProductDetailView: React.FC = () => {
               <img
                 src={currentImage}
                 alt={product.name}
+                loading="eager"
+                decoding="async"
+                {...({ fetchPriority: 'high' } as any)}
                 onError={(e) => {
                   (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=800&q=80';
                 }}
@@ -360,7 +363,13 @@ export const ProductDetailView: React.FC = () => {
                         : 'border-neutral-200 hover:border-neutral-400 opacity-70 hover:opacity-100'
                     }`}
                   >
-                    <img src={img} alt="Frame angle" className="w-full h-full object-contain mix-blend-multiply" />
+                    <img
+                      src={img}
+                      alt="Frame angle"
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-contain mix-blend-multiply"
+                    />
                   </button>
                 ))}
               </div>

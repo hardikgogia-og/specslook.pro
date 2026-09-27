@@ -15,13 +15,13 @@ import { HeroBannerSlider } from '../components/HeroBannerSlider.tsx';
 import { ProductSlider } from '../components/ProductSlider.tsx';
 import { StoreLocatorForm } from '../components/StoreLocatorForm.tsx';
 
-// AI-Generated Category Backgrounds (Matching Characters Looking Left)
-import eyeglassManImg from '../assets/images/man_glasses_1789719136120.jpg';
-import eyeglassWomanImg from '../assets/images/eyeglass_woman_left_1789315396068.jpg';
-import eyeglassKidImg from '../assets/images/eyeglass_kid_left_1789315413137.jpg';
-import sunglassManImg from '../assets/images/sunglass_man_face_1789314497936.jpg';
-import sunglassWomanImg from '../assets/images/sunglass_woman_face_1789314512198.jpg';
-import sunglassKidImg from '../assets/images/sunglass_kid_smile_1789314525399.jpg';
+// AI-Generated Category Backgrounds (Matching Characters Looking Left - High-performance WebP)
+import eyeglassManImg from '../assets/images/man_glasses_1789719136120.webp';
+import eyeglassWomanImg from '../assets/images/eyeglass_woman_left_1789315396068.webp';
+import eyeglassKidImg from '../assets/images/eyeglass_kid_left_1789315413137.webp';
+import sunglassManImg from '../assets/images/sunglass_man_face_1789314497936.webp';
+import sunglassWomanImg from '../assets/images/sunglass_woman_face_1789314512198.webp';
+import sunglassKidImg from '../assets/images/sunglass_kid_smile_1789314525399.webp';
 import { getBlogImage } from '../data/blogImages.ts';
 import { getStoreImage } from '../data/storeImages.ts';
 
@@ -70,6 +70,8 @@ export const HomeView: React.FC = () => {
               <img
                 src={eyeglassManImg}
                 alt="Eyeglasses for Men"
+                loading="lazy"
+                decoding="async"
                 className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 referrerPolicy="no-referrer"
               />
@@ -107,6 +109,8 @@ export const HomeView: React.FC = () => {
               <img
                 src={eyeglassWomanImg}
                 alt="Eyeglasses for Women"
+                loading="lazy"
+                decoding="async"
                 className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 referrerPolicy="no-referrer"
               />
@@ -144,6 +148,8 @@ export const HomeView: React.FC = () => {
               <img
                 src={eyeglassKidImg}
                 alt="Eyeglasses for Kids"
+                loading="lazy"
+                decoding="async"
                 className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 referrerPolicy="no-referrer"
               />
@@ -181,6 +187,8 @@ export const HomeView: React.FC = () => {
               <img
                 src={sunglassManImg}
                 alt="Sunglasses for Men"
+                loading="lazy"
+                decoding="async"
                 className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 referrerPolicy="no-referrer"
               />
@@ -218,6 +226,8 @@ export const HomeView: React.FC = () => {
               <img
                 src={sunglassWomanImg}
                 alt="Sunglasses for Women"
+                loading="lazy"
+                decoding="async"
                 className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 referrerPolicy="no-referrer"
               />
@@ -255,6 +265,8 @@ export const HomeView: React.FC = () => {
               <img
                 src={sunglassKidImg}
                 alt="Sunglasses for Kids"
+                loading="lazy"
+                decoding="async"
                 className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 referrerPolicy="no-referrer"
               />
@@ -328,6 +340,8 @@ export const HomeView: React.FC = () => {
           <img
             src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1800&q=80"
             alt="Specslook Luxury Eyewear Ambient"
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover opacity-20 mix-blend-luminosity scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-neutral-950 via-neutral-950/90 to-neutral-950/80" />
@@ -431,6 +445,8 @@ export const HomeView: React.FC = () => {
           <img
             src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1600&q=80"
             alt="Specslook Eyewear Background"
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover opacity-12 mix-blend-luminosity scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/95 via-neutral-950/95 to-black/95" />
@@ -495,6 +511,8 @@ export const HomeView: React.FC = () => {
           <img
             src="https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1600&q=80"
             alt="Italian Eyewear Heritage Workshop"
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover opacity-15 mix-blend-luminosity scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-neutral-950/95 via-neutral-950/90 to-neutral-950/95" />
@@ -507,6 +525,8 @@ export const HomeView: React.FC = () => {
                 <img
                   src="https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1200&q=80"
                   alt="Specslook Precision Craftsmanship"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -607,8 +627,10 @@ export const HomeView: React.FC = () => {
                 <img
                   src={getStoreImage(store)}
                   alt={store.name}
+                  loading="lazy"
+                  decoding="async"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = (store as any).image || '/assets/stores/sl1_store.jpg';
+                    (e.target as HTMLImageElement).src = (store as any).image || '/assets/stores/sl1_store.webp';
                   }}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
@@ -698,6 +720,8 @@ export const HomeView: React.FC = () => {
                   <img
                     src={getBlogImage(post)}
                     alt={post.title}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     onError={(e) => {
                       (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80';

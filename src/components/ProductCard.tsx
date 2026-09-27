@@ -76,6 +76,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           src={isHovered && secondaryImage ? secondaryImage : displayImage}
           alt={product.name}
           loading="lazy"
+          decoding="async"
           onError={(e) => {
             (e.target as HTMLImageElement).src = fallbackImg;
           }}

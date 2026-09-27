@@ -58,6 +58,8 @@ export const BlogView: React.FC = () => {
             <img
               src={getBlogImage(activePost)}
               alt={activePost.title}
+              loading="eager"
+              decoding="async"
               className="w-full h-full object-cover"
               onError={(e) => {
                 (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1200&q=85';
@@ -147,6 +149,8 @@ export const BlogView: React.FC = () => {
                   <img
                     src={getBlogImage(post)}
                     alt={post.title}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     onError={(e) => {
                       (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80';

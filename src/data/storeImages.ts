@@ -1,8 +1,8 @@
-import sl1StoreImg from '../assets/images/sl1_store.jpg';
-import sl2StoreImg from '../assets/images/sl2_store.jpg';
-import sl3StoreImg from '../assets/images/sl3_store.jpg';
-import sl4StoreImg from '../assets/images/sl4_store.jpg';
-import sl5StoreImg from '../assets/images/sl5_store.jpg';
+import sl1StoreImg from '../assets/images/sl1_store.webp';
+import sl2StoreImg from '../assets/images/sl2_store.webp';
+import sl3StoreImg from '../assets/images/sl3_store.webp';
+import sl4StoreImg from '../assets/images/sl4_store.webp';
+import sl5StoreImg from '../assets/images/sl5_store.webp';
 import { StoreLocation } from '../types.ts';
 
 export { sl1StoreImg, sl2StoreImg, sl3StoreImg, sl4StoreImg, sl5StoreImg };

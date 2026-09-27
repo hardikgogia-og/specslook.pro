@@ -10,11 +10,11 @@ import {
 } from 'lucide-react';
 import { useStore } from '../context/StoreContext.tsx';
 
-// Photorealistic Hero Images of people wearing Specslook eyewear
-import heroAttachmentsImg from '../assets/images/hero_attachments_shift_1789659615986.jpg';
-import heroOpticalsImg from '../assets/images/hero_opticals_person_1789659629107.jpg';
-import heroSunglassesImg from '../assets/images/hero_sunglasses_sun_1789659642131.jpg';
-import heroLifestyleImg from '../assets/images/hero_lifestyle_duo_1789659659052.jpg';
+// Photorealistic Hero Images of people wearing Specslook eyewear (High-performance compressed WebP)
+import heroAttachmentsImg from '../assets/images/hero_attachments_shift_1789659615986.webp';
+import heroOpticalsImg from '../assets/images/hero_opticals_person_1789659629107.webp';
+import heroSunglassesImg from '../assets/images/hero_sunglasses_sun_1789659642131.webp';
+import heroLifestyleImg from '../assets/images/hero_lifestyle_duo_1789659659052.webp';
 
 interface SlideData {
   id: string;
@@ -155,6 +155,9 @@ export const HeroBannerSlider: React.FC = () => {
                 src={slide.image}
                 alt={slide.badge}
                 referrerPolicy="no-referrer"
+                loading={index === 0 ? 'eager' : 'lazy'}
+                decoding="async"
+                {...(index === 0 ? { fetchPriority: 'high' } : {})}
                 className={`w-full h-full object-cover object-center sm:object-right-top transition-transform duration-3000 ease-out ${
                   isCurrent ? 'scale-105' : 'scale-100'
                 }`}

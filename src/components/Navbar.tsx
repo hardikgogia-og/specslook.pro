@@ -8,7 +8,8 @@ import {
   X,
   ChevronDown,
   ArrowRight,
-  Sparkles
+  Sparkles,
+  Camera
 } from 'lucide-react';
 import { SpecslookLogo } from './SpecslookLogo.tsx';
 import { useStore, AppView } from '../context/StoreContext.tsx';
@@ -325,6 +326,23 @@ export const Navbar: React.FC = () => {
             )}
           </button>
 
+          {/* VIRTUAL TRY-ON (Camera AR) */}
+          <button
+            onClick={() => handleNavClick('try-on')}
+            className={`transition-colors py-2 relative flex items-center gap-1.5 hover:text-red-600 ${
+              currentView === 'try-on' ? 'text-red-600 font-bold' : 'text-neutral-800'
+            }`}
+          >
+            <Camera className="w-3.5 h-3.5 text-red-600" />
+            <span>Virtual Try-On</span>
+            <span className="text-[9px] font-black uppercase px-1.5 py-0.5 bg-red-600 text-white rounded-xs tracking-wider animate-pulse">
+              3D AR
+            </span>
+            {currentView === 'try-on' && (
+              <span className="absolute bottom-0 inset-x-0 h-0.5 bg-red-600"></span>
+            )}
+          </button>
+
           <button
             onClick={() => handleNavClick('shop')}
             className={`text-neutral-800 hover:text-red-600 transition-colors py-2 ${
@@ -513,6 +531,20 @@ export const Navbar: React.FC = () => {
             className="py-2.5 px-3 text-left font-bold text-sm text-neutral-900 hover:bg-neutral-100 rounded-sm"
           >
             Home
+          </button>
+
+          {/* 3D Virtual Try-On Banner in Mobile Drawer */}
+          <button
+            onClick={() => handleNavClick('try-on')}
+            className="my-1 py-3 px-3.5 text-left font-extrabold text-xs text-white bg-neutral-950 hover:bg-red-600 rounded-sm flex items-center justify-between transition-colors shadow-sm border border-neutral-800"
+          >
+            <div className="flex items-center gap-2">
+              <Camera className="w-4 h-4 text-red-500" />
+              <span>3D Virtual Try-On (Camera AR)</span>
+            </div>
+            <span className="text-[9px] font-black uppercase px-2 py-0.5 bg-red-600 text-white rounded-xs">
+              Live
+            </span>
           </button>
 
           {/* Eyeglasses Accordion */}

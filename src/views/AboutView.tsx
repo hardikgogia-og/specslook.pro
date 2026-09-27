@@ -65,6 +65,8 @@ export const AboutView: React.FC = () => {
               <img
                 src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1200&q=80"
                 alt="Artisanal Handcrafting Eyewear Atelier Since 1998"
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover aspect-4/3 filter contrast-105"
               />
               <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-neutral-950/95 via-neutral-950/60 to-transparent p-5 text-white">

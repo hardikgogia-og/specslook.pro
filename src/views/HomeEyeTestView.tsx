@@ -15,7 +15,6 @@ import {
   Glasses
 } from 'lucide-react';
 import { useStore } from '../context/StoreContext.tsx';
-import eyeDoctorImg from '../assets/images/sunglass_woman_face_1789314512198.jpg';
 
 export const HomeEyeTestView: React.FC = () => {
   const { showToast } = useStore();

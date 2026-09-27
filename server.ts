@@ -3,10 +3,31 @@ import type { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import fs from 'fs';
 import cors from 'cors';
+import compression from 'compression';
 import { dbService } from './src/server/db.ts';
 
 const app = express();
 const PORT = 3000;
+
+// High-performance gzip/deflate response compression
+app.use(compression({
+  threshold: 1024,
+  level: 6,
+}));
+
+// Immutable long-term caching for static media, scripts, styles, and fonts
+app.use((req: Request, res: Response, next: NextFunction) => {
+  const url = req.url.split('?')[0];
+  if (
+    url.startsWith('/assets/') ||
+    url.match(/\.(webp|avif|jpg|jpeg|png|gif|svg|woff2|woff|ttf|css|js|ico)$/i)
+  ) {
+    if (!url.startsWith('/api') && !url.startsWith('/data/')) {
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    }
+  }
+  next();
+});
 
 // Ensure public/uploads directory exists for system image uploads (safe on read-only environments like Vercel)
 const uploadsDir = path.join(process.cwd(), 'public', 'uploads');

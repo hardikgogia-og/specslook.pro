@@ -23,7 +23,7 @@ export const SpecslookLogo: React.FC<LogoProps> = ({
   };
 
   const selectedSizeClass = sizeClasses[size] || sizeClasses.md;
-  const imageSrc = isWhite ? '/shop-logopng-white.png' : '/shop-logopng.png';
+  const imageSrc = isWhite ? '/shop-logopng-white.webp' : '/shop-logopng.webp';
 
   return (
     <div
@@ -33,14 +33,16 @@ export const SpecslookLogo: React.FC<LogoProps> = ({
       <img
         src={imageSrc}
         alt="Specslook - A Complete Eye wear Zone"
+        decoding="async"
         className={`${selectedSizeClass} w-auto object-contain transition-transform duration-200 hover:scale-[1.02] ${
           isWhite ? 'brightness-0 invert filter' : ''
         }`}
         onError={(e) => {
-          // Fallback to original uploaded logo if white variant has any loading issue
+          // Fallback to original uploaded logo if webp variant has any loading issue
           const target = e.currentTarget;
-          if (target.src !== window.location.origin + '/shop-logopng.png') {
-            target.src = '/shop-logopng.png';
+          const fallback = isWhite ? '/shop-logopng-white.png' : '/shop-logopng.png';
+          if (!target.src.endsWith(fallback)) {
+            target.src = fallback;
           }
         }}
       />
