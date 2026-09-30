@@ -5,6 +5,7 @@ import fs from 'fs';
 import cors from 'cors';
 import compression from 'compression';
 import { dbService } from './src/server/db.ts';
+import { renderFranchiseHtml } from './src/server/franchisePrerender.ts';
 
 const app = express();
 const PORT = 3000;
@@ -128,7 +129,8 @@ app.use((req: Request, res: Response, next: NextFunction) => {
         cleanPath.startsWith('/product/') ||
         cleanPath.startsWith('/product-category/') ||
         cleanPath === '/home-eyetest' ||
-        cleanPath === '/home/home-eyetest';
+        cleanPath === '/home/home-eyetest' ||
+        cleanPath === '/franchise';
 
       if (!isFrontendSpaRoute) {
         const prefixes = [
@@ -197,6 +199,7 @@ app.get('/sitemap.xml', (req: Request, res: Response) => {
   <url><loc>https://specslook.com/shop/</loc><lastmod>2026-09-18</lastmod><changefreq>daily</changefreq><priority>0.95</priority></url>
   <url><loc>https://specslook.com/about/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://specslook.com/store/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://specslook.com/franchise/</loc><lastmod>2026-09-30</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://specslook.com/home/home-eyetest/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://specslook.com/contact-us/</loc><lastmod>2026-09-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://specslook.com/blog/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url>
@@ -1195,11 +1198,42 @@ async function startServer() {
         server: { middlewareMode: true },
         appType: 'spa'
       });
+
+      // Dedicated Franchise Page handler for Google & AI indexing in dev mode
+      app.get(['/franchise', '/franchise/'], async (req: Request, res: Response, next: NextFunction) => {
+        try {
+          const rootHtmlPath = path.join(process.cwd(), 'index.html');
+          if (fs.existsSync(rootHtmlPath)) {
+            let template = fs.readFileSync(rootHtmlPath, 'utf8');
+            template = await vite.transformIndexHtml(req.originalUrl || '/franchise/', template);
+            const html = renderFranchiseHtml(template);
+            res.setHeader('Content-Type', 'text/html; charset=utf-8');
+            return res.send(html);
+          }
+        } catch (e) {
+          next(e);
+          return;
+        }
+        next();
+      });
+
       app.use(vite.middlewares);
     } catch (err) {
       console.warn('Vite dev middleware failed to load, falling back to static files:', err);
       const distPath = path.join(process.cwd(), 'dist');
       app.use(express.static(distPath));
+
+      app.get(['/franchise', '/franchise/'], (req: Request, res: Response) => {
+        const distHtmlPath = path.join(distPath, 'index.html');
+        if (fs.existsSync(distHtmlPath)) {
+          const template = fs.readFileSync(distHtmlPath, 'utf8');
+          const html = renderFranchiseHtml(template);
+          res.setHeader('Content-Type', 'text/html; charset=utf-8');
+          return res.send(html);
+        }
+        res.sendFile(distHtmlPath);
+      });
+
       app.get('*', (req: Request, res: Response) => {
         res.sendFile(path.join(distPath, 'index.html'));
       });
@@ -1207,6 +1241,24 @@ async function startServer() {
   } else {
     const distPath = path.join(process.cwd(), 'dist');
     app.use(express.static(distPath));
+
+    // Dedicated Franchise Page handler for Google & AI indexing in production mode
+    app.get(['/franchise', '/franchise/'], (req: Request, res: Response) => {
+      const staticFranchiseHtml = path.join(distPath, 'franchise', 'index.html');
+      if (fs.existsSync(staticFranchiseHtml)) {
+        res.setHeader('Content-Type', 'text/html; charset=utf-8');
+        return res.sendFile(staticFranchiseHtml);
+      }
+      const distHtmlPath = path.join(distPath, 'index.html');
+      if (fs.existsSync(distHtmlPath)) {
+        const template = fs.readFileSync(distHtmlPath, 'utf8');
+        const html = renderFranchiseHtml(template);
+        res.setHeader('Content-Type', 'text/html; charset=utf-8');
+        return res.send(html);
+      }
+      res.sendFile(distHtmlPath);
+    });
+
     app.get('*', (req: Request, res: Response) => {
       res.sendFile(path.join(distPath, 'index.html'));
     });

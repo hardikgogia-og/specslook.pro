@@ -142,6 +142,10 @@ const getInitialRoute = (): { view: AppView; params: Record<string, any> } => {
     const decoded = decodeURIComponent(productSlugOrId);
     return { view: 'product', params: { slug: decoded, id: decoded } };
   }
+  if (path === '/franchise' || hash === 'franchise' || search.get('view') === 'franchise') return { view: 'franchise', params: {} };
+  if (path === '/home-eyetest' || path === '/home/home-eyetest' || hash === 'home-eyetest') return { view: 'home-eyetest', params: {} };
+  if (path === '/terms' || path === '/terms-and-conditions' || hash === 'terms') return { view: 'terms', params: {} };
+  if (path === '/privacy' || path === '/privacy-policy' || hash === 'privacy') return { view: 'privacy', params: {} };
   if (path === '/checkout' || hash === 'checkout') return { view: 'checkout', params: {} };
   if (path === '/tracking' || hash === 'tracking') return { view: 'tracking', params: {} };
   if (path === '/account' || hash === 'account') return { view: 'account', params: {} };
@@ -680,6 +684,14 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         return;
       }
 
+      // 5.5. Franchise route: /franchise, /franchise/
+      if (path === '/franchise' || hash === 'franchise' || search.get('view') === 'franchise') {
+        setCurrentView('franchise');
+        setViewParams({});
+        trackPageView('/franchise/', 'Specslook Franchise Opportunities');
+        return;
+      }
+
       // 6. Preserved Home Eye Test: /home/home-eyetest/, /home/home-eyetest, /home-eyetest
       if (path === '/home/home-eyetest' || path === '/home-eyetest' || hash === 'home-eyetest' || search.get('view') === 'home-eyetest') {
         setCurrentView('home-eyetest');
@@ -820,6 +832,8 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       targetUrl = '/try-on/';
     } else if (view === 'stores') {
       targetUrl = '/store/';
+    } else if (view === 'franchise') {
+      targetUrl = '/franchise/';
     } else if (view === 'home-eyetest') {
       targetUrl = '/home/home-eyetest/';
     } else if (view === 'about') {

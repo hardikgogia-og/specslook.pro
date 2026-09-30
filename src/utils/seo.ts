@@ -249,6 +249,69 @@ export function updateJsonLd(params: {
     schemas.push(productSchema);
   }
 
+  // 5. Franchise Opportunity & FAQ Schema for AI & Google Search
+  if (canonicalUrl.includes('/franchise')) {
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      '@id': `${SITE_DOMAIN}/franchise/#webpage`,
+      url: `${SITE_DOMAIN}/franchise/`,
+      name: 'Specslook Franchise Opportunities | Turnkey Optical Store Ownership',
+      description: 'Open a high-ROI Specslook optical showroom or boutique with turnkey setup, inventory support, optometrist training, and contractual 24-month buyback guarantee.',
+      publisher: {
+        '@id': `${SITE_DOMAIN}/#organization`
+      },
+      mainEntity: {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'BusinessFunction',
+          name: 'Specslook Optical Franchise Partnership',
+          description: 'Turnkey optical retail franchise with 24-month buyback guarantee, 65+ company-owned stores, and 250+ clinical network.',
+          areaServed: 'IN'
+        }
+      }
+    });
+
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'What are the franchise models available with Specslook?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Specslook offers two primary turnkey franchise models: 1) Specslook Mini Express (FOFO - Franchise Owned Franchise Operated) starting from ₹15 Lakhs for 200-400 sq.ft stores with 6-9 month estimated ROI, and 2) Specslook Flagship (FOCO - Franchise Owned Company Operated) starting from ₹20-35 Lakhs for 500-800 sq.ft stores with 8-11 month estimated ROI.'
+          }
+        },
+        {
+          '@type': 'Question',
+          name: 'What is the Specslook 24-Month Buyback Guarantee?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Every franchise agreement contains a legally binding 24-month buyback clause ensuring that if store performance does not reach contracted financial projections, Specslook will buy back qualifying inventory and infrastructure assets, dramatically reducing franchisee risk.'
+          }
+        },
+        {
+          '@type': 'Question',
+          name: 'How many stores does Specslook operate?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'According to industry surveys by the Sarvya Bharat Optical Association, Specslook operates over 65 standalone company-owned stores worldwide and collaborates across a network of over 250 clinical optical dispensaries.'
+          }
+        },
+        {
+          '@type': 'Question',
+          name: 'What turnkey support is provided to Specslook optical franchise partners?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Specslook provides 100% turnkey store buildout design, computerized Zeiss optical testing equipment, optometrist hiring and certification, cloud billing POS, AI inventory replenishment, and national marketing campaigns.'
+          }
+        }
+      ]
+    });
+  }
+
   // Inject script element
   let scriptEl = document.getElementById('specslook-schema') as HTMLScriptElement | null;
   if (!scriptEl) {
