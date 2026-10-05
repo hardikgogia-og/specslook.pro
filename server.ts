@@ -182,7 +182,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 // 1. Google Merchant Center Feed (Public XML endpoint: https://specslook.com/merchant-feed.xml)
-app.get(['/merchant-feed.xml', '/merchant-feed'], (_req: Request, res: Response) => {
+app.get(['/merchant-feed.xml', '/merchant-feed', '/api/merchant-feed.xml', '/api/merchant-feed'], (_req: Request, res: Response) => {
   try {
     const products = dbService.getProducts();
     const xml = generateMerchantFeedXml(products);
@@ -196,7 +196,7 @@ app.get(['/merchant-feed.xml', '/merchant-feed'], (_req: Request, res: Response)
 });
 
 // 2. Google Merchant Center Diagnostics Route
-app.get(['/api/merchant-diagnostics', '/api/admin/merchant-diagnostics'], (_req: Request, res: Response) => {
+app.get(['/api/merchant-diagnostics', '/api/admin/merchant-diagnostics', '/merchant-diagnostics'], (_req: Request, res: Response) => {
   try {
     const products = dbService.getProducts();
     const diagnostics = getMerchantDiagnostics(products);
@@ -208,7 +208,7 @@ app.get(['/api/merchant-diagnostics', '/api/admin/merchant-diagnostics'], (_req:
 });
 
 // 3. Dynamic XML Sitemap (Automatically includes ALL active/current products with canonical URLs)
-app.get('/sitemap.xml', (_req: Request, res: Response) => {
+app.get(['/sitemap.xml', '/api/sitemap.xml', '/api/sitemap'], (_req: Request, res: Response) => {
   try {
     const products = dbService.getProducts();
     const today = new Date().toISOString().split('T')[0];

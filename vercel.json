@@ -26,6 +26,22 @@
       ]
     },
     {
+      "source": "/(.*)\\.xml",
+      "headers": [
+        { "key": "Content-Type", "value": "application/xml; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=1800, stale-while-revalidate=3600" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    },
+    {
+      "source": "/merchant-feed",
+      "headers": [
+        { "key": "Content-Type", "value": "application/xml; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=1800, stale-while-revalidate=3600" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    },
+    {
       "source": "/(.*)",
       "headers": [
         { "key": "X-Content-Type-Options", "value": "nosniff" },
@@ -58,10 +74,14 @@
     { "source": "/privacy/", "destination": "/privacy-policy/", "permanent": true }
   ],
   "rewrites": [
+    { "source": "/merchant-feed.xml", "destination": "/api/merchant-feed" },
+    { "source": "/merchant-feed", "destination": "/api/merchant-feed" },
+    { "source": "/api/merchant-feed.xml", "destination": "/api/merchant-feed" },
+    { "source": "/sitemap.xml", "destination": "/api/sitemap" },
+    { "source": "/robots.txt", "destination": "/robots.txt" },
     {
-      "source": "/((?!api/|data/|uploads/|assets/|sitemap\\.xml|robots\\.txt).*)",
+      "source": "/((?!api/|data/|uploads/|assets/|sitemap\\.xml|robots\\.txt|merchant-feed\\.xml|merchant-feed).*)",
       "destination": "/index.html"
     }
   ]
 }
-
