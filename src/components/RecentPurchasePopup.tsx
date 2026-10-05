@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { ShoppingBag, CheckCircle, X, Glasses } from 'lucide-react';
+import { X, Glasses } from 'lucide-react';
 import { useStore } from '../context/StoreContext.tsx';
 
 interface PurchaseNotification {
@@ -94,57 +93,53 @@ export const RecentPurchasePopup: React.FC = () => {
       aria-label="Recent purchase alert"
       className="fixed bottom-5 left-5 z-40 pointer-events-none"
     >
-      <AnimatePresence mode="wait">
-        {isVisible && (
-          <motion.div
-            key={`notification-${currentIndex}`}
-            initial={{ opacity: 0, y: 16, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 12, scale: 0.96 }}
-            transition={{ duration: 0.35, ease: 'easeOut' }}
-            className="pointer-events-auto max-w-[calc(100vw-32px)] sm:max-w-xs bg-white/95 backdrop-blur-md border border-neutral-200/90 shadow-2xl rounded-xs p-3.5 flex items-start gap-3 select-none group hover:border-neutral-400 transition-colors"
-          >
-            {/* Visual Icon Box */}
-            <div
-              onClick={handleClick}
-              className="w-10 h-10 rounded-xs bg-neutral-950 text-white flex items-center justify-center shrink-0 cursor-pointer relative overflow-hidden group-hover:bg-red-600 transition-colors"
-            >
-              <Glasses className="w-5 h-5 text-white" />
-              <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            </div>
+      <div
+        key={`notification-${currentIndex}`}
+        className={`pointer-events-auto max-w-[calc(100vw-32px)] sm:max-w-xs bg-white/95 backdrop-blur-md border border-neutral-200/90 shadow-2xl rounded-xs p-3.5 flex items-start gap-3 select-none group hover:border-neutral-400 transition-all duration-300 ease-out transform ${
+          isVisible
+            ? 'opacity-100 translate-y-0 scale-100'
+            : 'opacity-0 translate-y-4 scale-95 pointer-events-none'
+        }`}
+      >
+        {/* Visual Icon Box */}
+        <div
+          onClick={handleClick}
+          className="w-10 h-10 rounded-xs bg-neutral-950 text-white flex items-center justify-center shrink-0 cursor-pointer relative overflow-hidden group-hover:bg-red-600 transition-colors"
+        >
+          <Glasses className="w-5 h-5 text-white" />
+          <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+        </div>
 
-            {/* Notification Content matching layout */}
-            <div onClick={handleClick} className="flex-1 min-w-0 cursor-pointer">
-              <div className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-700 uppercase tracking-widest mb-0.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                <span>Verified Buyer</span>
-              </div>
-              <div className="font-bold text-neutral-900 text-xs sm:text-[13px] leading-tight truncate">
-                {currentItem.name} from {currentItem.city}
-              </div>
-              <div className="text-[11px] text-neutral-500 font-medium my-0.5 tracking-wide">
-                Purchased
-              </div>
-              <div className="font-bold text-neutral-950 text-xs sm:text-[13px] leading-tight text-red-600 truncate">
-                {currentItem.product}
-              </div>
-            </div>
+        {/* Notification Content matching layout */}
+        <div onClick={handleClick} className="flex-1 min-w-0 cursor-pointer">
+          <div className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-700 uppercase tracking-widest mb-0.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+            <span>Verified Buyer</span>
+          </div>
+          <div className="font-bold text-neutral-900 text-xs sm:text-[13px] leading-tight truncate">
+            {currentItem.name} from {currentItem.city}
+          </div>
+          <div className="text-[11px] text-neutral-500 font-medium my-0.5 tracking-wide">
+            Purchased
+          </div>
+          <div className="font-bold text-neutral-950 text-xs sm:text-[13px] leading-tight text-red-600 truncate">
+            {currentItem.product}
+          </div>
+        </div>
 
-            {/* Dismiss Button */}
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsVisible(false);
-              }}
-              title="Dismiss notification"
-              className="text-neutral-400 hover:text-neutral-700 p-0.5 -mr-1 -mt-1 rounded transition-colors"
-            >
-              <X className="w-3.5 h-3.5" />
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
+        {/* Dismiss Button */}
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsVisible(false);
+          }}
+          title="Dismiss notification"
+          className="text-neutral-400 hover:text-neutral-700 p-0.5 -mr-1 -mt-1 rounded transition-colors"
+        >
+          <X className="w-3.5 h-3.5" />
+        </button>
+      </div>
     </div>
   );
 };

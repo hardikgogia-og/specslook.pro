@@ -248,7 +248,7 @@ Whether you're navigating highway asphalt on bright afternoons or relaxing near 
     },
     {
       id: 'banner-02',
-      title: 'CHROMANCE POLARIZED',
+      title: 'POLARVUE POLARIZED',
       subtitle: 'Eliminate glare. Elevate contrast. Experience hyper-vibrant color calibration engineered with aerospace Japanese Titanium.',
       badge: 'ADVANCED OPTICS',
       ctaText: 'DISCOVER POLARIZED',
@@ -455,9 +455,9 @@ Whether you're navigating highway asphalt on bright afternoons or relaxing near 
       items: [
         {
           productId: 'prod-007',
-          productName: 'Specslook Titanium Chromance Polarized',
+          productName: 'Specslook Titanium PolarVue Polarized',
           sku: 'SL-TI-8090-PWT',
-          variantName: 'Titanium Pewter / Silver Chromance',
+          variantName: 'Titanium Pewter / Silver PolarVue',
           image: 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=400&q=80',
           price: 14990,
           quantity: 1,

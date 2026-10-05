@@ -432,7 +432,7 @@ export const ShopView: React.FC = () => {
                 <div className="flex-1">
                   <div className="font-bold text-xs text-neutral-900 flex items-center gap-1">
                     <ShieldCheck className="w-3.5 h-3.5 text-red-600" />
-                    <span>Chromance Polarized</span>
+                    <span>PolarVue Polarized</span>
                   </div>
                   <div className="text-[10px] text-neutral-500">Only show anti-glare crystal glass</div>
                 </div>

@@ -14,6 +14,7 @@ import { useStore } from '../context/StoreContext.tsx';
 import { HeroBannerSlider } from '../components/HeroBannerSlider.tsx';
 import { ProductSlider } from '../components/ProductSlider.tsx';
 import { StoreLocatorForm } from '../components/StoreLocatorForm.tsx';
+import { YouTubeFacade } from '../components/YouTubeFacade.tsx';
 
 // AI-Generated Category Backgrounds (Matching Characters Looking Left - High-performance WebP)
 import eyeglassManImg from '../assets/images/man_glasses_1789719136120.webp';
@@ -383,28 +384,13 @@ export const HomeView: React.FC = () => {
               </div>
             </div>
 
-            {/* Autoplay Video Banner for Sunglasses */}
+            {/* Autoplay Video Banner for Sunglasses - Lightweight Facade with 0.01 poster */}
             <div className="lg:col-span-7">
-              <div className="relative rounded-xs overflow-hidden border border-neutral-800 bg-black shadow-2xl group">
-                <div className="relative w-full aspect-16/9 overflow-hidden">
-                  <iframe
-                    className="w-full h-full object-cover pointer-events-auto"
-                    src="https://www.youtube-nocookie.com/embed/TPVp-ILVobw?autoplay=1&mute=1&loop=1&playlist=TPVp-ILVobw&controls=1&showinfo=0&rel=0&modestbranding=1&playsinline=1"
-                    title="Specslook Sunglasses Showcase"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                  />
-                </div>
-                <div className="px-4 py-2.5 bg-neutral-900/90 border-t border-neutral-800 flex items-center justify-between text-[11px] text-neutral-300">
-                  <span className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-red-400">
-                    <span className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
-                    AUTOPLAYING SUNGLASSES CINEMATIC
-                  </span>
-                  <span className="text-neutral-400">
-                    Press player volume icon to enable sound
-                  </span>
-                </div>
-              </div>
+              <YouTubeFacade
+                videoId="TPVp-ILVobw"
+                title="Specslook Sunglasses Showcase"
+                poster="#t=0.01"
+              />
             </div>
           </div>
         </div>
@@ -531,7 +517,7 @@ export const HomeView: React.FC = () => {
                 />
               </div>
               <div className="absolute -bottom-6 -right-6 bg-red-600 text-white p-5 rounded-xs shadow-xl hidden sm:block max-w-xs">
-                <div className="font-black text-xl uppercase tracking-tighter">CHROMANCE™</div>
+                <div className="font-black text-xl uppercase tracking-tighter">POLARVUE™</div>
                 <div className="text-xs text-white/90 mt-1">
                   Calibrated light contrast filter eliminating 99.9% of blinding road and water reflections.
                 </div>

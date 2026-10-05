@@ -24,8 +24,10 @@ const HomeEyeTestView = lazy(() => import('./views/HomeEyeTestView.tsx').then(m 
 const TermsView = lazy(() => import('./views/TermsView.tsx').then(m => ({ default: m.TermsView })));
 const PrivacyPolicyView = lazy(() => import('./views/PrivacyPolicyView.tsx').then(m => ({ default: m.PrivacyPolicyView })));
 
-import { WhatsAppWidget } from './components/WhatsAppWidget.tsx';
-import { RecentPurchasePopup } from './components/RecentPurchasePopup.tsx';
+// Non-critical floating customer widgets lazy loaded in background
+const WhatsAppWidget = lazy(() => import('./components/WhatsAppWidget.tsx').then(m => ({ default: m.WhatsAppWidget })));
+const RecentPurchasePopup = lazy(() => import('./components/RecentPurchasePopup.tsx').then(m => ({ default: m.RecentPurchasePopup })));
+
 import { updateSEO } from './utils/seo.ts';
 
 const ViewLoadingFallback: React.FC = () => (
@@ -326,10 +328,18 @@ const AppContent: React.FC = () => {
       {!isAdmin && <Footer />}
 
       {/* Floating WhatsApp Orders Widget (+91 83688 53448) - Hidden on product pages to keep glass selection clean */}
-      {!isAdmin && !isProductPage && <WhatsAppWidget phoneNumber="918368853448" />}
+      {!isAdmin && !isProductPage && (
+        <Suspense fallback={null}>
+          <WhatsAppWidget phoneNumber="918368853448" />
+        </Suspense>
+      )}
 
       {/* Premium Recent Purchase Notification Popup */}
-      {!isAdmin && <RecentPurchasePopup />}
+      {!isAdmin && (
+        <Suspense fallback={null}>
+          <RecentPurchasePopup />
+        </Suspense>
+      )}
     </div>
   );
 };

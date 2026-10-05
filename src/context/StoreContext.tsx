@@ -393,17 +393,15 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   // Refresh products directly with multi-tier resilience:
   // 1. API endpoint /api/products (Server/Dev)
   // 2. Direct static database asset /data/specslook_db.json (Vercel/Static hosting/Zero backend)
-  // 3. Direct GitHub fetch (via credentials if admin, or raw public repository if customer)
-  const refreshProducts = async (): Promise<void> => {
+  const refreshProducts = async (force: boolean = false): Promise<void> => {
     const timestamp = Date.now();
+    const url = force ? `/api/products?_t=${timestamp}` : '/api/products';
 
     // 1. Server API /api/products
     try {
-      const res = await fetch(`/api/products?_t=${timestamp}`, {
-        cache: 'no-store',
+      const res = await fetch(url, {
         headers: {
-          'Cache-Control': 'no-cache, no-store, must-revalidate',
-          Pragma: 'no-cache'
+          Accept: 'application/json'
         }
       });
       if (res.ok) {
@@ -503,24 +501,23 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
 
     try {
-      const timestamp = Date.now();
       const [cRes, sRes, bRes, bnRes] = await Promise.allSettled([
-        fetch(`/api/categories?_t=${timestamp}`, { cache: 'no-store' }).then(async r => {
+        fetch('/api/categories', { headers: { Accept: 'application/json' } }).then(async r => {
           if (!r.ok) return null;
           const data = await r.json();
           return Array.isArray(data) ? data : null;
         }),
-        fetch(`/api/stores?_t=${timestamp}`, { cache: 'no-store' }).then(async r => {
+        fetch('/api/stores', { headers: { Accept: 'application/json' } }).then(async r => {
           if (!r.ok) return null;
           const data = await r.json();
           return Array.isArray(data) ? data : null;
         }),
-        fetch(`/api/blogs?_t=${timestamp}`, { cache: 'no-store' }).then(async r => {
+        fetch('/api/blogs', { headers: { Accept: 'application/json' } }).then(async r => {
           if (!r.ok) return null;
           const data = await r.json();
           return Array.isArray(data) ? data : null;
         }),
-        fetch(`/api/banners?_t=${timestamp}`, { cache: 'no-store' }).then(async r => {
+        fetch('/api/banners', { headers: { Accept: 'application/json' } }).then(async r => {
           if (!r.ok) return null;
           const data = await r.json();
           return Array.isArray(data) ? data : null;
@@ -562,18 +559,46 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   useEffect(() => {
-    verifyAdminSession();
-    fetchData();
-    initAnalytics();
+    // Only check admin authentication if admin credentials exist in storage or user is on /admin route
+    const hasAdminSession = () => {
+      try {
+        return !!(
+          sessionStorage.getItem('specslook_admin_token') ||
+          localStorage.getItem('specslook_admin_token') ||
+          window.location.pathname.startsWith('/admin')
+        );
+      } catch {
+        return false;
+      }
+    };
 
-    // Dynamically refresh products when switching back to tab/window (e.g. mobile app switch or admin tab switch)
-    const handleVisibilityOrFocus = () => {
-      if (document.visibilityState === 'visible') {
+    if (hasAdminSession()) {
+      verifyAdminSession();
+    } else {
+      setAdminAuthLoading(false);
+    }
+
+    // Defer non-critical background data refresh to idle time to preserve FCP/LCP
+    const runDeferredTasks = () => {
+      fetchData();
+      initAnalytics();
+    };
+
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(runDeferredTasks, { timeout: 2000 });
+    } else {
+      setTimeout(runDeferredTasks, 300);
+    }
+
+    // Cooldown visibility refresh to avoid duplicate requests on tab/focus toggling
+    let lastRefresh = Date.now();
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible' && Date.now() - lastRefresh > 60000) {
+        lastRefresh = Date.now();
         refreshProducts();
       }
     };
-    window.addEventListener('visibilitychange', handleVisibilityOrFocus);
-    window.addEventListener('focus', handleVisibilityOrFocus);
+    window.addEventListener('visibilitychange', handleVisibility);
 
     // Cross-tab synchronization via storage events
     const handleStorage = (e: StorageEvent) => {

@@ -120,7 +120,7 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <button onClick={() => navigateTo('shop', { polarized: true })} className="hover:text-white transition-colors">
-                  Chromance Polarized
+                  PolarVue Polarized
                 </button>
               </li>
             </ul>

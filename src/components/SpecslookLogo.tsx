@@ -34,6 +34,8 @@ export const SpecslookLogo: React.FC<LogoProps> = ({
         src={imageSrc}
         alt="Specslook - A Complete Eye wear Zone"
         decoding="async"
+        width={180}
+        height={48}
         className={`${selectedSizeClass} w-auto object-contain transition-transform duration-200 hover:scale-[1.02] ${
           isWhite ? 'brightness-0 invert filter' : ''
         }`}

@@ -77,6 +77,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           alt={product.name}
           loading="lazy"
           decoding="async"
+          width={360}
+          height={270}
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
           onError={(e) => {
             (e.target as HTMLImageElement).src = fallbackImg;
           }}

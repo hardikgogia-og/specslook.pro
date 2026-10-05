@@ -42,8 +42,10 @@ import {
   ShieldAlert,
   Printer,
   GitBranch,
-  Key
+  Key,
+  Globe
 } from 'lucide-react';
+import { GoogleMerchantDashboard } from '../components/admin/GoogleMerchantDashboard.tsx';
 import { useStore } from '../context/StoreContext.tsx';
 import { compressImageFile } from '../utils/apiHelper.ts';
 import { testGitHubConnectionDirect, getStoredGitHubCredentials } from '../utils/githubGitService.ts';
@@ -85,7 +87,7 @@ export const AdminView: React.FC = () => {
   } | null>(null);
 
   // Active Admin Tabs
-  const [activeTab, setActiveTab] = useState<'overview' | 'products' | 'orders' | 'appointments' | 'categories' | 'stores' | 'coupons' | 'customers'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'products' | 'orders' | 'appointments' | 'categories' | 'stores' | 'coupons' | 'customers' | 'google-merchant'>('overview');
 
   // Admin Data States
   const [stats, setStats] = useState<any>(null);
@@ -1269,7 +1271,8 @@ export const AdminView: React.FC = () => {
             { id: 'categories', label: `Categories (${adminCategories.length})`, icon: Tag },
             { id: 'stores', label: `Stores (${adminStores.length})`, icon: MapPin },
             { id: 'coupons', label: `Coupons (${adminCoupons.length})`, icon: Tag },
-            { id: 'customers', label: `Customers (${adminCustomers.length})`, icon: Users }
+            { id: 'customers', label: `Customers (${adminCustomers.length})`, icon: Users },
+            { id: 'google-merchant', label: 'Google Merchant Feed', icon: Globe }
           ].map((tab) => (
             <button
               key={tab.id}
@@ -2427,6 +2430,11 @@ export const AdminView: React.FC = () => {
             </div>
           </div>
         )}
+
+        {/* TAB 9: GOOGLE MERCHANT CENTER & GOOGLE SHOPPING FEED */}
+        {activeTab === 'google-merchant' && (
+          <GoogleMerchantDashboard products={adminProducts} />
+        )}
       </div>
 
       {/* MODAL: ADD / EDIT PRODUCT */}
@@ -2567,7 +2575,7 @@ export const AdminView: React.FC = () => {
                   className="w-4 h-4 accent-red-600"
                 />
                 <label htmlFor="polCheck" className="font-bold text-neutral-800">
-                  Chromance Polarized Crystal Lens Technology
+                  PolarVue Polarized Crystal Lens Technology
                 </label>
               </div>
 

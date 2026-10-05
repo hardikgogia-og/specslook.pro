@@ -171,21 +171,25 @@ export function updateJsonLd(params: {
 
   // 4. Product & Genuine Offer Schema
   if (product) {
-    const offerPrice = product.salePrice || product.price;
-    const imageUrl = product.images && product.images.length > 0 ? product.images[0] : DEFAULT_OG_IMAGE;
+    const offerPrice = product.salePrice && product.salePrice < product.price ? product.salePrice : product.price;
+    const rawImage = product.images && product.images.length > 0 ? product.images[0] : DEFAULT_OG_IMAGE;
+    const imageUrl = rawImage.startsWith('http') ? rawImage : `${SITE_DOMAIN}${rawImage.startsWith('/') ? '' : '/'}${rawImage}`;
+    const allImages = (product.images && product.images.length > 0)
+      ? product.images.map(img => img.startsWith('http') ? img : `${SITE_DOMAIN}${img.startsWith('/') ? '' : '/'}${img}`)
+      : [imageUrl];
 
     const productSchema: any = {
       '@context': 'https://schema.org',
       '@type': 'Product',
       '@id': `${SITE_DOMAIN}/product/${product.slug}/#product`,
       name: product.name,
-      image: product.images && product.images.length > 0 ? product.images : [imageUrl],
+      image: allImages,
       description: product.shortDescription || product.description || `Specslook ${product.name}`,
       sku: product.sku || `SL-${product.id}`,
       mpn: product.sku || `SL-${product.id}`,
       brand: {
         '@type': 'Brand',
-        name: product.brand || 'SPECSLOOK'
+        name: 'Specslook'
       },
       offers: {
         '@type': 'Offer',

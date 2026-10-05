@@ -725,6 +725,8 @@ export const VirtualTryOnModal: React.FC<VirtualTryOnModalProps> = ({
                 autoPlay
                 playsInline
                 muted
+                preload="metadata"
+                poster="#t=0.01"
                 className={`w-full h-full object-cover sm:object-contain transition-transform duration-200 ${
                   isMirrored ? '-scale-x-100' : ''
                 }`}

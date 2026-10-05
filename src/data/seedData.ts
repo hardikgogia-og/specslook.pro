@@ -1222,14 +1222,14 @@ export const initialProducts: Product[] = [
   },
   {
     "id": "prod-007",
-    "slug": "titanium-aviator-polarized-chromance",
-    "name": "Specslook Titanium Chromance Polarized",
+    "slug": "titanium-aviator-polarized-polarvue",
+    "name": "Specslook Titanium PolarVue Polarized",
     "sku": "SL-TI-8090-CHR",
     "brand": "SPECSLOOK",
     "price": 18990,
     "salePrice": 14990,
-    "description": "The pinnacle of luxury eyewear engineering. Crafted from aerospace-grade solid Japanese Beta-Titanium, weighing merely 18 grams while offering unbeatable tensile strength and zero corrosion. Equipped with patented Chromance polarized lenses that calibrate light spectrum for intensified color vibrancy, hyper-defined contrasts and eliminated reflection glare.",
-    "shortDescription": "Aerospace-grade Japanese Titanium with Chromance color-enhancing polarized optics.",
+    "description": "The pinnacle of luxury eyewear engineering. Crafted from aerospace-grade solid Japanese Beta-Titanium, weighing merely 18 grams while offering unbeatable tensile strength and zero corrosion. Equipped with patented PolarVue polarized lenses that calibrate light spectrum for intensified color vibrancy, hyper-defined contrasts and eliminated reflection glare.",
+    "shortDescription": "Aerospace-grade Japanese Titanium with PolarVue color-enhancing polarized optics.",
     "category": "Polarized",
     "subcategory": "Aviator",
     "featured": true,
@@ -1242,7 +1242,7 @@ export const initialProducts: Product[] = [
     ],
     "specifications": {
       "frameMaterial": "100% Pure Japanese Beta-Titanium",
-      "lensMaterial": "High-Definition Chromance Polarized Glass",
+      "lensMaterial": "High-Definition PolarVue Polarized Glass",
       "lensWidthMm": 59,
       "bridgeMm": 15,
       "templeLengthMm": 140,
@@ -1255,7 +1255,7 @@ export const initialProducts: Product[] = [
     "variants": [
       {
         "id": "var-007-1",
-        "colorName": "Titanium Pewter / Silver Chromance",
+        "colorName": "Titanium Pewter / Silver PolarVue",
         "colorHex": "#8A8D8F",
         "frameColor": "Brushed Titanium",
         "lensColor": "Silver Flash Polarized",
@@ -1746,7 +1746,7 @@ export const initialBanners: Banner[] = [
   },
   {
     "id": "banner-02",
-    "title": "CHROMANCE POLARIZED",
+    "title": "POLARVUE POLARIZED",
     "subtitle": "Eliminate glare. Elevate contrast. Experience hyper-vibrant color calibration engineered with aerospace Japanese Titanium.",
     "badge": "ADVANCED OPTICS",
     "ctaText": "DISCOVER POLARIZED",
@@ -2273,9 +2273,9 @@ export const initialOrders: Order[] = [
     "items": [
       {
         "productId": "prod-007",
-        "productName": "Specslook Titanium Chromance Polarized",
+        "productName": "Specslook Titanium PolarVue Polarized",
         "sku": "SL-TI-8090-PWT",
-        "variantName": "Titanium Pewter / Silver Chromance",
+        "variantName": "Titanium Pewter / Silver PolarVue",
         "image": "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=400&q=80",
         "price": 14990,
         "quantity": 1,

@@ -1,8 +1,28 @@
 User-agent: *
 Allow: /
+Allow: /uploads/
+Allow: /assets/
+Allow: /merchant-feed.xml
+Allow: /sitemap.xml
 Disallow: /admin
 Disallow: /api/
 Disallow: /checkout/
 Disallow: /account/
+
+User-agent: Googlebot
+Allow: /
+Allow: /uploads/
+Allow: /assets/
+Allow: /merchant-feed.xml
+Allow: /sitemap.xml
+Disallow: /admin
+Disallow: /api/
+Disallow: /checkout/
+Disallow: /account/
+
+User-agent: Googlebot-Image
+Allow: /
+Allow: /uploads/
+Allow: /assets/
 
 Sitemap: https://specslook.com/sitemap.xml

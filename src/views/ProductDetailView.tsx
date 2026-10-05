@@ -98,9 +98,11 @@ export const ProductDetailView: React.FC = () => {
           (p.sku && p.sku.toLowerCase() === lowerTarget)
         );
 
-        // Fuzzy fallback if exact slug didn't match
+        // Fuzzy fallback if exact slug didn't match (including legacy chromance -> polarvue)
         if (!found) {
+          const aliasTarget = lowerTarget.replace(/chromance/g, 'polarvue');
           found = products.find(p =>
+            p.slug.toLowerCase() === aliasTarget ||
             p.slug.toLowerCase().includes(lowerTarget) ||
             lowerTarget.includes(p.slug.toLowerCase()) ||
             p.name.toLowerCase().includes(lowerTarget)
@@ -324,7 +326,7 @@ export const ProductDetailView: React.FC = () => {
               {product.specifications.isPolarized && (
                 <div className="absolute top-4 right-4 bg-neutral-950 text-white text-[10px] font-bold px-2 py-0.5 uppercase tracking-widest border border-neutral-800 flex items-center gap-1">
                   <ShieldCheck className="w-3 h-3 text-amber-400" />
-                  POLARIZED CHROMANCE
+                  POLARIZED POLARVUE
                 </div>
               )}
 

@@ -133,7 +133,7 @@ export const AboutView: React.FC = () => {
                 <ShieldCheck className="w-5 h-5 text-red-500" />
               </div>
               <h3 className="font-extrabold text-base text-neutral-950 uppercase tracking-wide">
-                Chromance™ UV400 Polarized Optics
+                PolarVue™ UV400 Polarized Optics
               </h3>
               <p className="text-xs text-neutral-600 leading-relaxed">
                 Our solar lenses feature micro-crystalline polarization films that eliminate 99.9% of blinding road and water glare. Combined with 9-layer vacuum anti-reflective coatings, they deliver vivid high-contrast color calibration and 100% UV400 solar shielding.

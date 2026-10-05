@@ -6,6 +6,8 @@ import cors from 'cors';
 import compression from 'compression';
 import { dbService } from './src/server/db.ts';
 import { renderFranchiseHtml } from './src/server/franchisePrerender.ts';
+import { generateMerchantFeedXml, getMerchantDiagnostics } from './src/server/merchantFeed.ts';
+import { renderProductHtml } from './src/server/productPrerender.ts';
 
 const app = express();
 const PORT = 3000;
@@ -165,7 +167,9 @@ const legacy301Redirects: Record<string, string> = {
   '/terms': '/terms-and-conditions/',
   '/terms/': '/terms-and-conditions/',
   '/privacy': '/privacy-policy/',
-  '/privacy/': '/privacy-policy/'
+  '/privacy/': '/privacy-policy/',
+  '/product/titanium-aviator-polarized-chromance': '/product/titanium-aviator-polarized-polarvue/',
+  '/product/titanium-aviator-polarized-chromance/': '/product/titanium-aviator-polarized-polarvue/'
 };
 
 app.use((req: Request, res: Response, next: NextFunction) => {
@@ -177,70 +181,110 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-// Serve sitemap.xml and robots.txt directly
-app.get('/sitemap.xml', (req: Request, res: Response) => {
-  const possiblePaths = [
-    path.join(process.cwd(), 'public', 'sitemap.xml'),
-    path.join(process.cwd(), 'dist', 'sitemap.xml')
-  ];
-  for (const p of possiblePaths) {
-    if (fs.existsSync(p)) {
-      res.setHeader('Content-Type', 'application/xml; charset=utf-8');
-      return res.sendFile(p);
-    }
-  }
-
-  // Dynamic XML generation fallback
+// 1. Google Merchant Center Feed (Public XML endpoint: https://specslook.com/merchant-feed.xml)
+app.get(['/merchant-feed.xml', '/merchant-feed'], (_req: Request, res: Response) => {
   try {
     const products = dbService.getProducts();
-    const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://specslook.com/</loc><lastmod>2026-09-18</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>
-  <url><loc>https://specslook.com/shop/</loc><lastmod>2026-09-18</lastmod><changefreq>daily</changefreq><priority>0.95</priority></url>
-  <url><loc>https://specslook.com/about/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://specslook.com/store/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://specslook.com/franchise/</loc><lastmod>2026-09-30</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://specslook.com/home/home-eyetest/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://specslook.com/contact-us/</loc><lastmod>2026-09-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://specslook.com/blog/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url>
-  <url><loc>https://specslook.com/terms-and-conditions/</loc><lastmod>2026-09-18</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://specslook.com/privacy-policy/</loc><lastmod>2026-09-18</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://specslook.com/product-category/eyeglasses/</loc><lastmod>2026-09-18</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://specslook.com/product-category/eyewear/womeneyewear/</loc><lastmod>2026-09-18</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://specslook.com/product-category/eyewear/meneyewear/</loc><lastmod>2026-09-18</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://specslook.com/product-category/eyewear/kidseyewear/</loc><lastmod>2026-09-18</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
-  <url><loc>https://specslook.com/product-category/sunglasses/</loc><lastmod>2026-09-18</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://specslook.com/product-category/sunglasses/women/</loc><lastmod>2026-09-18</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://specslook.com/product-category/sunglasses/men/</loc><lastmod>2026-09-18</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://specslook.com/product-category/sunglasses/kids/</loc><lastmod>2026-09-18</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
-  <url><loc>https://specslook.com/product-category/attachments/</loc><lastmod>2026-09-18</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
-  <url><loc>https://specslook.com/product-category/polarized/</loc><lastmod>2026-09-18</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
-  <url><loc>https://specslook.com/product-category/blue-light-blockers/</loc><lastmod>2026-09-18</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
-${products.map(p => `  <url><loc>https://specslook.com/product/${encodeURIComponent(p.slug)}/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>`).join('\n')}
-  <url><loc>https://specslook.com/blog/the-legendary-aviator-style-history/</loc><lastmod>2026-09-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://specslook.com/blog/polarized-vs-non-polarized-eyewear-guide/</loc><lastmod>2026-09-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://specslook.com/blog/how-to-choose-frames-for-your-face-shape/</loc><lastmod>2026-09-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-</urlset>`;
+    const xml = generateMerchantFeedXml(products);
     res.setHeader('Content-Type', 'application/xml; charset=utf-8');
+    res.setHeader('Cache-Control', 'public, max-age=1800, stale-while-revalidate=3600');
     return res.send(xml);
-  } catch {
-    return res.status(500).send('Error generating sitemap');
+  } catch (err: any) {
+    console.error('Error generating Google Merchant feed:', err);
+    return res.status(500).send('Error generating Google Merchant feed');
   }
 });
 
-app.get('/robots.txt', (req: Request, res: Response) => {
-  const possiblePaths = [
-    path.join(process.cwd(), 'public', 'robots.txt'),
-    path.join(process.cwd(), 'dist', 'robots.txt')
-  ];
-  for (const p of possiblePaths) {
-    if (fs.existsSync(p)) {
-      res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-      return res.sendFile(p);
-    }
+// 2. Google Merchant Center Diagnostics Route
+app.get(['/api/merchant-diagnostics', '/api/admin/merchant-diagnostics'], (_req: Request, res: Response) => {
+  try {
+    const products = dbService.getProducts();
+    const diagnostics = getMerchantDiagnostics(products);
+    res.setHeader('Cache-Control', 'no-cache');
+    return res.json(diagnostics);
+  } catch (err: any) {
+    return res.status(500).json({ error: 'Failed to generate merchant diagnostics: ' + err.message });
+  }
+});
+
+// 3. Dynamic XML Sitemap (Automatically includes ALL active/current products with canonical URLs)
+app.get('/sitemap.xml', (_req: Request, res: Response) => {
+  try {
+    const products = dbService.getProducts();
+    const today = new Date().toISOString().split('T')[0];
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://specslook.com/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>
+  <url><loc>https://specslook.com/shop/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.95</priority></url>
+  <url><loc>https://specslook.com/about/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://specslook.com/store/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://specslook.com/franchise/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://specslook.com/home/home-eyetest/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://specslook.com/contact-us/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://specslook.com/blog/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://specslook.com/terms-and-conditions/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://specslook.com/privacy-policy/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://specslook.com/product-category/eyeglasses/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://specslook.com/product-category/eyewear/womeneyewear/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://specslook.com/product-category/eyewear/meneyewear/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://specslook.com/product-category/eyewear/kidseyewear/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
+  <url><loc>https://specslook.com/product-category/sunglasses/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://specslook.com/product-category/sunglasses/women/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://specslook.com/product-category/sunglasses/men/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://specslook.com/product-category/sunglasses/kids/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
+  <url><loc>https://specslook.com/product-category/attachments/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
+  <url><loc>https://specslook.com/product-category/polarized/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
+  <url><loc>https://specslook.com/product-category/blue-light-blockers/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
+${products.map(p => `  <url><loc>https://specslook.com/product/${encodeURIComponent(p.slug)}/</loc><lastmod>${p.createdAt ? p.createdAt.split('T')[0] : today}</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>`).join('\n')}
+  <url><loc>https://specslook.com/blog/the-legendary-aviator-style-history/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://specslook.com/blog/polarized-vs-non-polarized-eyewear-guide/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://specslook.com/blog/how-to-choose-frames-for-your-face-shape/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+</urlset>`;
+    res.setHeader('Content-Type', 'application/xml; charset=utf-8');
+    return res.send(xml);
+  } catch (err: any) {
+    console.error('Error generating dynamic sitemap:', err);
+    return res.status(500).send('Error generating dynamic sitemap');
+  }
+});
+
+// 4. Robots.txt (Unblocked for Googlebot, Googlebot-Image, and all crawlers)
+app.get('/robots.txt', (_req: Request, res: Response) => {
+  const robotsPath = path.join(process.cwd(), 'public', 'robots.txt');
+  if (fs.existsSync(robotsPath)) {
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+    return res.sendFile(robotsPath);
   }
   res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-  res.send("User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /api/\nDisallow: /checkout/\nDisallow: /account/\n\nSitemap: https://specslook.com/sitemap.xml\n");
+  return res.send(`User-agent: *
+Allow: /
+Allow: /uploads/
+Allow: /assets/
+Allow: /merchant-feed.xml
+Allow: /sitemap.xml
+Disallow: /admin
+Disallow: /api/
+Disallow: /checkout/
+Disallow: /account/
+
+User-agent: Googlebot
+Allow: /
+Allow: /uploads/
+Allow: /assets/
+Allow: /merchant-feed.xml
+Allow: /sitemap.xml
+Disallow: /admin
+Disallow: /api/
+Disallow: /checkout/
+Disallow: /account/
+
+User-agent: Googlebot-Image
+Allow: /
+Allow: /uploads/
+Allow: /assets/
+
+Sitemap: https://specslook.com/sitemap.xml
+`);
 });
 
 // Serve uploaded photos statically with high-performance caching
@@ -546,6 +590,7 @@ app.get('/api/products', (req: Request, res: Response) => {
     sort: sort ? String(sort) : undefined
   });
 
+  res.setHeader('Cache-Control', 'public, max-age=30, stale-while-revalidate=120');
   return res.json(products);
 });
 
@@ -1043,6 +1088,7 @@ app.delete('/api/coupons/:id', requireAdminAuth, (req: Request, res: Response) =
 
 // Categories
 app.get('/api/categories', (req: Request, res: Response) => {
+  res.setHeader('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
   return res.json(dbService.getCategories());
 });
 
@@ -1065,6 +1111,7 @@ app.delete('/api/categories/:id', requireAdminAuth, (req: Request, res: Response
 
 // Stores
 app.get('/api/stores', (req: Request, res: Response) => {
+  res.setHeader('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
   return res.json(dbService.getStores());
 });
 
@@ -1087,6 +1134,7 @@ app.delete('/api/stores/:id', requireAdminAuth, (req: Request, res: Response) =>
 
 // Blogs
 app.get('/api/blogs', (req: Request, res: Response) => {
+  res.setHeader('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
   return res.json(dbService.getBlogs());
 });
 
@@ -1217,6 +1265,31 @@ async function startServer() {
         next();
       });
 
+      // Dedicated Product Page handler for Google & AI indexing with Product Schema in dev mode
+      app.get(['/product/:slug', '/product/:slug/'], async (req: Request, res: Response, next: NextFunction) => {
+        try {
+          const rawSlug = req.params.slug;
+          const cleanSlug = decodeURIComponent(rawSlug).trim().toLowerCase();
+          const products = dbService.getProducts();
+          const product = products.find(p => p.slug.toLowerCase() === cleanSlug || p.id.toLowerCase() === cleanSlug) ||
+                          products.find(p => p.slug.toLowerCase().replace(/chromance/g, 'polarvue') === cleanSlug);
+          if (product) {
+            const rootHtmlPath = path.join(process.cwd(), 'index.html');
+            if (fs.existsSync(rootHtmlPath)) {
+              let template = fs.readFileSync(rootHtmlPath, 'utf8');
+              template = await vite.transformIndexHtml(req.originalUrl || `/product/${product.slug}/`, template);
+              const html = renderProductHtml(template, product);
+              res.setHeader('Content-Type', 'text/html; charset=utf-8');
+              return res.send(html);
+            }
+          }
+        } catch (e) {
+          next(e);
+          return;
+        }
+        next();
+      });
+
       app.use(vite.middlewares);
     } catch (err) {
       console.warn('Vite dev middleware failed to load, falling back to static files:', err);
@@ -1232,6 +1305,29 @@ async function startServer() {
           return res.send(html);
         }
         res.sendFile(distHtmlPath);
+      });
+
+      app.get(['/product/:slug', '/product/:slug/'], (req: Request, res: Response, next: NextFunction) => {
+        try {
+          const rawSlug = req.params.slug;
+          const cleanSlug = decodeURIComponent(rawSlug).trim().toLowerCase();
+          const products = dbService.getProducts();
+          const product = products.find(p => p.slug.toLowerCase() === cleanSlug || p.id.toLowerCase() === cleanSlug) ||
+                          products.find(p => p.slug.toLowerCase().replace(/chromance/g, 'polarvue') === cleanSlug);
+          if (product) {
+            const distHtmlPath = path.join(distPath, 'index.html');
+            if (fs.existsSync(distHtmlPath)) {
+              const template = fs.readFileSync(distHtmlPath, 'utf8');
+              const html = renderProductHtml(template, product);
+              res.setHeader('Content-Type', 'text/html; charset=utf-8');
+              return res.send(html);
+            }
+          }
+        } catch (e) {
+          next(e);
+          return;
+        }
+        next();
       });
 
       app.get('*', (req: Request, res: Response) => {
@@ -1257,6 +1353,30 @@ async function startServer() {
         return res.send(html);
       }
       res.sendFile(distHtmlPath);
+    });
+
+    // Dedicated Product Page handler for Google & AI indexing with Product Schema in production mode
+    app.get(['/product/:slug', '/product/:slug/'], (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const rawSlug = req.params.slug;
+        const cleanSlug = decodeURIComponent(rawSlug).trim().toLowerCase();
+        const products = dbService.getProducts();
+        const product = products.find(p => p.slug.toLowerCase() === cleanSlug || p.id.toLowerCase() === cleanSlug) ||
+                        products.find(p => p.slug.toLowerCase().replace(/chromance/g, 'polarvue') === cleanSlug);
+        if (product) {
+          const distHtmlPath = path.join(distPath, 'index.html');
+          if (fs.existsSync(distHtmlPath)) {
+            const template = fs.readFileSync(distHtmlPath, 'utf8');
+            const html = renderProductHtml(template, product);
+            res.setHeader('Content-Type', 'text/html; charset=utf-8');
+            return res.send(html);
+          }
+        }
+      } catch (e) {
+        next(e);
+        return;
+      }
+      next();
     });
 
     app.get('*', (req: Request, res: Response) => {

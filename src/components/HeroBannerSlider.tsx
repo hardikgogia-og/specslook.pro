@@ -10,12 +10,6 @@ import {
 } from 'lucide-react';
 import { useStore } from '../context/StoreContext.tsx';
 
-// Photorealistic Hero Images of people wearing Specslook eyewear (High-performance compressed WebP)
-import heroAttachmentsImg from '../assets/images/hero_attachments_shift_1789659615986.webp';
-import heroOpticalsImg from '../assets/images/hero_opticals_person_1789659629107.webp';
-import heroSunglassesImg from '../assets/images/hero_sunglasses_sun_1789659642131.webp';
-import heroLifestyleImg from '../assets/images/hero_lifestyle_duo_1789659659052.webp';
-
 interface SlideData {
   id: string;
   tabLabel: string;
@@ -23,6 +17,7 @@ interface SlideData {
   badge: string;
   badgeColor: string;
   image: string;
+  srcSet: string;
   primaryCtaText: string;
   primaryAction: { view: 'shop' | 'product'; params: Record<string, any> };
 }
@@ -41,7 +36,8 @@ export const HeroBannerSlider: React.FC = () => {
       tabIcon: <Zap className="w-3.5 h-3.5 text-amber-400" />,
       badge: 'INNOVATION SPOTLIGHT • 6-IN-1 ATTACHMENTS',
       badgeColor: 'bg-amber-500 text-black',
-      image: heroAttachmentsImg,
+      image: '/assets/hero/hero_attachments_shift.webp',
+      srcSet: '/assets/hero/hero_attachments_shift_mobile.webp 750w, /assets/hero/hero_attachments_shift.webp 1280w',
       primaryCtaText: 'Shop 6-in-1 Attachments',
       primaryAction: {
         view: 'shop',
@@ -54,7 +50,8 @@ export const HeroBannerSlider: React.FC = () => {
       tabIcon: <Eye className="w-3.5 h-3.5 text-blue-400" />,
       badge: 'FLAGSHIP SPOTLIGHT • PREMIUM OPTICALS',
       badgeColor: 'bg-blue-600 text-white',
-      image: heroOpticalsImg,
+      image: '/assets/hero/hero_opticals.webp',
+      srcSet: '/assets/hero/hero_opticals_mobile.webp 750w, /assets/hero/hero_opticals.webp 1280w',
       primaryCtaText: 'Shop Eyeglasses',
       primaryAction: {
         view: 'shop',
@@ -67,7 +64,8 @@ export const HeroBannerSlider: React.FC = () => {
       tabIcon: <Sun className="w-3.5 h-3.5 text-yellow-400" />,
       badge: 'SOLAR SPOTLIGHT • POLARIZED SUNGLASSES',
       badgeColor: 'bg-red-600 text-white',
-      image: heroSunglassesImg,
+      image: '/assets/hero/hero_sunglasses.webp',
+      srcSet: '/assets/hero/hero_sunglasses_mobile.webp 750w, /assets/hero/hero_sunglasses.webp 1280w',
       primaryCtaText: 'Shop Sunglasses',
       primaryAction: {
         view: 'shop',
@@ -80,7 +78,8 @@ export const HeroBannerSlider: React.FC = () => {
       tabIcon: <Sparkles className="w-3.5 h-3.5 text-red-400" />,
       badge: 'NEW ARRIVALS • SIGNATURE EYEWEAR',
       badgeColor: 'bg-emerald-600 text-white',
-      image: heroLifestyleImg,
+      image: '/assets/hero/hero_lifestyle.webp',
+      srcSet: '/assets/hero/hero_lifestyle_mobile.webp 750w, /assets/hero/hero_lifestyle.webp 1280w',
       primaryCtaText: 'Shop All Collections',
       primaryAction: {
         view: 'shop',
@@ -153,10 +152,14 @@ export const HeroBannerSlider: React.FC = () => {
             >
               <img
                 src={slide.image}
+                srcSet={slide.srcSet}
+                sizes="(max-width: 640px) 100vw, 1280px"
                 alt={slide.badge}
                 referrerPolicy="no-referrer"
                 loading={index === 0 ? 'eager' : 'lazy'}
                 decoding="async"
+                width={1280}
+                height={520}
                 {...(index === 0 ? { fetchPriority: 'high' } : {})}
                 className={`w-full h-full object-cover object-center sm:object-right-top transition-transform duration-3000 ease-out ${
                   isCurrent ? 'scale-105' : 'scale-100'

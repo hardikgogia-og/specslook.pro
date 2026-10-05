@@ -26,12 +26,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://m.media-amazon.com">
-    <link rel="preconnect" href="https://m.media-amazon.com" crossorigin>
     <link rel="dns-prefetch" href="https://images.unsplash.com">
-    <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
     <link rel="dns-prefetch" href="https://d1311wbk6unapo.cloudfront.net">
-    <link rel="preconnect" href="https://d1311wbk6unapo.cloudfront.net" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+    <link rel="dns-prefetch" href="https://i.ytimg.com">
+
+    <!-- Preload LCP Hero Banner Image & Brand Logo for Instant Paint -->
+    <link rel="preload" as="image" type="image/webp" href="/assets/hero/hero_attachments_shift.webp" imagesrcset="/assets/hero/hero_attachments_shift_mobile.webp 750w, /assets/hero/hero_attachments_shift.webp 1280w" imagesizes="(max-width: 640px) 100vw, 1280px" fetchpriority="high">
+    <link rel="preload" as="image" type="image/webp" href="/shop-logopng.webp">
+
+    <!-- Non-render-blocking Google Fonts with instant print swap -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" media="print" onload="this.media='all'">
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap">
+    </noscript>
     <script type="application/ld+json" id="specslook-schema">
     {
       "@context": "https://schema.org",
