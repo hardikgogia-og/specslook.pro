@@ -142,6 +142,50 @@ const getInitialRoute = (): { view: AppView; params: Record<string, any> } => {
     const decoded = decodeURIComponent(productSlugOrId);
     return { view: 'product', params: { slug: decoded, id: decoded } };
   }
+  // Category URLs matching /product-category/...
+  const catMatch = rawPath.match(/^\/product-category\/([^/]+)(?:\/([^/]+))?/i);
+  if (catMatch) {
+    const primary = catMatch[1]?.toLowerCase().replace(/\/+$/, '') || '';
+    const sub = catMatch[2]?.toLowerCase().replace(/\/+$/, '') || '';
+    let category = 'Eyeglasses';
+    let gender: string | undefined = undefined;
+
+    if (primary === 'eyeglasses' || primary === 'eyewear') {
+      category = 'Eyeglasses';
+      if (sub.includes('women')) gender = 'Women';
+      else if (sub.includes('men')) gender = 'Men';
+      else if (sub.includes('kid')) gender = 'Kids';
+    } else if (primary === 'sunglasses' || primary === 'shades') {
+      category = 'Sunglasses';
+      if (sub.includes('women')) gender = 'Women';
+      else if (sub.includes('men')) gender = 'Men';
+      else if (sub.includes('kid')) gender = 'Kids';
+    } else if (primary === 'attachments') {
+      category = 'Attachments';
+    } else if (primary === 'polarized') {
+      category = 'Sunglasses';
+      return { view: 'shop', params: { category: 'Sunglasses', polarized: true } };
+    } else if (primary === 'blue-light-blockers' || primary === 'blue-light') {
+      category = 'Eyeglasses';
+      return { view: 'shop', params: { category: 'Eyeglasses', blueLight: true } };
+    }
+    return { view: 'shop', params: { category, gender, subcategory: sub || undefined } };
+  }
+
+  // Direct category and alias routes
+  if (path === '/eyeglasses' || path === '/eyewear' || path === '/specs') {
+    return { view: 'shop', params: { category: 'Eyeglasses' } };
+  }
+  if (path === '/sunglasses' || path === '/shades') {
+    return { view: 'shop', params: { category: 'Sunglasses' } };
+  }
+  if (path === '/attachments') {
+    return { view: 'shop', params: { category: 'Attachments' } };
+  }
+  if (path === '/polarized') {
+    return { view: 'shop', params: { category: 'Sunglasses', polarized: true } };
+  }
+
   if (path === '/franchise' || hash === 'franchise' || search.get('view') === 'franchise') return { view: 'franchise', params: {} };
   if (path === '/home-eyetest' || path === '/home/home-eyetest' || hash === 'home-eyetest') return { view: 'home-eyetest', params: {} };
   if (path === '/terms' || path === '/terms-and-conditions' || hash === 'terms') return { view: 'terms', params: {} };
@@ -153,7 +197,11 @@ const getInitialRoute = (): { view: AppView; params: Record<string, any> } => {
   if (path === '/blog' || path === '/blogs' || hash === 'blog') return { view: 'blog', params: {} };
   if (path === '/about' || hash === 'about') return { view: 'about', params: {} };
   if (path === '/contact' || path === '/contact-us' || hash === 'contact') return { view: 'contact', params: {} };
-  if (path === '/shop' || hash === 'shop') return { view: 'shop', params: {} };
+  if (path === '/shop' || hash === 'shop') {
+    const category = search.get('category') || undefined;
+    const gender = search.get('gender') || undefined;
+    return { view: 'shop', params: category ? { category, gender } : (gender ? { gender } : {}) };
+  }
   return { view: 'home', params: {} };
 };
 
@@ -680,6 +728,32 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         setCurrentView('shop');
         setViewParams({ category: resolvedCategory, gender: resolvedGender, subcategory: subCat || undefined });
         trackPageView(rawPath, `${resolvedCategory || 'Shop'} Collection`);
+        return;
+      }
+
+      // 3.5 Direct category alias routes: /eyeglasses, /sunglasses, /shades, /attachments, /polarized
+      if (path === '/eyeglasses' || path === '/eyewear' || path === '/specs') {
+        setCurrentView('shop');
+        setViewParams({ category: 'Eyeglasses' });
+        trackPageView('/product-category/eyeglasses/', 'Eyeglasses Collection');
+        return;
+      }
+      if (path === '/sunglasses' || path === '/shades') {
+        setCurrentView('shop');
+        setViewParams({ category: 'Sunglasses' });
+        trackPageView('/product-category/sunglasses/', 'Shades & Sunglasses');
+        return;
+      }
+      if (path === '/attachments') {
+        setCurrentView('shop');
+        setViewParams({ category: 'Attachments' });
+        trackPageView('/product-category/attachments/', 'Clip-On Attachments');
+        return;
+      }
+      if (path === '/polarized') {
+        setCurrentView('shop');
+        setViewParams({ category: 'Sunglasses', polarized: true });
+        trackPageView('/product-category/polarized/', 'PolarVue Polarized Shades');
         return;
       }
 

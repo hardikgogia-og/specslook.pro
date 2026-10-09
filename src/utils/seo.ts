@@ -155,6 +155,67 @@ export function updateJsonLd(params: {
     }
   });
 
+  // 2.5 SiteNavigationElement for Google Sitelinks on Homepage
+  if (canonicalUrl === `${SITE_DOMAIN}/` || canonicalUrl === SITE_DOMAIN) {
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      '@id': `${SITE_DOMAIN}/#sitelinks`,
+      name: 'Specslook Sitelinks Navigation',
+      itemListElement: [
+        {
+          '@type': 'SiteNavigationElement',
+          position: 1,
+          name: 'Eyeglasses',
+          description: 'Handcrafted optical frames, titanium spectacles, and blue-light lenses',
+          url: `${SITE_DOMAIN}/product-category/eyeglasses/`
+        },
+        {
+          '@type': 'SiteNavigationElement',
+          position: 2,
+          name: 'Shades & Sunglasses',
+          description: 'Luxury aviator sunglasses, polarized shades, and UV400 eyewear',
+          url: `${SITE_DOMAIN}/product-category/sunglasses/`
+        },
+        {
+          '@type': 'SiteNavigationElement',
+          position: 3,
+          name: 'Home Eye Test',
+          description: 'Certified 14-point computerized eye examination at your doorstep',
+          url: `${SITE_DOMAIN}/home/home-eyetest/`
+        },
+        {
+          '@type': 'SiteNavigationElement',
+          position: 4,
+          name: 'About Us',
+          description: 'Specslook heritage, master optics, and flagship ateliers',
+          url: `${SITE_DOMAIN}/about/`
+        },
+        {
+          '@type': 'SiteNavigationElement',
+          position: 5,
+          name: 'Flagship Stores',
+          description: 'Visit Specslook optical boutiques and showrooms in Gurugram',
+          url: `${SITE_DOMAIN}/store/`
+        },
+        {
+          '@type': 'SiteNavigationElement',
+          position: 6,
+          name: 'Franchise Opportunities',
+          description: 'Turnkey optical store ownership with 24-month buyback guarantee',
+          url: `${SITE_DOMAIN}/franchise/`
+        },
+        {
+          '@type': 'SiteNavigationElement',
+          position: 7,
+          name: 'All Eyewear Shop',
+          description: 'Browse the complete Specslook luxury collection',
+          url: `${SITE_DOMAIN}/shop/`
+        }
+      ]
+    });
+  }
+
   // 3. Breadcrumbs Schema
   if (breadcrumbs && breadcrumbs.length > 0) {
     schemas.push({

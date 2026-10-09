@@ -8,6 +8,7 @@ import { dbService } from './src/server/db.ts';
 import { renderFranchiseHtml } from './src/server/franchisePrerender.ts';
 import { generateMerchantFeedXml, getMerchantDiagnostics } from './src/server/merchantFeed.ts';
 import { renderProductHtml } from './src/server/productPrerender.ts';
+import { renderHomeHtml, renderCategoryHtml, renderStaticPageHtml, CATEGORY_CONFIGS } from './src/server/pagePrerender.ts';
 
 const app = express();
 const PORT = 3000;
@@ -111,9 +112,17 @@ app.use((req: Request, res: Response, next: NextFunction) => {
         cleanPath === '/admin' ||
         cleanPath === '' ||
         cleanPath === '/' ||
+        cleanPath === '/home' ||
         cleanPath === '/store' ||
         cleanPath === '/stores' ||
         cleanPath === '/shop' ||
+        cleanPath === '/eyeglasses' ||
+        cleanPath === '/eyewear' ||
+        cleanPath === '/specs' ||
+        cleanPath === '/sunglasses' ||
+        cleanPath === '/shades' ||
+        cleanPath === '/attachments' ||
+        cleanPath === '/polarized' ||
         cleanPath === '/checkout' ||
         cleanPath === '/cart' ||
         cleanPath === '/tracking' ||
@@ -148,8 +157,24 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-// 301 Permanent Redirects for legacy URLs to preserve search equity without chains or loops
+// 301 Permanent Redirects for legacy & shorthand URLs to preserve search equity without chains or loops
 const legacy301Redirects: Record<string, string> = {
+  '/home': '/',
+  '/home/': '/',
+  '/eyeglasses': '/product-category/eyeglasses/',
+  '/eyeglasses/': '/product-category/eyeglasses/',
+  '/eyewear': '/product-category/eyeglasses/',
+  '/eyewear/': '/product-category/eyeglasses/',
+  '/specs': '/product-category/eyeglasses/',
+  '/specs/': '/product-category/eyeglasses/',
+  '/sunglasses': '/product-category/sunglasses/',
+  '/sunglasses/': '/product-category/sunglasses/',
+  '/shades': '/product-category/sunglasses/',
+  '/shades/': '/product-category/sunglasses/',
+  '/attachments': '/product-category/attachments/',
+  '/attachments/': '/product-category/attachments/',
+  '/polarized': '/product-category/polarized/',
+  '/polarized/': '/product-category/polarized/',
   '/about-us': '/about/',
   '/about-us/': '/about/',
   '/stores': '/store/',
@@ -1235,6 +1260,41 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 // VITE MIDDLEWARE / PRODUCTION STATIC SERVING
 // -------------------------------------------------------------
 
+function findCategoryConfig(urlPath: string) {
+  const clean = urlPath.toLowerCase().replace(/^\/+/, '').replace(/\/+$/, '');
+  if (clean === 'product-category/eyeglasses' || clean === 'eyeglasses' || clean === 'eyewear' || clean === 'specs') {
+    return CATEGORY_CONFIGS['eyeglasses'];
+  }
+  if (clean === 'product-category/sunglasses' || clean === 'sunglasses' || clean === 'shades') {
+    return CATEGORY_CONFIGS['sunglasses'];
+  }
+  if (clean === 'product-category/eyewear/meneyewear' || clean === 'product-category/eyeglasses/men') {
+    return CATEGORY_CONFIGS['eyewear-men'];
+  }
+  if (clean === 'product-category/eyewear/womeneyewear' || clean === 'product-category/eyeglasses/women') {
+    return CATEGORY_CONFIGS['eyewear-women'];
+  }
+  if (clean === 'product-category/eyewear/kidseyewear' || clean === 'product-category/eyeglasses/kids') {
+    return CATEGORY_CONFIGS['eyewear-kids'];
+  }
+  if (clean === 'product-category/sunglasses/men') {
+    return CATEGORY_CONFIGS['sunglasses-men'];
+  }
+  if (clean === 'product-category/sunglasses/women') {
+    return CATEGORY_CONFIGS['sunglasses-women'];
+  }
+  if (clean === 'product-category/sunglasses/kids') {
+    return CATEGORY_CONFIGS['sunglasses-kids'];
+  }
+  if (clean === 'product-category/attachments' || clean === 'attachments') {
+    return CATEGORY_CONFIGS['attachments'];
+  }
+  if (clean === 'product-category/polarized' || clean === 'polarized') {
+    return CATEGORY_CONFIGS['polarized'];
+  }
+  return null;
+}
+
 async function startServer() {
   const isDistBundle = typeof __filename !== 'undefined' && __filename.includes('dist');
   const isProduction = process.env.NODE_ENV === 'production' || isDistBundle;
@@ -1247,7 +1307,48 @@ async function startServer() {
         appType: 'spa'
       });
 
-      // Dedicated Franchise Page handler for Google & AI indexing in dev mode
+      // 1. Homepage Prerender Handler (Googlebot & Sitelinks in dev)
+      app.get('/', async (req: Request, res: Response, next: NextFunction) => {
+        try {
+          const rootHtmlPath = path.join(process.cwd(), 'index.html');
+          if (fs.existsSync(rootHtmlPath)) {
+            let template = fs.readFileSync(rootHtmlPath, 'utf8');
+            template = await vite.transformIndexHtml('/', template);
+            const products = dbService.getProducts();
+            const html = renderHomeHtml(template, products);
+            res.setHeader('Content-Type', 'text/html; charset=utf-8');
+            return res.send(html);
+          }
+        } catch (e) {
+          next(e);
+          return;
+        }
+        next();
+      });
+
+      // 2. Category Pages Prerender Handler (Eyeglasses, Shades, Subcategories)
+      app.get(/^\/product-category\/.*/, async (req: Request, res: Response, next: NextFunction) => {
+        try {
+          const config = findCategoryConfig(req.path);
+          if (config) {
+            const rootHtmlPath = path.join(process.cwd(), 'index.html');
+            if (fs.existsSync(rootHtmlPath)) {
+              let template = fs.readFileSync(rootHtmlPath, 'utf8');
+              template = await vite.transformIndexHtml(req.originalUrl || req.path, template);
+              const products = dbService.getProducts();
+              const html = renderCategoryHtml(template, config, products);
+              res.setHeader('Content-Type', 'text/html; charset=utf-8');
+              return res.send(html);
+            }
+          }
+        } catch (e) {
+          next(e);
+          return;
+        }
+        next();
+      });
+
+      // 3. Dedicated Franchise Page handler for Google & AI indexing in dev mode
       app.get(['/franchise', '/franchise/'], async (req: Request, res: Response, next: NextFunction) => {
         try {
           const rootHtmlPath = path.join(process.cwd(), 'index.html');
@@ -1265,7 +1366,7 @@ async function startServer() {
         next();
       });
 
-      // Dedicated Product Page handler for Google & AI indexing with Product Schema in dev mode
+      // 4. Dedicated Product Page handler for Google & AI indexing with Product Schema in dev mode
       app.get(['/product/:slug', '/product/:slug/'], async (req: Request, res: Response, next: NextFunction) => {
         try {
           const rawSlug = req.params.slug;
@@ -1290,45 +1391,40 @@ async function startServer() {
         next();
       });
 
+      // 5. Dedicated Static Content Pages (About, Home Eye Test, Stores, Contact, Shop)
+      const staticDevPages: Array<{ key: 'about' | 'home-eyetest' | 'stores' | 'contact' | 'shop'; routes: string[] }> = [
+        { key: 'about', routes: ['/about', '/about/'] },
+        { key: 'home-eyetest', routes: ['/home/home-eyetest', '/home/home-eyetest/'] },
+        { key: 'stores', routes: ['/store', '/store/'] },
+        { key: 'contact', routes: ['/contact-us', '/contact-us/'] },
+        { key: 'shop', routes: ['/shop', '/shop/'] }
+      ];
+
+      for (const sp of staticDevPages) {
+        app.get(sp.routes, async (req: Request, res: Response, next: NextFunction) => {
+          try {
+            const rootHtmlPath = path.join(process.cwd(), 'index.html');
+            if (fs.existsSync(rootHtmlPath)) {
+              let template = fs.readFileSync(rootHtmlPath, 'utf8');
+              template = await vite.transformIndexHtml(req.originalUrl || req.path, template);
+              const products = dbService.getProducts();
+              const html = renderStaticPageHtml(template, sp.key, products);
+              res.setHeader('Content-Type', 'text/html; charset=utf-8');
+              return res.send(html);
+            }
+          } catch (e) {
+            next(e);
+            return;
+          }
+          next();
+        });
+      }
+
       app.use(vite.middlewares);
     } catch (err) {
       console.warn('Vite dev middleware failed to load, falling back to static files:', err);
       const distPath = path.join(process.cwd(), 'dist');
       app.use(express.static(distPath));
-
-      app.get(['/franchise', '/franchise/'], (req: Request, res: Response) => {
-        const distHtmlPath = path.join(distPath, 'index.html');
-        if (fs.existsSync(distHtmlPath)) {
-          const template = fs.readFileSync(distHtmlPath, 'utf8');
-          const html = renderFranchiseHtml(template);
-          res.setHeader('Content-Type', 'text/html; charset=utf-8');
-          return res.send(html);
-        }
-        res.sendFile(distHtmlPath);
-      });
-
-      app.get(['/product/:slug', '/product/:slug/'], (req: Request, res: Response, next: NextFunction) => {
-        try {
-          const rawSlug = req.params.slug;
-          const cleanSlug = decodeURIComponent(rawSlug).trim().toLowerCase();
-          const products = dbService.getProducts();
-          const product = products.find(p => p.slug.toLowerCase() === cleanSlug || p.id.toLowerCase() === cleanSlug) ||
-                          products.find(p => p.slug.toLowerCase().replace(/chromance/g, 'polarvue') === cleanSlug);
-          if (product) {
-            const distHtmlPath = path.join(distPath, 'index.html');
-            if (fs.existsSync(distHtmlPath)) {
-              const template = fs.readFileSync(distHtmlPath, 'utf8');
-              const html = renderProductHtml(template, product);
-              res.setHeader('Content-Type', 'text/html; charset=utf-8');
-              return res.send(html);
-            }
-          }
-        } catch (e) {
-          next(e);
-          return;
-        }
-        next();
-      });
 
       app.get('*', (req: Request, res: Response) => {
         res.sendFile(path.join(distPath, 'index.html'));
@@ -1338,7 +1434,43 @@ async function startServer() {
     const distPath = path.join(process.cwd(), 'dist');
     app.use(express.static(distPath));
 
-    // Dedicated Franchise Page handler for Google & AI indexing in production mode
+    // 1. Homepage Prerender Handler in production
+    app.get('/', (req: Request, res: Response) => {
+      const distIndex = path.join(distPath, 'index.html');
+      if (fs.existsSync(distIndex)) {
+        res.setHeader('Content-Type', 'text/html; charset=utf-8');
+        return res.sendFile(distIndex);
+      }
+      res.sendFile(distIndex);
+    });
+
+    // 2. Category Pages Prerender Handler in production
+    app.get(/^\/product-category\/.*/, (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const config = findCategoryConfig(req.path);
+        if (config) {
+          const catStaticHtml = path.join(distPath, ...config.canonicalPath.split('/').filter(Boolean), 'index.html');
+          if (fs.existsSync(catStaticHtml)) {
+            res.setHeader('Content-Type', 'text/html; charset=utf-8');
+            return res.sendFile(catStaticHtml);
+          }
+          const distHtmlPath = path.join(distPath, 'index.html');
+          if (fs.existsSync(distHtmlPath)) {
+            const template = fs.readFileSync(distHtmlPath, 'utf8');
+            const products = dbService.getProducts();
+            const html = renderCategoryHtml(template, config, products);
+            res.setHeader('Content-Type', 'text/html; charset=utf-8');
+            return res.send(html);
+          }
+        }
+      } catch (e) {
+        next(e);
+        return;
+      }
+      next();
+    });
+
+    // 3. Dedicated Franchise Page handler in production mode
     app.get(['/franchise', '/franchise/'], (req: Request, res: Response) => {
       const staticFranchiseHtml = path.join(distPath, 'franchise', 'index.html');
       if (fs.existsSync(staticFranchiseHtml)) {
@@ -1355,11 +1487,16 @@ async function startServer() {
       res.sendFile(distHtmlPath);
     });
 
-    // Dedicated Product Page handler for Google & AI indexing with Product Schema in production mode
+    // 4. Dedicated Product Page handler in production mode
     app.get(['/product/:slug', '/product/:slug/'], (req: Request, res: Response, next: NextFunction) => {
       try {
         const rawSlug = req.params.slug;
         const cleanSlug = decodeURIComponent(rawSlug).trim().toLowerCase();
+        const prodStatic = path.join(distPath, 'product', cleanSlug, 'index.html');
+        if (fs.existsSync(prodStatic)) {
+          res.setHeader('Content-Type', 'text/html; charset=utf-8');
+          return res.sendFile(prodStatic);
+        }
         const products = dbService.getProducts();
         const product = products.find(p => p.slug.toLowerCase() === cleanSlug || p.id.toLowerCase() === cleanSlug) ||
                         products.find(p => p.slug.toLowerCase().replace(/chromance/g, 'polarvue') === cleanSlug);

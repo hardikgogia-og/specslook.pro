@@ -1,9 +1,20 @@
 import { dbService } from '../src/server/db.ts';
+import { initialProducts } from '../src/data/seedData.ts';
 import { getMerchantDiagnostics } from '../src/server/merchantFeed.ts';
 
 export default function handler(req: any, res: any) {
   try {
-    const products = dbService.getProducts();
+    let products: any[] = [];
+    try {
+      products = dbService.getProducts();
+    } catch (dbErr) {
+      console.warn('[diagnostics] dbService error, falling back to seedData:', dbErr);
+    }
+
+    if (!Array.isArray(products) || products.length === 0) {
+      products = initialProducts;
+    }
+
     const diagnostics = getMerchantDiagnostics(products);
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
     res.setHeader('Cache-Control', 'no-cache');

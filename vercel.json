@@ -54,6 +54,18 @@
     }
   ],
   "redirects": [
+    { "source": "/home", "destination": "/", "permanent": true },
+    { "source": "/home/", "destination": "/", "permanent": true },
+    { "source": "/eyeglasses", "destination": "/product-category/eyeglasses/", "permanent": true },
+    { "source": "/eyeglasses/", "destination": "/product-category/eyeglasses/", "permanent": true },
+    { "source": "/eyewear", "destination": "/product-category/eyeglasses/", "permanent": true },
+    { "source": "/eyewear/", "destination": "/product-category/eyeglasses/", "permanent": true },
+    { "source": "/specs", "destination": "/product-category/eyeglasses/", "permanent": true },
+    { "source": "/specs/", "destination": "/product-category/eyeglasses/", "permanent": true },
+    { "source": "/sunglasses", "destination": "/product-category/sunglasses/", "permanent": true },
+    { "source": "/sunglasses/", "destination": "/product-category/sunglasses/", "permanent": true },
+    { "source": "/shades", "destination": "/product-category/sunglasses/", "permanent": true },
+    { "source": "/shades/", "destination": "/product-category/sunglasses/", "permanent": true },
     { "source": "/about-us", "destination": "/about/", "permanent": true },
     { "source": "/about-us/", "destination": "/about/", "permanent": true },
     { "source": "/stores", "destination": "/store/", "permanent": true },
@@ -71,7 +83,9 @@
     { "source": "/terms", "destination": "/terms-and-conditions/", "permanent": true },
     { "source": "/terms/", "destination": "/terms-and-conditions/", "permanent": true },
     { "source": "/privacy", "destination": "/privacy-policy/", "permanent": true },
-    { "source": "/privacy/", "destination": "/privacy-policy/", "permanent": true }
+    { "source": "/privacy/", "destination": "/privacy-policy/", "permanent": true },
+    { "source": "/product/titanium-aviator-polarized-chromance", "destination": "/product/titanium-aviator-polarized-polarvue/", "permanent": true },
+    { "source": "/product/titanium-aviator-polarized-chromance/", "destination": "/product/titanium-aviator-polarized-polarvue/", "permanent": true }
   ],
   "rewrites": [
     { "source": "/merchant-feed.xml", "destination": "/api/merchant-feed" },
