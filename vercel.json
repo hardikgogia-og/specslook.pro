@@ -1,13 +1,8 @@
 {
   "version": 2,
-  "cleanUrls": true,
-  "trailingSlash": false,
   "functions": {
-    "api/*.ts": {
-      "includeFiles": "data/**,public/data/**,dist/**,public/**"
-    },
     "api/**/*.ts": {
-      "includeFiles": "data/**,public/data/**,dist/**,public/**"
+      "includeFiles": "data/**,public/data/**"
     }
   },
   "headers": [
@@ -31,43 +26,15 @@
       ]
     },
     {
-      "source": "/sitemap.xml",
+      "source": "/(.*)\\.xml",
       "headers": [
         { "key": "Content-Type", "value": "application/xml; charset=utf-8" },
         { "key": "Cache-Control", "value": "public, max-age=1800, stale-while-revalidate=3600" },
-        { "key": "X-Robots-Tag", "value": "all" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" }
-      ]
-    },
-    {
-      "source": "/sitemap",
-      "headers": [
-        { "key": "Content-Type", "value": "application/xml; charset=utf-8" },
-        { "key": "Cache-Control", "value": "public, max-age=1800, stale-while-revalidate=3600" },
-        { "key": "X-Robots-Tag", "value": "all" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" }
-      ]
-    },
-    {
-      "source": "/merchant-feed.xml",
-      "headers": [
-        { "key": "Content-Type", "value": "application/xml; charset=utf-8" },
-        { "key": "Cache-Control", "value": "public, max-age=1800, stale-while-revalidate=3600" },
-        { "key": "X-Robots-Tag", "value": "all" },
         { "key": "Access-Control-Allow-Origin", "value": "*" }
       ]
     },
     {
       "source": "/merchant-feed",
-      "headers": [
-        { "key": "Content-Type", "value": "application/xml; charset=utf-8" },
-        { "key": "Cache-Control", "value": "public, max-age=1800, stale-while-revalidate=3600" },
-        { "key": "X-Robots-Tag", "value": "all" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" }
-      ]
-    },
-    {
-      "source": "/(.*)\\.xml",
       "headers": [
         { "key": "Content-Type", "value": "application/xml; charset=utf-8" },
         { "key": "Cache-Control", "value": "public, max-age=1800, stale-while-revalidate=3600" },
@@ -107,39 +74,13 @@
     { "source": "/privacy/", "destination": "/privacy-policy/", "permanent": true }
   ],
   "rewrites": [
-    { "source": "/sitemap.xml", "destination": "/api/sitemap" },
-    { "source": "/sitemap", "destination": "/api/sitemap" },
-    { "source": "/api/sitemap.xml", "destination": "/api/sitemap" },
-    { "source": "/api/sitemap", "destination": "/api/sitemap" },
     { "source": "/merchant-feed.xml", "destination": "/api/merchant-feed" },
     { "source": "/merchant-feed", "destination": "/api/merchant-feed" },
     { "source": "/api/merchant-feed.xml", "destination": "/api/merchant-feed" },
-    { "source": "/api/merchant-feed", "destination": "/api/merchant-feed" },
-    { "source": "/merchant-diagnostics", "destination": "/api/merchant-diagnostics" },
-    { "source": "/api/merchant-diagnostics", "destination": "/api/merchant-diagnostics" },
+    { "source": "/sitemap.xml", "destination": "/api/sitemap" },
     { "source": "/robots.txt", "destination": "/robots.txt" },
-    { "source": "/product/:slug*", "destination": "/product/:slug*/index.html" },
-    { "source": "/franchise", "destination": "/franchise/index.html" },
-    { "source": "/franchise/", "destination": "/franchise/index.html" },
-    { "source": "/about", "destination": "/about/index.html" },
-    { "source": "/about/", "destination": "/about/index.html" },
-    { "source": "/store", "destination": "/store/index.html" },
-    { "source": "/store/", "destination": "/store/index.html" },
-    { "source": "/home/home-eyetest", "destination": "/home/home-eyetest/index.html" },
-    { "source": "/home/home-eyetest/", "destination": "/home/home-eyetest/index.html" },
-    { "source": "/contact-us", "destination": "/contact-us/index.html" },
-    { "source": "/contact-us/", "destination": "/contact-us/index.html" },
-    { "source": "/shop", "destination": "/shop/index.html" },
-    { "source": "/shop/", "destination": "/shop/index.html" },
-    { "source": "/blog", "destination": "/blog/index.html" },
-    { "source": "/blog/", "destination": "/blog/index.html" },
-    { "source": "/terms-and-conditions", "destination": "/terms-and-conditions/index.html" },
-    { "source": "/terms-and-conditions/", "destination": "/terms-and-conditions/index.html" },
-    { "source": "/privacy-policy", "destination": "/privacy-policy/index.html" },
-    { "source": "/privacy-policy/", "destination": "/privacy-policy/index.html" },
-    { "source": "/product-category/:path*", "destination": "/product-category/:path*/index.html" },
     {
-      "source": "/((?!api/|data/|uploads/|assets/|sitemap\\.xml|sitemap|robots\\.txt|merchant-feed\\.xml|merchant-feed|merchant-diagnostics).*)",
+      "source": "/((?!api/|data/|uploads/|assets/|sitemap\\.xml|robots\\.txt|merchant-feed\\.xml|merchant-feed).*)",
       "destination": "/index.html"
     }
   ]

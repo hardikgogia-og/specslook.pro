@@ -5,7 +5,6 @@ import fs from 'fs';
 import cors from 'cors';
 import compression from 'compression';
 import { dbService } from './src/server/db.ts';
-import { initialProducts } from './src/data/seedData.ts';
 import { renderFranchiseHtml } from './src/server/franchisePrerender.ts';
 import { generateMerchantFeedXml, getMerchantDiagnostics } from './src/server/merchantFeed.ts';
 import { renderProductHtml } from './src/server/productPrerender.ts';
@@ -185,38 +184,13 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 // 1. Google Merchant Center Feed (Public XML endpoint: https://specslook.com/merchant-feed.xml)
 app.get(['/merchant-feed.xml', '/merchant-feed', '/api/merchant-feed.xml', '/api/merchant-feed'], (_req: Request, res: Response) => {
   try {
-    let products: any[] = [];
-    try {
-      products = dbService.getProducts();
-    } catch (e) {
-      console.warn('dbService error in merchant-feed, falling back to seedData:', e);
-    }
-    if (!Array.isArray(products) || products.length === 0) {
-      products = initialProducts;
-    }
+    const products = dbService.getProducts();
     const xml = generateMerchantFeedXml(products);
     res.setHeader('Content-Type', 'application/xml; charset=utf-8');
     res.setHeader('Cache-Control', 'public, max-age=1800, stale-while-revalidate=3600');
-    res.setHeader('X-Robots-Tag', 'all');
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    return res.status(200).send(xml);
+    return res.send(xml);
   } catch (err: any) {
     console.error('Error generating Google Merchant feed:', err);
-    // Disk fallback to pre-generated XML
-    try {
-      const publicPath = path.join(process.cwd(), 'public', 'merchant-feed.xml');
-      const distPath = path.join(process.cwd(), 'dist', 'merchant-feed.xml');
-      const targetPath = fs.existsSync(publicPath) ? publicPath : (fs.existsSync(distPath) ? distPath : null);
-      if (targetPath) {
-        res.setHeader('Content-Type', 'application/xml; charset=utf-8');
-        res.setHeader('Cache-Control', 'public, max-age=1800, stale-while-revalidate=3600');
-        res.setHeader('X-Robots-Tag', 'all');
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        return res.status(200).send(fs.readFileSync(targetPath, 'utf8'));
-      }
-    } catch (diskErr) {
-      console.warn('Fallback disk read failed for merchant feed in server.ts:', diskErr);
-    }
     return res.status(500).send('Error generating Google Merchant feed');
   }
 });
@@ -224,18 +198,9 @@ app.get(['/merchant-feed.xml', '/merchant-feed', '/api/merchant-feed.xml', '/api
 // 2. Google Merchant Center Diagnostics Route
 app.get(['/api/merchant-diagnostics', '/api/admin/merchant-diagnostics', '/merchant-diagnostics'], (_req: Request, res: Response) => {
   try {
-    let products: any[] = [];
-    try {
-      products = dbService.getProducts();
-    } catch {
-      products = initialProducts;
-    }
-    if (!Array.isArray(products) || products.length === 0) {
-      products = initialProducts;
-    }
+    const products = dbService.getProducts();
     const diagnostics = getMerchantDiagnostics(products);
     res.setHeader('Cache-Control', 'no-cache');
-    res.setHeader('Access-Control-Allow-Origin', '*');
     return res.json(diagnostics);
   } catch (err: any) {
     return res.status(500).json({ error: 'Failed to generate merchant diagnostics: ' + err.message });
@@ -243,91 +208,42 @@ app.get(['/api/merchant-diagnostics', '/api/admin/merchant-diagnostics', '/merch
 });
 
 // 3. Dynamic XML Sitemap (Automatically includes ALL active/current products with canonical URLs)
-app.get(['/sitemap.xml', '/sitemap', '/api/sitemap.xml', '/api/sitemap'], (_req: Request, res: Response) => {
+app.get(['/sitemap.xml', '/api/sitemap.xml', '/api/sitemap'], (_req: Request, res: Response) => {
   try {
-    let products: any[] = [];
-    try {
-      products = dbService.getProducts();
-    } catch (e) {
-      console.warn('dbService error in sitemap, falling back to seedData:', e);
-    }
-    if (!Array.isArray(products) || products.length === 0) {
-      products = initialProducts;
-    }
-
+    const products = dbService.getProducts();
     const today = new Date().toISOString().split('T')[0];
-    const staticUrls = [
-      { loc: 'https://specslook.com/', priority: '1.0', changefreq: 'daily' },
-      { loc: 'https://specslook.com/shop/', priority: '0.95', changefreq: 'daily' },
-      { loc: 'https://specslook.com/about/', priority: '0.8', changefreq: 'weekly' },
-      { loc: 'https://specslook.com/store/', priority: '0.85', changefreq: 'weekly' },
-      { loc: 'https://specslook.com/franchise/', priority: '0.9', changefreq: 'weekly' },
-      { loc: 'https://specslook.com/home/home-eyetest/', priority: '0.9', changefreq: 'weekly' },
-      { loc: 'https://specslook.com/contact-us/', priority: '0.7', changefreq: 'monthly' },
-      { loc: 'https://specslook.com/blog/', priority: '0.75', changefreq: 'weekly' },
-      { loc: 'https://specslook.com/terms-and-conditions/', priority: '0.6', changefreq: 'monthly' },
-      { loc: 'https://specslook.com/privacy-policy/', priority: '0.6', changefreq: 'monthly' },
-      { loc: 'https://specslook.com/product-category/eyeglasses/', priority: '0.9', changefreq: 'daily' },
-      { loc: 'https://specslook.com/product-category/eyewear/womeneyewear/', priority: '0.9', changefreq: 'daily' },
-      { loc: 'https://specslook.com/product-category/eyewear/meneyewear/', priority: '0.9', changefreq: 'daily' },
-      { loc: 'https://specslook.com/product-category/eyewear/kidseyewear/', priority: '0.85', changefreq: 'daily' },
-      { loc: 'https://specslook.com/product-category/sunglasses/', priority: '0.9', changefreq: 'daily' },
-      { loc: 'https://specslook.com/product-category/sunglasses/women/', priority: '0.9', changefreq: 'daily' },
-      { loc: 'https://specslook.com/product-category/sunglasses/men/', priority: '0.9', changefreq: 'daily' },
-      { loc: 'https://specslook.com/product-category/sunglasses/kids/', priority: '0.85', changefreq: 'daily' },
-      { loc: 'https://specslook.com/product-category/attachments/', priority: '0.85', changefreq: 'daily' },
-      { loc: 'https://specslook.com/product-category/polarized/', priority: '0.85', changefreq: 'daily' },
-      { loc: 'https://specslook.com/product-category/blue-light-blockers/', priority: '0.85', changefreq: 'daily' }
-    ];
-
-    const productUrls = products
-      .filter((p: any) => p && p.slug && p.name)
-      .map((p: any) => ({
-        loc: `https://specslook.com/product/${encodeURIComponent(p.slug)}/`,
-        lastmod: p.createdAt ? p.createdAt.split('T')[0] : today,
-        changefreq: 'weekly',
-        priority: '0.85'
-      }));
-
-    const blogUrls = [
-      { loc: 'https://specslook.com/blog/the-legendary-aviator-style-history/', priority: '0.7', changefreq: 'monthly' },
-      { loc: 'https://specslook.com/blog/polarized-vs-non-polarized-eyewear-guide/', priority: '0.7', changefreq: 'monthly' },
-      { loc: 'https://specslook.com/blog/how-to-choose-frames-for-your-face-shape/', priority: '0.7', changefreq: 'monthly' }
-    ];
-
-    const allUrls = [...staticUrls, ...productUrls, ...blogUrls];
-
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${allUrls.map(u => `  <url>
-    <loc>${u.loc}</loc>
-    <lastmod>${(u as any).lastmod || today}</lastmod>
-    <changefreq>${u.changefreq}</changefreq>
-    <priority>${u.priority}</priority>
-  </url>`).join('\n')}
+  <url><loc>https://specslook.com/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>
+  <url><loc>https://specslook.com/shop/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.95</priority></url>
+  <url><loc>https://specslook.com/about/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://specslook.com/store/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://specslook.com/franchise/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://specslook.com/home/home-eyetest/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://specslook.com/contact-us/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://specslook.com/blog/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://specslook.com/terms-and-conditions/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://specslook.com/privacy-policy/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://specslook.com/product-category/eyeglasses/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://specslook.com/product-category/eyewear/womeneyewear/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://specslook.com/product-category/eyewear/meneyewear/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://specslook.com/product-category/eyewear/kidseyewear/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
+  <url><loc>https://specslook.com/product-category/sunglasses/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://specslook.com/product-category/sunglasses/women/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://specslook.com/product-category/sunglasses/men/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://specslook.com/product-category/sunglasses/kids/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
+  <url><loc>https://specslook.com/product-category/attachments/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
+  <url><loc>https://specslook.com/product-category/polarized/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
+  <url><loc>https://specslook.com/product-category/blue-light-blockers/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
+${products.map(p => `  <url><loc>https://specslook.com/product/${encodeURIComponent(p.slug)}/</loc><lastmod>${p.createdAt ? p.createdAt.split('T')[0] : today}</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>`).join('\n')}
+  <url><loc>https://specslook.com/blog/the-legendary-aviator-style-history/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://specslook.com/blog/polarized-vs-non-polarized-eyewear-guide/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://specslook.com/blog/how-to-choose-frames-for-your-face-shape/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 </urlset>`;
-
     res.setHeader('Content-Type', 'application/xml; charset=utf-8');
-    res.setHeader('Cache-Control', 'public, max-age=1800, stale-while-revalidate=3600');
-    res.setHeader('X-Robots-Tag', 'all');
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    return res.status(200).send(xml);
+    return res.send(xml);
   } catch (err: any) {
-    console.error('Error generating dynamic sitemap in server.ts:', err);
-    try {
-      const publicPath = path.join(process.cwd(), 'public', 'sitemap.xml');
-      const distPath = path.join(process.cwd(), 'dist', 'sitemap.xml');
-      const targetPath = fs.existsSync(publicPath) ? publicPath : (fs.existsSync(distPath) ? distPath : null);
-      if (targetPath) {
-        res.setHeader('Content-Type', 'application/xml; charset=utf-8');
-        res.setHeader('Cache-Control', 'public, max-age=1800, stale-while-revalidate=3600');
-        res.setHeader('X-Robots-Tag', 'all');
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        return res.status(200).send(fs.readFileSync(targetPath, 'utf8'));
-      }
-    } catch (diskErr) {
-      console.warn('Fallback disk read failed for sitemap in server.ts:', diskErr);
-    }
+    console.error('Error generating dynamic sitemap:', err);
     return res.status(500).send('Error generating dynamic sitemap');
   }
 });
@@ -1316,75 +1232,6 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 });
 
 // -------------------------------------------------------------
-// UNIVERSAL SEO & SSR PAGE HANDLERS (Active across Dev, Prod & Vercel)
-// -------------------------------------------------------------
-
-// Dedicated Franchise Page handler for Google & AI indexing
-app.get(['/franchise', '/franchise/'], (req: Request, res: Response, next: NextFunction) => {
-  const staticFranchiseHtml = path.join(process.cwd(), 'dist', 'franchise', 'index.html');
-  if (fs.existsSync(staticFranchiseHtml)) {
-    res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    return res.sendFile(staticFranchiseHtml);
-  }
-  const distHtmlPath = path.join(process.cwd(), 'dist', 'index.html');
-  const rootHtmlPath = path.join(process.cwd(), 'index.html');
-  const templatePath = fs.existsSync(distHtmlPath) ? distHtmlPath : (fs.existsSync(rootHtmlPath) ? rootHtmlPath : null);
-  if (templatePath) {
-    const template = fs.readFileSync(templatePath, 'utf8');
-    const html = renderFranchiseHtml(template);
-    res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    return res.send(html);
-  }
-  next();
-});
-
-// Dedicated Product Page handler for Google & AI indexing with Product Schema
-app.get(['/product/:slug', '/product/:slug/'], (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const rawSlug = req.params.slug;
-    const cleanSlug = decodeURIComponent(rawSlug).trim().toLowerCase();
-
-    // 1. Check if pre-rendered static HTML exists on disk
-    const staticDir = path.join(process.cwd(), 'dist', 'product', cleanSlug, 'index.html');
-    const staticFile = path.join(process.cwd(), 'dist', 'product', `${cleanSlug}.html`);
-    const staticTarget = fs.existsSync(staticDir) ? staticDir : (fs.existsSync(staticFile) ? staticFile : null);
-    if (staticTarget) {
-      res.setHeader('Content-Type', 'text/html; charset=utf-8');
-      return res.sendFile(staticTarget);
-    }
-
-    // 2. Dynamic SSR injection for products
-    let products: any[] = [];
-    try {
-      products = dbService.getProducts();
-    } catch {
-      products = initialProducts;
-    }
-    if (!Array.isArray(products) || products.length === 0) {
-      products = initialProducts;
-    }
-
-    const product = products.find(p => p.slug.toLowerCase() === cleanSlug || p.id.toLowerCase() === cleanSlug) ||
-                    products.find(p => p.slug.toLowerCase().replace(/chromance/g, 'polarvue') === cleanSlug);
-    if (product) {
-      const distHtmlPath = path.join(process.cwd(), 'dist', 'index.html');
-      const rootHtmlPath = path.join(process.cwd(), 'index.html');
-      const templatePath = fs.existsSync(distHtmlPath) ? distHtmlPath : (fs.existsSync(rootHtmlPath) ? rootHtmlPath : null);
-      if (templatePath) {
-        const template = fs.readFileSync(templatePath, 'utf8');
-        const html = renderProductHtml(template, product);
-        res.setHeader('Content-Type', 'text/html; charset=utf-8');
-        return res.send(html);
-      }
-    }
-  } catch (e) {
-    next(e);
-    return;
-  }
-  next();
-});
-
-// -------------------------------------------------------------
 // VITE MIDDLEWARE / PRODUCTION STATIC SERVING
 // -------------------------------------------------------------
 
@@ -1399,11 +1246,90 @@ async function startServer() {
         server: { middlewareMode: true },
         appType: 'spa'
       });
+
+      // Dedicated Franchise Page handler for Google & AI indexing in dev mode
+      app.get(['/franchise', '/franchise/'], async (req: Request, res: Response, next: NextFunction) => {
+        try {
+          const rootHtmlPath = path.join(process.cwd(), 'index.html');
+          if (fs.existsSync(rootHtmlPath)) {
+            let template = fs.readFileSync(rootHtmlPath, 'utf8');
+            template = await vite.transformIndexHtml(req.originalUrl || '/franchise/', template);
+            const html = renderFranchiseHtml(template);
+            res.setHeader('Content-Type', 'text/html; charset=utf-8');
+            return res.send(html);
+          }
+        } catch (e) {
+          next(e);
+          return;
+        }
+        next();
+      });
+
+      // Dedicated Product Page handler for Google & AI indexing with Product Schema in dev mode
+      app.get(['/product/:slug', '/product/:slug/'], async (req: Request, res: Response, next: NextFunction) => {
+        try {
+          const rawSlug = req.params.slug;
+          const cleanSlug = decodeURIComponent(rawSlug).trim().toLowerCase();
+          const products = dbService.getProducts();
+          const product = products.find(p => p.slug.toLowerCase() === cleanSlug || p.id.toLowerCase() === cleanSlug) ||
+                          products.find(p => p.slug.toLowerCase().replace(/chromance/g, 'polarvue') === cleanSlug);
+          if (product) {
+            const rootHtmlPath = path.join(process.cwd(), 'index.html');
+            if (fs.existsSync(rootHtmlPath)) {
+              let template = fs.readFileSync(rootHtmlPath, 'utf8');
+              template = await vite.transformIndexHtml(req.originalUrl || `/product/${product.slug}/`, template);
+              const html = renderProductHtml(template, product);
+              res.setHeader('Content-Type', 'text/html; charset=utf-8');
+              return res.send(html);
+            }
+          }
+        } catch (e) {
+          next(e);
+          return;
+        }
+        next();
+      });
+
       app.use(vite.middlewares);
     } catch (err) {
       console.warn('Vite dev middleware failed to load, falling back to static files:', err);
       const distPath = path.join(process.cwd(), 'dist');
       app.use(express.static(distPath));
+
+      app.get(['/franchise', '/franchise/'], (req: Request, res: Response) => {
+        const distHtmlPath = path.join(distPath, 'index.html');
+        if (fs.existsSync(distHtmlPath)) {
+          const template = fs.readFileSync(distHtmlPath, 'utf8');
+          const html = renderFranchiseHtml(template);
+          res.setHeader('Content-Type', 'text/html; charset=utf-8');
+          return res.send(html);
+        }
+        res.sendFile(distHtmlPath);
+      });
+
+      app.get(['/product/:slug', '/product/:slug/'], (req: Request, res: Response, next: NextFunction) => {
+        try {
+          const rawSlug = req.params.slug;
+          const cleanSlug = decodeURIComponent(rawSlug).trim().toLowerCase();
+          const products = dbService.getProducts();
+          const product = products.find(p => p.slug.toLowerCase() === cleanSlug || p.id.toLowerCase() === cleanSlug) ||
+                          products.find(p => p.slug.toLowerCase().replace(/chromance/g, 'polarvue') === cleanSlug);
+          if (product) {
+            const distHtmlPath = path.join(distPath, 'index.html');
+            if (fs.existsSync(distHtmlPath)) {
+              const template = fs.readFileSync(distHtmlPath, 'utf8');
+              const html = renderProductHtml(template, product);
+              res.setHeader('Content-Type', 'text/html; charset=utf-8');
+              return res.send(html);
+            }
+          }
+        } catch (e) {
+          next(e);
+          return;
+        }
+        next();
+      });
+
       app.get('*', (req: Request, res: Response) => {
         res.sendFile(path.join(distPath, 'index.html'));
       });
@@ -1411,6 +1337,48 @@ async function startServer() {
   } else {
     const distPath = path.join(process.cwd(), 'dist');
     app.use(express.static(distPath));
+
+    // Dedicated Franchise Page handler for Google & AI indexing in production mode
+    app.get(['/franchise', '/franchise/'], (req: Request, res: Response) => {
+      const staticFranchiseHtml = path.join(distPath, 'franchise', 'index.html');
+      if (fs.existsSync(staticFranchiseHtml)) {
+        res.setHeader('Content-Type', 'text/html; charset=utf-8');
+        return res.sendFile(staticFranchiseHtml);
+      }
+      const distHtmlPath = path.join(distPath, 'index.html');
+      if (fs.existsSync(distHtmlPath)) {
+        const template = fs.readFileSync(distHtmlPath, 'utf8');
+        const html = renderFranchiseHtml(template);
+        res.setHeader('Content-Type', 'text/html; charset=utf-8');
+        return res.send(html);
+      }
+      res.sendFile(distHtmlPath);
+    });
+
+    // Dedicated Product Page handler for Google & AI indexing with Product Schema in production mode
+    app.get(['/product/:slug', '/product/:slug/'], (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const rawSlug = req.params.slug;
+        const cleanSlug = decodeURIComponent(rawSlug).trim().toLowerCase();
+        const products = dbService.getProducts();
+        const product = products.find(p => p.slug.toLowerCase() === cleanSlug || p.id.toLowerCase() === cleanSlug) ||
+                        products.find(p => p.slug.toLowerCase().replace(/chromance/g, 'polarvue') === cleanSlug);
+        if (product) {
+          const distHtmlPath = path.join(distPath, 'index.html');
+          if (fs.existsSync(distHtmlPath)) {
+            const template = fs.readFileSync(distHtmlPath, 'utf8');
+            const html = renderProductHtml(template, product);
+            res.setHeader('Content-Type', 'text/html; charset=utf-8');
+            return res.send(html);
+          }
+        }
+      } catch (e) {
+        next(e);
+        return;
+      }
+      next();
+    });
+
     app.get('*', (req: Request, res: Response) => {
       res.sendFile(path.join(distPath, 'index.html'));
     });
