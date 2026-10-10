@@ -47,7 +47,7 @@ export const HomeView: React.FC = () => {
       {/* 1.5. DEDICATED GENDER & OPTICAL CATEGORIES */}
       <section className="py-12 bg-white border-b border-neutral-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-3">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-3">
             <div>
               <div className="text-xs font-extrabold text-red-600 uppercase tracking-widest mb-1 flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5" />
@@ -62,11 +62,81 @@ export const HomeView: React.FC = () => {
             </p>
           </div>
 
+          {/* Direct Crawlable Category Navigation Links for Mobile & Desktop Googlebot */}
+          <div className="flex flex-wrap items-center gap-2 mb-8 text-xs font-bold uppercase tracking-wider" aria-label="Featured Categories Navigation">
+            <a
+              href="/product-category/eyeglasses/"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  navigateTo('shop', { category: 'Eyeglasses' });
+                }
+              }}
+              className="px-3.5 py-1.5 bg-neutral-900 text-white rounded-xs hover:bg-red-600 transition-colors shadow-xs"
+            >
+              All Eyeglasses
+            </a>
+            <a
+              href="/product-category/sunglasses/"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  navigateTo('shop', { category: 'Sunglasses' });
+                }
+              }}
+              className="px-3.5 py-1.5 bg-red-600 text-white rounded-xs hover:bg-red-700 transition-colors shadow-xs"
+            >
+              Shades &amp; Sunglasses
+            </a>
+            <a
+              href="/product-category/attachments/"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  navigateTo('shop', { category: 'Attachments' });
+                }
+              }}
+              className="px-3.5 py-1.5 bg-neutral-100 text-neutral-800 rounded-xs hover:bg-neutral-200 transition-colors border border-neutral-300"
+            >
+              6-in-1 Attachments
+            </a>
+            <a
+              href="/home/home-eyetest/"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  navigateTo('home-eyetest');
+                }
+              }}
+              className="px-3.5 py-1.5 bg-emerald-50 text-emerald-800 rounded-xs hover:bg-emerald-100 transition-colors border border-emerald-300"
+            >
+              Home Eye Test
+            </a>
+            <a
+              href="/store/"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  navigateTo('stores');
+                }
+              }}
+              className="px-3.5 py-1.5 bg-neutral-50 text-neutral-700 rounded-xs hover:bg-neutral-100 transition-colors border border-neutral-200"
+            >
+              Flagship Stores
+            </a>
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Eyeglasses for Men */}
-            <div
-              onClick={() => navigateTo('shop', { category: 'Eyeglasses', gender: 'Men' })}
-              className="group relative overflow-hidden rounded-xs min-h-[320px] sm:min-h-[350px] p-6 flex flex-col justify-between cursor-pointer border border-neutral-700/80 shadow-lg hover:shadow-2xl transition-all duration-300"
+            <a
+              href="/product-category/eyewear/meneyewear/"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  navigateTo('shop', { category: 'Eyeglasses', gender: 'Men' });
+                }
+              }}
+              className="group relative overflow-hidden rounded-xs min-h-[320px] sm:min-h-[350px] p-6 flex flex-col justify-between cursor-pointer border border-neutral-700/80 shadow-lg hover:shadow-2xl transition-all duration-300 block"
             >
               <img
                 src={eyeglassManImg}
@@ -76,7 +146,6 @@ export const HomeView: React.FC = () => {
                 className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 referrerPolicy="no-referrer"
               />
-              {/* Eye-catching high visibility overlay: clear picture with readable bottom text */}
               <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/15 to-transparent group-hover:from-neutral-950/90 transition-colors" />
 
               <div className="relative z-10 flex items-center justify-between">
@@ -100,12 +169,18 @@ export const HomeView: React.FC = () => {
                   <span>&rarr;</span>
                 </div>
               </div>
-            </div>
+            </a>
 
             {/* Eyeglasses for Women */}
-            <div
-              onClick={() => navigateTo('shop', { category: 'Eyeglasses', gender: 'Women' })}
-              className="group relative overflow-hidden rounded-xs min-h-[320px] sm:min-h-[350px] p-6 flex flex-col justify-between cursor-pointer border border-neutral-700/80 shadow-lg hover:shadow-2xl transition-all duration-300"
+            <a
+              href="/product-category/eyewear/womeneyewear/"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  navigateTo('shop', { category: 'Eyeglasses', gender: 'Women' });
+                }
+              }}
+              className="group relative overflow-hidden rounded-xs min-h-[320px] sm:min-h-[350px] p-6 flex flex-col justify-between cursor-pointer border border-neutral-700/80 shadow-lg hover:shadow-2xl transition-all duration-300 block"
             >
               <img
                 src={eyeglassWomanImg}
@@ -115,7 +190,6 @@ export const HomeView: React.FC = () => {
                 className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 referrerPolicy="no-referrer"
               />
-              {/* Eye-catching high visibility overlay: clear picture with readable bottom text */}
               <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/15 to-transparent group-hover:from-neutral-950/90 transition-colors" />
 
               <div className="relative z-10 flex items-center justify-between">
@@ -139,12 +213,18 @@ export const HomeView: React.FC = () => {
                   <span>&rarr;</span>
                 </div>
               </div>
-            </div>
+            </a>
 
             {/* Eyeglasses for Kids */}
-            <div
-              onClick={() => navigateTo('shop', { category: 'Eyeglasses', gender: 'Kids' })}
-              className="group relative overflow-hidden rounded-xs min-h-[320px] sm:min-h-[350px] p-6 flex flex-col justify-between cursor-pointer border border-neutral-700/80 shadow-lg hover:shadow-2xl transition-all duration-300"
+            <a
+              href="/product-category/eyewear/kidseyewear/"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  navigateTo('shop', { category: 'Eyeglasses', gender: 'Kids' });
+                }
+              }}
+              className="group relative overflow-hidden rounded-xs min-h-[320px] sm:min-h-[350px] p-6 flex flex-col justify-between cursor-pointer border border-neutral-700/80 shadow-lg hover:shadow-2xl transition-all duration-300 block"
             >
               <img
                 src={eyeglassKidImg}
@@ -154,7 +234,6 @@ export const HomeView: React.FC = () => {
                 className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 referrerPolicy="no-referrer"
               />
-              {/* Eye-catching high visibility overlay: clear picture with readable bottom text */}
               <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/15 to-transparent group-hover:from-neutral-950/90 transition-colors" />
 
               <div className="relative z-10 flex items-center justify-between">
@@ -178,12 +257,18 @@ export const HomeView: React.FC = () => {
                   <span>&rarr;</span>
                 </div>
               </div>
-            </div>
+            </a>
 
             {/* Sunglasses for Men */}
-            <div
-              onClick={() => navigateTo('shop', { category: 'Sunglasses', gender: 'Men' })}
-              className="group relative overflow-hidden rounded-xs min-h-[320px] sm:min-h-[350px] p-6 flex flex-col justify-between cursor-pointer border border-neutral-700/80 shadow-lg hover:shadow-2xl transition-all duration-300"
+            <a
+              href="/product-category/sunglasses/men/"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  navigateTo('shop', { category: 'Sunglasses', gender: 'Men' });
+                }
+              }}
+              className="group relative overflow-hidden rounded-xs min-h-[320px] sm:min-h-[350px] p-6 flex flex-col justify-between cursor-pointer border border-neutral-700/80 shadow-lg hover:shadow-2xl transition-all duration-300 block"
             >
               <img
                 src={sunglassManImg}
@@ -193,7 +278,6 @@ export const HomeView: React.FC = () => {
                 className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 referrerPolicy="no-referrer"
               />
-              {/* Eye-catching high visibility overlay: clear picture with readable bottom text */}
               <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/15 to-transparent group-hover:from-neutral-950/90 transition-colors" />
 
               <div className="relative z-10 flex items-center justify-between">
@@ -217,12 +301,18 @@ export const HomeView: React.FC = () => {
                   <span>&rarr;</span>
                 </div>
               </div>
-            </div>
+            </a>
 
             {/* Sunglasses for Women */}
-            <div
-              onClick={() => navigateTo('shop', { category: 'Sunglasses', gender: 'Women' })}
-              className="group relative overflow-hidden rounded-xs min-h-[320px] sm:min-h-[350px] p-6 flex flex-col justify-between cursor-pointer border border-neutral-700/80 shadow-lg hover:shadow-2xl transition-all duration-300"
+            <a
+              href="/product-category/sunglasses/women/"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  navigateTo('shop', { category: 'Sunglasses', gender: 'Women' });
+                }
+              }}
+              className="group relative overflow-hidden rounded-xs min-h-[320px] sm:min-h-[350px] p-6 flex flex-col justify-between cursor-pointer border border-neutral-700/80 shadow-lg hover:shadow-2xl transition-all duration-300 block"
             >
               <img
                 src={sunglassWomanImg}
@@ -232,7 +322,6 @@ export const HomeView: React.FC = () => {
                 className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 referrerPolicy="no-referrer"
               />
-              {/* Eye-catching high visibility overlay: clear picture with readable bottom text */}
               <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/15 to-transparent group-hover:from-neutral-950/90 transition-colors" />
 
               <div className="relative z-10 flex items-center justify-between">
@@ -256,12 +345,18 @@ export const HomeView: React.FC = () => {
                   <span>&rarr;</span>
                 </div>
               </div>
-            </div>
+            </a>
 
             {/* Sunglasses for Kids */}
-            <div
-              onClick={() => navigateTo('shop', { category: 'Sunglasses', gender: 'Kids' })}
-              className="group relative overflow-hidden rounded-xs min-h-[320px] sm:min-h-[350px] p-6 flex flex-col justify-between cursor-pointer border border-neutral-700/80 shadow-lg hover:shadow-2xl transition-all duration-300"
+            <a
+              href="/product-category/sunglasses/kids/"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  navigateTo('shop', { category: 'Sunglasses', gender: 'Kids' });
+                }
+              }}
+              className="group relative overflow-hidden rounded-xs min-h-[320px] sm:min-h-[350px] p-6 flex flex-col justify-between cursor-pointer border border-neutral-700/80 shadow-lg hover:shadow-2xl transition-all duration-300 block"
             >
               <img
                 src={sunglassKidImg}
@@ -271,7 +366,6 @@ export const HomeView: React.FC = () => {
                 className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 referrerPolicy="no-referrer"
               />
-              {/* Eye-catching high visibility overlay: clear picture with readable bottom text */}
               <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/15 to-transparent group-hover:from-neutral-950/90 transition-colors" />
 
               <div className="relative z-10 flex items-center justify-between">
@@ -295,7 +389,7 @@ export const HomeView: React.FC = () => {
                   <span>&rarr;</span>
                 </div>
               </div>
-            </div>
+            </a>
           </div>
 
           {/* Glass Add-on callout ribbon */}
@@ -311,12 +405,18 @@ export const HomeView: React.FC = () => {
                 </p>
               </div>
             </div>
-            <button
-              onClick={() => navigateTo('shop', { category: 'Eyeglasses' })}
+            <a
+              href="/product-category/eyeglasses/"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  navigateTo('shop', { category: 'Eyeglasses' });
+                }
+              }}
               className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-extrabold text-[11px] uppercase tracking-wider rounded-xs transition-colors shrink-0"
             >
               Explore Optical Frames
-            </button>
+            </a>
           </div>
         </div>
       </section>

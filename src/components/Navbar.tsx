@@ -142,24 +142,37 @@ export const Navbar: React.FC = () => {
         </div>
 
         {/* Logo */}
-        <div
-          onClick={() => handleNavClick('home')}
+        <a
+          href="/"
+          onClick={(e) => {
+            if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+              e.preventDefault();
+              handleNavClick('home');
+            }
+          }}
           className="flex items-center cursor-pointer select-none"
+          aria-label="Specslook Home"
         >
           <SpecslookLogo size="md" />
-        </div>
+        </a>
 
         {/* Desktop Primary Nav Links */}
         <nav className="hidden lg:flex items-center gap-5 xl:gap-7 font-semibold text-xs tracking-wider uppercase">
-          <button
-            onClick={() => handleNavClick('home')}
+          <a
+            href="/"
+            onClick={(e) => {
+              if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                e.preventDefault();
+                handleNavClick('home');
+              }
+            }}
             className={`transition-colors py-2 relative hover:text-red-600 ${
               currentView === 'home' ? 'text-red-600 font-bold' : 'text-neutral-800'
             }`}
           >
             Home
             {currentView === 'home' && <span className="absolute bottom-0 inset-x-0 h-0.5 bg-red-600"></span>}
-          </button>
+          </a>
 
           {/* EYEGLASSES DROPDOWN */}
           <div
@@ -167,8 +180,14 @@ export const Navbar: React.FC = () => {
             onMouseEnter={() => handleMouseEnterDropdown('eyeglasses')}
             onMouseLeave={handleMouseLeaveDropdown}
           >
-            <button
-              onClick={() => handleNavClick('shop', { category: 'Eyeglasses' })}
+            <a
+              href="/product-category/eyeglasses/"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                  e.preventDefault();
+                  handleNavClick('shop', { category: 'Eyeglasses' });
+                }
+              }}
               className={`transition-colors py-2 relative flex items-center gap-1 hover:text-red-600 ${
                 currentView === 'shop' && viewParams.category === 'Eyeglasses'
                   ? 'text-red-600 font-bold'
@@ -180,7 +199,7 @@ export const Navbar: React.FC = () => {
               {currentView === 'shop' && viewParams.category === 'Eyeglasses' && (
                 <span className="absolute bottom-0 inset-x-0 h-0.5 bg-red-600"></span>
               )}
-            </button>
+            </a>
 
             {/* Eyeglasses Dropdown Panel */}
             {activeDropdown === 'eyeglasses' && (
@@ -189,46 +208,70 @@ export const Navbar: React.FC = () => {
                   Shop Eyeglasses By Category
                 </div>
                 <div className="py-1 space-y-0.5">
-                  <button
-                    onClick={() => handleNavClick('shop', { category: 'Eyeglasses', gender: 'Men' })}
-                    className="w-full text-left px-3 py-2 hover:bg-neutral-50 rounded-xs flex items-center justify-between group transition-colors"
+                  <a
+                    href="/product-category/eyewear/meneyewear/"
+                    onClick={(e) => {
+                      if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                        e.preventDefault();
+                        handleNavClick('shop', { category: 'Eyeglasses', gender: 'Men' });
+                      }
+                    }}
+                    className="w-full text-left px-3 py-2 hover:bg-neutral-50 rounded-xs flex items-center justify-between group transition-colors block"
                   >
                     <div>
                       <div className="text-xs font-bold text-neutral-900 group-hover:text-red-600">For Men</div>
                       <div className="text-[10px] text-neutral-500 normal-case">Executive titanium, square & browline frames</div>
                     </div>
                     <ArrowRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-red-600 group-hover:translate-x-0.5 transition-all" />
-                  </button>
+                  </a>
 
-                  <button
-                    onClick={() => handleNavClick('shop', { category: 'Eyeglasses', gender: 'Women' })}
-                    className="w-full text-left px-3 py-2 hover:bg-neutral-50 rounded-xs flex items-center justify-between group transition-colors"
+                  <a
+                    href="/product-category/eyewear/womeneyewear/"
+                    onClick={(e) => {
+                      if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                        e.preventDefault();
+                        handleNavClick('shop', { category: 'Eyeglasses', gender: 'Women' });
+                      }
+                    }}
+                    className="w-full text-left px-3 py-2 hover:bg-neutral-50 rounded-xs flex items-center justify-between group transition-colors block"
                   >
                     <div>
                       <div className="text-xs font-bold text-neutral-900 group-hover:text-red-600">For Women</div>
                       <div className="text-[10px] text-neutral-500 normal-case">Cat-eye, champagne crystal & rose gold optics</div>
                     </div>
                     <ArrowRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-red-600 group-hover:translate-x-0.5 transition-all" />
-                  </button>
+                  </a>
 
-                  <button
-                    onClick={() => handleNavClick('shop', { category: 'Eyeglasses', gender: 'Kids' })}
-                    className="w-full text-left px-3 py-2 hover:bg-neutral-50 rounded-xs flex items-center justify-between group transition-colors"
+                  <a
+                    href="/product-category/eyewear/kidseyewear/"
+                    onClick={(e) => {
+                      if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                        e.preventDefault();
+                        handleNavClick('shop', { category: 'Eyeglasses', gender: 'Kids' });
+                      }
+                    }}
+                    className="w-full text-left px-3 py-2 hover:bg-neutral-50 rounded-xs flex items-center justify-between group transition-colors block"
                   >
                     <div>
                       <div className="text-xs font-bold text-neutral-900 group-hover:text-red-600">For Kids</div>
                       <div className="text-[10px] text-neutral-500 normal-case">Shatterproof flex TR90 & blue-light study frames</div>
                     </div>
                     <ArrowRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-red-600 group-hover:translate-x-0.5 transition-all" />
-                  </button>
+                  </a>
 
-                  <button
-                    onClick={() => handleNavClick('shop', { category: 'Eyeglasses' })}
-                    className="w-full text-left px-3 py-2 mt-1 bg-neutral-50 hover:bg-neutral-100 rounded-xs flex items-center justify-between group font-bold text-xs text-neutral-900"
+                  <a
+                    href="/product-category/eyeglasses/"
+                    onClick={(e) => {
+                      if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                        e.preventDefault();
+                        handleNavClick('shop', { category: 'Eyeglasses' });
+                      }
+                    }}
+                    className="w-full text-left px-3 py-2 mt-1 bg-neutral-50 hover:bg-neutral-100 rounded-xs flex items-center justify-between group font-bold text-xs text-neutral-900 block"
                   >
                     <span>View All Eyeglasses</span>
                     <span className="text-[10px] text-red-600">Explore &rarr;</span>
-                  </button>
+                  </a>
                 </div>
               </div>
             )}
@@ -240,8 +283,14 @@ export const Navbar: React.FC = () => {
             onMouseEnter={() => handleMouseEnterDropdown('sunglasses')}
             onMouseLeave={handleMouseLeaveDropdown}
           >
-            <button
-              onClick={() => handleNavClick('shop', { category: 'Sunglasses' })}
+            <a
+              href="/product-category/sunglasses/"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                  e.preventDefault();
+                  handleNavClick('shop', { category: 'Sunglasses' });
+                }
+              }}
               className={`transition-colors py-2 relative flex items-center gap-1 hover:text-red-600 ${
                 currentView === 'shop' && viewParams.category === 'Sunglasses'
                   ? 'text-red-600 font-bold'
@@ -253,7 +302,7 @@ export const Navbar: React.FC = () => {
               {currentView === 'shop' && viewParams.category === 'Sunglasses' && (
                 <span className="absolute bottom-0 inset-x-0 h-0.5 bg-red-600"></span>
               )}
-            </button>
+            </a>
 
             {/* Sunglasses Dropdown Panel */}
             {activeDropdown === 'sunglasses' && (
@@ -262,54 +311,84 @@ export const Navbar: React.FC = () => {
                   Shop Sunglasses By Category
                 </div>
                 <div className="py-1 space-y-0.5">
-                  <button
-                    onClick={() => handleNavClick('shop', { category: 'Sunglasses', gender: 'Men' })}
-                    className="w-full text-left px-3 py-2 hover:bg-neutral-50 rounded-xs flex items-center justify-between group transition-colors"
+                  <a
+                    href="/product-category/sunglasses/men/"
+                    onClick={(e) => {
+                      if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                        e.preventDefault();
+                        handleNavClick('shop', { category: 'Sunglasses', gender: 'Men' });
+                      }
+                    }}
+                    className="w-full text-left px-3 py-2 hover:bg-neutral-50 rounded-xs flex items-center justify-between group transition-colors block"
                   >
                     <div>
                       <div className="text-xs font-bold text-neutral-900 group-hover:text-red-600">For Men</div>
                       <div className="text-[10px] text-neutral-500 normal-case">Aviator Pilot, Justin Matte Wrap & Clubmaster</div>
                     </div>
                     <ArrowRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-red-600 group-hover:translate-x-0.5 transition-all" />
-                  </button>
+                  </a>
 
-                  <button
-                    onClick={() => handleNavClick('shop', { category: 'Sunglasses', gender: 'Women' })}
-                    className="w-full text-left px-3 py-2 hover:bg-neutral-50 rounded-xs flex items-center justify-between group transition-colors"
+                  <a
+                    href="/product-category/sunglasses/women/"
+                    onClick={(e) => {
+                      if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                        e.preventDefault();
+                        handleNavClick('shop', { category: 'Sunglasses', gender: 'Women' });
+                      }
+                    }}
+                    className="w-full text-left px-3 py-2 hover:bg-neutral-50 rounded-xs flex items-center justify-between group transition-colors block"
                   >
                     <div>
                       <div className="text-xs font-bold text-neutral-900 group-hover:text-red-600">For Women</div>
                       <div className="text-[10px] text-neutral-500 normal-case">Oversized Butterfly, Cat-eye & Rose Gold Hexagon</div>
                     </div>
                     <ArrowRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-red-600 group-hover:translate-x-0.5 transition-all" />
-                  </button>
+                  </a>
 
-                  <button
-                    onClick={() => handleNavClick('shop', { category: 'Sunglasses', gender: 'Kids' })}
-                    className="w-full text-left px-3 py-2 hover:bg-neutral-50 rounded-xs flex items-center justify-between group transition-colors"
+                  <a
+                    href="/product-category/sunglasses/kids/"
+                    onClick={(e) => {
+                      if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                        e.preventDefault();
+                        handleNavClick('shop', { category: 'Sunglasses', gender: 'Kids' });
+                      }
+                    }}
+                    className="w-full text-left px-3 py-2 hover:bg-neutral-50 rounded-xs flex items-center justify-between group transition-colors block"
                   >
                     <div>
                       <div className="text-xs font-bold text-neutral-900 group-hover:text-red-600">For Kids</div>
                       <div className="text-[10px] text-neutral-500 normal-case">100% UV400 Child Aviator & Shatterproof Wayfarer</div>
                     </div>
                     <ArrowRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-red-600 group-hover:translate-x-0.5 transition-all" />
-                  </button>
+                  </a>
 
-                  <button
-                    onClick={() => handleNavClick('shop', { category: 'Sunglasses' })}
-                    className="w-full text-left px-3 py-2 mt-1 bg-neutral-50 hover:bg-neutral-100 rounded-xs flex items-center justify-between group font-bold text-xs text-neutral-900"
+                  <a
+                    href="/product-category/sunglasses/"
+                    onClick={(e) => {
+                      if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                        e.preventDefault();
+                        handleNavClick('shop', { category: 'Sunglasses' });
+                      }
+                    }}
+                    className="w-full text-left px-3 py-2 mt-1 bg-neutral-50 hover:bg-neutral-100 rounded-xs flex items-center justify-between group font-bold text-xs text-neutral-900 block"
                   >
                     <span>View All Sunglasses</span>
                     <span className="text-[10px] text-red-600">Explore &rarr;</span>
-                  </button>
+                  </a>
                 </div>
               </div>
             )}
           </div>
 
           {/* ATTACHMENTS (6-in-1 & 2-in-1 Clip-Ons) */}
-          <button
-            onClick={() => handleNavClick('shop', { category: 'Attachments' })}
+          <a
+            href="/product-category/attachments/"
+            onClick={(e) => {
+              if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                e.preventDefault();
+                handleNavClick('shop', { category: 'Attachments' });
+              }
+            }}
             className={`transition-colors py-2 relative flex items-center gap-1.5 hover:text-red-600 ${
               currentView === 'shop' && viewParams.category === 'Attachments'
                 ? 'text-red-600 font-bold'
@@ -323,19 +402,31 @@ export const Navbar: React.FC = () => {
             {currentView === 'shop' && viewParams.category === 'Attachments' && (
               <span className="absolute bottom-0 inset-x-0 h-0.5 bg-red-600"></span>
             )}
-          </button>
+          </a>
 
-          <button
-            onClick={() => handleNavClick('shop')}
+          <a
+            href="/shop/"
+            onClick={(e) => {
+              if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                e.preventDefault();
+                handleNavClick('shop');
+              }
+            }}
             className={`text-neutral-800 hover:text-red-600 transition-colors py-2 ${
               currentView === 'shop' && !viewParams.category ? 'text-red-600 font-bold' : ''
             }`}
           >
             All Frames
-          </button>
+          </a>
 
-          <button
-            onClick={() => handleNavClick('home-eyetest')}
+          <a
+            href="/home/home-eyetest/"
+            onClick={(e) => {
+              if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                e.preventDefault();
+                handleNavClick('home-eyetest');
+              }
+            }}
             className={`transition-colors py-2 relative flex items-center gap-1 hover:text-red-600 ${
               currentView === 'home-eyetest' ? 'text-red-600 font-bold' : 'text-neutral-800'
             }`}
@@ -347,19 +438,31 @@ export const Navbar: React.FC = () => {
             {currentView === 'home-eyetest' && (
               <span className="absolute bottom-0 inset-x-0 h-0.5 bg-red-600"></span>
             )}
-          </button>
+          </a>
 
-          <button
-            onClick={() => handleNavClick('stores')}
+          <a
+            href="/store/"
+            onClick={(e) => {
+              if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                e.preventDefault();
+                handleNavClick('stores');
+              }
+            }}
             className={`transition-colors py-2 hover:text-red-600 ${
               currentView === 'stores' ? 'text-red-600 font-bold' : 'text-neutral-800'
             }`}
           >
             Our Stores
-          </button>
+          </a>
 
-          <button
-            onClick={() => handleNavClick('franchise')}
+          <a
+            href="/franchise/"
+            onClick={(e) => {
+              if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                e.preventDefault();
+                handleNavClick('franchise');
+              }
+            }}
             className={`transition-colors py-2 relative flex items-center gap-1 hover:text-red-600 ${
               currentView === 'franchise' ? 'text-red-600 font-bold' : 'text-neutral-800'
             }`}
@@ -371,14 +474,20 @@ export const Navbar: React.FC = () => {
             {currentView === 'franchise' && (
               <span className="absolute bottom-0 inset-x-0 h-0.5 bg-red-600"></span>
             )}
-          </button>
+          </a>
 
-          <button
-            onClick={() => handleNavClick('about')}
+          <a
+            href="/about/"
+            onClick={(e) => {
+              if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                e.preventDefault();
+                handleNavClick('about');
+              }
+            }}
             className="text-neutral-800 hover:text-red-600 transition-colors py-2"
           >
             About Us
-          </button>
+          </a>
         </nav>
 
         {/* Right Action Icons */}
@@ -526,30 +635,54 @@ export const Navbar: React.FC = () => {
             </button>
             {mobileExpandedCat === 'eyeglasses' && (
               <div className="pl-4 py-1 space-y-1 bg-neutral-50 rounded-xs mb-1">
-                <button
-                  onClick={() => handleNavClick('shop', { category: 'Eyeglasses', gender: 'Men' })}
-                  className="w-full py-2 px-3 text-left text-xs font-semibold text-neutral-700 hover:text-red-600"
+                <a
+                  href="/product-category/eyewear/meneyewear/"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                      e.preventDefault();
+                      handleNavClick('shop', { category: 'Eyeglasses', gender: 'Men' });
+                    }
+                  }}
+                  className="w-full py-2 px-3 text-left text-xs font-semibold text-neutral-700 hover:text-red-600 block"
                 >
                   • Eyeglasses for Men
-                </button>
-                <button
-                  onClick={() => handleNavClick('shop', { category: 'Eyeglasses', gender: 'Women' })}
-                  className="w-full py-2 px-3 text-left text-xs font-semibold text-neutral-700 hover:text-red-600"
+                </a>
+                <a
+                  href="/product-category/eyewear/womeneyewear/"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                      e.preventDefault();
+                      handleNavClick('shop', { category: 'Eyeglasses', gender: 'Women' });
+                    }
+                  }}
+                  className="w-full py-2 px-3 text-left text-xs font-semibold text-neutral-700 hover:text-red-600 block"
                 >
                   • Eyeglasses for Women
-                </button>
-                <button
-                  onClick={() => handleNavClick('shop', { category: 'Eyeglasses', gender: 'Kids' })}
-                  className="w-full py-2 px-3 text-left text-xs font-semibold text-neutral-700 hover:text-red-600"
+                </a>
+                <a
+                  href="/product-category/eyewear/kidseyewear/"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                      e.preventDefault();
+                      handleNavClick('shop', { category: 'Eyeglasses', gender: 'Kids' });
+                    }
+                  }}
+                  className="w-full py-2 px-3 text-left text-xs font-semibold text-neutral-700 hover:text-red-600 block"
                 >
                   • Eyeglasses for Kids
-                </button>
-                <button
-                  onClick={() => handleNavClick('shop', { category: 'Eyeglasses' })}
-                  className="w-full py-2 px-3 text-left text-xs font-bold text-red-600"
+                </a>
+                <a
+                  href="/product-category/eyeglasses/"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                      e.preventDefault();
+                      handleNavClick('shop', { category: 'Eyeglasses' });
+                    }
+                  }}
+                  className="w-full py-2 px-3 text-left text-xs font-bold text-red-600 block"
                 >
                   • View All Eyeglasses &rarr;
-                </button>
+                </a>
               </div>
             )}
           </div>
@@ -565,94 +698,166 @@ export const Navbar: React.FC = () => {
             </button>
             {mobileExpandedCat === 'sunglasses' && (
               <div className="pl-4 py-1 space-y-1 bg-neutral-50 rounded-xs mb-1">
-                <button
-                  onClick={() => handleNavClick('shop', { category: 'Sunglasses', gender: 'Men' })}
-                  className="w-full py-2 px-3 text-left text-xs font-semibold text-neutral-700 hover:text-red-600"
+                <a
+                  href="/product-category/sunglasses/men/"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                      e.preventDefault();
+                      handleNavClick('shop', { category: 'Sunglasses', gender: 'Men' });
+                    }
+                  }}
+                  className="w-full py-2 px-3 text-left text-xs font-semibold text-neutral-700 hover:text-red-600 block"
                 >
                   • Sunglasses for Men
-                </button>
-                <button
-                  onClick={() => handleNavClick('shop', { category: 'Sunglasses', gender: 'Women' })}
-                  className="w-full py-2 px-3 text-left text-xs font-semibold text-neutral-700 hover:text-red-600"
+                </a>
+                <a
+                  href="/product-category/sunglasses/women/"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                      e.preventDefault();
+                      handleNavClick('shop', { category: 'Sunglasses', gender: 'Women' });
+                    }
+                  }}
+                  className="w-full py-2 px-3 text-left text-xs font-semibold text-neutral-700 hover:text-red-600 block"
                 >
                   • Sunglasses for Women
-                </button>
-                <button
-                  onClick={() => handleNavClick('shop', { category: 'Sunglasses', gender: 'Kids' })}
-                  className="w-full py-2 px-3 text-left text-xs font-semibold text-neutral-700 hover:text-red-600"
+                </a>
+                <a
+                  href="/product-category/sunglasses/kids/"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                      e.preventDefault();
+                      handleNavClick('shop', { category: 'Sunglasses', gender: 'Kids' });
+                    }
+                  }}
+                  className="w-full py-2 px-3 text-left text-xs font-semibold text-neutral-700 hover:text-red-600 block"
                 >
                   • Sunglasses for Kids
-                </button>
-                <button
-                  onClick={() => handleNavClick('shop', { category: 'Sunglasses' })}
-                  className="w-full py-2 px-3 text-left text-xs font-bold text-red-600"
+                </a>
+                <a
+                  href="/product-category/sunglasses/"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                      e.preventDefault();
+                      handleNavClick('shop', { category: 'Sunglasses' });
+                    }
+                  }}
+                  className="w-full py-2 px-3 text-left text-xs font-bold text-red-600 block"
                 >
                   • View All Sunglasses &rarr;
-                </button>
+                </a>
               </div>
             )}
           </div>
 
-          <button
-            onClick={() => handleNavClick('shop', { category: 'Attachments' })}
-            className="py-2.5 px-3 text-left font-bold text-sm text-neutral-900 hover:bg-neutral-100 rounded-sm flex items-center justify-between"
+          <a
+            href="/product-category/attachments/"
+            onClick={(e) => {
+              if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                e.preventDefault();
+                handleNavClick('shop', { category: 'Attachments' });
+              }
+            }}
+            className="py-2.5 px-3 text-left font-bold text-sm text-neutral-900 hover:bg-neutral-100 rounded-sm flex items-center justify-between block"
           >
             <span>Attachments (6-in-1 & 2-in-1)</span>
             <span className="text-[9px] font-black uppercase px-1.5 py-0.5 bg-neutral-900 text-white rounded-xs">
               NEW
             </span>
-          </button>
+          </a>
 
-          <button
-            onClick={() => handleNavClick('shop')}
-            className="py-2.5 px-3 text-left font-bold text-sm text-neutral-900 hover:bg-neutral-100 rounded-sm"
+          <a
+            href="/shop/"
+            onClick={(e) => {
+              if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                e.preventDefault();
+                handleNavClick('shop');
+              }
+            }}
+            className="py-2.5 px-3 text-left font-bold text-sm text-neutral-900 hover:bg-neutral-100 rounded-sm block"
           >
             Shop All Frames
-          </button>
-          <button
-            onClick={() => handleNavClick('home-eyetest')}
-            className="py-2.5 px-3 text-left font-bold text-sm text-neutral-900 hover:bg-neutral-100 rounded-sm flex items-center justify-between"
+          </a>
+          <a
+            href="/home/home-eyetest/"
+            onClick={(e) => {
+              if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                e.preventDefault();
+                handleNavClick('home-eyetest');
+              }
+            }}
+            className="py-2.5 px-3 text-left font-bold text-sm text-neutral-900 hover:bg-neutral-100 rounded-sm flex items-center justify-between block"
           >
             <span>Home Eye Test</span>
             <span className="text-[9px] font-black uppercase px-1.5 py-0.5 bg-emerald-600 text-white rounded-xs">
               Book Free
             </span>
-          </button>
-          <button
-            onClick={() => handleNavClick('stores')}
-            className="py-2.5 px-3 text-left font-bold text-sm text-neutral-900 hover:bg-neutral-100 rounded-sm"
+          </a>
+          <a
+            href="/store/"
+            onClick={(e) => {
+              if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                e.preventDefault();
+                handleNavClick('stores');
+              }
+            }}
+            className="py-2.5 px-3 text-left font-bold text-sm text-neutral-900 hover:bg-neutral-100 rounded-sm block"
           >
             Our Stores & Boutiques
-          </button>
-          <button
-            onClick={() => handleNavClick('franchise')}
-            className="py-2.5 px-3 text-left font-bold text-sm text-neutral-900 hover:bg-neutral-100 rounded-sm flex items-center justify-between"
+          </a>
+          <a
+            href="/franchise/"
+            onClick={(e) => {
+              if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                e.preventDefault();
+                handleNavClick('franchise');
+              }
+            }}
+            className="py-2.5 px-3 text-left font-bold text-sm text-neutral-900 hover:bg-neutral-100 rounded-sm flex items-center justify-between block"
           >
             <span>Franchise Opportunities</span>
             <span className="text-[9px] font-black uppercase px-1.5 py-0.5 bg-red-600 text-white rounded-xs">
               24M Buyback
             </span>
-          </button>
-          <button
-            onClick={() => handleNavClick('about')}
-            className="py-2.5 px-3 text-left font-bold text-sm text-neutral-900 hover:bg-neutral-100 rounded-sm"
+          </a>
+          <a
+            href="/about/"
+            onClick={(e) => {
+              if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                e.preventDefault();
+                handleNavClick('about');
+              }
+            }}
+            className="py-2.5 px-3 text-left font-bold text-sm text-neutral-900 hover:bg-neutral-100 rounded-sm block"
           >
             The Specslook Story
-          </button>
-          <button
-            onClick={() => handleNavClick('contact')}
-            className="py-2.5 px-3 text-left font-bold text-sm text-neutral-900 hover:bg-neutral-100 rounded-sm"
+          </a>
+          <a
+            href="/contact-us/"
+            onClick={(e) => {
+              if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                e.preventDefault();
+                handleNavClick('contact');
+              }
+            }}
+            className="py-2.5 px-3 text-left font-bold text-sm text-neutral-900 hover:bg-neutral-100 rounded-sm block"
           >
             Contact Customer Concierge
-          </button>
+          </a>
           <div className="pt-4 mt-2 border-t border-neutral-200 flex flex-col gap-2">
-            <button
-              onClick={() => handleNavClick('tracking')}
-              className="py-2.5 px-3 bg-neutral-100 text-neutral-900 text-xs font-bold rounded-sm flex items-center gap-2"
+            <a
+              href="/tracking/"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                  e.preventDefault();
+                  handleNavClick('tracking');
+                }
+              }}
+              className="py-2.5 px-3 bg-neutral-100 text-neutral-900 text-xs font-bold rounded-sm flex items-center gap-2 block"
             >
               <Truck className="w-4 h-4 text-red-600" />
               Track Your Shipment
-            </button>
+            </a>
           </div>
         </div>
       )}

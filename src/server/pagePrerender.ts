@@ -218,6 +218,13 @@ export function renderHomeHtml(baseHtml: string, products: Product[]): string {
         '@id': `${SITE_DOMAIN}/#organization`,
         name: 'Specslook',
         legalName: 'Specslook Eyewear',
+        alternateName: ['Specslook Official', 'Specslook India', 'specslook.com'],
+        slogan: 'Handcrafted Luxury Eyewear & Master Optics',
+        brand: {
+          '@type': 'Brand',
+          name: 'Specslook',
+          url: canonicalUrl
+        },
         url: canonicalUrl,
         logo: LOGO_URL,
         telephone: '+91-8368853448',
@@ -813,3 +820,127 @@ export function renderStaticPageHtml(baseHtml: string, pageKey: 'about' | 'home-
 
   return html;
 }
+
+/**
+ * Check whether a URL matches known casino spam, slot hacking, or WordPress injection patterns
+ */
+export function isSpamOrHackedPath(pathname: string, fullUrl = ''): boolean {
+  const path = pathname.toLowerCase();
+  const query = (fullUrl.includes('?') ? fullUrl.split('?')[1] : '').toLowerCase();
+
+  const spamKeywords = [
+    'casino',
+    'fruitautomaten',
+    'winkans',
+    'poker',
+    'roulette',
+    'judislot',
+    'gacor',
+    'slot-online',
+    'slot-gacor',
+    'judi-online',
+    'betting',
+    'vulkan',
+    'daftar-slot',
+    'situs-slot',
+    'togel',
+    'sbobet',
+    'wp-admin',
+    'wp-includes',
+    'wp-content',
+    'xmlrpc.php',
+    'wp-login'
+  ];
+
+  if (spamKeywords.some(kw => path.includes(kw))) {
+    return true;
+  }
+
+  // Compromised WordPress categories
+  if (path === '/category/blog' || path === '/category/blog/' || path.startsWith('/category/')) {
+    return true;
+  }
+
+  // WordPress numeric post ID spam query, e.g. /?p=8970
+  if (/^\?p=\d+/i.test('?' + query) || /(?:^|[?&])p=\d+/i.test(query)) {
+    return true;
+  }
+
+  return false;
+}
+
+/**
+ * Prerender genuine 404 Not Found HTML page with noindex, nofollow and helpful store navigation
+ */
+export function render404Html(baseHtml: string): string {
+  const pageTitle = 'Page Not Found (404) | Specslook Official Store';
+  const pageDesc = 'The page you are looking for does not exist on Specslook. Explore our handcrafted eyeglasses, polarized sunglasses, and doorstep home eye tests.';
+  const canonicalUrl = `${SITE_DOMAIN}/`;
+
+  let html = baseHtml;
+
+  // Title
+  if (/<title>[\s\S]*?<\/title>/i.test(html)) {
+    html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${pageTitle}</title>`);
+  }
+
+  // Description
+  if (/<meta\s+name=["']description["'][^>]*>/i.test(html)) {
+    html = html.replace(/<meta\s+name=["']description["'][^>]*>/i, `<meta name="description" content="${pageDesc}" />`);
+  }
+
+  // Robots NOINDEX, NOFOLLOW (Crucial for Google to purge deleted/spam URLs)
+  if (/<meta\s+name=["']robots["'][^>]*>/i.test(html)) {
+    html = html.replace(/<meta\s+name=["']robots["'][^>]*>/i, `<meta name="robots" content="noindex, nofollow" />`);
+  } else {
+    html = html.replace('</head>', `<meta name="robots" content="noindex, nofollow" />\n</head>`);
+  }
+
+  // Canonical tag removed or points to self to prevent soft-404 attribution
+  if (/<link\s+rel=["']canonical["'][^>]*>/i.test(html)) {
+    html = html.replace(/<link\s+rel=["']canonical["'][^>]*>/i, '');
+  }
+
+  const notFoundContent = `
+    <div id="specslook-404-prerender" class="max-w-3xl mx-auto px-4 py-20 text-center font-sans">
+      <div class="mb-4 inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-100 text-red-600 text-2xl font-black">
+        404
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-black uppercase tracking-tight text-neutral-950 mb-4">
+        Page Not Found
+      </h1>
+      <p class="text-neutral-600 text-sm sm:text-base max-w-lg mx-auto mb-8">
+        The requested URL was not found on Specslook. It may have been moved, deleted, or entered incorrectly.
+      </p>
+      
+      <div class="flex flex-wrap justify-center gap-3 text-xs font-bold uppercase mb-12">
+        <a href="/" class="bg-neutral-950 text-white px-5 py-2.5 rounded-xs hover:bg-neutral-800 transition-colors">
+          Return to Home
+        </a>
+        <a href="/product-category/eyeglasses/" class="bg-red-600 text-white px-5 py-2.5 rounded-xs hover:bg-red-700 transition-colors">
+          Eyeglasses
+        </a>
+        <a href="/product-category/sunglasses/" class="border border-neutral-300 text-neutral-800 px-5 py-2.5 rounded-xs hover:border-neutral-950 transition-colors">
+          Shades &amp; Sunglasses
+        </a>
+        <a href="/home/home-eyetest/" class="border border-neutral-300 text-neutral-800 px-5 py-2.5 rounded-xs hover:border-neutral-950 transition-colors">
+          Book Home Eye Test
+        </a>
+      </div>
+
+      <div class="border-t border-neutral-200 pt-8 text-xs text-neutral-500">
+        <p class="mb-2">Need assistance finding the right frames or prescription lenses?</p>
+        <p class="font-bold text-neutral-800">
+          WhatsApp / Call Concierge: <a href="https://wa.me/918368853448" class="text-red-600 underline">+91 83688 53448</a> &bull; Email: <a href="mailto:info@specslook.com" class="text-red-600 underline">info@specslook.com</a>
+        </p>
+      </div>
+    </div>
+  `;
+
+  if (html.includes('<div id="root"></div>')) {
+    html = html.replace('<div id="root"></div>', `<div id="root">${notFoundContent}</div>`);
+  }
+
+  return html;
+}
+

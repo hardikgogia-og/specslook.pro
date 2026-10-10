@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "trailingSlash": true,
   "functions": {
     "api/**/*.ts": {
       "includeFiles": "data/**,public/data/**"
@@ -42,6 +43,13 @@
       ]
     },
     {
+      "source": "/404.html",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" },
+        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
+      ]
+    },
+    {
       "source": "/(.*)",
       "headers": [
         { "key": "X-Content-Type-Options", "value": "nosniff" },
@@ -66,6 +74,10 @@
     { "source": "/sunglasses/", "destination": "/product-category/sunglasses/", "permanent": true },
     { "source": "/shades", "destination": "/product-category/sunglasses/", "permanent": true },
     { "source": "/shades/", "destination": "/product-category/sunglasses/", "permanent": true },
+    { "source": "/attachments", "destination": "/product-category/attachments/", "permanent": true },
+    { "source": "/attachments/", "destination": "/product-category/attachments/", "permanent": true },
+    { "source": "/polarized", "destination": "/product-category/polarized/", "permanent": true },
+    { "source": "/polarized/", "destination": "/product-category/polarized/", "permanent": true },
     { "source": "/about-us", "destination": "/about/", "permanent": true },
     { "source": "/about-us/", "destination": "/about/", "permanent": true },
     { "source": "/stores", "destination": "/store/", "permanent": true },
@@ -93,9 +105,35 @@
     { "source": "/api/merchant-feed.xml", "destination": "/api/merchant-feed" },
     { "source": "/sitemap.xml", "destination": "/api/sitemap" },
     { "source": "/robots.txt", "destination": "/robots.txt" },
-    {
-      "source": "/((?!api/|data/|uploads/|assets/|sitemap\\.xml|robots\\.txt|merchant-feed\\.xml|merchant-feed).*)",
-      "destination": "/index.html"
-    }
+    { "source": "/shop/:path*", "destination": "/shop/index.html" },
+    { "source": "/shop", "destination": "/shop/index.html" },
+    { "source": "/product-category/:path*", "destination": "/product-category/:path*/index.html" },
+    { "source": "/product/:slug*", "destination": "/product/:slug*/index.html" },
+    { "source": "/about/:path*", "destination": "/about/index.html" },
+    { "source": "/about", "destination": "/about/index.html" },
+    { "source": "/store/:path*", "destination": "/store/index.html" },
+    { "source": "/store", "destination": "/store/index.html" },
+    { "source": "/franchise/:path*", "destination": "/franchise/index.html" },
+    { "source": "/franchise", "destination": "/franchise/index.html" },
+    { "source": "/home/home-eyetest/:path*", "destination": "/home/home-eyetest/index.html" },
+    { "source": "/home/home-eyetest", "destination": "/home/home-eyetest/index.html" },
+    { "source": "/contact-us/:path*", "destination": "/contact-us/index.html" },
+    { "source": "/contact-us", "destination": "/contact-us/index.html" },
+    { "source": "/blog/:path*", "destination": "/blog/index.html" },
+    { "source": "/blog", "destination": "/blog/index.html" },
+    { "source": "/checkout/:path*", "destination": "/index.html" },
+    { "source": "/checkout", "destination": "/index.html" },
+    { "source": "/account/:path*", "destination": "/index.html" },
+    { "source": "/account", "destination": "/index.html" },
+    { "source": "/tracking/:path*", "destination": "/index.html" },
+    { "source": "/tracking", "destination": "/index.html" },
+    { "source": "/try-on/:path*", "destination": "/index.html" },
+    { "source": "/try-on", "destination": "/index.html" },
+    { "source": "/terms-and-conditions/:path*", "destination": "/index.html" },
+    { "source": "/terms-and-conditions", "destination": "/index.html" },
+    { "source": "/privacy-policy/:path*", "destination": "/index.html" },
+    { "source": "/privacy-policy", "destination": "/index.html" },
+    { "source": "/admin/:path*", "destination": "/index.html" },
+    { "source": "/admin", "destination": "/index.html" }
   ]
 }

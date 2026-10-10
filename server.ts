@@ -8,7 +8,7 @@ import { dbService } from './src/server/db.ts';
 import { renderFranchiseHtml } from './src/server/franchisePrerender.ts';
 import { generateMerchantFeedXml, getMerchantDiagnostics } from './src/server/merchantFeed.ts';
 import { renderProductHtml } from './src/server/productPrerender.ts';
-import { renderHomeHtml, renderCategoryHtml, renderStaticPageHtml, CATEGORY_CONFIGS } from './src/server/pagePrerender.ts';
+import { renderHomeHtml, renderCategoryHtml, renderStaticPageHtml, render404Html, isSpamOrHackedPath, CATEGORY_CONFIGS } from './src/server/pagePrerender.ts';
 
 const app = express();
 const PORT = 3000;
@@ -56,6 +56,39 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
   if (req.secure || req.headers['x-forwarded-proto'] === 'https') {
     res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+  }
+  next();
+});
+
+// Defense against casino spam, slot injections & compromised WordPress queries (Return HTTP 410 Gone)
+app.use((req: Request, res: Response, next: NextFunction) => {
+  if (isSpamOrHackedPath(req.path, req.url)) {
+    res.status(410);
+    res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    return res.send(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>410 Gone - Page Permanently Removed | Specslook Eyewear</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #fafafa; color: #171717; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; text-align: center; }
+    .card { background: #fff; border: 1px solid #e5e5e5; padding: 40px; max-width: 520px; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    h1 { font-size: 22px; font-weight: 800; text-transform: uppercase; margin-bottom: 12px; }
+    p { font-size: 14px; color: #737373; line-height: 1.6; margin-bottom: 24px; }
+    a { display: inline-block; background: #000; color: #fff; text-decoration: none; padding: 10px 24px; font-size: 13px; font-weight: 700; text-transform: uppercase; border-radius: 2px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>410 Resource Gone</h1>
+    <p>This resource has been permanently removed and is no longer available on Specslook.</p>
+    <a href="https://specslook.com/">Return to Specslook Official Store</a>
+  </div>
+</body>
+</html>`);
   }
   next();
 });
@@ -1295,6 +1328,53 @@ function findCategoryConfig(urlPath: string) {
   return null;
 }
 
+export function isValidFrontendRoute(rawPath: string): boolean {
+  const path = rawPath.replace(/\/+$/, '') || '/';
+
+  const validExact = new Set([
+    '/',
+    '/shop',
+    '/about',
+    '/store',
+    '/franchise',
+    '/contact-us',
+    '/blog',
+    '/checkout',
+    '/account',
+    '/tracking',
+    '/try-on',
+    '/terms-and-conditions',
+    '/privacy-policy',
+    '/product-category/eyeglasses',
+    '/product-category/sunglasses',
+    '/product-category/attachments',
+    '/product-category/polarized',
+    '/product-category/blue-light-blockers',
+    '/admin'
+  ]);
+
+  if (validExact.has(path)) return true;
+  if (path === '/home/home-eyetest') return true;
+
+  if (path.startsWith('/product/')) {
+    const slug = path.replace(/^\/product\//, '').replace(/\/+$/, '');
+    const products = dbService.getProducts();
+    return products.some(p => p.slug?.toLowerCase() === slug.toLowerCase() || p.id?.toLowerCase() === slug.toLowerCase());
+  }
+
+  if (path.startsWith('/product-category/')) {
+    return !!findCategoryConfig(path);
+  }
+
+  if (path.startsWith('/blog/')) {
+    const slug = path.replace(/^\/blog\//, '').replace(/\/+$/, '');
+    const blogs = dbService.getBlogs();
+    return blogs.some(b => b.slug?.toLowerCase() === slug.toLowerCase());
+  }
+
+  return false;
+}
+
 async function startServer() {
   const isDistBundle = typeof __filename !== 'undefined' && __filename.includes('dist');
   const isProduction = process.env.NODE_ENV === 'production' || isDistBundle;
@@ -1420,6 +1500,30 @@ async function startServer() {
         });
       }
 
+      // In dev mode, return genuine 404 for unknown routes rather than defaulting to index.html
+      app.use((req: Request, res: Response, next: NextFunction) => {
+        if (
+          req.method === 'GET' &&
+          !req.path.startsWith('/@') &&
+          !req.path.startsWith('/src') &&
+          !req.path.startsWith('/node_modules') &&
+          !req.path.startsWith('/assets') &&
+          !req.path.startsWith('/public') &&
+          !req.path.startsWith('/data') &&
+          !req.path.startsWith('/api') &&
+          !req.path.startsWith('/uploads') &&
+          !req.path.includes('.') &&
+          !isValidFrontendRoute(req.path)
+        ) {
+          res.status(404);
+          res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+          const rootHtml = path.join(process.cwd(), 'index.html');
+          const template = fs.existsSync(rootHtml) ? fs.readFileSync(rootHtml, 'utf8') : '';
+          return res.send(render404Html(template));
+        }
+        next();
+      });
+
       app.use(vite.middlewares);
     } catch (err) {
       console.warn('Vite dev middleware failed to load, falling back to static files:', err);
@@ -1516,7 +1620,19 @@ async function startServer() {
       next();
     });
 
+    // Production Catch-All Route: Return genuine 404 for unknown URLs, or index.html for valid SPA routes
     app.get('*', (req: Request, res: Response) => {
+      if (!isValidFrontendRoute(req.path)) {
+        res.status(404);
+        res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+        const notFoundPath = path.join(distPath, '404.html');
+        if (fs.existsSync(notFoundPath)) {
+          return res.sendFile(notFoundPath);
+        }
+        const distHtml = path.join(distPath, 'index.html');
+        const template = fs.existsSync(distHtml) ? fs.readFileSync(distHtml, 'utf8') : '<!doctype html><html><head><title>404 Not Found</title></head><body><h1>404 Not Found</h1></body></html>';
+        return res.send(render404Html(template));
+      }
       res.sendFile(path.join(distPath, 'index.html'));
     });
   }

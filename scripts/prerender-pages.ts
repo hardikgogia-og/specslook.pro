@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { dbService } from '../src/server/db.ts';
-import { renderHomeHtml, renderCategoryHtml, renderStaticPageHtml, CATEGORY_CONFIGS } from '../src/server/pagePrerender.ts';
+import { renderHomeHtml, renderCategoryHtml, renderStaticPageHtml, render404Html, CATEGORY_CONFIGS } from '../src/server/pagePrerender.ts';
 import { renderFranchiseHtml } from '../src/server/franchisePrerender.ts';
 import { renderProductHtml } from '../src/server/productPrerender.ts';
 
@@ -33,30 +33,29 @@ export function prerenderAllPages() {
   console.log('  ✅ Prerendered Home (dist/index.html) with SiteNavigationElement Schema');
 
   // 2. Prerender Category Pages (Eyeglasses, Shades/Sunglasses, and Subcategories)
-  for (const [key, config] of Object.entries(CATEGORY_CONFIGS)) {
+  for (const [, config] of Object.entries(CATEGORY_CONFIGS)) {
     const categoryHtml = renderCategoryHtml(baseHtml, config, products);
     
-    // Primary path, e.g. dist/product-category/eyeglasses/index.html
+    // Primary canonical path, e.g. dist/product-category/eyeglasses/index.html
     const targetFile = path.join(distDir, ...config.canonicalPath.split('/').filter(Boolean), 'index.html');
     writeHtml(targetFile, categoryHtml);
     console.log(`  ✅ Prerendered Category: ${config.canonicalPath}`);
 
-    // Alias paths for common Google search and user direct hits
-    if (key === 'eyeglasses') {
+    // Also mirror to legacy/short category paths if defined (e.g. dist/eyeglasses/index.html, dist/sunglasses/index.html)
+    if (config.categoryKey === 'eyeglasses') {
       writeHtml(path.join(distDir, 'eyeglasses', 'index.html'), categoryHtml);
       writeHtml(path.join(distDir, 'eyewear', 'index.html'), categoryHtml);
-      writeHtml(path.join(distDir, 'specs', 'index.html'), categoryHtml);
-      console.log('  ✅ Created aliases: /eyeglasses/, /eyewear/, /specs/');
-    } else if (key === 'sunglasses') {
+    } else if (config.categoryKey === 'sunglasses') {
       writeHtml(path.join(distDir, 'sunglasses', 'index.html'), categoryHtml);
       writeHtml(path.join(distDir, 'shades', 'index.html'), categoryHtml);
-      console.log('  ✅ Created aliases: /sunglasses/, /shades/');
-    } else if (key === 'attachments') {
-      writeHtml(path.join(distDir, 'attachments', 'index.html'), categoryHtml);
-    } else if (key === 'polarized') {
-      writeHtml(path.join(distDir, 'polarized', 'index.html'), categoryHtml);
     }
   }
+
+  // 2.5 Prerender 404 Not Found Page (dist/404.html for genuine 404/410 responses)
+  const notFoundHtml = render404Html(baseHtml);
+  writeHtml(path.join(distDir, '404.html'), notFoundHtml);
+  console.log('  ✅ Prerendered Custom 404.html (noindex, nofollow, store navigation)');
+
 
   // 3. Prerender Static & Service Landing Pages
   const staticPages: Array<{ key: 'about' | 'home-eyetest' | 'stores' | 'contact' | 'shop'; paths: string[] }> = [

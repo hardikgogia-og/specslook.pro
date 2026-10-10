@@ -94,34 +94,88 @@ export const Footer: React.FC = () => {
             <h5 className="text-white font-bold text-xs tracking-widest uppercase mb-4">The Icons</h5>
             <ul className="space-y-2.5 text-xs text-neutral-400 font-medium">
               <li>
-                <button onClick={() => navigateTo('shop', { shape: 'Aviator' })} className="hover:text-white transition-colors">
+                <a
+                  href="/shop?shape=Aviator"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey) {
+                      e.preventDefault();
+                      navigateTo('shop', { shape: 'Aviator' });
+                    }
+                  }}
+                  className="hover:text-white transition-colors block"
+                >
                   Aviator Classic
-                </button>
+                </a>
               </li>
               <li>
-                <button onClick={() => navigateTo('shop', { shape: 'Wayfarer' })} className="hover:text-white transition-colors">
+                <a
+                  href="/shop?shape=Wayfarer"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey) {
+                      e.preventDefault();
+                      navigateTo('shop', { shape: 'Wayfarer' });
+                    }
+                  }}
+                  className="hover:text-white transition-colors block"
+                >
                   Original Wayfarer
-                </button>
+                </a>
               </li>
               <li>
-                <button onClick={() => navigateTo('shop', { shape: 'Clubmaster' })} className="hover:text-white transition-colors">
+                <a
+                  href="/shop?shape=Clubmaster"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey) {
+                      e.preventDefault();
+                      navigateTo('shop', { shape: 'Clubmaster' });
+                    }
+                  }}
+                  className="hover:text-white transition-colors block"
+                >
                   Clubmaster Browline
-                </button>
+                </a>
               </li>
               <li>
-                <button onClick={() => navigateTo('shop', { shape: 'Round' })} className="hover:text-white transition-colors">
+                <a
+                  href="/shop?shape=Round"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey) {
+                      e.preventDefault();
+                      navigateTo('shop', { shape: 'Round' });
+                    }
+                  }}
+                  className="hover:text-white transition-colors block"
+                >
                   Round Metal Legend
-                </button>
+                </a>
               </li>
               <li>
-                <button onClick={() => navigateTo('shop', { shape: 'Hexagonal' })} className="hover:text-white transition-colors">
+                <a
+                  href="/shop?shape=Hexagonal"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey) {
+                      e.preventDefault();
+                      navigateTo('shop', { shape: 'Hexagonal' });
+                    }
+                  }}
+                  className="hover:text-white transition-colors block"
+                >
                   Hexagonal Flat Lenses
-                </button>
+                </a>
               </li>
               <li>
-                <button onClick={() => navigateTo('shop', { polarized: true })} className="hover:text-white transition-colors">
+                <a
+                  href="/product-category/polarized/"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey) {
+                      e.preventDefault();
+                      navigateTo('shop', { polarized: true });
+                    }
+                  }}
+                  className="hover:text-white transition-colors block"
+                >
                   PolarVue Polarized
-                </button>
+                </a>
               </li>
             </ul>
           </div>
@@ -131,56 +185,174 @@ export const Footer: React.FC = () => {
             <h5 className="text-white font-bold text-xs tracking-widest uppercase mb-4">Client Care</h5>
             <ul className="space-y-2.5 text-xs text-neutral-400 font-medium">
               <li>
-                <button onClick={() => navigateTo('home-eyetest')} className="hover:text-white transition-colors flex items-center gap-1.5 text-emerald-400">
+                <a
+                  href="/home/home-eyetest/"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey) {
+                      e.preventDefault();
+                      navigateTo('home-eyetest');
+                    }
+                  }}
+                  className="hover:text-white transition-colors flex items-center gap-1.5 text-emerald-400"
+                >
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
                   Home Eye Test (Doorstep)
-                </button>
+                </a>
               </li>
               <li>
-                <button onClick={() => navigateTo('shop', { category: 'Eyeglasses', gender: 'Women' })} className="hover:text-white transition-colors">
+                <a
+                  href="/product-category/eyeglasses/"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey) {
+                      e.preventDefault();
+                      navigateTo('shop', { category: 'Eyeglasses' });
+                    }
+                  }}
+                  className="hover:text-white transition-colors block"
+                >
+                  Eyeglasses Collection
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/product-category/sunglasses/"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey) {
+                      e.preventDefault();
+                      navigateTo('shop', { category: 'Sunglasses' });
+                    }
+                  }}
+                  className="hover:text-white transition-colors block"
+                >
+                  Shades &amp; Sunglasses
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/product-category/eyewear/womeneyewear/"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey) {
+                      e.preventDefault();
+                      navigateTo('shop', { category: 'Eyeglasses', gender: 'Women' });
+                    }
+                  }}
+                  className="hover:text-white transition-colors block"
+                >
                   Women's Eyewear Collection
-                </button>
+                </a>
               </li>
               <li>
-                <button onClick={() => navigateTo('tracking')} className="hover:text-white transition-colors flex items-center gap-1">
+                <a
+                  href="/tracking/"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey) {
+                      e.preventDefault();
+                      navigateTo('tracking');
+                    }
+                  }}
+                  className="hover:text-white transition-colors flex items-center gap-1"
+                >
                   Track Your Shipment
-                </button>
+                </a>
               </li>
               <li>
-                <button onClick={() => navigateTo('stores')} className="hover:text-white transition-colors">
+                <a
+                  href="/store/"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey) {
+                      e.preventDefault();
+                      navigateTo('stores');
+                    }
+                  }}
+                  className="hover:text-white transition-colors block"
+                >
                   Our Flagship Stores
-                </button>
+                </a>
               </li>
               <li>
-                <button onClick={() => navigateTo('franchise')} className="hover:text-white transition-colors flex items-center gap-1.5 text-amber-400 font-semibold">
+                <a
+                  href="/franchise/"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey) {
+                      e.preventDefault();
+                      navigateTo('franchise');
+                    }
+                  }}
+                  className="hover:text-white transition-colors flex items-center gap-1.5 text-amber-400 font-semibold"
+                >
                   <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
                   Franchise Partnerships (24M Buyback)
-                </button>
+                </a>
               </li>
               <li>
-                <button onClick={() => navigateTo('about')} className="hover:text-white transition-colors">
-                  Our Optical Lab & Story
-                </button>
+                <a
+                  href="/about/"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey) {
+                      e.preventDefault();
+                      navigateTo('about');
+                    }
+                  }}
+                  className="hover:text-white transition-colors block"
+                >
+                  Our Optical Lab &amp; Story
+                </a>
               </li>
               <li>
-                <button onClick={() => navigateTo('contact')} className="hover:text-white transition-colors">
+                <a
+                  href="/contact-us/"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey) {
+                      e.preventDefault();
+                      navigateTo('contact');
+                    }
+                  }}
+                  className="hover:text-white transition-colors block"
+                >
                   Customer Concierge (Contact Us)
-                </button>
+                </a>
               </li>
               <li>
-                <button onClick={() => navigateTo('terms')} className="hover:text-white transition-colors">
-                  Terms & Conditions
-                </button>
+                <a
+                  href="/terms-and-conditions/"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey) {
+                      e.preventDefault();
+                      navigateTo('terms');
+                    }
+                  }}
+                  className="hover:text-white transition-colors block"
+                >
+                  Terms &amp; Conditions
+                </a>
               </li>
               <li>
-                <button onClick={() => navigateTo('privacy')} className="hover:text-white transition-colors">
+                <a
+                  href="/privacy-policy/"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey) {
+                      e.preventDefault();
+                      navigateTo('privacy');
+                    }
+                  }}
+                  className="hover:text-white transition-colors block"
+                >
                   Privacy Policy
-                </button>
+                </a>
               </li>
               <li>
-                <button onClick={() => navigateTo('blog')} className="hover:text-white transition-colors">
-                  Style Journal & Guides
-                </button>
+                <a
+                  href="/blog/"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey) {
+                      e.preventDefault();
+                      navigateTo('blog');
+                    }
+                  }}
+                  className="hover:text-white transition-colors block"
+                >
+                  Style Journal &amp; Guides
+                </a>
               </li>
             </ul>
           </div>
@@ -214,13 +386,31 @@ export const Footer: React.FC = () => {
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
           <span>&copy; {new Date().getFullYear()} Specslook. All rights reserved.</span>
           <span className="hidden sm:inline text-neutral-800">&bull;</span>
-          <button onClick={() => navigateTo('terms')} className="hover:text-neutral-300 transition-colors underline sm:no-underline">
-            Terms & Conditions
-          </button>
+          <a
+            href="/terms-and-conditions/"
+            onClick={(e) => {
+              if (!e.ctrlKey && !e.metaKey) {
+                e.preventDefault();
+                navigateTo('terms');
+              }
+            }}
+            className="hover:text-neutral-300 transition-colors underline sm:no-underline"
+          >
+            Terms &amp; Conditions
+          </a>
           <span className="text-neutral-800">&bull;</span>
-          <button onClick={() => navigateTo('privacy')} className="hover:text-neutral-300 transition-colors underline sm:no-underline">
+          <a
+            href="/privacy-policy/"
+            onClick={(e) => {
+              if (!e.ctrlKey && !e.metaKey) {
+                e.preventDefault();
+                navigateTo('privacy');
+              }
+            }}
+            className="hover:text-neutral-300 transition-colors underline sm:no-underline"
+          >
             Privacy Policy
-          </button>
+          </a>
         </div>
         <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[11px] text-neutral-400">
           <span className="bg-emerald-950/80 text-emerald-400 px-2.5 py-1 rounded-xs border border-emerald-800 font-bold flex items-center gap-1">

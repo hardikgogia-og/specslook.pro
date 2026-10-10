@@ -99,13 +99,19 @@ export const ProductSlider: React.FC<ProductSliderProps> = ({
         </div>
 
         <div className="flex items-center gap-3">
-          <button
-            onClick={() => navigateTo('shop', { category })}
+          <a
+            href={category === 'Eyeglasses' ? '/product-category/eyeglasses/' : '/product-category/sunglasses/'}
+            onClick={(e) => {
+              if (!e.ctrlKey && !e.metaKey) {
+                e.preventDefault();
+                navigateTo('shop', { category });
+              }
+            }}
             className="text-xs font-bold uppercase tracking-wider text-neutral-800 hover:text-red-600 flex items-center gap-1 group mr-2"
           >
             <span>View All {category}</span>
             <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-          </button>
+          </a>
 
           {/* Prev / Next controls */}
           <div className="flex items-center gap-1.5">
