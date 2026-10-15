@@ -60,35 +60,20 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-// Defense against casino spam, slot injections & compromised WordPress queries (Return HTTP 410 Gone)
+// Defense against casino spam, slot injections & malicious crawlers (Return HTTP 404 Not Found)
 app.use((req: Request, res: Response, next: NextFunction) => {
   if (isSpamOrHackedPath(req.path, req.url)) {
-    res.status(410);
+    res.status(404);
     res.setHeader('X-Robots-Tag', 'noindex, nofollow');
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    return res.send(`<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>410 Gone - Page Permanently Removed | Specslook Eyewear</title>
-  <meta name="robots" content="noindex, nofollow">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #fafafa; color: #171717; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; text-align: center; }
-    .card { background: #fff; border: 1px solid #e5e5e5; padding: 40px; max-width: 520px; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-    h1 { font-size: 22px; font-weight: 800; text-transform: uppercase; margin-bottom: 12px; }
-    p { font-size: 14px; color: #737373; line-height: 1.6; margin-bottom: 24px; }
-    a { display: inline-block; background: #000; color: #fff; text-decoration: none; padding: 10px 24px; font-size: 13px; font-weight: 700; text-transform: uppercase; border-radius: 2px; }
-  </style>
-</head>
-<body>
-  <div class="card">
-    <h1>410 Resource Gone</h1>
-    <p>This resource has been permanently removed and is no longer available on Specslook.</p>
-    <a href="https://specslook.com/">Return to Specslook Official Store</a>
-  </div>
-</body>
-</html>`);
+    const distPath = path.join(process.cwd(), 'dist');
+    const notFoundPath = path.join(distPath, '404.html');
+    if (fs.existsSync(notFoundPath)) {
+      return res.sendFile(notFoundPath);
+    }
+    const distHtml = path.join(distPath, 'index.html');
+    const template = fs.existsSync(distHtml) ? fs.readFileSync(distHtml, 'utf8') : '<!doctype html><html><head><title>404 Not Found</title></head><body><h1>404 Not Found</h1></body></html>';
+    return res.send(render404Html(template));
   }
   next();
 });
@@ -266,37 +251,42 @@ app.get(['/api/merchant-diagnostics', '/api/admin/merchant-diagnostics', '/merch
 });
 
 // 3. Dynamic XML Sitemap (Automatically includes ALL active/current products with canonical URLs)
-app.get(['/sitemap.xml', '/api/sitemap.xml', '/api/sitemap'], (_req: Request, res: Response) => {
+app.get(['/sitemap.xml', '/api/sitemap.xml', '/api/sitemap'], (req: Request, res: Response) => {
   try {
     const products = dbService.getProducts();
     const today = new Date().toISOString().split('T')[0];
+    const rawHost = (req.headers && (req.headers['x-forwarded-host'] || req.headers['host'])) || 'www.specslook.com';
+    const baseUrl = typeof rawHost === 'string' && rawHost.includes('specslook.com')
+      ? 'https://www.specslook.com'
+      : (typeof rawHost === 'string' && rawHost.startsWith('localhost') ? `http://${rawHost}` : 'https://www.specslook.com');
+
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://specslook.com/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>
-  <url><loc>https://specslook.com/shop/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.95</priority></url>
-  <url><loc>https://specslook.com/about/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://specslook.com/store/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://specslook.com/franchise/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://specslook.com/home/home-eyetest/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://specslook.com/contact-us/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://specslook.com/blog/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url>
-  <url><loc>https://specslook.com/terms-and-conditions/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://specslook.com/privacy-policy/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://specslook.com/product-category/eyeglasses/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://specslook.com/product-category/eyewear/womeneyewear/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://specslook.com/product-category/eyewear/meneyewear/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://specslook.com/product-category/eyewear/kidseyewear/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
-  <url><loc>https://specslook.com/product-category/sunglasses/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://specslook.com/product-category/sunglasses/women/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://specslook.com/product-category/sunglasses/men/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://specslook.com/product-category/sunglasses/kids/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
-  <url><loc>https://specslook.com/product-category/attachments/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
-  <url><loc>https://specslook.com/product-category/polarized/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
-  <url><loc>https://specslook.com/product-category/blue-light-blockers/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
-${products.map(p => `  <url><loc>https://specslook.com/product/${encodeURIComponent(p.slug)}/</loc><lastmod>${p.createdAt ? p.createdAt.split('T')[0] : today}</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>`).join('\n')}
-  <url><loc>https://specslook.com/blog/the-legendary-aviator-style-history/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://specslook.com/blog/polarized-vs-non-polarized-eyewear-guide/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://specslook.com/blog/how-to-choose-frames-for-your-face-shape/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>${baseUrl}/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>
+  <url><loc>${baseUrl}/shop/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.95</priority></url>
+  <url><loc>${baseUrl}/about/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>${baseUrl}/store/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>
+  <url><loc>${baseUrl}/franchise/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>${baseUrl}/home/home-eyetest/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>${baseUrl}/contact-us/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>${baseUrl}/blog/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url>
+  <url><loc>${baseUrl}/terms-and-conditions/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>${baseUrl}/privacy-policy/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>${baseUrl}/product-category/eyeglasses/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>${baseUrl}/product-category/eyewear/womeneyewear/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>${baseUrl}/product-category/eyewear/meneyewear/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>${baseUrl}/product-category/eyewear/kidseyewear/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
+  <url><loc>${baseUrl}/product-category/sunglasses/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>${baseUrl}/product-category/sunglasses/women/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>${baseUrl}/product-category/sunglasses/men/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>${baseUrl}/product-category/sunglasses/kids/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
+  <url><loc>${baseUrl}/product-category/attachments/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
+  <url><loc>${baseUrl}/product-category/polarized/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
+  <url><loc>${baseUrl}/product-category/blue-light-blockers/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
+${products.map(p => `  <url><loc>${baseUrl}/product/${encodeURIComponent(p.slug)}/</loc><lastmod>${p.createdAt ? p.createdAt.split('T')[0] : today}</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>`).join('\n')}
+  <url><loc>${baseUrl}/blog/the-legendary-aviator-style-history/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>${baseUrl}/blog/polarized-vs-non-polarized-eyewear-guide/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>${baseUrl}/blog/how-to-choose-frames-for-your-face-shape/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 </urlset>`;
     res.setHeader('Content-Type', 'application/xml; charset=utf-8');
     return res.send(xml);
@@ -341,7 +331,7 @@ Allow: /
 Allow: /uploads/
 Allow: /assets/
 
-Sitemap: https://specslook.com/sitemap.xml
+Sitemap: https://www.specslook.com/sitemap.xml
 `);
 });
 

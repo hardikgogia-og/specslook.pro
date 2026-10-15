@@ -33,43 +33,49 @@ export default function handler(req: any, res: any) {
 
     const today = new Date().toISOString().split('T')[0];
 
+    // Production host is canonical https://www.specslook.com
+    const rawHost = (req.headers && (req.headers['x-forwarded-host'] || req.headers['host'])) || 'www.specslook.com';
+    const baseUrl = rawHost.includes('specslook.com')
+      ? 'https://www.specslook.com'
+      : (rawHost.startsWith('localhost') ? `http://${rawHost}` : `https://${rawHost}`);
+
     const staticUrls = [
-      { loc: 'https://specslook.com/', priority: '1.0', changefreq: 'daily' },
-      { loc: 'https://specslook.com/shop/', priority: '0.95', changefreq: 'daily' },
-      { loc: 'https://specslook.com/about/', priority: '0.8', changefreq: 'weekly' },
-      { loc: 'https://specslook.com/store/', priority: '0.85', changefreq: 'weekly' },
-      { loc: 'https://specslook.com/franchise/', priority: '0.9', changefreq: 'weekly' },
-      { loc: 'https://specslook.com/home/home-eyetest/', priority: '0.9', changefreq: 'weekly' },
-      { loc: 'https://specslook.com/contact-us/', priority: '0.7', changefreq: 'monthly' },
-      { loc: 'https://specslook.com/blog/', priority: '0.75', changefreq: 'weekly' },
-      { loc: 'https://specslook.com/terms-and-conditions/', priority: '0.6', changefreq: 'monthly' },
-      { loc: 'https://specslook.com/privacy-policy/', priority: '0.6', changefreq: 'monthly' },
-      { loc: 'https://specslook.com/product-category/eyeglasses/', priority: '0.9', changefreq: 'daily' },
-      { loc: 'https://specslook.com/product-category/eyewear/womeneyewear/', priority: '0.9', changefreq: 'daily' },
-      { loc: 'https://specslook.com/product-category/eyewear/meneyewear/', priority: '0.9', changefreq: 'daily' },
-      { loc: 'https://specslook.com/product-category/eyewear/kidseyewear/', priority: '0.85', changefreq: 'daily' },
-      { loc: 'https://specslook.com/product-category/sunglasses/', priority: '0.9', changefreq: 'daily' },
-      { loc: 'https://specslook.com/product-category/sunglasses/women/', priority: '0.9', changefreq: 'daily' },
-      { loc: 'https://specslook.com/product-category/sunglasses/men/', priority: '0.9', changefreq: 'daily' },
-      { loc: 'https://specslook.com/product-category/sunglasses/kids/', priority: '0.85', changefreq: 'daily' },
-      { loc: 'https://specslook.com/product-category/attachments/', priority: '0.85', changefreq: 'daily' },
-      { loc: 'https://specslook.com/product-category/polarized/', priority: '0.85', changefreq: 'daily' },
-      { loc: 'https://specslook.com/product-category/blue-light-blockers/', priority: '0.85', changefreq: 'daily' }
+      { loc: `${baseUrl}/`, priority: '1.0', changefreq: 'daily' },
+      { loc: `${baseUrl}/shop/`, priority: '0.95', changefreq: 'daily' },
+      { loc: `${baseUrl}/about/`, priority: '0.8', changefreq: 'weekly' },
+      { loc: `${baseUrl}/store/`, priority: '0.85', changefreq: 'weekly' },
+      { loc: `${baseUrl}/franchise/`, priority: '0.9', changefreq: 'weekly' },
+      { loc: `${baseUrl}/home/home-eyetest/`, priority: '0.9', changefreq: 'weekly' },
+      { loc: `${baseUrl}/contact-us/`, priority: '0.7', changefreq: 'monthly' },
+      { loc: `${baseUrl}/blog/`, priority: '0.75', changefreq: 'weekly' },
+      { loc: `${baseUrl}/terms-and-conditions/`, priority: '0.6', changefreq: 'monthly' },
+      { loc: `${baseUrl}/privacy-policy/`, priority: '0.6', changefreq: 'monthly' },
+      { loc: `${baseUrl}/product-category/eyeglasses/`, priority: '0.9', changefreq: 'daily' },
+      { loc: `${baseUrl}/product-category/eyewear/womeneyewear/`, priority: '0.9', changefreq: 'daily' },
+      { loc: `${baseUrl}/product-category/eyewear/meneyewear/`, priority: '0.9', changefreq: 'daily' },
+      { loc: `${baseUrl}/product-category/eyewear/kidseyewear/`, priority: '0.85', changefreq: 'daily' },
+      { loc: `${baseUrl}/product-category/sunglasses/`, priority: '0.9', changefreq: 'daily' },
+      { loc: `${baseUrl}/product-category/sunglasses/women/`, priority: '0.9', changefreq: 'daily' },
+      { loc: `${baseUrl}/product-category/sunglasses/men/`, priority: '0.9', changefreq: 'daily' },
+      { loc: `${baseUrl}/product-category/sunglasses/kids/`, priority: '0.85', changefreq: 'daily' },
+      { loc: `${baseUrl}/product-category/attachments/`, priority: '0.85', changefreq: 'daily' },
+      { loc: `${baseUrl}/product-category/polarized/`, priority: '0.85', changefreq: 'daily' },
+      { loc: `${baseUrl}/product-category/blue-light-blockers/`, priority: '0.85', changefreq: 'daily' }
     ];
 
     const productUrls = products
       .filter((p: any) => p && p.slug && p.name)
       .map((p: any) => ({
-        loc: `https://specslook.com/product/${encodeURIComponent(p.slug)}/`,
+        loc: `${baseUrl}/product/${encodeURIComponent(p.slug)}/`,
         lastmod: p.createdAt ? p.createdAt.split('T')[0] : today,
         changefreq: 'weekly',
         priority: '0.85'
       }));
 
     const blogUrls = [
-      { loc: 'https://specslook.com/blog/the-legendary-aviator-style-history/', priority: '0.7', changefreq: 'monthly' },
-      { loc: 'https://specslook.com/blog/polarized-vs-non-polarized-eyewear-guide/', priority: '0.7', changefreq: 'monthly' },
-      { loc: 'https://specslook.com/blog/how-to-choose-frames-for-your-face-shape/', priority: '0.7', changefreq: 'monthly' }
+      { loc: `${baseUrl}/blog/the-legendary-aviator-style-history/`, priority: '0.7', changefreq: 'monthly' },
+      { loc: `${baseUrl}/blog/polarized-vs-non-polarized-eyewear-guide/`, priority: '0.7', changefreq: 'monthly' },
+      { loc: `${baseUrl}/blog/how-to-choose-frames-for-your-face-shape/`, priority: '0.7', changefreq: 'monthly' }
     ];
 
     const allUrls = [...staticUrls, ...productUrls, ...blogUrls];

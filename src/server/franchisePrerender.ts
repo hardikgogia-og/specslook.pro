@@ -7,19 +7,19 @@
 export function renderFranchiseHtml(baseHtml: string): string {
   const franchiseTitle = 'Specslook Franchise Opportunities | Turnkey Optical Store Ownership';
   const franchiseDesc = 'Open a high-ROI Specslook optical showroom or boutique with turnkey setup, inventory support, optometrist training, and contractual 24-month buyback guarantee.';
-  const franchiseUrl = 'https://specslook.com/franchise/';
-  const ogImage = 'https://specslook.com/shop-logopng.png';
+  const franchiseUrl = 'https://www.specslook.com/franchise/';
+  const ogImage = 'https://www.specslook.com/shop-logopng.png';
 
   const franchiseJsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
         '@type': 'Organization',
-        '@id': 'https://specslook.com/#organization',
+        '@id': 'https://www.specslook.com/#organization',
         name: 'Specslook',
         legalName: 'Specslook Eyewear',
-        url: 'https://specslook.com/',
-        logo: 'https://specslook.com/shop-logopng.png',
+        url: 'https://www.specslook.com/',
+        logo: 'https://www.specslook.com/shop-logopng.png',
         telephone: '+91-8368853448',
         email: 'info@specslook.com',
         address: {
@@ -39,9 +39,9 @@ export function renderFranchiseHtml(baseHtml: string): string {
         description: franchiseDesc,
         isPartOf: {
           '@type': 'WebSite',
-          '@id': 'https://specslook.com/#website',
+          '@id': 'https://www.specslook.com/#website',
           name: 'Specslook',
-          url: 'https://specslook.com/'
+          url: 'https://www.specslook.com/'
         },
         breadcrumb: {
           '@type': 'BreadcrumbList',
@@ -50,7 +50,7 @@ export function renderFranchiseHtml(baseHtml: string): string {
               '@type': 'ListItem',
               position: 1,
               name: 'Home',
-              item: 'https://specslook.com/'
+              item: 'https://www.specslook.com/'
             },
             {
               '@type': 'ListItem',

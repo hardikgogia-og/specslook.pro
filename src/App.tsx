@@ -23,6 +23,7 @@ const AdminView = lazy(() => import('./views/AdminView.tsx').then(m => ({ defaul
 const HomeEyeTestView = lazy(() => import('./views/HomeEyeTestView.tsx').then(m => ({ default: m.HomeEyeTestView })));
 const TermsView = lazy(() => import('./views/TermsView.tsx').then(m => ({ default: m.TermsView })));
 const PrivacyPolicyView = lazy(() => import('./views/PrivacyPolicyView.tsx').then(m => ({ default: m.PrivacyPolicyView })));
+const NotFoundView = lazy(() => import('./views/NotFoundView.tsx').then(m => ({ default: m.NotFoundView })));
 
 // Non-critical floating customer widgets lazy loaded in background
 const WhatsAppWidget = lazy(() => import('./components/WhatsAppWidget.tsx').then(m => ({ default: m.WhatsAppWidget })));
@@ -253,6 +254,13 @@ const AppContent: React.FC = () => {
         canonicalPath: '/admin',
         noIndex: true
       });
+    } else if (currentView === 'not-found') {
+      updateSEO({
+        title: 'Page Not Found (404) | Specslook Official Store',
+        description: 'The requested page was not found on Specslook. Explore our handcrafted eyeglasses, polarized sunglasses, and doorstep home eye tests.',
+        canonicalPath: '/404.html',
+        noIndex: true
+      });
     }
   }, [currentView, viewParams]);
 
@@ -293,8 +301,10 @@ const AppContent: React.FC = () => {
         return <PrivacyPolicyView />;
       case 'admin':
         return <AdminView />;
+      case 'not-found':
+        return <NotFoundView />;
       default:
-        return <HomeView />;
+        return <NotFoundView />;
     }
   };
 

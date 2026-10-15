@@ -1,6 +1,6 @@
 import type { Product } from '../types.ts';
 
-const SITE_DOMAIN = 'https://specslook.com';
+const SITE_DOMAIN = 'https://www.specslook.com';
 
 /**
  * Escapes characters for safe inclusion inside XML attributes/nodes

@@ -1,7 +1,7 @@
 import type { Product } from '../types.ts';
 import { resolvePublicImageUrl } from './merchantFeed.ts';
 
-const SITE_DOMAIN = 'https://specslook.com';
+const SITE_DOMAIN = 'https://www.specslook.com';
 
 /**
  * Server-side HTML prerenderer for Specslook Product Detail Pages

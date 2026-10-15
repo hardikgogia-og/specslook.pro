@@ -37,7 +37,8 @@ export type AppView =
   | 'home-eyetest'
   | 'terms'
   | 'privacy'
-  | 'admin';
+  | 'admin'
+  | 'not-found';
 
 interface Toast {
   id: string;
@@ -129,19 +130,35 @@ const getInitialRoute = (): { view: AppView; params: Record<string, any> } => {
   const hash = window.location.hash.replace('#', '').replace(/\/+$/, '');
   const search = new URLSearchParams(window.location.search);
 
+  // Exact homepage
+  if (path === '/' && !hash && !search.get('view')) {
+    return { view: 'home', params: {} };
+  }
+
   if (path === '/admin' || hash === 'admin' || search.get('view') === 'admin') {
     return { view: 'admin', params: {} };
   }
   if (path === '/try-on' || path === '/virtual-try-on' || hash === 'try-on' || hash === 'virtual-try-on' || search.get('view') === 'try-on') {
     return { view: 'try-on', params: {} };
   }
+
+  // Product URLs matching /product/:slug
   const productMatch = path.match(/^\/(?:product|products)\/([^/]+)/i);
   const hashProductMatch = hash.match(/^(?:product|products)\/([^/]+)/i);
   const productSlugOrId = productMatch?.[1] || hashProductMatch?.[1] || search.get('product') || search.get('slug') || search.get('id');
   if (productSlugOrId) {
-    const decoded = decodeURIComponent(productSlugOrId);
-    return { view: 'product', params: { slug: decoded, id: decoded } };
+    const decoded = decodeURIComponent(productSlugOrId).trim().toLowerCase();
+    // Validate that product exists in catalog (or seed data fallback)
+    const exists = initialProducts.some(
+      p => p.slug?.toLowerCase() === decoded || p.id?.toLowerCase() === decoded ||
+           p.slug?.toLowerCase().replace(/chromance/g, 'polarvue') === decoded
+    );
+    if (exists) {
+      return { view: 'product', params: { slug: decoded, id: decoded } };
+    }
+    return { view: 'not-found', params: { path: rawPath } };
   }
+
   // Category URLs matching /product-category/...
   const catMatch = rawPath.match(/^\/product-category\/([^/]+)(?:\/([^/]+))?/i);
   if (catMatch) {
@@ -155,19 +172,24 @@ const getInitialRoute = (): { view: AppView; params: Record<string, any> } => {
       if (sub.includes('women')) gender = 'Women';
       else if (sub.includes('men')) gender = 'Men';
       else if (sub.includes('kid')) gender = 'Kids';
+      else if (sub && sub !== 'eyeglasses') return { view: 'not-found', params: { path: rawPath } };
     } else if (primary === 'sunglasses' || primary === 'shades') {
       category = 'Sunglasses';
       if (sub.includes('women')) gender = 'Women';
       else if (sub.includes('men')) gender = 'Men';
       else if (sub.includes('kid')) gender = 'Kids';
+      else if (sub && sub !== 'sunglasses') return { view: 'not-found', params: { path: rawPath } };
     } else if (primary === 'attachments') {
+      if (sub) return { view: 'not-found', params: { path: rawPath } };
       category = 'Attachments';
     } else if (primary === 'polarized') {
-      category = 'Sunglasses';
+      if (sub) return { view: 'not-found', params: { path: rawPath } };
       return { view: 'shop', params: { category: 'Sunglasses', polarized: true } };
     } else if (primary === 'blue-light-blockers' || primary === 'blue-light') {
-      category = 'Eyeglasses';
+      if (sub) return { view: 'not-found', params: { path: rawPath } };
       return { view: 'shop', params: { category: 'Eyeglasses', blueLight: true } };
+    } else {
+      return { view: 'not-found', params: { path: rawPath } };
     }
     return { view: 'shop', params: { category, gender, subcategory: sub || undefined } };
   }
@@ -186,23 +208,39 @@ const getInitialRoute = (): { view: AppView; params: Record<string, any> } => {
     return { view: 'shop', params: { category: 'Sunglasses', polarized: true } };
   }
 
+  // Blog article URLs matching /blog/:slug
+  if (path.startsWith('/blog/') || path.startsWith('/blogs/')) {
+    const blogSlug = path.replace(/^\/(?:blog|blogs)\//, '').replace(/\/+$/, '').toLowerCase();
+    const validBlogSlugs = new Set([
+      'the-legendary-aviator-style-history',
+      'polarized-vs-non-polarized-eyewear-guide',
+      'how-to-choose-frames-for-your-face-shape'
+    ]);
+    if (validBlogSlugs.has(blogSlug) || initialBlogs.some(b => b.slug.toLowerCase() === blogSlug)) {
+      return { view: 'blog', params: { slug: blogSlug } };
+    }
+    return { view: 'not-found', params: { path: rawPath } };
+  }
+
   if (path === '/franchise' || hash === 'franchise' || search.get('view') === 'franchise') return { view: 'franchise', params: {} };
   if (path === '/home-eyetest' || path === '/home/home-eyetest' || hash === 'home-eyetest') return { view: 'home-eyetest', params: {} };
   if (path === '/terms' || path === '/terms-and-conditions' || hash === 'terms') return { view: 'terms', params: {} };
   if (path === '/privacy' || path === '/privacy-policy' || hash === 'privacy') return { view: 'privacy', params: {} };
-  if (path === '/checkout' || hash === 'checkout') return { view: 'checkout', params: {} };
+  if (path === '/checkout' || path === '/cart' || hash === 'checkout') return { view: 'checkout', params: {} };
   if (path === '/tracking' || hash === 'tracking') return { view: 'tracking', params: {} };
-  if (path === '/account' || hash === 'account') return { view: 'account', params: {} };
+  if (path === '/account' || path === '/my-account' || hash === 'account') return { view: 'account', params: {} };
   if (path === '/stores' || path === '/store' || hash === 'stores') return { view: 'stores', params: {} };
   if (path === '/blog' || path === '/blogs' || hash === 'blog') return { view: 'blog', params: {} };
-  if (path === '/about' || hash === 'about') return { view: 'about', params: {} };
+  if (path === '/about' || path === '/about-us' || hash === 'about') return { view: 'about', params: {} };
   if (path === '/contact' || path === '/contact-us' || hash === 'contact') return { view: 'contact', params: {} };
   if (path === '/shop' || hash === 'shop') {
     const category = search.get('category') || undefined;
     const gender = search.get('gender') || undefined;
     return { view: 'shop', params: category ? { category, gender } : (gender ? { gender } : {}) };
   }
-  return { view: 'home', params: {} };
+
+  // Any other route is nonexistent -> return not-found view
+  return { view: 'not-found', params: { path: rawPath } };
 };
 
 const StoreContext = createContext<StoreContextType | undefined>(undefined);

@@ -1,6 +1,6 @@
 import type { Product } from '../types.ts';
 
-export const SITE_DOMAIN = 'https://specslook.com';
+export const SITE_DOMAIN = 'https://www.specslook.com';
 export const SITE_NAME = 'Specslook Eyewear';
 export const DEFAULT_OG_IMAGE = `${SITE_DOMAIN}/shop-logopng.png`;
 
@@ -51,15 +51,21 @@ export function updateSEO(options: SEOOptions): void {
   setMeta('description', description);
   setMeta('robots', noIndex ? 'noindex, nofollow' : 'index, follow');
 
-  // 3. Canonical URL (Self-referencing canonical preserving exact path with trailing slash)
-  const canonicalUrl = `${SITE_DOMAIN}${canonicalPath.startsWith('/') ? canonicalPath : '/' + canonicalPath}`;
+  // 3. Canonical URL (Removed on noIndex / 404 pages to prevent soft-404 attribution)
   let canonicalEl = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
-  if (!canonicalEl) {
-    canonicalEl = document.createElement('link');
-    canonicalEl.setAttribute('rel', 'canonical');
-    document.head.appendChild(canonicalEl);
+  const canonicalUrl = `${SITE_DOMAIN}${canonicalPath.startsWith('/') ? canonicalPath : '/' + canonicalPath}`;
+  if (noIndex) {
+    if (canonicalEl) {
+      canonicalEl.remove();
+    }
+  } else {
+    if (!canonicalEl) {
+      canonicalEl = document.createElement('link');
+      canonicalEl.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonicalEl);
+    }
+    canonicalEl.setAttribute('href', canonicalUrl);
   }
-  canonicalEl.setAttribute('href', canonicalUrl);
 
   // 4. OpenGraph Metadata
   setMeta('og:title', title, true);

@@ -40,30 +40,29 @@ export function prerenderAllPages() {
     const targetFile = path.join(distDir, ...config.canonicalPath.split('/').filter(Boolean), 'index.html');
     writeHtml(targetFile, categoryHtml);
     console.log(`  ✅ Prerendered Category: ${config.canonicalPath}`);
-
-    // Also mirror to legacy/short category paths if defined (e.g. dist/eyeglasses/index.html, dist/sunglasses/index.html)
-    if (config.categoryKey === 'eyeglasses') {
-      writeHtml(path.join(distDir, 'eyeglasses', 'index.html'), categoryHtml);
-      writeHtml(path.join(distDir, 'eyewear', 'index.html'), categoryHtml);
-    } else if (config.categoryKey === 'sunglasses') {
-      writeHtml(path.join(distDir, 'sunglasses', 'index.html'), categoryHtml);
-      writeHtml(path.join(distDir, 'shades', 'index.html'), categoryHtml);
-    }
   }
 
-  // 2.5 Prerender 404 Not Found Page (dist/404.html for genuine 404/410 responses)
+  // 2.5 Prerender 404 Not Found Page (dist/404.html for genuine 404 responses)
   const notFoundHtml = render404Html(baseHtml);
   writeHtml(path.join(distDir, '404.html'), notFoundHtml);
   console.log('  ✅ Prerendered Custom 404.html (noindex, nofollow, store navigation)');
 
-
-  // 3. Prerender Static & Service Landing Pages
-  const staticPages: Array<{ key: 'about' | 'home-eyetest' | 'stores' | 'contact' | 'shop'; paths: string[] }> = [
-    { key: 'about', paths: ['about', 'about-us'] },
-    { key: 'home-eyetest', paths: ['home/home-eyetest', 'home-eyetest', 'eyetest'] },
-    { key: 'stores', paths: ['store', 'stores'] },
-    { key: 'contact', paths: ['contact-us', 'contact'] },
-    { key: 'shop', paths: ['shop'] }
+  // 3. Prerender Static & Service Landing Pages, Blog, and Legal
+  const staticPages: Array<{
+    key: 'about' | 'home-eyetest' | 'stores' | 'contact' | 'shop' | 'blog' | 'terms' | 'privacy' | 'blog-aviator' | 'blog-polarized' | 'blog-face-shape';
+    paths: string[];
+  }> = [
+    { key: 'about', paths: ['about'] },
+    { key: 'home-eyetest', paths: ['home/home-eyetest'] },
+    { key: 'stores', paths: ['store'] },
+    { key: 'contact', paths: ['contact-us'] },
+    { key: 'shop', paths: ['shop'] },
+    { key: 'blog', paths: ['blog'] },
+    { key: 'terms', paths: ['terms-and-conditions'] },
+    { key: 'privacy', paths: ['privacy-policy'] },
+    { key: 'blog-aviator', paths: ['blog/the-legendary-aviator-style-history'] },
+    { key: 'blog-polarized', paths: ['blog/polarized-vs-non-polarized-eyewear-guide'] },
+    { key: 'blog-face-shape', paths: ['blog/how-to-choose-frames-for-your-face-shape'] }
   ];
 
   for (const page of staticPages) {
@@ -72,6 +71,17 @@ export function prerenderAllPages() {
       writeHtml(path.join(distDir, ...p.split('/'), 'index.html'), html);
     }
     console.log(`  ✅ Prerendered Static: /${page.paths[0]}/`);
+  }
+
+  // 3.5 Prerender Private / Utility SPA Pages with noindex, nofollow
+  const utilityPages = ['checkout', 'account', 'tracking', 'try-on', 'admin'];
+  const noIndexBaseHtml = baseHtml.replace(
+    '</head>',
+    '<meta name="robots" content="noindex, nofollow" />\n</head>'
+  );
+  for (const util of utilityPages) {
+    writeHtml(path.join(distDir, util, 'index.html'), noIndexBaseHtml);
+    console.log(`  ✅ Prerendered Utility: /${util}/ (noindex)`);
   }
 
   // 4. Prerender Franchise Page

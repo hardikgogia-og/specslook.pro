@@ -25,4 +25,4 @@ Allow: /
 Allow: /uploads/
 Allow: /assets/
 
-Sitemap: https://specslook.com/sitemap.xml
+Sitemap: https://www.specslook.com/sitemap.xml

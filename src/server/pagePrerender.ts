@@ -1,7 +1,7 @@
 import type { Product } from '../types.ts';
 import { resolvePublicImageUrl } from './merchantFeed.ts';
 
-const SITE_DOMAIN = 'https://specslook.com';
+const SITE_DOMAIN = 'https://www.specslook.com';
 const LOGO_URL = `${SITE_DOMAIN}/shop-logopng.png`;
 
 export interface CategoryPageConfig {
@@ -126,6 +126,17 @@ export const CATEGORY_CONFIGS: Record<string, CategoryPageConfig> = {
     intro: 'Precision multi-layer polarized lenses that neutralize horizontal glare while enhancing natural contrast and color clarity.',
     breadcrumbName: 'Polarized Shades',
     filterFn: (p: Product) => (p.category?.toLowerCase() === 'sunglasses' && (p.name.toLowerCase().includes('polar') || p.description.toLowerCase().includes('polar'))) || p.slug.includes('polar')
+  },
+  'blue-light-blockers': {
+    categoryKey: 'blue-light-blockers',
+    slug: 'blue-light-blockers',
+    canonicalPath: '/product-category/blue-light-blockers/',
+    title: 'Blue Light Blocking Glasses & Computer Screen Optics | Specslook',
+    description: 'Shop certified anti-reflective blue-light filter eyeglasses and computer screen lenses. Alleviate digital eyestrain and sleep fatigue.',
+    h1: 'Blue Light Blocking Glasses & Screen Optics',
+    intro: 'Engineered for digital screens and intense monitor sessions. Certified blue-light blocking lenses designed to reduce eye strain, headaches, and glare.',
+    breadcrumbName: 'Blue Light Blockers',
+    filterFn: (p: Product) => (p.category?.toLowerCase() === 'eyeglasses' && (p.name.toLowerCase().includes('blue') || p.description.toLowerCase().includes('blue'))) || p.slug.includes('blue')
   }
 };
 
@@ -630,7 +641,11 @@ export function renderCategoryHtml(baseHtml: string, config: CategoryPageConfig,
 /**
  * Prerender Key Content Pages (About, Home Eye Test, Stores, Contact, Shop)
  */
-export function renderStaticPageHtml(baseHtml: string, pageKey: 'about' | 'home-eyetest' | 'stores' | 'contact' | 'shop', allProducts: Product[]): string {
+export function renderStaticPageHtml(
+  baseHtml: string,
+  pageKey: 'about' | 'home-eyetest' | 'stores' | 'contact' | 'shop' | 'blog' | 'terms' | 'privacy' | 'blog-aviator' | 'blog-polarized' | 'blog-face-shape',
+  allProducts: Product[]
+): string {
   let title = 'Specslook | Luxury Eyewear & Sunglasses';
   let description = 'Handcrafted luxury optical frames and designer sunglasses with doorstep home eye test.';
   let canonicalPath = '/';
@@ -736,6 +751,115 @@ export function renderStaticPageHtml(baseHtml: string, pageKey: 'about' | 'home-
           </article>
         `).join('')}
       </div>
+    `;
+  } else if (pageKey === 'blog') {
+    title = 'Specslook Journal & Eyewear Style Guides | Specslook';
+    description = 'Explore expert eyewear styling guides, polarized vs non-polarized lens comparisons, and aviator history from Specslook optical specialists.';
+    canonicalPath = '/blog/';
+    h1 = 'Specslook Optical Journal & Eyewear Guides';
+    content = `
+      <p class="text-base text-neutral-700 leading-relaxed mb-8">
+        Expert optical insights, frame styling guidance, and precision lens technology from the Specslook optical team.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-8">
+        <article class="border border-neutral-200 p-5 rounded-xs bg-white">
+          <p class="text-xs font-bold text-red-600 uppercase mb-1">Style Heritage</p>
+          <h2 class="font-bold text-base text-neutral-900 mb-2"><a href="/blog/the-legendary-aviator-style-history/" class="hover:text-red-600">The Legendary Aviator Style History</a></h2>
+          <p class="text-xs text-neutral-600 mb-4">From WWII cockpits to modern runway prestige—how the teardrop pilot frame defined timeless cool.</p>
+          <a href="/blog/the-legendary-aviator-style-history/" class="text-xs font-bold text-red-600 uppercase">Read Guide &rarr;</a>
+        </article>
+        <article class="border border-neutral-200 p-5 rounded-xs bg-white">
+          <p class="text-xs font-bold text-red-600 uppercase mb-1">Lens Technology</p>
+          <h2 class="font-bold text-base text-neutral-900 mb-2"><a href="/blog/polarized-vs-non-polarized-eyewear-guide/" class="hover:text-red-600">Polarized vs Non-Polarized Eyewear Guide</a></h2>
+          <p class="text-xs text-neutral-600 mb-4">Discover how PolarVue™ multi-layer filters eliminate blinding glare without color distortion.</p>
+          <a href="/blog/polarized-vs-non-polarized-eyewear-guide/" class="text-xs font-bold text-red-600 uppercase">Read Guide &rarr;</a>
+        </article>
+        <article class="border border-neutral-200 p-5 rounded-xs bg-white">
+          <p class="text-xs font-bold text-red-600 uppercase mb-1">Fit &amp; Styling</p>
+          <h2 class="font-bold text-base text-neutral-900 mb-2"><a href="/blog/how-to-choose-frames-for-your-face-shape/" class="hover:text-red-600">How to Choose Frames for Your Face Shape</a></h2>
+          <p class="text-xs text-neutral-600 mb-4">Optometrist-approved geometric matching for oval, square, round, and heart face profiles.</p>
+          <a href="/blog/how-to-choose-frames-for-your-face-shape/" class="text-xs font-bold text-red-600 uppercase">Read Guide &rarr;</a>
+        </article>
+      </div>
+    `;
+  } else if (pageKey === 'terms') {
+    title = 'Terms and Conditions | Specslook Luxury Eyewear';
+    description = 'Specslook terms and conditions, warranty details, customer ordering policies, and doorstep home eye test agreements.';
+    canonicalPath = '/terms-and-conditions/';
+    h1 = 'Specslook Terms and Conditions';
+    content = `
+      <div class="prose prose-neutral max-w-none text-sm text-neutral-700 space-y-4">
+        <p>Welcome to Specslook. By placing an order, booking a home eye test, or accessing specslook.com, you agree to these Terms and Conditions.</p>
+        <h3 class="font-bold text-neutral-900 text-base">1. Prescription Accuracy</h3>
+        <p>All prescription lenses are fabricated to the precise measurements supplied by the customer or measured during our authorized home eye examination.</p>
+        <h3 class="font-bold text-neutral-900 text-base">2. 1-Year Craftsmanship Warranty</h3>
+        <p>Every Specslook titanium and acetate frame is backed by a 1-year warranty against manufacturing defects.</p>
+        <h3 class="font-bold text-neutral-900 text-base">3. Returns &amp; Exchanges</h3>
+        <p>Non-custom items can be returned within 14 days of delivery in pristine original packaging.</p>
+      </div>
+    `;
+  } else if (pageKey === 'privacy') {
+    title = 'Privacy Policy | Specslook Eyewear';
+    description = 'Read how Specslook collects, protects, and handles your personal information, prescriptions, and order records securely.';
+    canonicalPath = '/privacy-policy/';
+    h1 = 'Specslook Privacy Policy';
+    content = `
+      <div class="prose prose-neutral max-w-none text-sm text-neutral-700 space-y-4">
+        <p>Specslook is committed to safeguarding your privacy and personal optical records.</p>
+        <h3 class="font-bold text-neutral-900 text-base">Information We Collect</h3>
+        <p>We collect essential order information, delivery coordinates, and optical prescription measurements necessary to manufacture bespoke lenses and fulfill home eye exam bookings.</p>
+        <h3 class="font-bold text-neutral-900 text-base">Data Security</h3>
+        <p>All transmission of personal records is encrypted using high-grade SSL/TLS protocols and never sold to third-party data brokers.</p>
+      </div>
+    `;
+  } else if (pageKey === 'blog-aviator') {
+    title = 'The Legendary Aviator Style: A History of Iconic Pilot Shades | Specslook';
+    description = 'Explore the storied history of aviator sunglasses from WWII military pilots to high-fashion luxury eyewear.';
+    canonicalPath = '/blog/the-legendary-aviator-style-history/';
+    h1 = 'The Legendary Aviator Style: History of Iconic Eyewear';
+    content = `
+      <article class="prose prose-neutral max-w-3xl text-sm text-neutral-700 space-y-4">
+        <p class="lead text-base text-neutral-800 font-medium">From military cockpits in the late 1930s to timeless luxury fashion, the teardrop aviator frame remains the world's most enduring sunglass silhouette.</p>
+        <p>Engineered originally for high-altitude aviators seeking protection from solar glare, the double-bridge teardrop shape provides panoramic downward visibility while shielding sensitive peripheral vision.</p>
+        <p>At Specslook, our titanium aviators re-engineer this heritage design with ultra-flexible Japanese beta-titanium and scratch-resistant PolarVue™ polarized lenses.</p>
+        <div class="mt-6 pt-6 border-t border-neutral-200">
+          <a href="/product-category/sunglasses/" class="text-xs font-bold text-red-600 uppercase">&larr; Shop Specslook Aviator Sunglasses</a>
+        </div>
+      </article>
+    `;
+  } else if (pageKey === 'blog-polarized') {
+    title = 'Polarized vs Non-Polarized Lenses: Complete Buyer Guide | Specslook';
+    description = 'Learn the optical differences between polarized and standard tinted sunglasses for driving, glare reduction, and UV protection.';
+    canonicalPath = '/blog/polarized-vs-non-polarized-eyewear-guide/';
+    h1 = 'Polarized vs Non-Polarized Eyewear Guide';
+    content = `
+      <article class="prose prose-neutral max-w-3xl text-sm text-neutral-700 space-y-4">
+        <p class="lead text-base text-neutral-800 font-medium">Understand the physics of glare reduction and why polarized lenses provide superior clarity for driving and outdoor lifestyle.</p>
+        <p>Standard tinted lenses simply dim all incoming light equally. In contrast, polarized lenses feature microscopic chemical filters aligned to block horizontal light reflections—the primary cause of blinding glare from wet pavement, water, and car hoods.</p>
+        <p>Specslook PolarVue™ lenses combine 100% UV400 absorption with hydro-oleophobic multi-coatings that resist smudges, rainwater, and fingerprints.</p>
+        <div class="mt-6 pt-6 border-t border-neutral-200">
+          <a href="/product-category/polarized/" class="text-xs font-bold text-red-600 uppercase">&larr; Explore PolarVue™ Polarized Sunglasses</a>
+        </div>
+      </article>
+    `;
+  } else if (pageKey === 'blog-face-shape') {
+    title = 'How to Choose Frames for Your Face Shape | Specslook Guide';
+    description = 'Expert optometrist guide on finding the perfect spectacle and sunglass frames for round, square, oval, and heart-shaped faces.';
+    canonicalPath = '/blog/how-to-choose-frames-for-your-face-shape/';
+    h1 = 'How to Choose Frames for Your Face Shape';
+    content = `
+      <article class="prose prose-neutral max-w-3xl text-sm text-neutral-700 space-y-4">
+        <p class="lead text-base text-neutral-800 font-medium">Finding the right frame geometry is about creating visual balance with your natural facial contours.</p>
+        <ul class="space-y-2 list-disc pl-5">
+          <li><strong>Round Faces:</strong> Angular, rectangular, or geometric frames add definition and create lengthening contrast.</li>
+          <li><strong>Square Faces:</strong> Curved round or oval silhouettes soften strong jawlines and forehead angles.</li>
+          <li><strong>Oval Faces:</strong> Balanced proportions suit almost all frame silhouettes, from bold browlines to classic aviators.</li>
+          <li><strong>Heart Faces:</strong> Light-rimmed or cat-eye frames balance a broader forehead with a tapered chin.</li>
+        </ul>
+        <div class="mt-6 pt-6 border-t border-neutral-200">
+          <a href="/shop/" class="text-xs font-bold text-red-600 uppercase">&larr; Try All Frames With Doorstep Home Eye Test</a>
+        </div>
+      </article>
     `;
   }
 
@@ -875,7 +999,6 @@ export function isSpamOrHackedPath(pathname: string, fullUrl = ''): boolean {
 export function render404Html(baseHtml: string): string {
   const pageTitle = 'Page Not Found (404) | Specslook Official Store';
   const pageDesc = 'The page you are looking for does not exist on Specslook. Explore our handcrafted eyeglasses, polarized sunglasses, and doorstep home eye tests.';
-  const canonicalUrl = `${SITE_DOMAIN}/`;
 
   let html = baseHtml;
 
@@ -896,17 +1019,19 @@ export function render404Html(baseHtml: string): string {
     html = html.replace('</head>', `<meta name="robots" content="noindex, nofollow" />\n</head>`);
   }
 
-  // Canonical tag removed or points to self to prevent soft-404 attribution
-  if (/<link\s+rel=["']canonical["'][^>]*>/i.test(html)) {
-    html = html.replace(/<link\s+rel=["']canonical["'][^>]*>/i, '');
-  }
+  // Remove any canonical link tag completely on 404 to prevent soft-404 attribution to homepage
+  html = html.replace(/<link\s+rel=["']canonical["'][^>]*>\s*/gi, '');
+
+  // Strip client-side SPA script bundles from the 404 page so client hydration cannot overwrite 404 with home
+  html = html.replace(/<script\s+type=["']module["'][^>]*>[\s\S]*?<\/script>\s*/gi, '');
+  html = html.replace(/<link\s+rel=["']modulepreload["'][^>]*>\s*/gi, '');
 
   const notFoundContent = `
     <div id="specslook-404-prerender" class="max-w-3xl mx-auto px-4 py-20 text-center font-sans">
       <div class="mb-4 inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-100 text-red-600 text-2xl font-black">
         404
       </div>
-      <h1 class="text-3xl sm:text-4xl font-black uppercase tracking-tight text-neutral-950 mb-4">
+      <h1 class="text-3xl sm:text-4xl font-black uppercase tracking-tight text-neutral-950 mb-4 font-serif">
         Page Not Found
       </h1>
       <p class="text-neutral-600 text-sm sm:text-base max-w-lg mx-auto mb-8">
@@ -939,6 +1064,8 @@ export function render404Html(baseHtml: string): string {
 
   if (html.includes('<div id="root"></div>')) {
     html = html.replace('<div id="root"></div>', `<div id="root">${notFoundContent}</div>`);
+  } else if (html.includes('<div id="root">')) {
+    html = html.replace(/<div id="root">[\s\S]*?<\/div>/i, `<div id="root">${notFoundContent}</div>`);
   }
 
   return html;
