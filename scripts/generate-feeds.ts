@@ -3,7 +3,7 @@ import path from 'path';
 import { dbService } from '../src/server/db.ts';
 import { generateMerchantFeedXml } from '../src/server/merchantFeed.ts';
 
-function run() {
+export function generateFeeds() {
   const products = dbService.getProducts();
   const today = new Date().toISOString().split('T')[0];
 
@@ -85,4 +85,6 @@ ${allUrls.map(u => `  <url>
   console.log(`✅ Generated sitemap.xml (${sitemapXml.length} bytes, ${allUrls.length} URLs)`);
 }
 
-run();
+if (process.argv[1]?.includes('generate-feeds')) {
+  generateFeeds();
+}

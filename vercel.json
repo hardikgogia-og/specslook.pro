@@ -1,5 +1,7 @@
 {
   "version": 2,
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
   "trailingSlash": true,
   "functions": {
     "api/**/*.ts": {
@@ -100,6 +102,27 @@
     { "source": "/product/titanium-aviator-polarized-chromance/", "destination": "/product/titanium-aviator-polarized-polarvue/", "permanent": true }
   ],
   "rewrites": [
-    { "source": "/merchant-feed", "destination": "/api/merchant-feed" }
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "query",
+          "key": "p"
+        }
+      ],
+      "destination": "/api/legacy-handler"
+    },
+    {
+      "source": "/category/(.*)",
+      "destination": "/api/legacy-handler"
+    },
+    {
+      "source": "/(.*)(casino|fruitautomaten|winkans|poker|roulette|judislot|gacor|slot-online|slot-gacor|judi-online|betting|vulkan|daftar-slot|situs-slot|togel|sbobet|wp-admin|wp-includes|wp-content|xmlrpc\\.php|wp-login)(.*)",
+      "destination": "/api/legacy-handler"
+    },
+    {
+      "source": "/merchant-feed",
+      "destination": "/api/merchant-feed"
+    }
   ]
 }

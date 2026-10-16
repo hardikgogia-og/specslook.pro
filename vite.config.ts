@@ -2,10 +2,26 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig } from 'vite';
+import { generateFeeds } from './scripts/generate-feeds.ts';
+import { prerenderAllPages } from './scripts/prerender-pages.ts';
+
+function seoPrerenderPlugin() {
+  return {
+    name: 'seo-prerender-plugin',
+    closeBundle() {
+      try {
+        generateFeeds();
+        prerenderAllPages();
+      } catch (err) {
+        console.warn('Post-build prerendering encountered an error:', err);
+      }
+    }
+  };
+}
 
 export default defineConfig(() => {
   return {
-    plugins: [react(), tailwindcss()],
+    plugins: [react(), tailwindcss(), seoPrerenderPlugin()],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
