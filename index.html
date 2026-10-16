@@ -43,33 +43,79 @@
     <script type="application/ld+json" id="specslook-schema">
     {
       "@context": "https://schema.org",
-      "@type": "Organization",
-      "@id": "https://www.specslook.com/#organization",
-      "name": "Specslook",
-      "legalName": "Specslook Eyewear",
-      "alternateName": ["Specslook Official", "Specslook India", "specslook.com"],
-      "url": "https://www.specslook.com/",
-      "logo": "https://www.specslook.com/shop-logopng.png",
-      "telephone": "+91-8368853448",
-      "email": "info@specslook.com",
-      "slogan": "Handcrafted Luxury Eyewear & Master Optics",
-      "brand": {
-        "@type": "Brand",
-        "name": "Specslook",
-        "url": "https://www.specslook.com/"
-      },
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Specslook, Dreamz Mall, Sec 4-7 Circle",
-        "addressLocality": "Gurugram",
-        "addressRegion": "Haryana",
-        "postalCode": "122001",
-        "addressCountry": "IN"
-      },
-      "sameAs": [
-        "https://www.instagram.com/specslook",
-        "https://www.facebook.com/specslook",
-        "https://wa.me/918368853448"
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://www.specslook.com/#organization",
+          "name": "Specslook",
+          "legalName": "Specslook Eyewear",
+          "alternateName": ["Specs Look", "Specslook Eyewear", "Specslook India"],
+          "url": "https://www.specslook.com/",
+          "logo": "https://www.specslook.com/shop-logopng.png",
+          "telephone": "+91-8368853448",
+          "email": "info@specslook.com",
+          "slogan": "Handcrafted Luxury Eyewear & Master Optics",
+          "brand": {
+            "@type": "Brand",
+            "name": "Specslook",
+            "url": "https://www.specslook.com/"
+          },
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Specslook, Dreamz Mall, Sec 4-7 Circle",
+            "addressLocality": "Gurugram",
+            "addressRegion": "Haryana",
+            "postalCode": "122001",
+            "addressCountry": "IN"
+          },
+          "sameAs": [
+            "https://www.instagram.com/specslook",
+            "https://www.facebook.com/specslook",
+            "https://wa.me/918368853448"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://www.specslook.com/#website",
+          "name": "Specslook",
+          "alternateName": ["Specs Look", "Specslook Eyewear"],
+          "url": "https://www.specslook.com/",
+          "description": "Discover handcrafted luxury eyeglasses, Japanese titanium frames, designer sunglasses, polarized shades, and computerized home eye tests across India.",
+          "publisher": {
+            "@id": "https://www.specslook.com/#organization"
+          },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://www.specslook.com/shop?search={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "Optician",
+          "@id": "https://www.specslook.com/#store-sl1",
+          "name": "SPECSLOOK Flagship Optical Atelier",
+          "alternateName": "Specslook Dreamz Mall",
+          "url": "https://www.specslook.com/store/",
+          "telephone": "+91 83688 53448",
+          "email": "sl1.dreamz@specslook.com",
+          "image": "https://www.specslook.com/shop-logopng.png",
+          "priceRange": "₹₹",
+          "openingHours": "Mo-Su 10:30-21:30",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Dreamz Mall, Sector 4 / 7",
+            "addressLocality": "Gurugram",
+            "addressRegion": "Haryana",
+            "postalCode": "122001",
+            "addressCountry": "IN"
+          },
+          "parentOrganization": {
+            "@id": "https://www.specslook.com/#organization"
+          }
+        }
       ]
     }
     </script>

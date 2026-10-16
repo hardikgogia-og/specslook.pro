@@ -109,7 +109,8 @@ export function updateJsonLd(params: {
     '@type': 'Organization',
     '@id': `${SITE_DOMAIN}/#organization`,
     name: 'Specslook',
-    legalName: 'Specslook',
+    legalName: 'Specslook Eyewear',
+    alternateName: ['Specs Look', 'Specslook Eyewear', 'Specslook India'],
     url: `${SITE_DOMAIN}/`,
     logo: {
       '@type': 'ImageObject',
@@ -146,6 +147,7 @@ export function updateJsonLd(params: {
     '@type': 'WebSite',
     '@id': `${SITE_DOMAIN}/#website`,
     name: 'Specslook',
+    alternateName: ['Specs Look', 'Specslook Eyewear'],
     url: `${SITE_DOMAIN}/`,
     description: 'Luxury handcrafted eyewear, designer sunglasses, prescription lenses, and home eye tests across India.',
     publisher: {
@@ -377,6 +379,108 @@ export function updateJsonLd(params: {
           acceptedAnswer: {
             '@type': 'Answer',
             text: 'Specslook provides 100% turnkey store buildout design, computerized Zeiss optical testing equipment, optometrist hiring and certification, cloud billing POS, AI inventory replenishment, and national marketing campaigns.'
+          }
+        }
+      ]
+    });
+  }
+
+  // 6. Genuine Physical Stores Schema (Optician / LocalBusiness) for /store/
+  if (canonicalUrl.includes('/store')) {
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      '@id': `${SITE_DOMAIN}/store/#storelist`,
+      name: 'Specslook Flagship Stores & Optical Ateliers',
+      itemListElement: [
+        {
+          '@type': 'Optician',
+          position: 1,
+          name: 'SPECSLOOK SL1 - Dreamz Mall',
+          url: `${SITE_DOMAIN}/store/`,
+          telephone: '+91 83688 53448',
+          email: 'sl1.dreamz@specslook.com',
+          priceRange: '₹₹',
+          openingHours: 'Mo-Su 10:30-21:30',
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'Dreamz Mall, Sector 4 / 7',
+            addressLocality: 'Gurugram',
+            addressRegion: 'Haryana',
+            postalCode: '122001',
+            addressCountry: 'IN'
+          }
+        },
+        {
+          '@type': 'Optician',
+          position: 2,
+          name: 'SPECSLOOK SL2 - Sec 5 Railway Road',
+          url: `${SITE_DOMAIN}/store/`,
+          telephone: '+91 83688 53448',
+          email: 'sl2.sec5@specslook.com',
+          priceRange: '₹₹',
+          openingHours: 'Mo-Su 10:30-21:30',
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'Sec 5 Circle, Railway Road',
+            addressLocality: 'Gurugram',
+            addressRegion: 'Haryana',
+            postalCode: '122006',
+            addressCountry: 'IN'
+          }
+        },
+        {
+          '@type': 'Optician',
+          position: 3,
+          name: 'SPECSLOOK SL3 - Sector 85',
+          url: `${SITE_DOMAIN}/store/`,
+          telephone: '+91 83688 53448',
+          email: 'sl3.sec85@specslook.com',
+          priceRange: '₹₹',
+          openingHours: 'Mo-Su 10:30-21:30',
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'Sector 85, Multi-Brand Eyewear Boulevard',
+            addressLocality: 'Gurugram',
+            addressRegion: 'Haryana',
+            postalCode: '122004',
+            addressCountry: 'IN'
+          }
+        },
+        {
+          '@type': 'Optician',
+          position: 4,
+          name: 'SPECSLOOK SL4 - Sector 103 Dwarka Expressway',
+          url: `${SITE_DOMAIN}/store/`,
+          telephone: '+91 83688 53448',
+          email: 'sl4.sec103@specslook.com',
+          priceRange: '₹₹',
+          openingHours: 'Mo-Su 10:30-21:30',
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'Sector 103, Dwarka Expressway Corridor',
+            addressLocality: 'Gurugram',
+            addressRegion: 'Haryana',
+            postalCode: '122006',
+            addressCountry: 'IN'
+          }
+        },
+        {
+          '@type': 'Optician',
+          position: 5,
+          name: 'SPECSLOOK SL5 - Sector 89 Commercial Hub',
+          url: `${SITE_DOMAIN}/store/`,
+          telephone: '+91 83688 53448',
+          email: 'sl5.sec89@specslook.com',
+          priceRange: '₹₹',
+          openingHours: 'Mo-Su 10:30-21:30',
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'Sector 89, New Gurugram Commercial Hub',
+            addressLocality: 'Gurugram',
+            addressRegion: 'Haryana',
+            postalCode: '122505',
+            addressCountry: 'IN'
           }
         }
       ]

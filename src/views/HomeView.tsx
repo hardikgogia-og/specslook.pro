@@ -51,10 +51,13 @@ export const HomeView: React.FC = () => {
             <div>
               <div className="text-xs font-extrabold text-red-600 uppercase tracking-widest mb-1 flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>PRECISION COLLECTIONS</span>
+                <span>SPECSLOOK OFFICIAL EYEWEAR</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-black text-neutral-900 uppercase tracking-tight">
-                Shop By Category & Gender
+              <h1 className="text-2xl sm:text-4xl font-black text-neutral-900 uppercase tracking-tight mb-1.5">
+                Specslook Luxury Eyewear, Sunglasses &amp; Shades
+              </h1>
+              <h2 className="text-sm sm:text-base font-bold text-neutral-700 uppercase tracking-wider">
+                Shop By Eyewear Category &amp; Gender
               </h2>
             </div>
             <p className="text-xs text-neutral-500 max-w-md">

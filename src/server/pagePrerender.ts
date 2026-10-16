@@ -229,7 +229,7 @@ export function renderHomeHtml(baseHtml: string, products: Product[]): string {
         '@id': `${SITE_DOMAIN}/#organization`,
         name: 'Specslook',
         legalName: 'Specslook Eyewear',
-        alternateName: ['Specslook Official', 'Specslook India', 'specslook.com'],
+        alternateName: ['Specs Look', 'Specslook Eyewear', 'Specslook India'],
         slogan: 'Handcrafted Luxury Eyewear & Master Optics',
         brand: {
           '@type': 'Brand',
@@ -258,6 +258,7 @@ export function renderHomeHtml(baseHtml: string, products: Product[]): string {
         '@type': 'WebSite',
         '@id': `${SITE_DOMAIN}/#website`,
         name: 'Specslook',
+        alternateName: ['Specs Look', 'Specslook Eyewear'],
         url: canonicalUrl,
         description: pageDesc,
         publisher: {
@@ -705,10 +706,37 @@ export function renderStaticPageHtml(
       <p class="text-base text-neutral-700 leading-relaxed mb-6">
         Visit our luxury optical ateliers in Gurugram, Delhi NCR for bespoke frame styling, precision pupil distance measurement, and walk-in clinical examinations.
       </p>
-      <div class="border border-neutral-200 p-6 rounded-xs my-6 bg-white">
-        <h3 class="font-bold text-lg text-neutral-950 mb-1">Gurugram Flagship Boutique</h3>
-        <p class="text-sm text-neutral-600 mb-2">Specslook, Dreamz Mall, Sec 4-7 Circle, Gurugram, Haryana 122001</p>
-        <p class="text-xs text-neutral-500">Phone: +91 83688 53448 &bull; Hours: 10:30 AM - 9:30 PM (Daily)</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+        <div class="border border-neutral-200 p-6 rounded-xs bg-white">
+          <h3 class="font-bold text-lg text-neutral-950 mb-1">SPECSLOOK SL1 - Dreamz Mall</h3>
+          <p class="text-sm text-neutral-600 mb-2">Specslook, Dreamz Mall, Sector 4 / 7, Gurugram, Haryana - 122001</p>
+          <p class="text-xs text-neutral-500">Phone: +91 83688 53448 &bull; Hours: 10:30 AM - 9:30 PM (Daily)</p>
+          <p class="text-xs text-emerald-700 font-semibold mt-2">Mini Optical Studio &bull; Comprehensive Zeiss Eye Exam</p>
+        </div>
+        <div class="border border-neutral-200 p-6 rounded-xs bg-white">
+          <h3 class="font-bold text-lg text-neutral-950 mb-1">SPECSLOOK SL2 - Sec 5 Railway Road</h3>
+          <p class="text-sm text-neutral-600 mb-2">Sec 5 Circle, Railway Road, Gurugram, Haryana - 122006</p>
+          <p class="text-xs text-neutral-500">Phone: +91 83688 53448 &bull; Hours: 10:30 AM - 9:30 PM (Daily)</p>
+          <p class="text-xs text-emerald-700 font-semibold mt-2">Aviator &amp; Wayfarer Vault &bull; 3D Facial Scanning</p>
+        </div>
+        <div class="border border-neutral-200 p-6 rounded-xs bg-white">
+          <h3 class="font-bold text-lg text-neutral-950 mb-1">SPECSLOOK SL3 - Sector 85</h3>
+          <p class="text-sm text-neutral-600 mb-2">Sector 85, Multi-Brand Eyewear Boulevard, Gurugram, Haryana - 122004</p>
+          <p class="text-xs text-neutral-500">Phone: +91 83688 53448 &bull; Hours: 10:30 AM - 9:30 PM (Daily)</p>
+          <p class="text-xs text-emerald-700 font-semibold mt-2">Handcrafted Titanium Gallery &bull; Senior Optometrists</p>
+        </div>
+        <div class="border border-neutral-200 p-6 rounded-xs bg-white">
+          <h3 class="font-bold text-lg text-neutral-950 mb-1">SPECSLOOK SL4 - Sector 103 Dwarka Expressway</h3>
+          <p class="text-sm text-neutral-600 mb-2">Sector 103, Dwarka Expressway Corridor, Gurugram, Haryana - 122006</p>
+          <p class="text-xs text-neutral-500">Phone: +91 83688 53448 &bull; Hours: 10:30 AM - 9:30 PM (Daily)</p>
+          <p class="text-xs text-emerald-700 font-semibold mt-2">Express Optical Lab &bull; High-Index Ultra-Thin Lenses</p>
+        </div>
+        <div class="border border-neutral-200 p-6 rounded-xs bg-white md:col-span-2">
+          <h3 class="font-bold text-lg text-neutral-950 mb-1">SPECSLOOK SL5 - Sector 89 Commercial Hub</h3>
+          <p class="text-sm text-neutral-600 mb-2">Sector 89, New Gurugram Commercial Hub, Gurugram, Haryana - 122505</p>
+          <p class="text-xs text-neutral-500">Phone: +91 83688 53448 &bull; Hours: 10:30 AM - 9:30 PM (Daily)</p>
+          <p class="text-xs text-emerald-700 font-semibold mt-2">Haute Eyewear Atelier &bull; Computer Vision Eye Strain Clinic</p>
+        </div>
       </div>
     `;
   } else if (pageKey === 'contact') {
@@ -907,6 +935,106 @@ export function renderStaticPageHtml(
       }
     ]
   };
+
+  if (pageKey === 'stores') {
+    (jsonLd['@graph'] as any[]).push({
+      '@type': 'ItemList',
+      '@id': `${SITE_DOMAIN}/store/#storelist`,
+      name: 'Specslook Flagship Stores & Optical Ateliers',
+      itemListElement: [
+        {
+          '@type': 'Optician',
+          position: 1,
+          name: 'SPECSLOOK SL1 - Dreamz Mall',
+          url: `${SITE_DOMAIN}/store/`,
+          telephone: '+91 83688 53448',
+          email: 'sl1.dreamz@specslook.com',
+          priceRange: '₹₹',
+          openingHours: 'Mo-Su 10:30-21:30',
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'Specslook, Dreamz Mall, Sector 4 / 7',
+            addressLocality: 'Gurugram',
+            addressRegion: 'Haryana',
+            postalCode: '122001',
+            addressCountry: 'IN'
+          }
+        },
+        {
+          '@type': 'Optician',
+          position: 2,
+          name: 'SPECSLOOK SL2 - Sec 5 Railway Road',
+          url: `${SITE_DOMAIN}/store/`,
+          telephone: '+91 83688 53448',
+          email: 'sl2.sec5@specslook.com',
+          priceRange: '₹₹',
+          openingHours: 'Mo-Su 10:30-21:30',
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'Sec 5 Circle, Railway Road',
+            addressLocality: 'Gurugram',
+            addressRegion: 'Haryana',
+            postalCode: '122006',
+            addressCountry: 'IN'
+          }
+        },
+        {
+          '@type': 'Optician',
+          position: 3,
+          name: 'SPECSLOOK SL3 - Sector 85',
+          url: `${SITE_DOMAIN}/store/`,
+          telephone: '+91 83688 53448',
+          email: 'sl3.sec85@specslook.com',
+          priceRange: '₹₹',
+          openingHours: 'Mo-Su 10:30-21:30',
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'Sector 85, Multi-Brand Eyewear Boulevard',
+            addressLocality: 'Gurugram',
+            addressRegion: 'Haryana',
+            postalCode: '122004',
+            addressCountry: 'IN'
+          }
+        },
+        {
+          '@type': 'Optician',
+          position: 4,
+          name: 'SPECSLOOK SL4 - Sector 103 Dwarka Expressway',
+          url: `${SITE_DOMAIN}/store/`,
+          telephone: '+91 83688 53448',
+          email: 'sl4.sec103@specslook.com',
+          priceRange: '₹₹',
+          openingHours: 'Mo-Su 10:30-21:30',
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'Sector 103, Dwarka Expressway Corridor',
+            addressLocality: 'Gurugram',
+            addressRegion: 'Haryana',
+            postalCode: '122006',
+            addressCountry: 'IN'
+          }
+        },
+        {
+          '@type': 'Optician',
+          position: 5,
+          name: 'SPECSLOOK SL5 - Sector 89 Commercial Hub',
+          url: `${SITE_DOMAIN}/store/`,
+          telephone: '+91 83688 53448',
+          email: 'sl5.sec89@specslook.com',
+          priceRange: '₹₹',
+          openingHours: 'Mo-Su 10:30-21:30',
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'Sector 89, New Gurugram Commercial Hub',
+            addressLocality: 'Gurugram',
+            addressRegion: 'Haryana',
+            postalCode: '122505',
+            addressCountry: 'IN'
+          }
+        }
+      ]
+    });
+  }
 
   const semanticHtml = `
     <div id="specslook-static-prerender" class="max-w-5xl mx-auto px-4 py-12 text-neutral-900 font-sans">

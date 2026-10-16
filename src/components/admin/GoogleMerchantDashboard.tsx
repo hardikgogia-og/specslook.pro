@@ -47,8 +47,8 @@ export const GoogleMerchantDashboard: React.FC<Props> = ({ products }) => {
   const [copiedFeed, setCopiedFeed] = useState(false);
   const [copiedSitemap, setCopiedSitemap] = useState(false);
 
-  const feedUrl = 'https://specslook.com/merchant-feed.xml';
-  const sitemapUrl = 'https://specslook.com/sitemap.xml';
+  const feedUrl = 'https://www.specslook.com/merchant-feed.xml';
+  const sitemapUrl = 'https://www.specslook.com/sitemap.xml';
 
   const fetchDiagnostics = async () => {
     setLoading(true);

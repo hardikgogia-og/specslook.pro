@@ -224,7 +224,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-// 1. Google Merchant Center Feed (Public XML endpoint: https://specslook.com/merchant-feed.xml)
+// 1. Google Merchant Center Feed (Public XML endpoint: https://www.specslook.com/merchant-feed.xml)
 app.get(['/merchant-feed.xml', '/merchant-feed', '/api/merchant-feed.xml', '/api/merchant-feed'], (_req: Request, res: Response) => {
   try {
     const products = dbService.getProducts();

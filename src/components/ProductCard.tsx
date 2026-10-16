@@ -68,9 +68,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       </button>
 
       {/* Product Image Area */}
-      <div
-        className="relative aspect-4/3 w-full bg-neutral-100/60 overflow-hidden cursor-pointer flex items-center justify-center p-4"
-        onClick={() => navigateTo('product', { slug: product.slug, id: product.id })}
+      <a
+        href={`/product/${encodeURIComponent(product.slug)}/`}
+        className="relative aspect-4/3 w-full bg-neutral-100/60 overflow-hidden cursor-pointer flex items-center justify-center p-4 block"
+        onClick={(e) => {
+          if (!e.ctrlKey && !e.metaKey) {
+            e.preventDefault();
+            navigateTo('product', { slug: product.slug, id: product.id });
+          }
+        }}
       >
         <img
           src={isHovered && secondaryImage ? secondaryImage : displayImage}
@@ -89,17 +95,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         {/* Quick View Button overlay on hover */}
         <div className="absolute inset-x-0 bottom-3 px-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200 hidden sm:flex justify-center gap-2">
           <button
+            type="button"
             onClick={(e) => {
+              e.preventDefault();
               e.stopPropagation();
               navigateTo('product', { slug: product.slug, id: product.id });
             }}
-            className="w-full bg-neutral-900/90 hover:bg-neutral-950 text-white text-xs font-semibold py-2 px-3 flex items-center justify-center gap-1.5 tracking-wider uppercase transition-colors shadow-md backdrop-blur-xs"
+            className="w-full bg-neutral-900/90 hover:bg-neutral-950 text-white text-xs font-semibold py-2 px-3 flex items-center justify-center gap-1.5 tracking-wider uppercase transition-colors shadow-md backdrop-blur-xs cursor-pointer"
           >
             <Eye className="w-3.5 h-3.5" />
             Quick View
           </button>
         </div>
-      </div>
+      </a>
 
       {/* Product Details Area */}
       <div className="p-4 flex flex-col flex-1 justify-between gap-2.5">
@@ -111,11 +119,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </div>
 
           {/* Product Title */}
-          <h3
-            onClick={() => navigateTo('product', { slug: product.slug, id: product.id })}
-            className="font-bold text-sm sm:text-base text-neutral-900 group-hover:text-red-600 transition-colors line-clamp-1 cursor-pointer"
-          >
-            {product.name}
+          <h3 className="font-bold text-sm sm:text-base text-neutral-900 group-hover:text-red-600 transition-colors line-clamp-1">
+            <a
+              href={`/product/${encodeURIComponent(product.slug)}/`}
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  navigateTo('product', { slug: product.slug, id: product.id });
+                }
+              }}
+              className="hover:underline"
+            >
+              {product.name}
+            </a>
           </h3>
 
           {/* SKU & Short Specs */}

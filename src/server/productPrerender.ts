@@ -29,6 +29,12 @@ export function renderProductHtml(baseHtml: string, product: Product): string {
     ? 'https://schema.org/InStock'
     : 'https://schema.org/OutOfStock';
 
+  const categoryCanonicalPath = product.category?.toLowerCase() === 'sunglasses'
+    ? '/product-category/sunglasses/'
+    : product.category?.toLowerCase() === 'attachments'
+    ? '/product-category/attachments/'
+    : '/product-category/eyeglasses/';
+
   // Build complete Schema.org Product + Offer graph
   const productJsonLd = {
     '@context': 'https://schema.org',
@@ -137,7 +143,7 @@ export function renderProductHtml(baseHtml: string, product: Product): string {
             '@type': 'ListItem',
             position: 2,
             name: product.category || 'Shop',
-            item: `${SITE_DOMAIN}/shop?category=${encodeURIComponent(product.category || 'Eyewear')}`
+            item: `${SITE_DOMAIN}${categoryCanonicalPath}`
           },
           {
             '@type': 'ListItem',
@@ -156,7 +162,7 @@ export function renderProductHtml(baseHtml: string, product: Product): string {
       <nav class="text-xs text-neutral-500 mb-6 flex items-center gap-2">
         <a href="/" class="hover:underline">Home</a>
         <span>/</span>
-        <a href="/shop" class="hover:underline">${escapeHtml(product.category || 'Eyewear')}</a>
+        <a href="${categoryCanonicalPath}" class="hover:underline">${escapeHtml(product.category || 'Eyewear')}</a>
         <span>/</span>
         <span class="text-neutral-900 font-medium">${escapeHtml(product.name)}</span>
       </nav>

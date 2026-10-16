@@ -139,10 +139,16 @@ export const BlogView: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {blogs.map((post) => (
-            <article
+            <a
               key={post.id}
-              onClick={() => navigateTo('blog-post', { slug: post.slug })}
-              className="group bg-white border border-neutral-200 rounded-xs overflow-hidden shadow-xs hover:border-neutral-900 hover:shadow-lg transition-all cursor-pointer flex flex-col justify-between"
+              href={`/blog/${post.slug}/`}
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  navigateTo('blog-post', { slug: post.slug });
+                }
+              }}
+              className="group bg-white border border-neutral-200 rounded-xs overflow-hidden shadow-xs hover:border-neutral-900 hover:shadow-lg transition-all cursor-pointer flex flex-col justify-between block"
             >
               <div>
                 <div className="aspect-16/10 bg-neutral-100 overflow-hidden relative">
@@ -184,7 +190,7 @@ export const BlogView: React.FC = () => {
                   Read Journal &rarr;
                 </span>
               </div>
-            </article>
+            </a>
           ))}
         </div>
       </div>

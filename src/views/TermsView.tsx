@@ -85,7 +85,7 @@ export const TermsView: React.FC = () => {
             These Terms and Conditions (&quot;Terms&quot;) constitute a legally binding agreement between you (&quot;User&quot;, &quot;Customer&quot;, or &quot;You&quot;) and <strong>Specslook</strong> (&quot;Company&quot;, &quot;We&quot;, &quot;Us&quot;, or &quot;Our&quot;), having its principal headquarters and registered optical operations at <strong>Specslook, Dreamz Mall, Sec 4-7 Circle, Gurugram, Haryana - 122001, India</strong>.
           </p>
           <p className="text-sm">
-            By accessing or using our website (<strong>https://specslook.com</strong>), ordering spectacle frames, polarized sunglasses, magnetic clip-on attachments, or scheduling our certified Doorstep Home Eye Test services, you acknowledge that you have read, understood, and agreed to be governed by these Terms, as well as our <button onClick={() => navigateTo('privacy')} className="text-red-600 underline font-semibold hover:text-red-700">Privacy Policy</button>. If you do not agree to these Terms, please refrain from using our services.
+            By accessing or using our website (<strong>https://www.specslook.com</strong>), ordering spectacle frames, polarized sunglasses, magnetic clip-on attachments, or scheduling our certified Doorstep Home Eye Test services, you acknowledge that you have read, understood, and agreed to be governed by these Terms, as well as our <button onClick={() => navigateTo('privacy')} className="text-red-600 underline font-semibold hover:text-red-700">Privacy Policy</button>. If you do not agree to these Terms, please refrain from using our services.
           </p>
         </section>
 
