@@ -1,6 +1,6 @@
 {
   "name": "Specslook Eyewear",
-  "description": "Official Specslook luxury eyewear store offering handcrafted eyeglasses, designer sunglasses, polarized shades, home eye testing, and doorstep optical services across India.",
+  "description": "Official Specslook Eyewear Store. Handcrafted luxury eyeglasses, titanium spectacles, designer sunglasses, polarized shades, and computerized home eye testing across India.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

@@ -218,8 +218,8 @@ function replaceHeadMetadata(
  */
 export function renderHomeHtml(baseHtml: string, products: Product[]): string {
   const canonicalUrl = `${SITE_DOMAIN}/`;
-  const pageTitle = 'Specslook | Premium Luxury Eyewear, Sunglasses & Shades';
-  const pageDesc = 'Discover handcrafted luxury eyewear, Japanese titanium frames, designer sunglasses, polarized shades, and computerized home eye testing across India.';
+  const pageTitle = 'Specslook | Luxury Eyeglasses, Sunglasses & Eye Testing';
+  const pageDesc = 'Official Specslook Eyewear Store. Handcrafted luxury eyeglasses, titanium spectacles, designer sunglasses, polarized shades, and computerized home eye testing across India.';
 
   const homeJsonLd = {
     '@context': 'https://schema.org',

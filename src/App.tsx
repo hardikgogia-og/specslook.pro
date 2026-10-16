@@ -72,8 +72,8 @@ const AppContent: React.FC = () => {
 
     if (currentView === 'home') {
       updateSEO({
-        title: 'Specslook | Premium Luxury Eyewear & Sunglasses',
-        description: 'Discover handcrafted luxury eyewear, Japanese titanium frames, designer sunglasses, and computerized home eye testing across India.',
+        title: 'Specslook | Luxury Eyeglasses, Sunglasses & Eye Testing',
+        description: 'Official Specslook Eyewear Store. Handcrafted luxury eyeglasses, titanium spectacles, designer sunglasses, polarized shades, and computerized home eye testing across India.',
         canonicalPath: '/',
         breadcrumbs: [{ name: 'Home', url: '/' }]
       });

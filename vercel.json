@@ -100,10 +100,6 @@
     { "source": "/product/titanium-aviator-polarized-chromance/", "destination": "/product/titanium-aviator-polarized-polarvue/", "permanent": true }
   ],
   "rewrites": [
-    { "source": "/merchant-feed.xml", "destination": "/api/merchant-feed" },
-    { "source": "/merchant-feed", "destination": "/api/merchant-feed" },
-    { "source": "/api/merchant-feed.xml", "destination": "/api/merchant-feed" },
-    { "source": "/sitemap.xml", "destination": "/api/sitemap" },
-    { "source": "/robots.txt", "destination": "/robots.txt" }
+    { "source": "/merchant-feed", "destination": "/api/merchant-feed" }
   ]
 }
