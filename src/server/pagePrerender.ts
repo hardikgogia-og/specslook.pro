@@ -228,7 +228,7 @@ export function renderHomeHtml(baseHtml: string, products: Product[]): string {
         '@type': 'Organization',
         '@id': `${SITE_DOMAIN}/#organization`,
         name: 'Specslook',
-        legalName: 'Specslook Eyewear',
+        legalName: 'Specslook',
         alternateName: ['Specs Look', 'Specslook Eyewear', 'Specslook India'],
         slogan: 'Handcrafted Luxury Eyewear & Master Optics',
         brand: {
@@ -341,7 +341,7 @@ export function renderHomeHtml(baseHtml: string, products: Product[]): string {
       <!-- Top Site Header & Navigation Bar -->
       <nav class="border-b border-neutral-200 pb-4 mb-8 flex flex-wrap items-center justify-between gap-4" aria-label="Main Navigation">
         <a href="/" class="text-2xl font-black tracking-tight text-neutral-950 uppercase flex items-center gap-2">
-          <img src="/shop-logopng.png" alt="Specslook Eyewear Logo" width="140" height="36" class="h-9 w-auto inline-block" />
+          <img src="/shop-logopng.png" alt="Specslook Logo" width="140" height="36" class="h-9 w-auto inline-block" />
           <span>Specslook</span>
         </a>
         <div class="flex flex-wrap items-center gap-4 text-xs font-bold tracking-wider uppercase text-neutral-800">
@@ -476,7 +476,7 @@ export function renderHomeHtml(baseHtml: string, products: Product[]): string {
             <p>Email: info@specslook.com</p>
           </div>
         </div>
-        <p class="text-center text-neutral-500 pt-4 border-t border-neutral-100">&copy; 2026 Specslook Eyewear. All rights reserved.</p>
+        <p class="text-center text-neutral-500 pt-4 border-t border-neutral-100">&copy; 2026 Specslook. All rights reserved.</p>
       </footer>
     </div>
   `;

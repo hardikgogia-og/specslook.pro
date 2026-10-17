@@ -17,7 +17,7 @@ export function renderFranchiseHtml(baseHtml: string): string {
         '@type': 'Organization',
         '@id': 'https://www.specslook.com/#organization',
         name: 'Specslook',
-        legalName: 'Specslook Eyewear',
+        legalName: 'Specslook',
         url: 'https://www.specslook.com/',
         logo: 'https://www.specslook.com/shop-logopng.png',
         telephone: '+91-8368853448',

@@ -254,7 +254,7 @@ export const ProductDetailView: React.FC = () => {
     if (navigator.share) {
       navigator.share({
         title: product.name,
-        text: `Check out ${product.name} on Specslook Eyewear`,
+        text: `Check out ${product.name} on Specslook`,
         url: window.location.href
       }).catch(console.error);
     } else {

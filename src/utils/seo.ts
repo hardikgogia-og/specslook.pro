@@ -1,7 +1,7 @@
 import type { Product } from '../types.ts';
 
 export const SITE_DOMAIN = 'https://www.specslook.com';
-export const SITE_NAME = 'Specslook Eyewear';
+export const SITE_NAME = 'Specslook';
 export const DEFAULT_OG_IMAGE = `${SITE_DOMAIN}/shop-logopng.png`;
 
 export interface SEOOptions {
@@ -109,7 +109,7 @@ export function updateJsonLd(params: {
     '@type': 'Organization',
     '@id': `${SITE_DOMAIN}/#organization`,
     name: 'Specslook',
-    legalName: 'Specslook Eyewear',
+    legalName: 'Specslook',
     alternateName: ['Specs Look', 'Specslook Eyewear', 'Specslook India'],
     url: `${SITE_DOMAIN}/`,
     logo: {

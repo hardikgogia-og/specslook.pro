@@ -43,7 +43,7 @@ export function renderProductHtml(baseHtml: string, product: Product): string {
         '@type': 'Organization',
         '@id': `${SITE_DOMAIN}/#organization`,
         name: 'Specslook',
-        legalName: 'Specslook Eyewear',
+        legalName: 'Specslook',
         alternateName: ['Specs Look', 'Specslook Eyewear', 'Specslook India'],
         url: `${SITE_DOMAIN}/`,
         logo: `${SITE_DOMAIN}/shop-logopng.png`,
@@ -251,7 +251,7 @@ export function renderProductHtml(baseHtml: string, product: Product): string {
     <meta property="og:description" content="${metaDescription}" />
     <meta property="og:url" content="${canonicalUrl}" />
     <meta property="og:image" content="${primaryImage}" />
-    <meta property="og:site_name" content="Specslook Eyewear" />
+    <meta property="og:site_name" content="Specslook" />
     <meta property="og:price:amount" content="${currentPrice.toFixed(2)}" />
     <meta property="og:price:currency" content="INR" />
     <meta name="twitter:card" content="summary_large_image" />
