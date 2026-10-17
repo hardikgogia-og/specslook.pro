@@ -9,6 +9,7 @@ import { renderFranchiseHtml } from './src/server/franchisePrerender.ts';
 import { generateMerchantFeedXml, getMerchantDiagnostics } from './src/server/merchantFeed.ts';
 import { renderProductHtml } from './src/server/productPrerender.ts';
 import { renderHomeHtml, renderCategoryHtml, renderStaticPageHtml, render404Html, isSpamOrHackedPath, CATEGORY_CONFIGS } from './src/server/pagePrerender.ts';
+import { generateSitemapXml, saveSitemapFiles, SITE_DOMAIN } from './src/server/sitemapGenerator.ts';
 
 const app = express();
 const PORT = 3000;
@@ -250,48 +251,38 @@ app.get(['/api/merchant-diagnostics', '/api/admin/merchant-diagnostics', '/merch
   }
 });
 
-// 3. Dynamic XML Sitemap (Automatically includes ALL active/current products with canonical URLs)
+// 3. Dynamic XML Sitemap (Automatically includes ALL active products, categories, static & blog URLs)
 app.get(['/sitemap.xml', '/api/sitemap.xml', '/api/sitemap'], (req: Request, res: Response) => {
   try {
-    const products = dbService.getProducts();
-    const today = new Date().toISOString().split('T')[0];
     const rawHost = (req.headers && (req.headers['x-forwarded-host'] || req.headers['host'])) || 'www.specslook.com';
     const baseUrl = typeof rawHost === 'string' && rawHost.includes('specslook.com')
-      ? 'https://www.specslook.com'
-      : (typeof rawHost === 'string' && rawHost.startsWith('localhost') ? `http://${rawHost}` : 'https://www.specslook.com');
+      ? SITE_DOMAIN
+      : (typeof rawHost === 'string' && rawHost.startsWith('localhost') ? `http://${rawHost}` : SITE_DOMAIN);
 
-    const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>${baseUrl}/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>
-  <url><loc>${baseUrl}/shop/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.95</priority></url>
-  <url><loc>${baseUrl}/about/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>${baseUrl}/store/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>
-  <url><loc>${baseUrl}/franchise/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>${baseUrl}/home/home-eyetest/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>${baseUrl}/contact-us/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>${baseUrl}/blog/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url>
-  <url><loc>${baseUrl}/terms-and-conditions/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>${baseUrl}/privacy-policy/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>${baseUrl}/product-category/eyeglasses/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>${baseUrl}/product-category/eyewear/womeneyewear/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>${baseUrl}/product-category/eyewear/meneyewear/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>${baseUrl}/product-category/eyewear/kidseyewear/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
-  <url><loc>${baseUrl}/product-category/sunglasses/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>${baseUrl}/product-category/sunglasses/women/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>${baseUrl}/product-category/sunglasses/men/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>${baseUrl}/product-category/sunglasses/kids/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
-  <url><loc>${baseUrl}/product-category/attachments/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
-  <url><loc>${baseUrl}/product-category/polarized/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
-  <url><loc>${baseUrl}/product-category/blue-light-blockers/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
-${products.map(p => `  <url><loc>${baseUrl}/product/${encodeURIComponent(p.slug)}/</loc><lastmod>${p.createdAt ? p.createdAt.split('T')[0] : today}</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>`).join('\n')}
-  <url><loc>${baseUrl}/blog/the-legendary-aviator-style-history/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>${baseUrl}/blog/polarized-vs-non-polarized-eyewear-guide/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>${baseUrl}/blog/how-to-choose-frames-for-your-face-shape/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-</urlset>`;
+    const products = dbService.getProducts();
+    const result = generateSitemapXml(products, { baseUrl, includeImages: true });
+
     res.setHeader('Content-Type', 'application/xml; charset=utf-8');
-    return res.send(xml);
+    res.setHeader('Cache-Control', 'public, max-age=1800, stale-while-revalidate=3600');
+    res.setHeader('X-Robots-Tag', 'all');
+    return res.send(result.xml);
   } catch (err: any) {
     console.error('Error generating dynamic sitemap:', err);
+
+    // Fallback to static sitemap on disk
+    try {
+      const publicPath = path.join(process.cwd(), 'public', 'sitemap.xml');
+      const distPath = path.join(process.cwd(), 'dist', 'sitemap.xml');
+      const targetPath = fs.existsSync(publicPath) ? publicPath : (fs.existsSync(distPath) ? distPath : null);
+      if (targetPath) {
+        const fileContent = fs.readFileSync(targetPath, 'utf8');
+        res.setHeader('Content-Type', 'application/xml; charset=utf-8');
+        return res.send(fileContent);
+      }
+    } catch (diskErr) {
+      console.warn('Fallback disk read failed for sitemap:', diskErr);
+    }
+
     return res.status(500).send('Error generating dynamic sitemap');
   }
 });
@@ -666,6 +657,13 @@ app.post('/api/products', requireAdminAuth, async (req: Request, res: Response) 
     const gitToken = (req.headers['x-github-token'] as string) || '';
     const gitRepo = (req.headers['x-github-repo'] as string) || '';
     const product = await dbService.createProduct(req.body, { gitToken, gitRepo });
+    setTimeout(() => {
+      try {
+        saveSitemapFiles();
+      } catch (smErr) {
+        console.warn('Background sitemap auto-refresh warning:', smErr);
+      }
+    }, 100);
     return res.status(201).json(product);
   } catch (err: any) {
     console.error('Error creating product:', err);
@@ -682,6 +680,13 @@ app.put('/api/products/:id', requireAdminAuth, async (req: Request, res: Respons
     if (!updated) {
       return res.status(404).json({ error: 'Product not found' });
     }
+    setTimeout(() => {
+      try {
+        saveSitemapFiles();
+      } catch (smErr) {
+        console.warn('Background sitemap auto-refresh warning:', smErr);
+      }
+    }, 100);
     return res.json(updated);
   } catch (err: any) {
     console.error('Error updating product:', err);
@@ -698,10 +703,40 @@ app.delete('/api/products/:id', requireAdminAuth, async (req: Request, res: Resp
     if (!deleted) {
       return res.status(404).json({ error: 'Product not found' });
     }
+    setTimeout(() => {
+      try {
+        saveSitemapFiles();
+      } catch (smErr) {
+        console.warn('Background sitemap auto-refresh warning:', smErr);
+      }
+    }, 100);
     return res.json({ success: true, message: 'Product deleted successfully' });
   } catch (err: any) {
     console.error('Error deleting product:', err);
     return res.status(400).json({ error: err.message || 'Failed to delete product' });
+  }
+});
+
+// Admin: Trigger on-demand XML Sitemap regeneration
+app.post('/api/admin/sitemap/regenerate', requireAdminAuth, async (_req: Request, res: Response) => {
+  try {
+    const { urlCount, result, publicPath, distPath } = saveSitemapFiles();
+    return res.json({
+      success: true,
+      message: 'XML sitemap successfully regenerated',
+      urlCount,
+      breakdown: {
+        staticPages: result.staticCount,
+        categories: result.categoryCount,
+        products: result.productCount,
+        blogs: result.blogCount
+      },
+      publicPath,
+      distPath
+    });
+  } catch (err: any) {
+    console.error('Error regenerating sitemap:', err);
+    return res.status(500).json({ error: err.message || 'Failed to regenerate sitemap' });
   }
 });
 

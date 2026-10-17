@@ -260,6 +260,8 @@ export function updateJsonLd(params: {
         '@type': 'Brand',
         name: 'Specslook'
       },
+      category: product.category || 'Eyewear',
+      itemCondition: 'https://schema.org/NewCondition',
       offers: {
         '@type': 'Offer',
         url: `${SITE_DOMAIN}/product/${product.slug}/`,
@@ -496,5 +498,15 @@ export function updateJsonLd(params: {
     document.head.appendChild(scriptEl);
   }
 
-  scriptEl.textContent = JSON.stringify(schemas.length === 1 ? schemas[0] : schemas, null, 2);
+  const formattedSchema = schemas.length === 1
+    ? schemas[0]
+    : {
+        '@context': 'https://schema.org',
+        '@graph': schemas.map(s => {
+          const { '@context': _ctx, ...rest } = s;
+          return rest;
+        })
+      };
+
+  scriptEl.textContent = JSON.stringify(formattedSchema, null, 2);
 }

@@ -1,291 +1,672 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.specslook.com/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://www.specslook.com/shop/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://www.specslook.com/about/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <loc>https://www.specslook.com/franchise/</loc>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.specslook.com/home/home-eyetest/</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
   </url>
   <url>
     <loc>https://www.specslook.com/store/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://www.specslook.com/franchise/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <loc>https://www.specslook.com/about/</loc>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://www.specslook.com/home/home-eyetest/</loc>
-    <lastmod>2026-10-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://www.specslook.com/contact-us/</loc>
-    <lastmod>2026-10-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.80</priority>
   </url>
   <url>
     <loc>https://www.specslook.com/blog/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://www.specslook.com/terms-and-conditions/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <loc>https://www.specslook.com/contact-us/</loc>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://www.specslook.com/terms-and-conditions/</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
   </url>
   <url>
     <loc>https://www.specslook.com/privacy-policy/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.60</priority>
   </url>
   <url>
     <loc>https://www.specslook.com/product-category/eyeglasses/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.9</priority>
+    <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://www.specslook.com/product-category/eyewear/womeneyewear/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <loc>https://www.specslook.com/product-category/sunglasses/</loc>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.9</priority>
+    <priority>0.90</priority>
   </url>
   <url>
     <loc>https://www.specslook.com/product-category/eyewear/meneyewear/</loc>
-    <lastmod>2026-10-16</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://www.specslook.com/product-category/eyewear/kidseyewear/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://www.specslook.com/product-category/sunglasses/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <loc>https://www.specslook.com/product-category/eyewear/womeneyewear/</loc>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.9</priority>
+    <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://www.specslook.com/product-category/sunglasses/women/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <loc>https://www.specslook.com/product-category/eyewear/kidseyewear/</loc>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.9</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://www.specslook.com/product-category/sunglasses/men/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.9</priority>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.specslook.com/product-category/sunglasses/women/</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://www.specslook.com/product-category/sunglasses/kids/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://www.specslook.com/product-category/attachments/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <priority>0.90</priority>
   </url>
   <url>
     <loc>https://www.specslook.com/product-category/polarized/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <priority>0.90</priority>
   </url>
   <url>
     <loc>https://www.specslook.com/product-category/blue-light-blockers/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.specslook.com/blog/the-legendary-aviator-style-history/</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://www.specslook.com/blog/polarized-vs-non-polarized-eyewear-guide/</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://www.specslook.com/blog/how-to-choose-frames-for-your-face-shape/</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
   </url>
   <url>
     <loc>https://www.specslook.com/product/specslook-executive-titanium-browline/</loc>
     <lastmod>2026-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://www.specslook.com/uploads/prod-eye-men-01_img_1.jpg</image:loc>
+      <image:title>SL Executive Titanium Cateye  Eyeglasses</image:title>
+      <image:caption>Specslook SL Executive Titanium Cateye  Eyeglasses - Aerospace-grade titanium browline with hand-beveled acetate and ergonomic nose-pads.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.specslook.com/uploads/prod-eye-men-01_img_2.jpg</image:loc>
+      <image:title>SL Executive Titanium Cateye  Eyeglasses</image:title>
+      <image:caption>Specslook SL Executive Titanium Cateye  Eyeglasses - Aerospace-grade titanium browline with hand-beveled acetate and ergonomic nose-pads.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.specslook.com/uploads/prod-eye-men-01_img_3.jpg</image:loc>
+      <image:title>SL Executive Titanium Cateye  Eyeglasses</image:title>
+      <image:caption>Specslook SL Executive Titanium Cateye  Eyeglasses - Aerospace-grade titanium browline with hand-beveled acetate and ergonomic nose-pads.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.specslook.com/product/specslook-matte-black-wayfarer-optical/</loc>
     <lastmod>2026-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://www.specslook.com/uploads/prod-eye-men-02_img_1.webp</image:loc>
+      <image:title>SL Bold Black Square Glasses</image:title>
+      <image:caption>Specslook SL Bold Black Square Glasses - Velvet-touch matte black square frames with German 5-barrel spring hinges.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/31EW4pKNu6L.jpg</image:loc>
+      <image:title>SL Bold Black Square Glasses</image:title>
+      <image:caption>Specslook SL Bold Black Square Glasses - Velvet-touch matte black square frames with German 5-barrel spring hinges.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/41cflsmRolL.jpg</image:loc>
+      <image:title>SL Bold Black Square Glasses</image:title>
+      <image:caption>Specslook SL Bold Black Square Glasses - Velvet-touch matte black square frames with German 5-barrel spring hinges.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/51RXE0mfi+L.jpg</image:loc>
+      <image:title>SL Bold Black Square Glasses</image:title>
+      <image:caption>Specslook SL Bold Black Square Glasses - Velvet-touch matte black square frames with German 5-barrel spring hinges.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.specslook.com/product/specslook-gunmetal-titanium-rectangular/</loc>
     <lastmod>2026-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://www.specslook.com/uploads/prod-eye-men-03_img_1.webp</image:loc>
+      <image:title>SL Bold Square Large Eyeglasses</image:title>
+      <image:caption>Specslook SL Bold Square Large Eyeglasses - Featherlight pure titanium wire frame with silicone air-cushion nose pads.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.specslook.com/uploads/prod-eye-men-03_img_2.webp</image:loc>
+      <image:title>SL Bold Square Large Eyeglasses</image:title>
+      <image:caption>Specslook SL Bold Square Large Eyeglasses - Featherlight pure titanium wire frame with silicone air-cushion nose pads.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.specslook.com/uploads/prod-eye-men-03_img_3.webp</image:loc>
+      <image:title>SL Bold Square Large Eyeglasses</image:title>
+      <image:caption>Specslook SL Bold Square Large Eyeglasses - Featherlight pure titanium wire frame with silicone air-cushion nose pads.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.specslook.com/uploads/prod-eye-men-03_img_4.webp</image:loc>
+      <image:title>SL Bold Square Large Eyeglasses</image:title>
+      <image:caption>Specslook SL Bold Square Large Eyeglasses - Featherlight pure titanium wire frame with silicone air-cushion nose pads.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.specslook.com/product/specslook-rose-gold-cat-eye-optical/</loc>
     <lastmod>2026-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/617pTPJmKDL._SX679_.jpg</image:loc>
+      <image:title>Specslook Bold Leopard Square Eyeglasses</image:title>
+      <image:caption>Specslook Specslook Bold Leopard Square Eyeglasses - 18K rose-gold plated cat-eye silhouette with subtle geometric temple tips.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/5139-0CIckL._SX679_.jpg</image:loc>
+      <image:title>Specslook Bold Leopard Square Eyeglasses</image:title>
+      <image:caption>Specslook Specslook Bold Leopard Square Eyeglasses - 18K rose-gold plated cat-eye silhouette with subtle geometric temple tips.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/71SlVjnlWiL._SX679_.jpg</image:loc>
+      <image:title>Specslook Bold Leopard Square Eyeglasses</image:title>
+      <image:caption>Specslook Specslook Bold Leopard Square Eyeglasses - 18K rose-gold plated cat-eye silhouette with subtle geometric temple tips.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/71RAbZw0kUL._SX679_.jpg</image:loc>
+      <image:title>Specslook Bold Leopard Square Eyeglasses</image:title>
+      <image:caption>Specslook Specslook Bold Leopard Square Eyeglasses - 18K rose-gold plated cat-eye silhouette with subtle geometric temple tips.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.specslook.com/product/specslook-champagne-crystal-round-optical/</loc>
     <lastmod>2026-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/51NO-lJarVL._SX679_.jpg</image:loc>
+      <image:title>SL Bold Oversized Square Eyeglasses</image:title>
+      <image:caption>Specslook SL Bold Oversized Square Eyeglasses - Luminous crystal champagne bio-acetate with custom metal temple filigree.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/51o5O0erw3L._SX679_.jpg</image:loc>
+      <image:title>SL Bold Oversized Square Eyeglasses</image:title>
+      <image:caption>Specslook SL Bold Oversized Square Eyeglasses - Luminous crystal champagne bio-acetate with custom metal temple filigree.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/51k4DbGIwLL._SX679_.jpg</image:loc>
+      <image:title>SL Bold Oversized Square Eyeglasses</image:title>
+      <image:caption>Specslook SL Bold Oversized Square Eyeglasses - Luminous crystal champagne bio-acetate with custom metal temple filigree.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/71Va8kJyvOL._SY741_.jpg</image:loc>
+      <image:title>SL Bold Oversized Square Eyeglasses</image:title>
+      <image:caption>Specslook SL Bold Oversized Square Eyeglasses - Luminous crystal champagne bio-acetate with custom metal temple filigree.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.specslook.com/product/specslook-havana-geometric-optical/</loc>
     <lastmod>2026-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://www.specslook.com/uploads/prod-eye-wom-03_img_1.webp</image:loc>
+      <image:title>SL Classic Blue Black Cateye Eyeglasses</image:title>
+      <image:caption>Specslook SL Classic Blue Black Cateye Eyeglasses - Octagonal beveled Italian tortoise acetate with comfortable keyhole bridge.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.specslook.com/uploads/prod-eye-wom-03_img_2.webp</image:loc>
+      <image:title>SL Classic Blue Black Cateye Eyeglasses</image:title>
+      <image:caption>Specslook SL Classic Blue Black Cateye Eyeglasses - Octagonal beveled Italian tortoise acetate with comfortable keyhole bridge.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.specslook.com/uploads/prod-eye-wom-03_img_3.webp</image:loc>
+      <image:title>SL Classic Blue Black Cateye Eyeglasses</image:title>
+      <image:caption>Specslook SL Classic Blue Black Cateye Eyeglasses - Octagonal beveled Italian tortoise acetate with comfortable keyhole bridge.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.specslook.com/product/specslook-junior-flex-tr90-kids-glasses/</loc>
     <lastmod>2026-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_I_Hip_Hop_Kids_Collection_I_Matte_Finished_I_Computer_Gaming_Glasses_I_For_Girls_I_Age_Group_6_12__1008RD__C0NAHV16QA_2025-07-17_2.jpg</image:loc>
+      <image:title>Specslook Junior Flex-TR90 Kids Eyeglasses</image:title>
+      <image:caption>Specslook Specslook Junior Flex-TR90 Kids Eyeglasses - 180-degree bendable medical polymer with drop-safe magnetic hinge protection.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_I_Hip_Hop_Kids_Collection_I_Matte_Finished_I_Computer_Gaming_Glasses_I_For_Girls_I_Age_Group_6_12__1008RD__AEQ3VJNQB5_2025-07-17_1.jpg</image:loc>
+      <image:title>Specslook Junior Flex-TR90 Kids Eyeglasses</image:title>
+      <image:caption>Specslook Specslook Junior Flex-TR90 Kids Eyeglasses - 180-degree bendable medical polymer with drop-safe magnetic hinge protection.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_I_Hip_Hop_Kids_Collection_I_Matte_Finished_I_Computer_Gaming_Glasses_I_For_Girls_I_Age_Group_6_12__1008RD__8OTA7KJ5F1_2025-07-17_3.jpg</image:loc>
+      <image:title>Specslook Junior Flex-TR90 Kids Eyeglasses</image:title>
+      <image:caption>Specslook Specslook Junior Flex-TR90 Kids Eyeglasses - 180-degree bendable medical polymer with drop-safe magnetic hinge protection.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_I_Hip_Hop_Kids_Collection_I_Matte_Finished_I_Computer_Gaming_Glasses_I_For_Girls_I_Age_Group_6_12__1008RD__F7ZJVYKHOG_2025-07-17_4.jpg</image:loc>
+      <image:title>Specslook Junior Flex-TR90 Kids Eyeglasses</image:title>
+      <image:caption>Specslook Specslook Junior Flex-TR90 Kids Eyeglasses - 180-degree bendable medical polymer with drop-safe magnetic hinge protection.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.specslook.com/product/specslook-junior-study-blue-block-kids/</loc>
     <lastmod>2026-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_I_Dark_Blue_Color_I_Hip_Hop_Kids_Collection_I_Matte_Finished_I_Computer_Gaming_Glasses_I_For_Boys_and_Girls_I_Boys_and_Girls_I_Age_Group_6_12__1003DBL__P18V0M1317_2025-07-17_2.jpg</image:loc>
+      <image:title>Specslook Junior Flex N.Blue Round EyeGlasses</image:title>
+      <image:caption>Specslook Specslook Junior Flex N.Blue Round EyeGlasses - Anti-slip ear hooks with featherlight build designed for classroom concentration.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_I_Dark_Blue_Color_I_Hip_Hop_Kids_Collection_I_Matte_Finished_I_Computer_Gaming_Glasses_I_For_Boys_and_Girls_I_Boys_and_Girls_I_Age_Group_6_12__1003DBL__O9JH2S771I_2025-07-17_1.jpg</image:loc>
+      <image:title>Specslook Junior Flex N.Blue Round EyeGlasses</image:title>
+      <image:caption>Specslook Specslook Junior Flex N.Blue Round EyeGlasses - Anti-slip ear hooks with featherlight build designed for classroom concentration.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_I_Dark_Blue_Color_I_Hip_Hop_Kids_Collection_I_Matte_Finished_I_Computer_Gaming_Glasses_I_For_Boys_and_Girls_I_Boys_and_Girls_I_Age_Group_6_12__1003DBL__W8DYV3Y7EB_2025-07-17_3.jpg</image:loc>
+      <image:title>Specslook Junior Flex N.Blue Round EyeGlasses</image:title>
+      <image:caption>Specslook Specslook Junior Flex N.Blue Round EyeGlasses - Anti-slip ear hooks with featherlight build designed for classroom concentration.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_I_Dark_Blue_Color_I_Hip_Hop_Kids_Collection_I_Matte_Finished_I_Computer_Gaming_Glasses_I_For_Boys_and_Girls_I_Boys_and_Girls_I_Age_Group_6_12__1003DBL__81YCIXGWFF_2025-07-17_4.jpg</image:loc>
+      <image:title>Specslook Junior Flex N.Blue Round EyeGlasses</image:title>
+      <image:caption>Specslook Specslook Junior Flex N.Blue Round EyeGlasses - Anti-slip ear hooks with featherlight build designed for classroom concentration.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.specslook.com/product/specslook-aviator-pilot-polar-gold/</loc>
     <lastmod>2026-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/51Z-nfSqd+L._SX569_.jpg</image:loc>
+      <image:title>Specslook Aviator Pilot Polarized Gold Sunglasses</image:title>
+      <image:caption>Specslook Specslook Aviator Pilot Polarized Gold Sunglasses - 18K gold plated pilot frame with emerald green crystal polarized glass.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/51HkQhzcSxL._SX569_.jpg</image:loc>
+      <image:title>Specslook Aviator Pilot Polarized Gold Sunglasses</image:title>
+      <image:caption>Specslook Specslook Aviator Pilot Polarized Gold Sunglasses - 18K gold plated pilot frame with emerald green crystal polarized glass.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/61LGVLENSML._SX569_.jpg</image:loc>
+      <image:title>Specslook Aviator Pilot Polarized Gold Sunglasses</image:title>
+      <image:caption>Specslook Specslook Aviator Pilot Polarized Gold Sunglasses - 18K gold plated pilot frame with emerald green crystal polarized glass.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.specslook.com/product/specslook-justin-matte-black-wrap/</loc>
     <lastmod>2026-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/41yqM8NP0qL._SX679_.jpg</image:loc>
+      <image:title>Specslook Square Blue Rimless Sunglasses</image:title>
+      <image:caption>Specslook Specslook Square Blue Rimless Sunglasses - Rubberized matte black rectangular frame with dark gradient UV400 lenses.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/41TB36voUIL._SX679_.jpg</image:loc>
+      <image:title>Specslook Square Blue Rimless Sunglasses</image:title>
+      <image:caption>Specslook Specslook Square Blue Rimless Sunglasses - Rubberized matte black rectangular frame with dark gradient UV400 lenses.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/71PX38uuB0L._SX679_.jpg</image:loc>
+      <image:title>Specslook Square Blue Rimless Sunglasses</image:title>
+      <image:caption>Specslook Specslook Square Blue Rimless Sunglasses - Rubberized matte black rectangular frame with dark gradient UV400 lenses.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/71M0axxOGEL._SX679_.jpg</image:loc>
+      <image:title>Specslook Square Blue Rimless Sunglasses</image:title>
+      <image:caption>Specslook Specslook Square Blue Rimless Sunglasses - Rubberized matte black rectangular frame with dark gradient UV400 lenses.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.specslook.com/product/specslook-glam-oversized-butterfly-sunglasses/</loc>
     <lastmod>2026-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&amp;fit=crop&amp;w=1000&amp;q=80</image:loc>
+      <image:title>Specslook Oversized Glam Butterfly Sunglasses</image:title>
+      <image:caption>Specslook Specslook Oversized Glam Butterfly Sunglasses - Dramatically sculpted oversized butterfly frame with gradient bronze lenses.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&amp;fit=crop&amp;w=1000&amp;q=80</image:loc>
+      <image:title>Specslook Oversized Glam Butterfly Sunglasses</image:title>
+      <image:caption>Specslook Specslook Oversized Glam Butterfly Sunglasses - Dramatically sculpted oversized butterfly frame with gradient bronze lenses.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.specslook.com/product/specslook-rose-gold-hexagonal-sunglasses/</loc>
     <lastmod>2026-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/51py0GmlQ5L._SX679_.jpg</image:loc>
+      <image:title>Specslook Hexagonal Rose Gold Sunglasses</image:title>
+      <image:caption>Specslook Specslook Hexagonal Rose Gold Sunglasses - Slim hexagonal wireframe with pink-champagne flash crystal lenses.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/51O09DfScHL._SX679_.jpg</image:loc>
+      <image:title>Specslook Hexagonal Rose Gold Sunglasses</image:title>
+      <image:caption>Specslook Specslook Hexagonal Rose Gold Sunglasses - Slim hexagonal wireframe with pink-champagne flash crystal lenses.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/61ClA1+29TL._SX679_.jpg</image:loc>
+      <image:title>Specslook Hexagonal Rose Gold Sunglasses</image:title>
+      <image:caption>Specslook Specslook Hexagonal Rose Gold Sunglasses - Slim hexagonal wireframe with pink-champagne flash crystal lenses.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.specslook.com/product/specslook-junior-pilot-uv400-kids-aviator/</loc>
     <lastmod>2026-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/61t4QArJ2fL._SX679_.jpg</image:loc>
+      <image:title>Specslook Junior Pilot UV400 Kids Aviator</image:title>
+      <image:caption>Specslook Specslook Junior Pilot UV400 Kids Aviator - Child-safe mini aviator with 100% UV400 polarized glare control.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/613m-5C2YML._SX679_.jpg</image:loc>
+      <image:title>Specslook Junior Pilot UV400 Kids Aviator</image:title>
+      <image:caption>Specslook Specslook Junior Pilot UV400 Kids Aviator - Child-safe mini aviator with 100% UV400 polarized glare control.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/71ecnZFC2KL._SX679_.jpg</image:loc>
+      <image:title>Specslook Junior Pilot UV400 Kids Aviator</image:title>
+      <image:caption>Specslook Specslook Junior Pilot UV400 Kids Aviator - Child-safe mini aviator with 100% UV400 polarized glare control.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.specslook.com/product/specslook-junior-shatterproof-beach-wayfarer/</loc>
     <lastmod>2026-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/41F65LyeRaL._SX679_.jpg</image:loc>
+      <image:title>Specslook Junior Square Frame Matte UV400  Kids Sunglasses</image:title>
+      <image:caption>Specslook Specslook Junior Square Frame Matte UV400  Kids Sunglasses - Flexible rubberized frames with anti-reflective polarized UV400 shield.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/61B3XKYLXSL._SX679_.jpg</image:loc>
+      <image:title>Specslook Junior Square Frame Matte UV400  Kids Sunglasses</image:title>
+      <image:caption>Specslook Specslook Junior Square Frame Matte UV400  Kids Sunglasses - Flexible rubberized frames with anti-reflective polarized UV400 shield.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/61Pd6Fh09JL._SX679_.jpg</image:loc>
+      <image:title>Specslook Junior Square Frame Matte UV400  Kids Sunglasses</image:title>
+      <image:caption>Specslook Specslook Junior Square Frame Matte UV400  Kids Sunglasses - Flexible rubberized frames with anti-reflective polarized UV400 shield.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/61JkE6m0-XL._SX679_.jpg</image:loc>
+      <image:title>Specslook Junior Square Frame Matte UV400  Kids Sunglasses</image:title>
+      <image:caption>Specslook Specslook Junior Square Frame Matte UV400  Kids Sunglasses - Flexible rubberized frames with anti-reflective polarized UV400 shield.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.specslook.com/product/aviator-classic-gold-g15/</loc>
     <lastmod>2026-08-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&amp;fit=crop&amp;w=1000&amp;q=80</image:loc>
+      <image:title>Specslook Aviator Classic Gold</image:title>
+      <image:caption>Specslook Specslook Aviator Classic Gold - Legendary teardrop frame with polished 18K gold finish and crystal green G-15 lenses.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&amp;fit=crop&amp;w=1000&amp;q=80</image:loc>
+      <image:title>Specslook Aviator Classic Gold</image:title>
+      <image:caption>Specslook Specslook Aviator Classic Gold - Legendary teardrop frame with polished 18K gold finish and crystal green G-15 lenses.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&amp;fit=crop&amp;w=1000&amp;q=80</image:loc>
+      <image:title>Specslook Aviator Classic Gold</image:title>
+      <image:caption>Specslook Specslook Aviator Classic Gold - Legendary teardrop frame with polished 18K gold finish and crystal green G-15 lenses.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.specslook.com/product/original-wayfarer-classic-black/</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&amp;fit=crop&amp;w=1000&amp;q=80</image:loc>
+      <image:title>Specslook Original Wayfarer Classic</image:title>
+      <image:caption>Specslook Specslook Original Wayfarer Classic - The defining silhouette of modern counterculture in hand-polished glossy black Italian acetate.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&amp;fit=crop&amp;w=1000&amp;q=80</image:loc>
+      <image:title>Specslook Original Wayfarer Classic</image:title>
+      <image:caption>Specslook Specslook Original Wayfarer Classic - The defining silhouette of modern counterculture in hand-polished glossy black Italian acetate.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&amp;fit=crop&amp;w=1000&amp;q=80</image:loc>
+      <image:title>Specslook Original Wayfarer Classic</image:title>
+      <image:caption>Specslook Specslook Original Wayfarer Classic - The defining silhouette of modern counterculture in hand-polished glossy black Italian acetate.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.specslook.com/product/clubmaster-classic-browline/</loc>
     <lastmod>2026-08-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&amp;fit=crop&amp;w=1000&amp;q=80</image:loc>
+      <image:title>Specslook Clubmaster Classic Browline</image:title>
+      <image:caption>Specslook Specslook Clubmaster Classic Browline - Retro mid-century browline design combining ebony acetate and gold metal rims.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&amp;fit=crop&amp;w=1000&amp;q=80</image:loc>
+      <image:title>Specslook Clubmaster Classic Browline</image:title>
+      <image:caption>Specslook Specslook Clubmaster Classic Browline - Retro mid-century browline design combining ebony acetate and gold metal rims.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.specslook.com/product/round-metal-legend-gold/</loc>
     <lastmod>2026-08-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&amp;fit=crop&amp;w=1000&amp;q=80</image:loc>
+      <image:title>Specslook Round Metal Legend</image:title>
+      <image:caption>Specslook Specslook Round Metal Legend - 1960s counter-culture icon with circular wire frame and curved brow bar.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&amp;fit=crop&amp;w=1000&amp;q=80</image:loc>
+      <image:title>Specslook Round Metal Legend</image:title>
+      <image:caption>Specslook Specslook Round Metal Legend - 1960s counter-culture icon with circular wire frame and curved brow bar.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.specslook.com/product/hexagonal-flat-lenses-copper/</loc>
     <lastmod>2026-09-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&amp;fit=crop&amp;w=1000&amp;q=80</image:loc>
+      <image:title>Specslook Hexagonal Flat Lenses</image:title>
+      <image:caption>Specslook Specslook Hexagonal Flat Lenses - Contemporary geometric geometric sunglasses with ultra-flat crystal lenses and coin-edge profile.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&amp;fit=crop&amp;w=1000&amp;q=80</image:loc>
+      <image:title>Specslook Hexagonal Flat Lenses</image:title>
+      <image:caption>Specslook Specslook Hexagonal Flat Lenses - Contemporary geometric geometric sunglasses with ultra-flat crystal lenses and coin-edge profile.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.specslook.com/product/blue-light-blocker-pro-acetate/</loc>
     <lastmod>2026-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_Unisex_Aqua_Brown_Color_Large_Size_Square_Frame_AntGlare_Lenses_Optical_Frame__AG221BW__R2TJ2MEC9P_2025-08-16_3.jpg</image:loc>
+      <image:title>Specslook Aqua Brown Large Square</image:title>
+      <image:caption>Specslook Specslook Aqua Brown Large Square - Ergonomic Japanese acetate eyeglasses with zero-glare blue-light filtering lenses.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_Unisex_Aqua_Brown_Color_Large_Size_Square_Frame_AntGlare_Lenses_Optical_Frame__AG221BW__QQFHKARPET_2025-08-16_2.jpg</image:loc>
+      <image:title>Specslook Aqua Brown Large Square</image:title>
+      <image:caption>Specslook Specslook Aqua Brown Large Square - Ergonomic Japanese acetate eyeglasses with zero-glare blue-light filtering lenses.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://d1311wbk6unapo.cloudfront.net/NushopCatalogue/tr:f-webp,w-1200,fo-auto/65ce2fa2ec4b6fd4e34e16d0/cat_img/Peter_Jones_Unisex_Aqua_Brown_Color_Large_Size_Square_Frame_AntGlare_Lenses_Optical_Frame__AG221BW__SUQ4RX58LR_2025-08-16_5.jpg</image:loc>
+      <image:title>Specslook Aqua Brown Large Square</image:title>
+      <image:caption>Specslook Specslook Aqua Brown Large Square - Ergonomic Japanese acetate eyeglasses with zero-glare blue-light filtering lenses.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.specslook.com/product/titanium-aviator-polarized-polarvue/</loc>
     <lastmod>2026-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&amp;fit=crop&amp;w=1000&amp;q=80</image:loc>
+      <image:title>Specslook Titanium PolarVue Polarized</image:title>
+      <image:caption>Specslook Specslook Titanium PolarVue Polarized - Aerospace-grade Japanese Titanium with PolarVue color-enhancing polarized optics.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&amp;fit=crop&amp;w=1000&amp;q=80</image:loc>
+      <image:title>Specslook Titanium PolarVue Polarized</image:title>
+      <image:caption>Specslook Specslook Titanium PolarVue Polarized - Aerospace-grade Japanese Titanium with PolarVue color-enhancing polarized optics.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.specslook.com/product/justin-matte-rubber-black/</loc>
     <lastmod>2026-08-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&amp;fit=crop&amp;w=1000&amp;q=80</image:loc>
+      <image:title>Specslook Justin Matte Rubberized</image:title>
+      <image:caption>Specslook Specslook Justin Matte Rubberized - Contemporary oversized Wayfarer silhouette with tactile rubberized soft-touch matte finish.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&amp;fit=crop&amp;w=1000&amp;q=80</image:loc>
+      <image:title>Specslook Justin Matte Rubberized</image:title>
+      <image:caption>Specslook Specslook Justin Matte Rubberized - Contemporary oversized Wayfarer silhouette with tactile rubberized soft-touch matte finish.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.specslook.com/product/specslook-6in1-magnetic-clip-on-eyeglasses/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://thecraze.in/cdn/shop/files/HDCRAFTER-6-in-1-Clip-On-Glasses-Men-Women-TR90-Prescription-Eye-Glasses-Frame-Optical-Magnetic_fb11f78c-b595-4a50-ba09-16b8b9daa356.webp?v=1787084406</image:loc>
+      <image:title>Specslook 6-in-1 Magnetic Clip-On Eyeglasses XL</image:title>
+      <image:caption>Specslook Specslook 6-in-1 Magnetic Clip-On Eyeglasses XL - Optical base frame + 5 magnetic snap-on sunglasses &amp; night driving clip lenses with premium carry pouch.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://thecraze.in/cdn/shop/files/HDCRAFTER-6-in-1-Clip-On-Glasses-Men-Women-TR90-Prescription-Eye-Glasses-Frame-Optical-Magnetic_79c2645f-6425-4eb3-8875-b2101ea80d08.webp?v=1787084405</image:loc>
+      <image:title>Specslook 6-in-1 Magnetic Clip-On Eyeglasses XL</image:title>
+      <image:caption>Specslook Specslook 6-in-1 Magnetic Clip-On Eyeglasses XL - Optical base frame + 5 magnetic snap-on sunglasses &amp; night driving clip lenses with premium carry pouch.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://thecraze.in/cdn/shop/files/HDCRAFTER-6-in-1-Clip-On-Glasses-Men-Women-TR90-Prescription-Eye-Glasses-Frame-Optical-Magnetic_b06c68cf-67af-40b7-9a7d-311fd76b0925.webp?v=1787084405</image:loc>
+      <image:title>Specslook 6-in-1 Magnetic Clip-On Eyeglasses XL</image:title>
+      <image:caption>Specslook Specslook 6-in-1 Magnetic Clip-On Eyeglasses XL - Optical base frame + 5 magnetic snap-on sunglasses &amp; night driving clip lenses with premium carry pouch.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://thecraze.in/cdn/shop/files/HDCRAFTER-6-in-1-Clip-On-Glasses-Men-Women-TR90-Prescription-Eye-Glasses-Frame-Optical-Magnetic_1ece32c5-6ee7-4692-8289-0cb427ac3cb2.webp?v=1787084406</image:loc>
+      <image:title>Specslook 6-in-1 Magnetic Clip-On Eyeglasses XL</image:title>
+      <image:caption>Specslook Specslook 6-in-1 Magnetic Clip-On Eyeglasses XL - Optical base frame + 5 magnetic snap-on sunglasses &amp; night driving clip lenses with premium carry pouch.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.specslook.com/product/specslook-2in1-magnetic-polarized-clip-on-eyeglasses/</loc>
     <lastmod>2026-09-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://www.specslook.com/blog/the-legendary-aviator-style-history/</loc>
-    <lastmod>2026-10-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.specslook.com/blog/polarized-vs-non-polarized-eyewear-guide/</loc>
-    <lastmod>2026-10-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.specslook.com/blog/how-to-choose-frames-for-your-face-shape/</loc>
-    <lastmod>2026-10-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/71AxPMp4ZeL._SX679_.jpg</image:loc>
+      <image:title>Specslook 6-in-1 Magnetic Polarized Clip-On Eyeglasses Wayfarer</image:title>
+      <image:caption>Specslook Specslook 6-in-1 Magnetic Polarized Clip-On Eyeglasses Wayfarer - Ultra-flexible optical eyeglasses with seamless magnetic polarized sunglass clip-on.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/719Vu2KrxBL._SY741_.jpg</image:loc>
+      <image:title>Specslook 6-in-1 Magnetic Polarized Clip-On Eyeglasses Wayfarer</image:title>
+      <image:caption>Specslook Specslook 6-in-1 Magnetic Polarized Clip-On Eyeglasses Wayfarer - Ultra-flexible optical eyeglasses with seamless magnetic polarized sunglass clip-on.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/71UgaTPdiCL._SX679_.jpg</image:loc>
+      <image:title>Specslook 6-in-1 Magnetic Polarized Clip-On Eyeglasses Wayfarer</image:title>
+      <image:caption>Specslook Specslook 6-in-1 Magnetic Polarized Clip-On Eyeglasses Wayfarer - Ultra-flexible optical eyeglasses with seamless magnetic polarized sunglass clip-on.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://m.media-amazon.com/images/I/71s6FvWLUwL._SX679_.jpg</image:loc>
+      <image:title>Specslook 6-in-1 Magnetic Polarized Clip-On Eyeglasses Wayfarer</image:title>
+      <image:caption>Specslook Specslook 6-in-1 Magnetic Polarized Clip-On Eyeglasses Wayfarer - Ultra-flexible optical eyeglasses with seamless magnetic polarized sunglass clip-on.</image:caption>
+    </image:image>
   </url>
 </urlset>

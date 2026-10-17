@@ -8,6 +8,7 @@
     "build": "node -e \"const fs=require('fs');if(fs.existsSync('data/specslook_db.json')){fs.mkdirSync('public/data',{recursive:true});fs.copyFileSync('data/specslook_db.json','public/data/specslook_db.json');console.log('Synced data/specslook_db.json to public/data/specslook_db.json');}\" && tsx scripts/generate-feeds.ts && vite build && tsx scripts/generate-feeds.ts && tsx scripts/prerender-pages.ts && esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs",
     "start": "node dist/server.cjs",
     "preview": "vite preview",
+    "generate:sitemap": "tsx scripts/generate-sitemap.ts",
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit"
   },

@@ -289,6 +289,7 @@ export interface Product {
   rating: number;
   reviewsCount: number;
   createdAt: string;
+  updatedAt?: string;
 }
 
 export interface Review {

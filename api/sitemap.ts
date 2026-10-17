@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { dbService } from '../src/server/db.ts';
 import { initialProducts } from '../src/data/seedData.ts';
+import { generateSitemapXml, SITE_DOMAIN } from '../src/server/sitemapGenerator.ts';
 
 function sendXmlResponse(res: any, xml: string) {
   res.setHeader('Content-Type', 'application/xml; charset=utf-8');
@@ -31,66 +32,14 @@ export default function handler(req: any, res: any) {
       products = initialProducts;
     }
 
-    const today = new Date().toISOString().split('T')[0];
-
     // Production host is canonical https://www.specslook.com
     const rawHost = (req.headers && (req.headers['x-forwarded-host'] || req.headers['host'])) || 'www.specslook.com';
     const baseUrl = rawHost.includes('specslook.com')
-      ? 'https://www.specslook.com'
+      ? SITE_DOMAIN
       : (rawHost.startsWith('localhost') ? `http://${rawHost}` : `https://${rawHost}`);
 
-    const staticUrls = [
-      { loc: `${baseUrl}/`, priority: '1.0', changefreq: 'daily' },
-      { loc: `${baseUrl}/shop/`, priority: '0.95', changefreq: 'daily' },
-      { loc: `${baseUrl}/about/`, priority: '0.8', changefreq: 'weekly' },
-      { loc: `${baseUrl}/store/`, priority: '0.85', changefreq: 'weekly' },
-      { loc: `${baseUrl}/franchise/`, priority: '0.9', changefreq: 'weekly' },
-      { loc: `${baseUrl}/home/home-eyetest/`, priority: '0.9', changefreq: 'weekly' },
-      { loc: `${baseUrl}/contact-us/`, priority: '0.7', changefreq: 'monthly' },
-      { loc: `${baseUrl}/blog/`, priority: '0.75', changefreq: 'weekly' },
-      { loc: `${baseUrl}/terms-and-conditions/`, priority: '0.6', changefreq: 'monthly' },
-      { loc: `${baseUrl}/privacy-policy/`, priority: '0.6', changefreq: 'monthly' },
-      { loc: `${baseUrl}/product-category/eyeglasses/`, priority: '0.9', changefreq: 'daily' },
-      { loc: `${baseUrl}/product-category/eyewear/womeneyewear/`, priority: '0.9', changefreq: 'daily' },
-      { loc: `${baseUrl}/product-category/eyewear/meneyewear/`, priority: '0.9', changefreq: 'daily' },
-      { loc: `${baseUrl}/product-category/eyewear/kidseyewear/`, priority: '0.85', changefreq: 'daily' },
-      { loc: `${baseUrl}/product-category/sunglasses/`, priority: '0.9', changefreq: 'daily' },
-      { loc: `${baseUrl}/product-category/sunglasses/women/`, priority: '0.9', changefreq: 'daily' },
-      { loc: `${baseUrl}/product-category/sunglasses/men/`, priority: '0.9', changefreq: 'daily' },
-      { loc: `${baseUrl}/product-category/sunglasses/kids/`, priority: '0.85', changefreq: 'daily' },
-      { loc: `${baseUrl}/product-category/attachments/`, priority: '0.85', changefreq: 'daily' },
-      { loc: `${baseUrl}/product-category/polarized/`, priority: '0.85', changefreq: 'daily' },
-      { loc: `${baseUrl}/product-category/blue-light-blockers/`, priority: '0.85', changefreq: 'daily' }
-    ];
-
-    const productUrls = products
-      .filter((p: any) => p && p.slug && p.name)
-      .map((p: any) => ({
-        loc: `${baseUrl}/product/${encodeURIComponent(p.slug)}/`,
-        lastmod: p.createdAt ? p.createdAt.split('T')[0] : today,
-        changefreq: 'weekly',
-        priority: '0.85'
-      }));
-
-    const blogUrls = [
-      { loc: `${baseUrl}/blog/the-legendary-aviator-style-history/`, priority: '0.7', changefreq: 'monthly' },
-      { loc: `${baseUrl}/blog/polarized-vs-non-polarized-eyewear-guide/`, priority: '0.7', changefreq: 'monthly' },
-      { loc: `${baseUrl}/blog/how-to-choose-frames-for-your-face-shape/`, priority: '0.7', changefreq: 'monthly' }
-    ];
-
-    const allUrls = [...staticUrls, ...productUrls, ...blogUrls];
-
-    const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${allUrls.map(u => `  <url>
-    <loc>${u.loc}</loc>
-    <lastmod>${(u as any).lastmod || today}</lastmod>
-    <changefreq>${u.changefreq}</changefreq>
-    <priority>${u.priority}</priority>
-  </url>`).join('\n')}
-</urlset>`;
-
-    return sendXmlResponse(res, xml);
+    const result = generateSitemapXml(products, { baseUrl, includeImages: true });
+    return sendXmlResponse(res, result.xml);
   } catch (err: any) {
     console.error('Error generating dynamic sitemap on Vercel:', err);
 

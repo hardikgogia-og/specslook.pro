@@ -125,6 +125,13 @@ export const ProductDetailView: React.FC = () => {
 
       // Update dynamic SEO & Schema.org JSON-LD for this product
       try {
+        const catLower = (found.category || '').toLowerCase();
+        const categoryCanonical = catLower === 'sunglasses'
+          ? '/product-category/sunglasses/'
+          : catLower === 'attachments'
+          ? '/product-category/attachments/'
+          : '/product-category/eyeglasses/';
+
         updateSEO({
           title: `${found.name} | Specslook Eyewear`,
           description: found.shortDescription || found.description || `Shop ${found.name} handcrafted with Japanese titanium & Italian acetate. Cash on delivery & doorstep trials.`,
@@ -134,7 +141,7 @@ export const ProductDetailView: React.FC = () => {
           product: found,
           breadcrumbs: [
             { name: 'Home', url: '/' },
-            { name: found.category || 'Shop', url: `/product-category/${(found.category || 'eyewear').toLowerCase()}/` },
+            { name: found.category || 'Shop', url: categoryCanonical },
             { name: found.name, url: `/product/${found.slug}/` }
           ]
         });

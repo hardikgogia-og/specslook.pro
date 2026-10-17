@@ -22,7 +22,8 @@ export function prerenderAllPages() {
     return;
   }
 
-  const baseHtml = fs.readFileSync(distIndexHtml, 'utf8');
+  const rawBaseHtml = fs.readFileSync(distIndexHtml, 'utf8');
+  const baseHtml = rawBaseHtml.replace(/<div id="root">[\s\S]*?<\/div>/i, '<div id="root"></div>');
   const products = dbService.getProducts();
 
   console.log(`🚀 Starting static site prerendering for Googlebot & Sitelinks (${products.length} products)...`);

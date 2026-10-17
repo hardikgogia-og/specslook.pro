@@ -490,6 +490,8 @@ export function renderHomeHtml(baseHtml: string, products: Product[]): string {
 
   if (html.includes('<div id="root"></div>')) {
     html = html.replace('<div id="root"></div>', `<div id="root">${semanticHomeContent}</div>`);
+  } else {
+    html = html.replace(/<div id="root">[\s\S]*?<\/div>/i, `<div id="root">${semanticHomeContent}</div>`);
   }
 
   return html;
@@ -634,6 +636,8 @@ export function renderCategoryHtml(baseHtml: string, config: CategoryPageConfig,
 
   if (html.includes('<div id="root"></div>')) {
     html = html.replace('<div id="root"></div>', `<div id="root">${semanticCategoryContent}</div>`);
+  } else {
+    html = html.replace(/<div id="root">[\s\S]*?<\/div>/i, `<div id="root">${semanticCategoryContent}</div>`);
   }
 
   return html;
@@ -1068,6 +1072,8 @@ export function renderStaticPageHtml(
 
   if (html.includes('<div id="root"></div>')) {
     html = html.replace('<div id="root"></div>', `<div id="root">${semanticHtml}</div>`);
+  } else {
+    html = html.replace(/<div id="root">[\s\S]*?<\/div>/i, `<div id="root">${semanticHtml}</div>`);
   }
 
   return html;

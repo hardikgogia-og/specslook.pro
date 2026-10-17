@@ -44,6 +44,7 @@ export function renderProductHtml(baseHtml: string, product: Product): string {
         '@id': `${SITE_DOMAIN}/#organization`,
         name: 'Specslook',
         legalName: 'Specslook Eyewear',
+        alternateName: ['Specs Look', 'Specslook Eyewear', 'Specslook India'],
         url: `${SITE_DOMAIN}/`,
         logo: `${SITE_DOMAIN}/shop-logopng.png`,
         telephone: '+91-8368853448',
@@ -55,6 +56,16 @@ export function renderProductHtml(baseHtml: string, product: Product): string {
           addressRegion: 'Haryana',
           postalCode: '122001',
           addressCountry: 'IN'
+        }
+      },
+      {
+        '@type': 'WebSite',
+        '@id': `${SITE_DOMAIN}/#website`,
+        name: 'Specslook',
+        alternateName: ['Specs Look', 'Specslook Eyewear'],
+        url: `${SITE_DOMAIN}/`,
+        publisher: {
+          '@id': `${SITE_DOMAIN}/#organization`
         }
       },
       {
@@ -254,17 +265,16 @@ export function renderProductHtml(baseHtml: string, product: Product): string {
   html = html.replace(/<meta\s+name=["']twitter:(title|description|image|card)["'][^>]*>/gi, '');
   html = html.replace('</head>', `${ogTags}\n</head>`);
 
-  // 5. Inject Schema.org JSON-LD
-  const schemaScriptTag = `<script type="application/ld+json" id="specslook-product-schema">\n${JSON.stringify(productJsonLd, null, 2)}\n</script>`;
-  if (/<script[^>]*id=["']specslook-product-schema["'][^>]*>[\s\S]*?<\/script>/i.test(html)) {
-    html = html.replace(/<script[^>]*id=["']specslook-product-schema["'][^>]*>[\s\S]*?<\/script>/i, schemaScriptTag);
-  } else {
-    html = html.replace('</head>', `${schemaScriptTag}\n</head>`);
-  }
+  // 5. Inject Schema.org JSON-LD (consolidate under specslook-schema)
+  const schemaScriptTag = `<script type="application/ld+json" id="specslook-schema">\n${JSON.stringify(productJsonLd, null, 2)}\n</script>`;
+  html = html.replace(/<script[^>]*id=["']specslook-(?:product-)?schema["'][^>]*>[\s\S]*?<\/script>/gi, '');
+  html = html.replace('</head>', `${schemaScriptTag}\n</head>`);
 
   // 6. Inject crawler-friendly semantic HTML inside root container
   if (html.includes('<div id="root"></div>')) {
     html = html.replace('<div id="root"></div>', `<div id="root">${semanticProductHtml}</div>`);
+  } else {
+    html = html.replace(/<div id="root">[\s\S]*?<\/div>/i, `<div id="root">${semanticProductHtml}</div>`);
   }
 
   return html;

@@ -64,6 +64,17 @@
     }
   ],
   "redirects": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "p"
+        }
+      ],
+      "destination": "/api/legacy-handler",
+      "permanent": false
+    },
     { "source": "/home", "destination": "/", "permanent": true },
     { "source": "/home/", "destination": "/", "permanent": true },
     { "source": "/eyeglasses", "destination": "/product-category/eyeglasses/", "permanent": true },
