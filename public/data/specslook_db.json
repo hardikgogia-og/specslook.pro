@@ -1364,38 +1364,10 @@
         "uvProtection": "100% UV400 Protection",
         "isPolarized": false,
         "frameShape": "Square",
-        "gender": "Men",
+        "gender": "Unisex",
         "weightGrams": 28
       },
-      "variants": [
-        {
-          "id": "var-008-1",
-          "colorName": "Matte Black / Gradient Grey",
-          "colorHex": "#1B1B1B",
-          "frameColor": "Matte Rubber Black",
-          "lensColor": "Grey Gradient",
-          "sku": "SL-JU-4165-622",
-          "stock": 25,
-          "size": "Large (54mm)",
-          "images": [
-            "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80",
-            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
-          ]
-        },
-        {
-          "id": "var-008-2",
-          "colorName": "Matte Havana / Brown Gradient",
-          "colorHex": "#4A2F1B",
-          "frameColor": "Rubberized Havana",
-          "lensColor": "Brown Gradient",
-          "sku": "SL-JU-4165-865",
-          "stock": 15,
-          "size": "Large (54mm)",
-          "images": [
-            "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80"
-          ]
-        }
-      ],
+      "variants": [],
       "rating": 4.8,
       "reviewsCount": 77,
       "createdAt": "2026-08-25T07:27:29.981Z"
