@@ -966,12 +966,12 @@
     {
       "id": "prod-002",
       "slug": "original-wayfarer-classic-black",
-      "name": "Specslook Original Wayfarer Classic",
+      "name": "Specslook Original Wayfarer Classic (G-BLK)",
       "sku": "SL-WF-2140-BLK",
       "brand": "SPECSLOOK",
-      "price": 12990,
-      "salePrice": 9490,
-      "description": "The Specslook Original Wayfarer Classic is the most recognizable style in the history of sunglasses. Since its initial design in 1952, Wayfarer has gained popularity among celebrities, musicians, artists and those with an impeccable fashion sense. As an iconic style of sunglasses, Original Wayfarer Classic always makes a statement. Choose classic black acetate with green G-15 lenses.",
+      "price": 2999,
+      "salePrice": 999,
+      "description": "The Specslook Original Wayfarer Classic is the most recognizable style in the history of sunglasses. Since its initial design in 1952, Wayfarer has gained popularity among celebrities, musicians, artists and those with an impeccable fashion sense. As an iconic style of sunglasses, Original Wayfarer Classic always makes a statement. Classic black acetate with Polarised lenses.",
       "shortDescription": "The defining silhouette of modern counterculture in hand-polished glossy black Italian acetate.",
       "category": "Sunglasses",
       "subcategory": "Wayfarer",
@@ -980,9 +980,12 @@
       "newArrival": false,
       "stock": 38,
       "images": [
-        "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80",
-        "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80",
-        "https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1000&q=80"
+        "https://m.media-amazon.com/images/I/51JXoPnaqXL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/31ISeC3qg7L.jpg",
+        "https://m.media-amazon.com/images/I/41EjxEx4-sL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/41LBKmWVIvL.jpg",
+        "https://m.media-amazon.com/images/I/61xkSZxInlL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/614XOTV262L._SX679_.jpg"
       ],
       "specifications": {
         "frameMaterial": "Hand-Polished Mazzucchelli Italian Acetate",
@@ -990,11 +993,11 @@
         "lensWidthMm": 50,
         "bridgeMm": 22,
         "templeLengthMm": 150,
-        "uvProtection": "100% UV400 Filtering",
+        "uvProtection": "100% UV400 Protection",
         "isPolarized": true,
         "frameShape": "Wayfarer",
         "gender": "Unisex",
-        "weightGrams": 42
+        "weightGrams": 28
       },
       "variants": [
         {
@@ -1636,7 +1639,7 @@
       "name": "Sunglasses for Women",
       "description": "High-fashion oversized butterflies, gradient cat-eyes, and metallic accents with 100% UV400 defense.",
       "image": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80",
-      "itemCount": 7,
+      "itemCount": 8,
       "featured": true
     },
     {
@@ -2213,7 +2216,7 @@
         "Custom Prescription Lens Lab",
         "Complimentary Ultrasonic Cleaning"
       ],
-      "image": "/src/assets/images/sl1_store.jpg"
+      "image": "/src/assets/images/sl1_store.webp"
     },
     {
       "id": "store-sl2",
@@ -2229,7 +2232,7 @@
         "Zero-Power Blue Cut Testing Bar",
         "Same-Day Lens Dispensing"
       ],
-      "image": "/src/assets/images/sl2_store.jpg"
+      "image": "/src/assets/images/sl2_store.webp"
     },
     {
       "id": "store-sl3",
@@ -2245,7 +2248,7 @@
         "Polarized Glare Simulator",
         "VIP Doorstep Trial Service"
       ],
-      "image": "/src/assets/images/sl3_store.jpg"
+      "image": "/src/assets/images/sl3_store.webp"
     },
     {
       "id": "store-sl4",
@@ -2261,7 +2264,7 @@
         "High-Index Ultra-Thin Lenses",
         "Contact Lens Solutions Bar"
       ],
-      "image": "/src/assets/images/sl4_store.jpg"
+      "image": "/src/assets/images/sl4_store.webp"
     },
     {
       "id": "store-sl5",
@@ -2277,7 +2280,7 @@
         "Bespoke Laser Monogramming",
         "Valet Parking Available"
       ],
-      "image": "/src/assets/images/sl5_store.jpg"
+      "image": "/src/assets/images/sl5_store.webp"
     }
   ],
   "blogs": [
