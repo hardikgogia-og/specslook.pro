@@ -1025,12 +1025,12 @@
     {
       "id": "prod-004",
       "slug": "round-metal-legend-gold",
-      "name": "Specslook Round Metal Legend",
+      "name": "Specslook GLAM Oval Sunglasses",
       "sku": "SL-RM-3447-GLD",
       "brand": "SPECSLOOK",
-      "price": 11490,
-      "salePrice": 8490,
-      "description": "The Specslook Round Metal sunglasses are totally retro. This look has been worn by legendary musicians and inspired by the 1960s counter-culture when this style first originated. The unisex metal, iconic sunglasses are known for their defined round crystal lenses and distinct curved brow bar, adjustable nose pads, and thin metal temples with plastic end tips.",
+      "price": 3000,
+      "salePrice": 649,
+      "description": "The Specslook GLAM Metal sunglasses are totally retro. This look has been worn by legendary musicians and inspired by the 1960s counter-culture when this style first originated. The unisex metal, iconic sunglasses are known for their defined round crystal lenses and distinct curved brow bar, adjustable nose pads, and thin metal temples with plastic end tips.",
       "shortDescription": "1960s counter-culture icon with circular wire frame and curved brow bar.",
       "category": "Sunglasses",
       "subcategory": "Round",
@@ -1039,8 +1039,12 @@
       "newArrival": false,
       "stock": 32,
       "images": [
-        "https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1000&q=80",
-        "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
+        "https://m.media-amazon.com/images/I/518JHswLI0L._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/51vz7SbnWIL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/61TmfxhOlfL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/610XpMfak0L._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/61Stg0ql12L._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/71UQuN19s3L._SX679_.jpg"
       ],
       "specifications": {
         "frameMaterial": "Fine Gauge Stainless Steel & Monel",
