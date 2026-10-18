@@ -1302,35 +1302,7 @@
         "gender": "Unisex",
         "weightGrams": 28
       },
-      "variants": [
-        {
-          "id": "var-007-1",
-          "colorName": "Titanium Pewter / Silver PolarVue",
-          "colorHex": "#8A8D8F",
-          "frameColor": "Brushed Titanium",
-          "lensColor": "Silver Flash Polarized",
-          "sku": "SL-TI-8090-PWT",
-          "stock": 8,
-          "size": "Large (54mm)",
-          "images": [
-            "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80",
-            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
-          ]
-        },
-        {
-          "id": "var-007-2",
-          "colorName": "Rose Gold / Bronze Polarized",
-          "colorHex": "#B76E79",
-          "frameColor": "Rose Gold Titanium",
-          "lensColor": "Bronze Gradient Polarized",
-          "sku": "SL-TI-8090-RSG",
-          "stock": 7,
-          "size": "Standard (50mm)",
-          "images": [
-            "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80"
-          ]
-        }
-      ],
+      "variants": [],
       "rating": 5,
       "reviewsCount": 56,
       "createdAt": "2026-09-07T07:27:29.981Z"
