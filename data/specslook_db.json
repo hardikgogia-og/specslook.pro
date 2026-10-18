@@ -999,36 +999,7 @@
         "gender": "Unisex",
         "weightGrams": 28
       },
-      "variants": [
-        {
-          "id": "var-002-1",
-          "colorName": "Polished Black / G-15 Green",
-          "colorHex": "#000000",
-          "frameColor": "Gloss Black",
-          "lensColor": "Classic Green G-15",
-          "sku": "SL-WF-2140-901",
-          "stock": 22,
-          "size": "Standard (50mm)",
-          "images": [
-            "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80",
-            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80",
-            "https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1000&q=80"
-          ]
-        },
-        {
-          "id": "var-002-2",
-          "colorName": "Tortoise Havana / Brown Gradient",
-          "colorHex": "#5C381E",
-          "frameColor": "Havana Tortoise",
-          "lensColor": "Brown Gradient B-15",
-          "sku": "SL-WF-2140-902",
-          "stock": 16,
-          "size": "Standard (50mm)",
-          "images": [
-            "https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1000&q=80"
-          ]
-        }
-      ],
+      "variants": [],
       "rating": 4.8,
       "reviewsCount": 118,
       "createdAt": "2026-08-18T07:27:29.981Z"
