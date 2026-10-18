@@ -655,12 +655,12 @@
     {
       "id": "prod-sun-wom-01",
       "slug": "specslook-glam-oversized-butterfly-sunglasses",
-      "name": "Specslook Oversized Glam Butterfly Sunglasses",
+      "name": "Specslook Glam OVAL Sunglasses",
       "sku": "SL-SG-BTF-WOM01",
       "brand": "SPECSLOOK",
-      "price": 8990,
-      "salePrice": 5990,
-      "description": "Statement oversized silhouette with butterfly contours hand-polished in rich black and honey tortoiseshell. Designed to frame high cheekbones and provide complete wrap-around sun shielding.",
+      "price": 4000,
+      "salePrice": 659,
+      "description": "UV Protection: UV400 lenses provide 100% protection from harmful UVA & UVB rays, helping reduce eye strain and protect vision in bright sunlight.\nLens Property: Tinted lenses with glare-reducing coating for clear and comfortable vision in outdoor conditions.\nFrame Material/Construction: Durable metal frame with high-quality construction for long-lasting performance and a premium finish.\nSize/Fit: Medium | Total Frame: 143 mm | Lens Width: 55 mm | Lens Height: 41 mm | Bridge: 18 mm | Temple Length: 148 mm.\nUse-Case: Ideal for women, best suited for daily wear, car driving, shopping, traveling, and lifestyle use.\nWarranty/Care: Comes with a 6-month manufacturer warranty and easy-care instructions for long-term use.",
       "shortDescription": "Dramatically sculpted oversized butterfly frame with gradient bronze lenses.",
       "category": "Sunglasses",
       "subcategory": "Women",
@@ -669,8 +669,11 @@
       "newArrival": true,
       "stock": 25,
       "images": [
-        "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80",
-        "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80"
+        "https://m.media-amazon.com/images/I/51hVf+IEFkL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/51BaebVEy6L._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/61yf3Ub6oJL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/61N5KO6BenL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/61nW07cJsmL._SX679_.jpg"
       ],
       "specifications": {
         "frameMaterial": "High-Density Italian Acetate",
@@ -678,11 +681,11 @@
         "lensWidthMm": 56,
         "bridgeMm": 17,
         "templeLengthMm": 140,
-        "uvProtection": "100% UV400 Absorption",
+        "uvProtection": "100% UV400 Protection",
         "isPolarized": true,
         "frameShape": "Cat-Eye",
         "gender": "Women",
-        "weightGrams": 32
+        "weightGrams": 28
       },
       "variants": [
         {
@@ -1040,35 +1043,7 @@
         "gender": "Unisex",
         "weightGrams": 28
       },
-      "variants": [
-        {
-          "id": "var-003-1",
-          "colorName": "Ebony Gold / Crystal Green",
-          "colorHex": "#1E1E1E",
-          "frameColor": "Black & Gold",
-          "lensColor": "Green Solid",
-          "sku": "SL-CM-3016-W0365",
-          "stock": 18,
-          "size": "Standard (50mm)",
-          "images": [
-            "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80",
-            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
-          ]
-        },
-        {
-          "id": "var-003-2",
-          "colorName": "Spotted Havana / Gold",
-          "colorHex": "#704214",
-          "frameColor": "Mock Tortoise",
-          "lensColor": "Brown Classic",
-          "sku": "SL-CM-3016-W0366",
-          "stock": 10,
-          "size": "Standard (50mm)",
-          "images": [
-            "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80"
-          ]
-        }
-      ],
+      "variants": [],
       "rating": 4.7,
       "reviewsCount": 89,
       "createdAt": "2026-08-23T07:27:29.981Z"
