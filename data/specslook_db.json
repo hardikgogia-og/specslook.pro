@@ -687,33 +687,7 @@
         "gender": "Women",
         "weightGrams": 28
       },
-      "variants": [
-        {
-          "id": "var-sgw1-1",
-          "colorName": "Gloss Black / Smoked Gradient",
-          "colorHex": "#0A0A0A",
-          "frameColor": "Gloss Black",
-          "lensColor": "Smoked Gradient",
-          "sku": "SL-SG-BTF-WOM01-BLK",
-          "stock": 15,
-          "images": [
-            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80",
-            "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80"
-          ]
-        },
-        {
-          "id": "var-sgw1-2",
-          "colorName": "Honey Tortoise / Warm Bronze",
-          "colorHex": "#A0522D",
-          "frameColor": "Honey Tortoise",
-          "lensColor": "Warm Bronze Gradient",
-          "sku": "SL-SG-BTF-WOM01-HNY",
-          "stock": 10,
-          "images": [
-            "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80"
-          ]
-        }
-      ],
+      "variants": [],
       "rating": 4.9,
       "reviewsCount": 112,
       "createdAt": "2026-09-13T15:32:17.489Z"
