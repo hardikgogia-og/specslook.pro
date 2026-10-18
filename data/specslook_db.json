@@ -1271,12 +1271,12 @@
     {
       "id": "prod-007",
       "slug": "titanium-aviator-polarized-polarvue",
-      "name": "Specslook Titanium PolarVue Polarized",
+      "name": "Specslook UV Protected Medium Square Rimless Sunglasses",
       "sku": "SL-TI-8090-CHR",
       "brand": "SPECSLOOK",
-      "price": 18990,
-      "salePrice": 14990,
-      "description": "The pinnacle of luxury eyewear engineering. Crafted from aerospace-grade solid Japanese Beta-Titanium, weighing merely 18 grams while offering unbeatable tensile strength and zero corrosion. Equipped with patented PolarVue polarized lenses that calibrate light spectrum for intensified color vibrancy, hyper-defined contrasts and eliminated reflection glare.",
+      "price": 2000,
+      "salePrice": 699,
+      "description": "The pinnacle of luxury eyewear engineering. Crafted from aerospace-grade solid Japanese Beta-Titanium, weighing merely 18 grams while offering unbeatable tensile strength and zero corrosion. Equipped with patented PolarVue Gen1 UV420 lenses that calibrate light spectrum for intensified color vibrancy, hyper-defined contrasts and eliminated reflection glare.",
       "shortDescription": "Aerospace-grade Japanese Titanium with PolarVue color-enhancing polarized optics.",
       "category": "Polarized",
       "subcategory": "Aviator",
@@ -1285,8 +1285,10 @@
       "newArrival": true,
       "stock": 15,
       "images": [
-        "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80",
-        "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
+        "https://m.media-amazon.com/images/I/41oRpF4XBsL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/418TBKI58OL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/61zo1AQ2f9L._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/71RXV1V3imL._SX679_.jpg"
       ],
       "specifications": {
         "frameMaterial": "100% Pure Japanese Beta-Titanium",
@@ -1294,11 +1296,11 @@
         "lensWidthMm": 59,
         "bridgeMm": 15,
         "templeLengthMm": 140,
-        "uvProtection": "100% UV400 + Polarized Cat 3",
+        "uvProtection": "100% UV400 Protection",
         "isPolarized": true,
-        "frameShape": "Aviator",
+        "frameShape": "Square",
         "gender": "Unisex",
-        "weightGrams": 18
+        "weightGrams": 28
       },
       "variants": [
         {
