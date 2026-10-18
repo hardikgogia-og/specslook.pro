@@ -1336,12 +1336,12 @@
     {
       "id": "prod-008",
       "slug": "justin-matte-rubber-black",
-      "name": "Specslook Justin Matte Rubberized",
-      "sku": "SL-JU-4165-MAT",
+      "name": "Specslook UV Protected Medium Square Rimless Shades",
+      "sku": "SL-GL-4165-BLK",
       "brand": "SPECSLOOK",
-      "price": 10490,
-      "salePrice": 7990,
-      "description": "Specslook Justin may just be one of the coolest looks in the Specslook collection. Inspired by the iconic Wayfarer sunglasses, this style has been redesigned with slightly larger rectangle lenses, fresh new frame colors, stunning colored lenses and a rubberized frame finish to really give it that extra edge.",
+      "price": 1999,
+      "salePrice": 699,
+      "description": "Rimless sunglasses for men and women offer a sleek, modern aesthetic with minimalistic design. These lightweight, comfortable frames provide unobstructed vision and style. Perfect for any occasion, they seamlessly blend elegance with functionality, ensuring UV protection while enhancing your look with a touch of sophistication. Ideal for fashion-forward individuals.\n\nEasy to clean\nLightweight and durable\nReduce reflections and glare\nReduce eyestrain, no tired eyes after a full day in the sun\nUVA/UVB & UVC rays Protection, minimizing damage to your eyesight in the long run.",
       "shortDescription": "Contemporary oversized Wayfarer silhouette with tactile rubberized soft-touch matte finish.",
       "category": "Sunglasses",
       "subcategory": "Wayfarer",
@@ -1350,8 +1350,10 @@
       "newArrival": false,
       "stock": 40,
       "images": [
-        "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80",
-        "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
+        "https://m.media-amazon.com/images/I/41AyRdK+VSL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/41m5SFc8qYL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/61zk49c1dWL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/71zeTyLgNlL._SX679_.jpg"
       ],
       "specifications": {
         "frameMaterial": "Rubberized Injection Molded Nylon",
@@ -1359,11 +1361,11 @@
         "lensWidthMm": 54,
         "bridgeMm": 16,
         "templeLengthMm": 145,
-        "uvProtection": "100% UV400",
-        "isPolarized": true,
+        "uvProtection": "100% UV400 Protection",
+        "isPolarized": false,
         "frameShape": "Square",
         "gender": "Men",
-        "weightGrams": 30
+        "weightGrams": 28
       },
       "variants": [
         {
@@ -1431,42 +1433,7 @@
         "gender": "Unisex",
         "weightGrams": 28
       },
-      "variants": [
-        {
-          "id": "var-009-1",
-          "colorName": "Matte Black (with 5 Clips)",
-          "colorHex": "#1B1B1B",
-          "frameColor": "Matte Black",
-          "lensColor": "Clear Base + 5 Sun/Driving Clips",
-          "sku": "SL-MAG-6IN1-BLK",
-          "stock": 30,
-          "size": "Medium (53mm)",
-          "images": [
-            "https://thecraze.in/cdn/shop/files/HDCRAFTER-6-in-1-Clip-On-Glasses-Men-Women-TR90-Prescription-Eye-Glasses-Frame-Optical-Magnetic_fb11f78c-b595-4a50-ba09-16b8b9daa356.webp?v=1787084406",
-            "https://thecraze.in/cdn/shop/files/HDCRAFTER-6-in-1-Clip-On-Glasses-Men-Women-TR90-Prescription-Eye-Glasses-Frame-Optical-Magnetic_79c2645f-6425-4eb3-8875-b2101ea80d08.webp?v=1787084405",
-            "https://thecraze.in/cdn/shop/files/HDCRAFTER-6-in-1-Clip-On-Glasses-Men-Women-TR90-Prescription-Eye-Glasses-Frame-Optical-Magnetic_b06c68cf-67af-40b7-9a7d-311fd76b0925.webp?v=1787084405",
-            "https://thecraze.in/cdn/shop/files/HDCRAFTER-6-in-1-Clip-On-Glasses-Men-Women-TR90-Prescription-Eye-Glasses-Frame-Optical-Magnetic_1ece32c5-6ee7-4692-8289-0cb427ac3cb2.webp?v=1787084406",
-            "https://thecraze.in/cdn/shop/files/HDCRAFTER-6-in-1-Clip-On-Glasses-Men-Women-TR90-Prescription-Eye-Glasses-Frame-Optical-Magnetic_9cda764a-30b1-486b-97f6-5c5c585e11f9.webp?v=1787084405"
-          ]
-        },
-        {
-          "id": "var-009-2",
-          "colorName": "Gloss Tortoise (with 5 Clips)",
-          "colorHex": "#5C381E",
-          "frameColor": "Dark Tortoise Shell",
-          "lensColor": "Clear Base + 5 Sun/Driving Clips",
-          "sku": "SL-MAG-6IN1-TOR",
-          "stock": 20,
-          "size": "Medium (53mm)",
-          "images": [
-            "https://thecraze.in/cdn/shop/files/HDCRAFTER-6-in-1-Clip-On-Glasses-Men-Women-TR90-Prescription-Eye-Glasses-Frame-Optical-Magnetic_fb11f78c-b595-4a50-ba09-16b8b9daa356.webp?v=1787084406",
-            "https://thecraze.in/cdn/shop/files/HDCRAFTER-6-in-1-Clip-On-Glasses-Men-Women-TR90-Prescription-Eye-Glasses-Frame-Optical-Magnetic_79c2645f-6425-4eb3-8875-b2101ea80d08.webp?v=1787084405",
-            "https://thecraze.in/cdn/shop/files/HDCRAFTER-6-in-1-Clip-On-Glasses-Men-Women-TR90-Prescription-Eye-Glasses-Frame-Optical-Magnetic_b06c68cf-67af-40b7-9a7d-311fd76b0925.webp?v=1787084405",
-            "https://thecraze.in/cdn/shop/files/HDCRAFTER-6-in-1-Clip-On-Glasses-Men-Women-TR90-Prescription-Eye-Glasses-Frame-Optical-Magnetic_1ece32c5-6ee7-4692-8289-0cb427ac3cb2.webp?v=1787084406",
-            "https://thecraze.in/cdn/shop/files/HDCRAFTER-6-in-1-Clip-On-Glasses-Men-Women-TR90-Prescription-Eye-Glasses-Frame-Optical-Magnetic_9cda764a-30b1-486b-97f6-5c5c585e11f9.webp?v=1787084405"
-          ]
-        }
-      ],
+      "variants": [],
       "rating": 4.9,
       "reviewsCount": 84,
       "createdAt": "2026-09-01T08:00:00.000Z"
