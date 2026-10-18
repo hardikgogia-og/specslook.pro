@@ -1007,12 +1007,12 @@
     {
       "id": "prod-003",
       "slug": "clubmaster-classic-browline",
-      "name": "Specslook Clubmaster Classic Browline",
+      "name": "Specslook Wayfarer Classic Browline",
       "sku": "SL-CM-3016-EBN",
       "brand": "SPECSLOOK",
-      "price": 13490,
-      "salePrice": 9990,
-      "description": "Specslook Clubmaster Classic sunglasses are retro and timeless. Inspired by the 50s, the unmistakable design of the Clubmaster has been repeatedly selected by historical intellectuals and cultural leaders. While wearing the Specslook Clubmaster Classic design, you will always make a statement. Combining refined ebony acetate browline with polished gold accents.",
+      "price": 3000,
+      "salePrice": 999,
+      "description": "Stylish Brown Retro Frame: Features a classic wayfarer shape with a rich brown vintage design suitable for daily wear and outdoor activities\nPolarized Glare-Free Lenses: Equipped with polarized lenses that reduce glare and enhance visual clarity for comfortable viewing\nUV Protection: Provides complete protection against harmful UV rays to keep your eyes safe during extended outdoor exposure\nComfortable Nose Pads: Soft nose pads ensure a snug and relaxed fit for all-day comfort without pressure points\nLightweight Design: Constructed with lightweight materials combined with strong build quality for durability and extended wear comfort\nVersatile Usage: Suitable for travel, beach trips, driving, and casual outings in various outdoor settings",
       "shortDescription": "Retro mid-century browline design combining ebony acetate and gold metal rims.",
       "category": "Sunglasses",
       "subcategory": "Clubmaster",
@@ -1021,8 +1021,12 @@
       "newArrival": false,
       "stock": 28,
       "images": [
-        "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80",
-        "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
+        "https://m.media-amazon.com/images/I/31t2O4FAoJL.jpg",
+        "https://m.media-amazon.com/images/I/31EtDYg7vhL.jpg",
+        "https://m.media-amazon.com/images/I/41DM6V3fkzL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/41Kdhqkl93L.jpg",
+        "https://m.media-amazon.com/images/I/61xkSZxInlL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/61njf14DIaL._SX679_.jpg"
       ],
       "specifications": {
         "frameMaterial": "Dual Acetate & Monel Metal Browline",
@@ -1030,11 +1034,11 @@
         "lensWidthMm": 51,
         "bridgeMm": 21,
         "templeLengthMm": 145,
-        "uvProtection": "100% UV400 Block",
-        "isPolarized": false,
-        "frameShape": "Clubmaster",
+        "uvProtection": "100% UV400 Protection",
+        "isPolarized": true,
+        "frameShape": "Wayfarer",
         "gender": "Unisex",
-        "weightGrams": 37
+        "weightGrams": 28
       },
       "variants": [
         {
