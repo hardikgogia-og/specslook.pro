@@ -1058,35 +1058,7 @@
         "gender": "Unisex",
         "weightGrams": 28
       },
-      "variants": [
-        {
-          "id": "var-004-1",
-          "colorName": "Polished Gold / G-15 Green",
-          "colorHex": "#E5C158",
-          "frameColor": "Gold Wire",
-          "lensColor": "Crystal Green",
-          "sku": "SL-RM-3447-001",
-          "stock": 20,
-          "size": "Standard (50mm)",
-          "images": [
-            "https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1000&q=80",
-            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
-          ]
-        },
-        {
-          "id": "var-004-2",
-          "colorName": "Silver / Flash Blue Mirrored",
-          "colorHex": "#C0C0C0",
-          "frameColor": "Polished Silver",
-          "lensColor": "Mirrored Blue Flash",
-          "sku": "SL-RM-3447-112",
-          "stock": 12,
-          "size": "Standard (50mm)",
-          "images": [
-            "https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1000&q=80"
-          ]
-        }
-      ],
+      "variants": [],
       "rating": 4.9,
       "reviewsCount": 97,
       "createdAt": "2026-08-28T07:27:29.981Z"
@@ -1094,12 +1066,12 @@
     {
       "id": "prod-005",
       "slug": "hexagonal-flat-lenses-copper",
-      "name": "Specslook Hexagonal Flat Lenses",
+      "name": "Specslook Hexagonal UV Protected Shades",
       "sku": "SL-HX-3548-COP",
       "brand": "SPECSLOOK",
-      "price": 12490,
-      "salePrice": 8990,
-      "description": "What do you get when you cross a circle with a square? You get the hexagonal Specslook Flat Lenses. An evolution of round sunglasses with flat crystal lenses. Hexagonal shape provides an ultra-contemporary edge to timeless metallic elegance.",
+      "price": 2000,
+      "salePrice": 499,
+      "description": "What do you get when you cross a circle with a square? You get the hexagonal Specslook Lenses. An evolution of round sunglasses with flat crystal lenses. Hexagonal shape provides an ultra-contemporary edge to timeless metallic elegance. Suits all face shapes.\nLightweight & Comfortable Build: Crafted with durable yet lightweight materials to ensure long-lasting comfort without pressure on the nose and ears during extended wear.\nPerfect Size & Comfortable Fit: Medium Size | Frame Width: 135 mm | Lens Width: 50 mm | Lens Height: 45 mm | Bridge: 20 mm | Temple Length: 145 mm | Designed to fit most face shapes securely.\nIdeal for Daily & Outdoor Use: Ideal for driving, traveling, shopping, beach outings, parties, vacations, and everyday lifestyle wear for men and women.\nWarranty & Easy Care: Comes with 6-month Dervin manufacturer warranty and easy cleaning and storage instructions for long-lasting performance and customer satisfaction.",
       "shortDescription": "Contemporary geometric geometric sunglasses with ultra-flat crystal lenses and coin-edge profile.",
       "category": "Sunglasses",
       "subcategory": "Hexagonal",
@@ -1108,8 +1080,12 @@
       "newArrival": true,
       "stock": 24,
       "images": [
-        "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80",
-        "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
+        "https://m.media-amazon.com/images/I/51gC4waUH0L._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/519BTi01f5L._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/41m45QXML9L.jpg",
+        "https://m.media-amazon.com/images/I/61MZiC-40ML._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/61CzwQrPVfL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/61boBr2yGHL._SX679_.jpg"
       ],
       "specifications": {
         "frameMaterial": "Ultra-thin Metallic Alloy",
@@ -1117,11 +1093,11 @@
         "lensWidthMm": 51,
         "bridgeMm": 21,
         "templeLengthMm": 145,
-        "uvProtection": "100% UV400",
+        "uvProtection": "100% UV400 Protection",
         "isPolarized": false,
         "frameShape": "Hexagonal",
         "gender": "Unisex",
-        "weightGrams": 27
+        "weightGrams": 28
       },
       "variants": [
         {
