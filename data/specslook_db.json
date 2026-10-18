@@ -1099,35 +1099,7 @@
         "gender": "Unisex",
         "weightGrams": 28
       },
-      "variants": [
-        {
-          "id": "var-005-1",
-          "colorName": "Copper Gold / Classic Green",
-          "colorHex": "#B87333",
-          "frameColor": "Copper Gold",
-          "lensColor": "Green",
-          "sku": "SL-HX-3548-001",
-          "stock": 14,
-          "size": "Standard (50mm)",
-          "images": [
-            "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80",
-            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
-          ]
-        },
-        {
-          "id": "var-005-2",
-          "colorName": "Matte Gunmetal / Grey Gradient",
-          "colorHex": "#43464B",
-          "frameColor": "Gunmetal",
-          "lensColor": "Grey Gradient",
-          "sku": "SL-HX-3548-002",
-          "stock": 10,
-          "size": "Standard (50mm)",
-          "images": [
-            "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80"
-          ]
-        }
-      ],
+      "variants": [],
       "rating": 4.6,
       "reviewsCount": 42,
       "createdAt": "2026-09-02T07:27:29.981Z"
