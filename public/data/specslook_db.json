@@ -879,8 +879,8 @@
       "name": "Specslook Aviator Classic Gold",
       "sku": "SL-AV-3025-GLD",
       "brand": "SPECSLOOK",
-      "price": 11990,
-      "salePrice": 8990,
+      "price": 8000,
+      "salePrice": 999,
       "description": "Currently one of the most iconic sunglass models in the world, the Specslook Aviator Classic was originally designed for aviators in 1937. Aviator Classic sunglasses are a timeless model that combines great aviator styling with exceptional quality, performance and comfort. With a classic gold frame, you can see the world through the legendary crystal green G-15 lens that offers optimal visual clarity and 100% UV protection.",
       "shortDescription": "Legendary teardrop frame with polished 18K gold finish and crystal green G-15 lenses.",
       "category": "Sunglasses",
@@ -890,9 +890,9 @@
       "newArrival": false,
       "stock": 43,
       "images": [
-        "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80",
-        "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80",
-        "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80"
+        "https://m.media-amazon.com/images/I/61n+9SxpJtL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/51JQts8dKeL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/61UJHsvgIaL._SX679_.jpg"
       ],
       "specifications": {
         "frameMaterial": "Monel Metal with 18K Gold Ion Plating",
@@ -900,11 +900,11 @@
         "lensWidthMm": 58,
         "bridgeMm": 14,
         "templeLengthMm": 135,
-        "uvProtection": "100% UV400 Absorption",
+        "uvProtection": "100% UV400 Protection",
         "isPolarized": true,
         "frameShape": "Aviator",
         "gender": "Unisex",
-        "weightGrams": 31
+        "weightGrams": 28
       },
       "variants": [
         {
@@ -1099,35 +1099,7 @@
         "gender": "Unisex",
         "weightGrams": 28
       },
-      "variants": [
-        {
-          "id": "var-005-1",
-          "colorName": "Copper Gold / Classic Green",
-          "colorHex": "#B87333",
-          "frameColor": "Copper Gold",
-          "lensColor": "Green",
-          "sku": "SL-HX-3548-001",
-          "stock": 14,
-          "size": "Standard (50mm)",
-          "images": [
-            "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80",
-            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80"
-          ]
-        },
-        {
-          "id": "var-005-2",
-          "colorName": "Matte Gunmetal / Grey Gradient",
-          "colorHex": "#43464B",
-          "frameColor": "Gunmetal",
-          "lensColor": "Grey Gradient",
-          "sku": "SL-HX-3548-002",
-          "stock": 10,
-          "size": "Standard (50mm)",
-          "images": [
-            "https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80"
-          ]
-        }
-      ],
+      "variants": [],
       "rating": 4.6,
       "reviewsCount": 42,
       "createdAt": "2026-09-02T07:27:29.981Z"
