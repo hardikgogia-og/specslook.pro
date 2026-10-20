@@ -51,10 +51,10 @@ export const HomeView: React.FC = () => {
             <div>
               <div className="text-xs font-extrabold text-red-600 uppercase tracking-widest mb-1 flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>SPECSLOOK OFFICIAL EYEWEAR</span>
+                <span>SPECSLOOK® OFFICIAL STORE &bull; SPECS LOOK</span>
               </div>
               <h1 className="text-2xl sm:text-4xl font-black text-neutral-900 uppercase tracking-tight mb-1.5">
-                Specslook Luxury Eyewear, Sunglasses &amp; Shades
+                Specslook &mdash; Luxury Eyeglasses, Sunglasses &amp; Specs Look Optics
               </h1>
               <h2 className="text-sm sm:text-base font-bold text-neutral-700 uppercase tracking-wider">
                 Shop By Eyewear Category &amp; Gender
@@ -834,6 +834,26 @@ export const HomeView: React.FC = () => {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Brand Authority & Search Disambiguation Section for Specslook & Specs Look */}
+      <section className="bg-neutral-100/70 border-t border-neutral-200 py-10 px-4 sm:px-6 lg:px-8" aria-label="About Specslook Eyewear">
+        <div className="max-w-7xl mx-auto">
+          <div className="max-w-4xl">
+            <h2 className="text-xs font-black uppercase text-red-600 tracking-widest mb-1.5">
+              Official Specslook Eyewear &bull; Gurugram, India
+            </h2>
+            <h3 className="text-lg sm:text-xl font-black text-neutral-900 uppercase tracking-tight mb-2.5">
+              Specslook (Specs Look) &mdash; Handcrafted Titanium Eyeglasses &amp; Polarized Optics
+            </h3>
+            <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed mb-3">
+              <strong>Specslook</strong> (commonly searched as <strong>Specs Look</strong>) is India’s premier direct-to-consumer luxury eyewear brand, headquartered at Dreamz Mall in Gurugram, Haryana. Founded to challenge overpriced legacy optical retail, Specslook engineers master-grade Japanese titanium spectacles, Italian Mazzucchelli acetate frames, high-definition PolarVue™ polarized sunglasses, and 6-in-1 magnetic clip-on attachments.
+            </p>
+            <p className="text-xs text-neutral-500 leading-relaxed">
+              With 65+ optical showrooms and 200+ partner clinics, Specslook offers certified 14-point computerized doorstep home eye tests, zero-cost frame trials, and prescription lens fitting across India. Official brand website: <span className="font-semibold text-neutral-700">specslook.com</span>. Not affiliated with Spectalook.
+            </p>
           </div>
         </div>
       </section>

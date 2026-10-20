@@ -40,15 +40,32 @@ export function renderProductHtml(baseHtml: string, product: Product): string {
     '@context': 'https://schema.org',
     '@graph': [
       {
+        '@type': 'Brand',
+        '@id': `${SITE_DOMAIN}/#brand`,
+        name: 'Specslook',
+        alternateName: ['Specs Look', 'Specslook Eyewear', 'Specslook India', 'specslook.com'],
+        url: `${SITE_DOMAIN}/`,
+        logo: `${SITE_DOMAIN}/shop-logopng.png`,
+        slogan: 'Handcrafted Luxury Eyewear & Master Optics',
+        description: 'Specslook (Specs Look) is an authentic Indian luxury eyewear brand offering handcrafted titanium spectacles, polarized sunglasses, and doorstep home eye tests.',
+        disambiguatingDescription: 'Specslook (specslook.com, also known as Specs Look) is an authentic Indian direct-to-consumer luxury eyewear brand founded in Gurugram, India. Not affiliated with Spectalook.'
+      },
+      {
         '@type': 'Organization',
         '@id': `${SITE_DOMAIN}/#organization`,
         name: 'Specslook',
         legalName: 'Specslook',
-        alternateName: ['Specs Look', 'Specslook Eyewear', 'Specslook India'],
+        alternateName: ['Specs Look', 'Specslook Eyewear', 'Specslook India', 'specslook.com'],
         url: `${SITE_DOMAIN}/`,
         logo: `${SITE_DOMAIN}/shop-logopng.png`,
         telephone: '+91-8368853448',
         email: 'info@specslook.com',
+        slogan: 'Handcrafted Luxury Eyewear & Master Optics',
+        disambiguatingDescription: 'Specslook (specslook.com), also known as Specs Look, is an Indian direct-to-consumer luxury eyewear and optics brand founded in Gurugram, India, specializing in handcrafted titanium eyeglasses, polarized sunglasses, and doorstep home eye tests. Not affiliated with Spectalook.',
+        knowsAbout: ['Eyewear', 'Eyeglasses', 'Sunglasses', 'Optics', 'Prescription Glasses', 'Blue Light Lenses', 'Polarized Shades'],
+        brand: {
+          '@id': `${SITE_DOMAIN}/#brand`
+        },
         address: {
           '@type': 'PostalAddress',
           streetAddress: 'Specslook, Dreamz Mall, Sec 4-7 Circle',
@@ -62,8 +79,9 @@ export function renderProductHtml(baseHtml: string, product: Product): string {
         '@type': 'WebSite',
         '@id': `${SITE_DOMAIN}/#website`,
         name: 'Specslook',
-        alternateName: ['Specs Look', 'Specslook Eyewear'],
+        alternateName: ['Specs Look', 'Specslook Eyewear', 'specslook.com'],
         url: `${SITE_DOMAIN}/`,
+        disambiguatingDescription: 'Official website of Specslook Eyewear (Specs Look) at specslook.com.',
         publisher: {
           '@id': `${SITE_DOMAIN}/#organization`
         }
@@ -79,7 +97,9 @@ export function renderProductHtml(baseHtml: string, product: Product): string {
         mpn: product.sku || `SL-${product.id}`,
         brand: {
           '@type': 'Brand',
-          name: 'Specslook'
+          '@id': `${SITE_DOMAIN}/#brand`,
+          name: 'Specslook',
+          alternateName: ['Specs Look', 'Specslook Eyewear']
         },
         category: product.category || 'Eyewear',
         itemCondition: 'https://schema.org/NewCondition',
@@ -94,7 +114,8 @@ export function renderProductHtml(baseHtml: string, product: Product): string {
           availability: availabilitySchema,
           seller: {
             '@type': 'Organization',
-            name: 'Specslook Eyewear'
+            '@id': `${SITE_DOMAIN}/#organization`,
+            name: 'Specslook'
           },
           shippingDetails: {
             '@type': 'OfferShippingDetails',

@@ -218,23 +218,34 @@ function replaceHeadMetadata(
  */
 export function renderHomeHtml(baseHtml: string, products: Product[]): string {
   const canonicalUrl = `${SITE_DOMAIN}/`;
-  const pageTitle = 'Specslook | Luxury Eyeglasses, Sunglasses & Eye Testing';
-  const pageDesc = 'Official Specslook Eyewear Store. Handcrafted luxury eyeglasses, titanium spectacles, designer sunglasses, polarized shades, and computerized home eye testing across India.';
+  const pageTitle = 'Specslook® Official Website | Luxury Eyeglasses & Sunglasses (Specs Look)';
+  const pageDesc = 'Official Specslook (Specs Look) online store. Handcrafted luxury eyeglasses, titanium spectacles, designer sunglasses, polarized shades, and computerized home eye testing across India.';
 
   const homeJsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
+        '@type': 'Brand',
+        '@id': `${SITE_DOMAIN}/#brand`,
+        name: 'Specslook',
+        alternateName: ['Specs Look', 'Specslook Eyewear', 'Specslook India', 'specslook.com'],
+        url: canonicalUrl,
+        logo: LOGO_URL,
+        slogan: 'Handcrafted Luxury Eyewear & Master Optics',
+        description: 'Specslook (Specs Look) is an authentic Indian luxury eyewear brand offering handcrafted titanium spectacles, polarized sunglasses, and doorstep home eye tests.',
+        disambiguatingDescription: 'Specslook (specslook.com, also known as Specs Look) is an authentic Indian direct-to-consumer luxury eyewear brand founded in Gurugram, India. Not affiliated with Spectalook.'
+      },
+      {
         '@type': 'Organization',
         '@id': `${SITE_DOMAIN}/#organization`,
         name: 'Specslook',
         legalName: 'Specslook',
-        alternateName: ['Specs Look', 'Specslook Eyewear', 'Specslook India'],
+        alternateName: ['Specs Look', 'Specslook Eyewear', 'Specslook India', 'specslook.com'],
         slogan: 'Handcrafted Luxury Eyewear & Master Optics',
+        disambiguatingDescription: 'Specslook (specslook.com), also known as Specs Look, is an Indian direct-to-consumer luxury eyewear and optics brand founded in Gurugram, India, specializing in handcrafted titanium eyeglasses, polarized sunglasses, and doorstep home eye tests. Not affiliated with Spectalook.',
+        knowsAbout: ['Eyewear', 'Eyeglasses', 'Sunglasses', 'Optics', 'Prescription Glasses', 'Blue Light Lenses', 'Polarized Shades'],
         brand: {
-          '@type': 'Brand',
-          name: 'Specslook',
-          url: canonicalUrl
+          '@id': `${SITE_DOMAIN}/#brand`
         },
         url: canonicalUrl,
         logo: LOGO_URL,
@@ -258,9 +269,10 @@ export function renderHomeHtml(baseHtml: string, products: Product[]): string {
         '@type': 'WebSite',
         '@id': `${SITE_DOMAIN}/#website`,
         name: 'Specslook',
-        alternateName: ['Specs Look', 'Specslook Eyewear'],
+        alternateName: ['Specs Look', 'Specslook Eyewear', 'specslook.com'],
         url: canonicalUrl,
         description: pageDesc,
+        disambiguatingDescription: 'Official website of Specslook Eyewear (Specs Look) at specslook.com.',
         publisher: {
           '@id': `${SITE_DOMAIN}/#organization`
         },
@@ -358,10 +370,10 @@ export function renderHomeHtml(baseHtml: string, products: Product[]): string {
 
       <!-- Hero Header Section -->
       <header class="text-center py-10 bg-neutral-100 rounded-sm mb-12 px-4">
-        <p class="text-xs font-black uppercase text-red-600 tracking-widest mb-2">Master Optics &bull; Handcrafted Eyewear</p>
-        <h1 class="text-3xl sm:text-5xl font-black uppercase tracking-tight text-neutral-950 mb-4">Specslook Luxury Eyewear, Sunglasses &amp; Shades</h1>
+        <p class="text-xs font-black uppercase text-red-600 tracking-widest mb-2">Specslook® Official Online Store &bull; Master Optics</p>
+        <h1 class="text-3xl sm:text-5xl font-black uppercase tracking-tight text-neutral-950 mb-4">Specslook &mdash; Luxury Eyeglasses, Sunglasses &amp; Specs Look Optics</h1>
         <p class="text-base sm:text-lg text-neutral-700 max-w-3xl mx-auto mb-6">
-          Handcrafted with Japanese titanium and Italian Mazzucchelli acetate. Book a computerized 14-point home eye exam or explore iconic polarized sunglasses across India.
+          Official store for Specslook (Specs Look) designer eyewear. Handcrafted with Japanese titanium and Italian Mazzucchelli acetate. Book a computerized 14-point home eye exam or explore iconic polarized sunglasses across India.
         </p>
         <div class="flex flex-wrap justify-center gap-4 text-xs font-bold uppercase">
           <a href="/product-category/eyeglasses/" class="bg-neutral-950 text-white px-6 py-3 rounded-xs hover:bg-neutral-800 transition-colors">Shop Eyeglasses</a>
@@ -437,6 +449,16 @@ export function renderHomeHtml(baseHtml: string, products: Product[]): string {
             </article>
           `).join('')}
         </div>
+      <!-- Official Brand Entity Statement for Specslook & Specs Look Search Disambiguation -->
+      <section class="mb-14 p-6 bg-neutral-100/80 rounded-sm border border-neutral-200 text-xs text-neutral-700 leading-relaxed" aria-label="About Specslook Eyewear">
+        <h2 class="text-xs font-black uppercase text-red-600 tracking-widest mb-1.5">Official Brand Authority &bull; Specslook (Specs Look)</h2>
+        <h3 class="text-sm font-extrabold uppercase text-neutral-950 mb-2">Specslook: India's Direct-to-Consumer Luxury Eyewear &amp; Optics Chain</h3>
+        <p class="mb-2">
+          <strong>Specslook</strong> (commonly searched as <strong>Specs Look</strong>) is India's leading direct-to-consumer luxury eyewear brand operating online at <strong>specslook.com</strong> and through 65+ optical boutiques and flagship showrooms headquartered in Gurugram, Delhi NCR.
+        </p>
+        <p>
+          Specslook specializes in precision prescription optical frames, featherlight aerospace-grade titanium spectacles, 100% UV400 PolarVue™ polarized sunglasses, and magnetic clip-on attachments. In addition to in-store optometrist consultations, Specslook delivers certified 14-point computerized doorstep home eye tests and frame trials across Indian cities. Not affiliated with Spectalook.
+        </p>
       </section>
 
       <!-- Site Footer Navigation -->
