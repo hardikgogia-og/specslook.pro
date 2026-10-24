@@ -228,7 +228,7 @@ export function renderHomeHtml(baseHtml: string, products: Product[]): string {
         '@type': 'Brand',
         '@id': `${SITE_DOMAIN}/#brand`,
         name: 'Specslook',
-        alternateName: ['Specs Look', 'Specslook Eyewear', 'Specslook India', 'specslook.com'],
+        alternateName: ['Specs Look', 'Specslook Eyewear', 'Specslook India', 'specslook.com', 'SPECSLOOK', 'SPECSLOOK Official'],
         url: canonicalUrl,
         logo: LOGO_URL,
         slogan: 'Handcrafted Luxury Eyewear & Master Optics',
@@ -240,7 +240,7 @@ export function renderHomeHtml(baseHtml: string, products: Product[]): string {
         '@id': `${SITE_DOMAIN}/#organization`,
         name: 'Specslook',
         legalName: 'Specslook',
-        alternateName: ['Specs Look', 'Specslook Eyewear', 'Specslook India', 'specslook.com'],
+        alternateName: ['Specs Look', 'Specslook Eyewear', 'Specslook India', 'specslook.com', 'SPECSLOOK'],
         slogan: 'Handcrafted Luxury Eyewear & Master Optics',
         disambiguatingDescription: 'Specslook (specslook.com), also known as Specs Look, is an Indian direct-to-consumer luxury eyewear and optics brand founded in Gurugram, India, specializing in handcrafted titanium eyeglasses, polarized sunglasses, and doorstep home eye tests. Not affiliated with Spectalook.',
         knowsAbout: ['Eyewear', 'Eyeglasses', 'Sunglasses', 'Optics', 'Prescription Glasses', 'Blue Light Lenses', 'Polarized Shades'],
@@ -262,6 +262,10 @@ export function renderHomeHtml(baseHtml: string, products: Product[]): string {
         sameAs: [
           'https://www.instagram.com/specslook',
           'https://www.facebook.com/specslook',
+          'https://twitter.com/specslook',
+          'https://www.youtube.com/@specslook',
+          'https://www.linkedin.com/company/specslook',
+          'https://pinterest.com/specslook',
           'https://wa.me/918368853448'
         ]
       },
@@ -269,7 +273,7 @@ export function renderHomeHtml(baseHtml: string, products: Product[]): string {
         '@type': 'WebSite',
         '@id': `${SITE_DOMAIN}/#website`,
         name: 'Specslook',
-        alternateName: ['Specs Look', 'Specslook Eyewear', 'specslook.com'],
+        alternateName: ['Specs Look', 'Specslook Eyewear', 'specslook.com', 'SPECSLOOK'],
         url: canonicalUrl,
         description: pageDesc,
         disambiguatingDescription: 'Official website of Specslook Eyewear (Specs Look) at specslook.com.',
@@ -284,6 +288,61 @@ export function renderHomeHtml(baseHtml: string, products: Product[]): string {
           },
           'query-input': 'required name=search_term_string'
         }
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': `${SITE_DOMAIN}/#brand-faq`,
+        name: 'Specslook Brand Disambiguation & Eyewear FAQ',
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: 'What is Specslook?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Specslook (specslook.com) is India\'s premier luxury optical and eyewear brand, known for handcrafted Japanese titanium eyeglasses, designer polarized sunglasses, blue-light block spectacles, and 14-point computerized doorstep home eye tests across India.'
+            }
+          },
+          {
+            '@type': 'Question',
+            name: 'Is Specslook the same as Spectalook?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'No. Specslook (specslook.com) is completely independent and has no affiliation, connection, or association with Spectalook. Specslook is the official trademark brand of specslook.com, offering authentic luxury eyewear, Japanese titanium spectacles, and polarized sunglasses.'
+            }
+          },
+          {
+            '@type': 'Question',
+            name: 'Is Specslook written as Specs Look or Specslook?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Specslook is commonly searched and referenced as both \'Specslook\' and \'Specs Look\'. Both names refer to the exact same official direct-to-consumer luxury eyewear brand at https://www.specslook.com.'
+            }
+          },
+          {
+            '@type': 'Question',
+            name: 'What is the official website of Specslook?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'The official and verified website for Specslook is https://www.specslook.com. Shop authentic frames, customize prescription lenses with Zeiss certified standards, and book home eye tests directly on specslook.com.'
+            }
+          },
+          {
+            '@type': 'Question',
+            name: 'Where can I buy authentic Specslook sunglasses and eyeglasses online?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Authentic Specslook eyewear is available exclusively through our official online store at https://www.specslook.com and our flagship optical ateliers in Gurugram, Delhi NCR.'
+            }
+          },
+          {
+            '@type': 'Question',
+            name: 'Does Specslook provide doorstep home eye testing?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Yes, Specslook provides certified 14-point computerized home eye examinations conducted by licensed optometrists equipped with portable digital refractometers and over 100 designer frames to try at home.'
+            }
+          }
+        ]
       },
       // Google Sitelinks Navigation Schema
       {
@@ -449,6 +508,8 @@ export function renderHomeHtml(baseHtml: string, products: Product[]): string {
             </article>
           `).join('')}
         </div>
+      </section>
+
       <!-- Official Brand Entity Statement for Specslook & Specs Look Search Disambiguation -->
       <section class="mb-14 p-6 bg-neutral-100/80 rounded-sm border border-neutral-200 text-xs text-neutral-700 leading-relaxed" aria-label="About Specslook Eyewear">
         <h2 class="text-xs font-black uppercase text-red-600 tracking-widest mb-1.5">Official Brand Authority &bull; Specslook (Specs Look)</h2>
@@ -459,6 +520,45 @@ export function renderHomeHtml(baseHtml: string, products: Product[]): string {
         <p>
           Specslook specializes in precision prescription optical frames, featherlight aerospace-grade titanium spectacles, 100% UV400 PolarVue™ polarized sunglasses, and magnetic clip-on attachments. In addition to in-store optometrist consultations, Specslook delivers certified 14-point computerized doorstep home eye tests and frame trials across Indian cities. Not affiliated with Spectalook.
         </p>
+      </section>
+
+      <!-- Official Brand Disambiguation & Search Authority FAQ Section -->
+      <section class="mb-14 p-6 bg-white rounded-sm border border-neutral-200 text-xs text-neutral-800" aria-label="Specslook Brand Frequently Asked Questions">
+        <h2 class="text-xs font-black uppercase text-red-600 tracking-widest mb-1.5">Official Brand Guide &amp; Search Authority</h2>
+        <h3 class="text-base font-black uppercase text-neutral-950 mb-4">Specslook (Specs Look) Eyewear &bull; Questions &amp; Answers</h3>
+        
+        <div class="space-y-4">
+          <article class="border-b border-neutral-100 pb-3">
+            <h4 class="font-bold text-sm text-neutral-900 mb-1">What is Specslook?</h4>
+            <p class="text-neutral-600 leading-relaxed">
+              <strong>Specslook</strong> (official domain: <strong>specslook.com</strong>) is India's premier luxury optical brand specializing in handcrafted Japanese titanium eyeglasses, polarized sunglasses, blue-light blocking spectacles, and certified 14-point computerized doorstep home eye examinations.
+            </p>
+          </article>
+          <article class="border-b border-neutral-100 pb-3">
+            <h4 class="font-bold text-sm text-neutral-900 mb-1">Is Specslook the same as Spectalook?</h4>
+            <p class="text-neutral-600 leading-relaxed">
+              <strong>No.</strong> Specslook is completely independent and has no affiliation, connection, or corporate association with Spectalook. Specslook is the official direct-to-consumer luxury eyewear brand operating exclusively at <strong>specslook.com</strong>.
+            </p>
+          </article>
+          <article class="border-b border-neutral-100 pb-3">
+            <h4 class="font-bold text-sm text-neutral-900 mb-1">Is Specslook written as Specs Look or Specslook?</h4>
+            <p class="text-neutral-600 leading-relaxed">
+              Both <strong>Specslook</strong> and <strong>Specs Look</strong> refer to the exact same luxury optical brand. Whether you search for "Specslook", "Specs Look", or "specslook.com", our official website delivers authentic designer eyeglasses and polarized shades.
+            </p>
+          </article>
+          <article class="border-b border-neutral-100 pb-3">
+            <h4 class="font-bold text-sm text-neutral-900 mb-1">What is the official website for Specslook?</h4>
+            <p class="text-neutral-600 leading-relaxed">
+              The verified official website is <a href="https://www.specslook.com/" class="text-red-600 font-bold hover:underline">https://www.specslook.com</a>. Customers should always place orders directly through specslook.com to receive genuine frames backed by our 1-year craftsmanship warranty.
+            </p>
+          </article>
+          <article class="border-b border-neutral-100 pb-3">
+            <h4 class="font-bold text-sm text-neutral-900 mb-1">Does Specslook provide doorstep home eye testing?</h4>
+            <p class="text-neutral-600 leading-relaxed">
+              Yes, Specslook provides certified 14-point computerized eye examinations right at your doorstep. Licensed optometrists arrive with portable digital refractometers and over 100 designer frames for in-person home try-on across Delhi NCR.
+            </p>
+          </article>
+        </div>
       </section>
 
       <!-- Site Footer Navigation -->

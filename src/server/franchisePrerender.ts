@@ -18,10 +18,20 @@ export function renderFranchiseHtml(baseHtml: string): string {
         '@id': 'https://www.specslook.com/#organization',
         name: 'Specslook',
         legalName: 'Specslook',
+        alternateName: ['Specs Look', 'Specslook Eyewear', 'Specslook India', 'specslook.com', 'SPECSLOOK'],
         url: 'https://www.specslook.com/',
         logo: 'https://www.specslook.com/shop-logopng.png',
         telephone: '+91-8368853448',
         email: 'info@specslook.com',
+        sameAs: [
+          'https://www.instagram.com/specslook',
+          'https://www.facebook.com/specslook',
+          'https://twitter.com/specslook',
+          'https://www.youtube.com/@specslook',
+          'https://www.linkedin.com/company/specslook',
+          'https://pinterest.com/specslook',
+          'https://wa.me/918368853448'
+        ],
         address: {
           '@type': 'PostalAddress',
           streetAddress: 'Specslook, Dreamz Mall, Sec 4-7 Circle',

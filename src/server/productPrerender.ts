@@ -43,7 +43,7 @@ export function renderProductHtml(baseHtml: string, product: Product): string {
         '@type': 'Brand',
         '@id': `${SITE_DOMAIN}/#brand`,
         name: 'Specslook',
-        alternateName: ['Specs Look', 'Specslook Eyewear', 'Specslook India', 'specslook.com'],
+        alternateName: ['Specs Look', 'Specslook Eyewear', 'Specslook India', 'specslook.com', 'SPECSLOOK', 'SPECSLOOK Official'],
         url: `${SITE_DOMAIN}/`,
         logo: `${SITE_DOMAIN}/shop-logopng.png`,
         slogan: 'Handcrafted Luxury Eyewear & Master Optics',
@@ -55,7 +55,7 @@ export function renderProductHtml(baseHtml: string, product: Product): string {
         '@id': `${SITE_DOMAIN}/#organization`,
         name: 'Specslook',
         legalName: 'Specslook',
-        alternateName: ['Specs Look', 'Specslook Eyewear', 'Specslook India', 'specslook.com'],
+        alternateName: ['Specs Look', 'Specslook Eyewear', 'Specslook India', 'specslook.com', 'SPECSLOOK'],
         url: `${SITE_DOMAIN}/`,
         logo: `${SITE_DOMAIN}/shop-logopng.png`,
         telephone: '+91-8368853448',
@@ -73,13 +73,22 @@ export function renderProductHtml(baseHtml: string, product: Product): string {
           addressRegion: 'Haryana',
           postalCode: '122001',
           addressCountry: 'IN'
-        }
+        },
+        sameAs: [
+          'https://www.instagram.com/specslook',
+          'https://www.facebook.com/specslook',
+          'https://twitter.com/specslook',
+          'https://www.youtube.com/@specslook',
+          'https://www.linkedin.com/company/specslook',
+          'https://pinterest.com/specslook',
+          'https://wa.me/918368853448'
+        ]
       },
       {
         '@type': 'WebSite',
         '@id': `${SITE_DOMAIN}/#website`,
         name: 'Specslook',
-        alternateName: ['Specs Look', 'Specslook Eyewear', 'specslook.com'],
+        alternateName: ['Specs Look', 'Specslook Eyewear', 'specslook.com', 'SPECSLOOK'],
         url: `${SITE_DOMAIN}/`,
         disambiguatingDescription: 'Official website of Specslook Eyewear (Specs Look) at specslook.com.',
         publisher: {

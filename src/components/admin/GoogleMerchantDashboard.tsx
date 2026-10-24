@@ -329,6 +329,62 @@ export const GoogleMerchantDashboard: React.FC<Props> = ({ products }) => {
         </div>
       </div>
 
+      {/* Google Search Console & Rank #1 Brand Entity Action Panel */}
+      <div className="bg-gradient-to-r from-neutral-900 to-neutral-800 p-6 rounded-xs border border-neutral-700 text-white shadow-xs space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 bg-red-600/30 text-red-400 rounded-xs border border-red-500/40">
+              <Globe className="w-5 h-5 text-red-400" />
+            </div>
+            <div>
+              <h3 className="font-extrabold text-sm uppercase tracking-wider text-white">
+                Google Search Console &bull; Rank #1 Brand Disambiguation Protocol
+              </h3>
+              <p className="text-xs text-neutral-300">
+                How to eliminate "Did you mean Spectalook / Specs Look" and secure #1 Google ranking for <strong>"Specslook"</strong>
+              </p>
+            </div>
+          </div>
+          <a
+            href="https://search.google.com/search-console"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xs text-xs font-bold flex items-center gap-1.5 transition-colors self-start sm:self-auto shrink-0"
+          >
+            <span>Open Google Search Console</span>
+            <ExternalLink className="w-3.5 h-3.5" />
+          </a>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2 text-xs">
+          <div className="p-3.5 bg-neutral-950/70 border border-neutral-800 rounded-xs space-y-1.5">
+            <span className="inline-block px-2 py-0.5 bg-red-950 text-red-300 border border-red-800 font-bold rounded-xs text-[10px]">Step 1: Submit Sitemap</span>
+            <p className="font-bold text-neutral-200">Submit sitemap.xml to GSC</p>
+            <p className="text-neutral-400 text-[11px] leading-relaxed">
+              In Google Search Console &gt; <strong>Sitemaps</strong>, paste:
+              <br />
+              <code className="text-red-400 bg-neutral-900 px-1 py-0.5 rounded font-mono select-all">https://www.specslook.com/sitemap.xml</code>
+            </p>
+          </div>
+
+          <div className="p-3.5 bg-neutral-950/70 border border-neutral-800 rounded-xs space-y-1.5">
+            <span className="inline-block px-2 py-0.5 bg-blue-950 text-blue-300 border border-blue-800 font-bold rounded-xs text-[10px]">Step 2: Request Indexing</span>
+            <p className="font-bold text-neutral-200">Force URL Inspection of Homepage</p>
+            <p className="text-neutral-400 text-[11px] leading-relaxed">
+              Paste <code className="text-blue-300 font-mono">https://www.specslook.com/</code> into GSC top search bar and click <strong>"Request Indexing"</strong>. Googlebot will ingest the new FAQPage &amp; Brand schema immediately.
+            </p>
+          </div>
+
+          <div className="p-3.5 bg-neutral-950/70 border border-neutral-800 rounded-xs space-y-1.5">
+            <span className="inline-block px-2 py-0.5 bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold rounded-xs text-[10px]">Step 3: Entity Ingestion</span>
+            <p className="font-bold text-neutral-200">Overriding Typo Heuristic</p>
+            <p className="text-neutral-400 text-[11px] leading-relaxed">
+              Our live server delivers rich FAQPage JSON-LD and HTML answering "Is Specslook related to Spectalook? No". Google uses this to override the typo prompt.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Feed Products Inventory Table */}
       <div className="bg-white p-6 border border-neutral-200 rounded-xs shadow-xs space-y-4">
         <div className="flex items-center justify-between pb-3 border-b border-neutral-200">
